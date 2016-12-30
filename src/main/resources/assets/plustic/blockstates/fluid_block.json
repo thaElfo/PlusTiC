@@ -1,0 +1,14 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "model": "forge:fluid"
+    },
+    "variants": {
+        "osmium": [{
+            "custom": { "fluid": "osmium" }
+        }],
+        "refinedobsidian": [{
+            "custom": { "fluid": "refinedobsidian" }
+        }]
+    }
+}

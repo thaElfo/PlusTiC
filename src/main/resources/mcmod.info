@@ -1,0 +1,16 @@
+[
+{
+  "modid": "plustic",
+  "name": "PlusTiC",
+  "description": "Integrate various mods with Tinker's Construct",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Landmaster (phuong0429)"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

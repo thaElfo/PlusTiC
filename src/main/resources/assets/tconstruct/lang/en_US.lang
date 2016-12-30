@@ -1,0 +1,21 @@
+material.sapphire.name=Sapphire
+material.ruby.name=Ruby
+material.peridot.name=Peridot
+material.malachite.name=Malachite
+material.amber.name=Amber
+material.topaz.name=Topaz
+material.tanzanite.name=Tanzanite
+material.amethyst.name=Amethyst
+material.osmium.name=Osmium
+material.refinedobsidian.name=Refined Obsidian
+
+modifier.bloodymary.name=Bloody Mary
+modifier.bloodymary.desc=§oBrought to you by the legendary Queen of England...§rDeals bonus damage depending on the amount of health already lost by the target. Also, a chance to drop a Coagulated Blood for each hit.
+modifier.naturesblessing.name=Nature's Blessing
+modifier.naturesblessing.desc=§oWonderful...§rA chance to drop bread per mob killed or block broken. Sometimes heals the player by a bit after killing a mob.
+modifier.natureswrath.name=Nature's Wrath
+modifier.natureswrath.desc=§oNature's wrath burning...§rAfter attacking a mob, there is a chance to burn the target, as well as to heal the player.
+modifier.naturespower.name=Nature's Power
+modifier.naturespower.desc=§oFeel the power...§rAfter attacking a mob: 20% chance to burn target. 20% chance to give player Speed. 20% chance to give player Strength.
+modifier.apocalypse.name=Apocalypse
+modifier.apocalypse.desc=§oThe end times...§rYour victim becomes moribund and is afflicted with Wither.

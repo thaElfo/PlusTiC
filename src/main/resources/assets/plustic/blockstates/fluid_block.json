@@ -9,6 +9,15 @@
         }],
         "refinedobsidian": [{
             "custom": { "fluid": "refinedobsidian" }
+        }],
+        "terrasteel": [{
+        	"custom": { "fluid": "terrasteel" }
+        }],
+        "elementium": [{
+        	"custom": { "fluid": "elementium" }
+        }],
+        "manasteel": [{
+        	"custom": { "fluid": "manasteel" }
         }]
     }
 }

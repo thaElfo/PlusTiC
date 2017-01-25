@@ -15,8 +15,8 @@ import net.minecraftforge.oredict.*;
 import net.minecraftforge.fml.common.Mod.*;
 import slimeknights.tconstruct.library.*;
 import slimeknights.tconstruct.library.materials.*;
+import slimeknights.tconstruct.shared.*;
 
-import slimeknights.tconstruct.shared.TinkerFluids;
 import static slimeknights.tconstruct.library.materials.MaterialTypes.*;
 import static slimeknights.tconstruct.library.utils.HarvestLevels.*;
 import static slimeknights.tconstruct.tools.TinkerTraits.*;
@@ -25,10 +25,10 @@ import static slimeknights.tconstruct.tools.TinkerTraits.*;
  * 
  * @author Landmaster
  */
-@Mod(modid = PlusTiC.MODID, name = "PlusTiC", version = PlusTiC.VERSION, dependencies = "required-after:mantle;required-after:tconstruct;after:Mekanism;after:BiomesOPlenty")
+@Mod(modid = PlusTiC.MODID, name = "PlusTiC", version = PlusTiC.VERSION, dependencies = "required-after:mantle;required-after:tconstruct;after:Mekanism;after:BiomesOPlenty;after:Botania")
 public class PlusTiC {
 	public static final String MODID = "plustic";
-	public static final String VERSION = "1.0";
+	public static final String VERSION = "1.1";
 	
 	public static Config config;
 	
@@ -200,6 +200,66 @@ public class PlusTiC {
 	        TinkerRegistry.addMaterialStats(refinedObsidian, justWhy);
 	        
 	        materials.put("refinedObsidian", refinedObsidian);
+		}
+		
+		if (config.botania && Loader.isModLoaded("Botania")) {
+			Material terrasteel = new Material("terrasteel",TextFormatting.GREEN);
+	        terrasteel.addTrait(Mana.mana);
+	        terrasteel.addTrait(Terrafirma.terrafirma,HEAD);
+	        terrasteel.addItem("ingotTerrasteel", 1, Material.VALUE_Ingot);
+	        terrasteel.setCraftable(false).setCastable(true);
+	        proxy.setRenderInfo(terrasteel, 0x00FF00);
+	        
+	        FluidMolten terrasteelFluid = Utils.fluidMetal("terrasteel", 0x00FF00);
+	        terrasteelFluid.setTemperature(760);
+	        Utils.initFluidMetal(terrasteelFluid);
+	        terrasteel.setFluid(terrasteelFluid);
+	        
+	        TinkerRegistry.addMaterialStats(terrasteel, new HeadMaterialStats(1562, 9, 5, OBSIDIAN));
+	        TinkerRegistry.addMaterialStats(terrasteel, new HandleMaterialStats(1f, 10));
+	        TinkerRegistry.addMaterialStats(terrasteel, new ExtraMaterialStats(10));
+	        TinkerRegistry.addMaterialStats(terrasteel, new BowMaterialStats(0.4f, 2f, 9f));
+	        
+	        materials.put("terrasteel", terrasteel);
+	        
+	        Material elementium = new Material("elementium",TextFormatting.LIGHT_PURPLE);
+	        elementium.addTrait(Mana.mana);
+	        elementium.addTrait(Elemental.elemental,HEAD);
+	        elementium.addItem("ingotElvenElementium", 1, Material.VALUE_Ingot);
+	        elementium.setCraftable(false).setCastable(true);
+	        proxy.setRenderInfo(elementium, 0xF66AFD);
+	        
+	        FluidMolten elementiumFluid = Utils.fluidMetal("elementium", 0xF66AFD);
+	        elementiumFluid.setTemperature(800);
+	        Utils.initFluidMetal(elementiumFluid);
+	        elementium.setFluid(elementiumFluid);
+	        
+	        TinkerRegistry.addMaterialStats(elementium,
+                    new HeadMaterialStats(204, 6.00f, 4.00f, DIAMOND),
+                    new HandleMaterialStats(0.85f, 60),
+                    new ExtraMaterialStats(50));
+	        TinkerRegistry.addMaterialStats(elementium, new BowMaterialStats(0.5f, 1.5f, 7f));
+	        
+	        materials.put("elvenElementium", elementium);
+	        
+	        Material manasteel = new Material("manasteel",TextFormatting.BLUE);
+	        manasteel.addTrait(Mana.mana);
+	        manasteel.addItem("ingotManasteel", 1, Material.VALUE_Ingot);
+	        manasteel.setCraftable(false).setCastable(true);
+	        proxy.setRenderInfo(manasteel, 0x54E5FF);
+	        
+	        FluidMolten manasteelFluid = Utils.fluidMetal("manasteel", 0x54E5FF);
+	        manasteelFluid.setTemperature(681);
+	        Utils.initFluidMetal(manasteelFluid);
+	        manasteel.setFluid(manasteelFluid);
+	        
+	        TinkerRegistry.addMaterialStats(manasteel,
+                    new HeadMaterialStats(540, 7.00f, 6.00f, OBSIDIAN),
+                    new HandleMaterialStats(1.25f, 150),
+                    new ExtraMaterialStats(60));
+	        TinkerRegistry.addMaterialStats(manasteel, new BowMaterialStats(1, 1.1f, 1));
+	        
+	        materials.put("manasteel", manasteel);
 		}
 		
 	    

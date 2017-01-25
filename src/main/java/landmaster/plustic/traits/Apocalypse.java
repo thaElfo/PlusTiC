@@ -16,14 +16,11 @@ public class Apocalypse extends AbstractTrait {
 	@Override
 	public void afterHit(ItemStack tool, EntityLivingBase player, EntityLivingBase target, float damageDealt, boolean wasCritical, boolean wasHit) {
 		if (wasHit && target.isEntityAlive()) {
-			float rnd = random.nextFloat();
-			if (rnd < 0.05) {
-				target.addPotionEffect(new PotionEffect(MobEffects.WITHER,(int)(100+rnd*2500),3));
-			} else if (rnd < 0.2) {
-				target.addPotionEffect(new PotionEffect(MobEffects.WITHER,(int)(100+rnd*500),2));
-			} else {
-				target.addPotionEffect(new PotionEffect(MobEffects.WITHER,130));
-			}
+			int amp = -1;
+			PotionEffect potionEffect = target.getActivePotionEffect(MobEffects.WITHER);
+			if (potionEffect != null) amp = potionEffect.getAmplifier();
+			amp = Math.min(3, amp+1);
+			target.addPotionEffect(new PotionEffect(MobEffects.WITHER, 130, amp));
 		}
 	}
 }

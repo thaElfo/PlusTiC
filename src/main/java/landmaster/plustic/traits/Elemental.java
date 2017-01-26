@@ -11,7 +11,6 @@ import net.minecraft.util.math.*;
 import net.minecraft.world.*;
 import net.minecraftforge.event.world.*;
 import slimeknights.tconstruct.library.traits.*;
-//import slimeknights.tconstruct.library.utils.*;
 
 public class Elemental extends AbstractTrait {
 	public static final Elemental elemental = new Elemental();
@@ -26,14 +25,15 @@ public class Elemental extends AbstractTrait {
 	}
 	
 	private void destroyColumn(ItemStack tool, World world, IBlockState state, BlockPos pos, EntityPlayer player) {
-		if (!world.isRemote && state.getBlock() instanceof BlockFalling && state.getBlock().canHarvestBlock(world, pos, player)) {
+		if (!world.isRemote && state.getBlock() instanceof BlockFalling && tool.canHarvestBlock(state)) {
 			BlockPos posUp = pos, posDown = pos;
 			while (world.getBlockState(posUp = posUp.add(0,1,0)).getBlock() == state.getBlock())
 				; // nothing to do
 			while (world.getBlockState(posDown = posDown.add(0,-1,0)).getBlock() == state.getBlock())
 				; // nothing to do
-			while (!(posUp = posUp.add(0,-1,0)).equals(posDown))
+			while (!(posUp = posUp.add(0,-1,0)).equals(posDown)) {
 				world.destroyBlock(posUp, !player.capabilities.isCreativeMode);
+			}
 		}
 	}
 	

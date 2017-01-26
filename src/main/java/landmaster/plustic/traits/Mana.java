@@ -35,7 +35,9 @@ public class Mana extends AbstractTrait {
 			}
 			IBaublesItemHandler ib = BaublesApi.getBaublesHandler(ep);
 			for (int i=0; i<ib.getSlots(); ++i) {
-				ItemStack is = ib.getStackInSlot(i).copy();
+				ItemStack is = ib.getStackInSlot(i);
+				if (is == null) continue;
+				is = is.copy();
 				if (ManaItemHandler.requestManaExact(is, ep, 100, true)) {
 					ToolHelper.healTool(tool, 1, ep);
 					ib.setStackInSlot(i, is);
@@ -61,7 +63,9 @@ public class Mana extends AbstractTrait {
 			}
 			IBaublesItemHandler ib = BaublesApi.getBaublesHandler(ep);
 			for (int i=0; i<ib.getSlots(); ++i) {
-				ItemStack is = ib.getStackInSlot(i).copy();
+				ItemStack is = ib.getStackInSlot(i);
+				if (is == null) continue;
+				is = is.copy();
 				if (ManaItemHandler.requestManaExact(is, ep, 100, true)) {
 					ib.setStackInSlot(i, is);
 					if (--newDamage <= 0) break manadraw;

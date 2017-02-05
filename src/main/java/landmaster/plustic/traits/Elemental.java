@@ -2,7 +2,9 @@ package landmaster.plustic.traits;
 
 import net.minecraft.block.*;
 import net.minecraft.block.state.*;
+import net.minecraft.enchantment.*;
 import net.minecraft.entity.*;
+import net.minecraft.entity.item.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.init.*;
 import net.minecraft.item.*;
@@ -32,7 +34,19 @@ public class Elemental extends AbstractTrait {
 			while (world.getBlockState(posDown = posDown.add(0,-1,0)).getBlock() == state.getBlock())
 				; // nothing to do
 			while (!(posUp = posUp.add(0,-1,0)).equals(posDown)) {
-				world.destroyBlock(posUp, !player.capabilities.isCreativeMode);
+				if (posUp.equals(pos)) continue;
+				if (EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, tool) > 0 && state.getBlock().canSilkHarvest(world, posUp, state, player)) {
+					world.destroyBlock(posUp, false);
+					if (!player.capabilities.isCreativeMode) {
+						EntityItem ie = new EntityItem(world, posUp.getX(), posUp.getY(), posUp.getZ(), new ItemStack(Item.getItemFromBlock(state.getBlock())));
+						world.spawnEntityInWorld(ie);
+					}
+				} else {
+					world.destroyBlock(posUp, false);
+					if (!player.capabilities.isCreativeMode) {
+						state.getBlock().dropBlockAsItem(world, posUp, state, EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, tool));
+					}
+				}
 			}
 		}
 	}

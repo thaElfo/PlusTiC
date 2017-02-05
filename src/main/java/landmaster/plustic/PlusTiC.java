@@ -1,13 +1,17 @@
 package landmaster.plustic;
 
 import java.util.*;
+import landmaster.plustic.block.*;
 import landmaster.plustic.proxy.*;
 import landmaster.plustic.config.*;
 import landmaster.plustic.fluids.*;
 import landmaster.plustic.util.*;
 import landmaster.plustic.traits.*;
+import net.minecraft.block.*;
 import net.minecraft.item.*;
+import net.minecraft.util.*;
 import net.minecraft.util.text.*;
+import net.minecraftforge.fluids.*;
 import net.minecraftforge.fml.common.*;
 import net.minecraftforge.fml.common.event.*;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -16,6 +20,7 @@ import net.minecraftforge.fml.common.Mod.*;
 import slimeknights.tconstruct.library.*;
 import slimeknights.tconstruct.library.materials.*;
 import slimeknights.tconstruct.shared.*;
+//import slimeknights.tconstruct.tools.*;
 
 import static slimeknights.tconstruct.library.materials.MaterialTypes.*;
 import static slimeknights.tconstruct.library.utils.HarvestLevels.*;
@@ -25,10 +30,10 @@ import static slimeknights.tconstruct.tools.TinkerTraits.*;
  * 
  * @author Landmaster
  */
-@Mod(modid = PlusTiC.MODID, name = "PlusTiC", version = PlusTiC.VERSION, dependencies = "required-after:mantle;required-after:tconstruct;after:Mekanism;after:BiomesOPlenty;after:Botania")
+@Mod(modid = PlusTiC.MODID, name = "PlusTiC", version = PlusTiC.VERSION, dependencies = "required-after:mantle;required-after:tconstruct;after:Mekanism;after:BiomesOPlenty;after:Botania;after:advancedRocketry")
 public class PlusTiC {
 	public static final String MODID = "plustic";
-	public static final String VERSION = "1.1";
+	public static final String VERSION = "1.2";
 	
 	public static Config config;
 	
@@ -154,13 +159,21 @@ public class PlusTiC {
 			GameRegistry.register(steelDust);
 			OreDictionary.registerOre("dustSteel", steelDust);
 			proxy.registerItemRenderer(steelDust, 0, "steeldust");
+			Item bronzeNugget = new Item().setUnlocalizedName("bronzenugget").setRegistryName("bronzenugget");
+			GameRegistry.register(bronzeNugget);
+			OreDictionary.registerOre("nuggetBronze", bronzeNugget);
+			proxy.registerItemRenderer(bronzeNugget, 0, "bronzenugget");
+			Item bronzeIngot = new Item().setUnlocalizedName("bronzeingot").setRegistryName("bronzeingot");
+			GameRegistry.register(bronzeIngot);
+			OreDictionary.registerOre("ingotBronze", bronzeIngot);
+			proxy.registerItemRenderer(bronzeIngot, 0, "bronzeingot");
 			
 			// ugly workaround for molten tin not registering
 			if (OreDictionary.getOres("ingotTin").size() == 0 || TinkerRegistry.getMelting(OreDictionary.getOres("ingotTin").get(0)) == null) {
 				MaterialIntegration tinI = new MaterialIntegration(null, TinkerFluids.tin, "Tin");
 				tinI.integrate();
 				tinI.integrateRecipes();
-				materialIntegrations.put("tin",tinI);
+				materialIntegrations.put("tin", tinI);
 			}
 			
 	        Material osmium = new Material("osmium",TextFormatting.BLUE);
@@ -262,7 +275,93 @@ public class PlusTiC {
 	        materials.put("manasteel", manasteel);
 		}
 		
+		if (config.advancedRocketry && Loader.isModLoaded("advancedRocketry")) {
+			Material iridium = new Material("iridium", TextFormatting.GRAY);
+			iridium.addTrait(dense);
+			iridium.addTrait(alien, HEAD);
+			iridium.addItem("ingotIridium", 1, Material.VALUE_Ingot);
+			iridium.setCraftable(false).setCastable(true);
+			proxy.setRenderInfo(iridium, 0xE5E5E5);
+			
+			FluidMolten iridiumFluid = Utils.fluidMetal("iridium", 0xE5E5E5);
+			iridiumFluid.setTemperature(810);
+			Utils.initFluidMetal(iridiumFluid);
+			iridium.setFluid(iridiumFluid);
+			
+			TinkerRegistry.addMaterialStats(iridium, new HeadMaterialStats(520, 6, 5.8f, DIAMOND));
+	        TinkerRegistry.addMaterialStats(iridium, new HandleMaterialStats(1.15f, -20));
+	        TinkerRegistry.addMaterialStats(iridium, new ExtraMaterialStats(60));
+	        TinkerRegistry.addMaterialStats(iridium, justWhy);
+	        
+	        materials.put("iridium", iridium);
+	        
+	        if (config.mekanism && Loader.isModLoaded("Mekanism")) {
+	        	// osmiridium
+	        	Item osmiridiumIngot = new Item().setUnlocalizedName("osmiridiumingot")
+	        			.setRegistryName("osmiridiumingot");
+	        	GameRegistry.register(osmiridiumIngot);
+	        	OreDictionary.registerOre("ingotOsmiridium", osmiridiumIngot);
+	        	proxy.registerItemRenderer(osmiridiumIngot, 0, "osmiridiumingot");
+	        	
+	        	Item osmiridiumNugget = new Item().setUnlocalizedName("osmiridiumnugget")
+	        			.setRegistryName("osmiridiumnugget");
+	        	GameRegistry.register(osmiridiumNugget);
+	        	OreDictionary.registerOre("nuggetOsmiridium", osmiridiumNugget);
+	        	proxy.registerItemRenderer(osmiridiumNugget, 0, "osmiridiumnugget");
+	        	
+	        	MetalBlock osmiridiumBlock = new MetalBlock("osmiridiumblock");
+	        	ItemBlock osmiridiumBlock_item = new ItemBlock(osmiridiumBlock);
+	        	GameRegistry.register(osmiridiumBlock);
+	        	GameRegistry.register(osmiridiumBlock_item, osmiridiumBlock.getRegistryName());
+	        	OreDictionary.registerOre("blockOsmiridium", osmiridiumBlock);
+	        	proxy.registerItemRenderer(osmiridiumBlock_item, 0, "osmiridiumblock");
+	        	
+	        	Material osmiridium = new Material("osmiridium", TextFormatting.LIGHT_PURPLE);
+	        	osmiridium.addTrait(DevilsStrength.devilsstrength);
+	        	osmiridium.addTrait(Anticorrosion.anticorrosion, HEAD);
+	        	osmiridium.addItem("ingotOsmiridium", 1, Material.VALUE_Ingot);
+	        	osmiridium.setCraftable(false).setCastable(true);
+	        	proxy.setRenderInfo(osmiridium, 0x666DFF);
+	        	
+	        	FluidMolten osmiridiumFluid = Utils.fluidMetal("osmiridium", 0x666DFF);
+	        	osmiridiumFluid.setTemperature(840);
+	        	Utils.initFluidMetal(osmiridiumFluid);
+	        	osmiridium.setFluid(osmiridiumFluid);
+	        	TinkerRegistry.registerAlloy(new FluidStack(osmiridiumFluid, 2),
+	        			new FluidStack(materials.get("osmium").getFluid(), 1),
+	        			new FluidStack(iridiumFluid, 1));
+	        	
+	        	TinkerRegistry.addMaterialStats(osmiridium, new HeadMaterialStats(1300, 6.8f, 8, COBALT));
+	        	TinkerRegistry.addMaterialStats(osmiridium, new HandleMaterialStats(1.5f, 30));
+	        	TinkerRegistry.addMaterialStats(osmiridium, new ExtraMaterialStats(80));
+	        	TinkerRegistry.addMaterialStats(osmiridium, new BowMaterialStats(0.38f, 2.05f, 10));
+	        	
+	        	materials.put("osmiridium", osmiridium);
+	        }
+		}
+		
 	    
 	    Utils.integrate(materials,materialIntegrations);
+	}
+	
+	@EventHandler
+	public void init(FMLInitializationEvent event) {
+		Block osmiridiumBlock = Block.REGISTRY.getObject(new ResourceLocation(MODID, "osmiridiumblock"));
+		Item osmiridiumIngot = Item.REGISTRY.getObject(new ResourceLocation(MODID, "osmiridiumingot"));
+		Item osmiridiumNugget = Item.REGISTRY.getObject(new ResourceLocation(MODID, "osmiridiumnugget"));
+		Item bronzeNugget = Item.REGISTRY.getObject(new ResourceLocation(MODID, "bronzenugget"));
+		Item bronzeIngot = Item.REGISTRY.getObject(new ResourceLocation(MODID, "bronzeingot"));
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(osmiridiumBlock),
+				"III", "III", "III",
+				'I', "ingotOsmiridium"));
+		GameRegistry.addShapelessRecipe(new ItemStack(osmiridiumIngot, 9), osmiridiumBlock);
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(osmiridiumIngot),
+				"III", "III", "III",
+				'I', "nuggetOsmiridium"));
+		GameRegistry.addShapelessRecipe(new ItemStack(osmiridiumNugget, 9), osmiridiumIngot);
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(bronzeIngot),
+				"III", "III", "III",
+				'I', "nuggetBronze"));
+		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(bronzeNugget, 9), "ingotBronze"));
 	}
 }

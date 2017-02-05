@@ -11,6 +11,8 @@ material.refinedobsidian.name=Refined Obsidian
 material.terrasteel.name=Terrasteel
 material.elementium.name=Elementium
 material.manasteel.name=Manasteel
+material.iridium.name=Iridium
+material.osmiridium.name=Osmiridium
 
 modifier.bloodymary.name=Bloody Mary
 modifier.bloodymary.desc=§oBrought to you by the legendary Queen of England...§rDeals bonus damage depending on the amount of health already lost by the target. Also, a chance to drop a Coagulated Blood for each hit.
@@ -28,3 +30,8 @@ modifier.terrafirma.name=Terrafirma
 modifier.terrafirma.desc=§oSolid earth§rWhile this tool is in your inventory, you will heal over time.
 modifier.elemental.name=Elemental
 modifier.elemental.desc=§oElemental...§rWhen gravity-affected blocks are destroyed, break all blocks of the same type above and below. Also, a chance to gain various benefits from a sucessful attack.
+modifier.devilsstrength.name=Devil's Strength
+modifier.devilsstrength.desc=§oRivaling Satan...§rBonus damage to non-Overworld mobs.
+modifier.devilsstrength.extra=Vs Non-Overworld: +%s
+modifier.anticorrosion.name=Anti-Corrosion
+modifier.anticorrosion.desc=§oFor the times when you splash the chemical§rEvery tick, there is a small chance that the holder's poison is healed.

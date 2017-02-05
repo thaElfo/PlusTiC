@@ -18,6 +18,12 @@
         }],
         "manasteel": [{
         	"custom": { "fluid": "manasteel" }
+        }],
+        "iridium": [{
+        	"custom": { "fluid": "iridium" }
+        }],
+        "osmiridium": [{
+        	"custom": { "fluid": "osmiridium" }
         }]
     }
 }

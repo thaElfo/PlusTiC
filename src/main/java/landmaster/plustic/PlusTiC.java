@@ -8,6 +8,7 @@ import landmaster.plustic.fluids.*;
 import landmaster.plustic.util.*;
 import landmaster.plustic.traits.*;
 import net.minecraft.block.*;
+import net.minecraft.init.*;
 import net.minecraft.item.*;
 import net.minecraft.util.*;
 import net.minecraft.util.text.*;
@@ -20,7 +21,6 @@ import net.minecraftforge.fml.common.Mod.*;
 import slimeknights.tconstruct.library.*;
 import slimeknights.tconstruct.library.materials.*;
 import slimeknights.tconstruct.shared.*;
-//import slimeknights.tconstruct.tools.*;
 
 import static slimeknights.tconstruct.library.materials.MaterialTypes.*;
 import static slimeknights.tconstruct.library.utils.HarvestLevels.*;
@@ -33,7 +33,7 @@ import static slimeknights.tconstruct.tools.TinkerTraits.*;
 @Mod(modid = PlusTiC.MODID, name = "PlusTiC", version = PlusTiC.VERSION, dependencies = "required-after:mantle;required-after:tconstruct;after:Mekanism;after:BiomesOPlenty;after:Botania;after:advancedRocketry")
 public class PlusTiC {
 	public static final String MODID = "plustic";
-	public static final String VERSION = "1.2a";
+	public static final String VERSION = "1.3";
 	
 	public static Config config;
 	
@@ -52,6 +52,16 @@ public class PlusTiC {
 		config.sync();
 		
 		BowMaterialStats justWhy = new BowMaterialStats(0.2f, 0.4f, -1f);
+		
+		if (config.base) {
+			Material tnt = new Material("tnt",TextFormatting.RED);
+			tnt.addTrait(Explosive.explosive);
+			tnt.addItem(Blocks.TNT, Material.VALUE_Ingot);
+			tnt.setCraftable(true);
+			proxy.setRenderInfo(tnt, 0xFF4F4F);
+			TinkerRegistry.addMaterialStats(tnt, new ArrowShaftMaterialStats(0.95f, 0));
+			materials.put("tnt", tnt);
+		}
 		
 		if (config.bop && Loader.isModLoaded("BiomesOPlenty")) {
 	        Material sapphire = new Material("sapphire",TextFormatting.BLUE);
@@ -218,7 +228,8 @@ public class PlusTiC {
 		if (config.botania && Loader.isModLoaded("Botania")) {
 			Material terrasteel = new Material("terrasteel",TextFormatting.GREEN);
 	        terrasteel.addTrait(Mana.mana);
-	        terrasteel.addTrait(Terrafirma.terrafirma,HEAD);
+	        terrasteel.addTrait(Terrafirma.terrafirma[0]);
+	        terrasteel.addTrait(Terrafirma.terrafirma[1],HEAD);
 	        terrasteel.addItem("ingotTerrasteel", 1, Material.VALUE_Ingot);
 	        terrasteel.setCraftable(false).setCastable(true);
 	        proxy.setRenderInfo(terrasteel, 0x00FF00);

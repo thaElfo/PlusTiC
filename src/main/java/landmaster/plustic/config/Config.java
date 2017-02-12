@@ -4,6 +4,7 @@ import net.minecraftforge.common.config.*;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 public class Config extends Configuration {
+	public boolean base;
 	public boolean bop;
 	public boolean mekanism;
 	public boolean botania;
@@ -14,6 +15,7 @@ public class Config extends Configuration {
 	}
 	
 	public void sync() {
+		base = getBoolean("Enable vanilla TiC addons", "modules", true, "Add features to vanilla Tinkers Construct");
 		bop = getBoolean("Enable BoP integration", "modules", true, "Integrate with Biomes o' Plenty");
 		mekanism = getBoolean("Enable Mekanism integration", "modules", true, "Integrate with Mekanism");
 		botania = getBoolean("Enable Botania integration", "modules", true, "Integrate with Botania");

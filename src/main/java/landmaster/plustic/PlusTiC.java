@@ -33,7 +33,7 @@ import static slimeknights.tconstruct.tools.TinkerTraits.*;
 @Mod(modid = PlusTiC.MODID, name = "PlusTiC", version = PlusTiC.VERSION, dependencies = "required-after:mantle;required-after:tconstruct;after:Mekanism;after:BiomesOPlenty;after:Botania;after:advancedRocketry")
 public class PlusTiC {
 	public static final String MODID = "plustic";
-	public static final String VERSION = "1.2";
+	public static final String VERSION = "1.2a";
 	
 	public static Config config;
 	
@@ -295,6 +295,26 @@ public class PlusTiC {
 	        
 	        materials.put("iridium", iridium);
 	        
+	        Material titanium = new Material("titanium", TextFormatting.WHITE);
+	        titanium.addTrait(Light.light);
+	        titanium.addTrait(Anticorrosion.anticorrosion, HEAD);
+	        titanium.addItem("ingotTitanium", 1, Material.VALUE_Ingot);
+	        titanium.setCraftable(false).setCastable(true);
+	        proxy.setRenderInfo(titanium, 0xDCE1EA);
+	        
+	        FluidMolten titaniumFluid = Utils.fluidMetal("titanium", 0xDCE1EA);
+	        titaniumFluid.setTemperature(790);
+	        Utils.initFluidMetal(titaniumFluid);
+	        titanium.setFluid(titaniumFluid);
+	        
+	        TinkerRegistry.addMaterialStats(titanium, new HeadMaterialStats(560, 6, 6, OBSIDIAN));
+	        TinkerRegistry.addMaterialStats(titanium, new HandleMaterialStats(1.4f, 0));
+	        TinkerRegistry.addMaterialStats(titanium, new ExtraMaterialStats(40));
+	        TinkerRegistry.addMaterialStats(titanium, new BowMaterialStats(1.15f, 1.3f, 6.6f));
+	        
+	        materials.put("titanium", titanium);
+	        
+	        
 	        if (config.mekanism && Loader.isModLoaded("Mekanism")) {
 	        	// osmiridium
 	        	Item osmiridiumIngot = new Item().setUnlocalizedName("osmiridiumingot")
@@ -346,22 +366,26 @@ public class PlusTiC {
 	
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
+		Item bronzeNugget = Item.REGISTRY.getObject(new ResourceLocation(MODID, "bronzenugget"));
+		Item bronzeIngot = Item.REGISTRY.getObject(new ResourceLocation(MODID, "bronzeingot"));
 		Block osmiridiumBlock = Block.REGISTRY.getObject(new ResourceLocation(MODID, "osmiridiumblock"));
 		Item osmiridiumIngot = Item.REGISTRY.getObject(new ResourceLocation(MODID, "osmiridiumingot"));
 		Item osmiridiumNugget = Item.REGISTRY.getObject(new ResourceLocation(MODID, "osmiridiumnugget"));
-		Item bronzeNugget = Item.REGISTRY.getObject(new ResourceLocation(MODID, "bronzenugget"));
-		Item bronzeIngot = Item.REGISTRY.getObject(new ResourceLocation(MODID, "bronzeingot"));
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(osmiridiumBlock),
-				"III", "III", "III",
-				'I', "ingotOsmiridium"));
-		GameRegistry.addShapelessRecipe(new ItemStack(osmiridiumIngot, 9), osmiridiumBlock);
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(osmiridiumIngot),
-				"III", "III", "III",
-				'I', "nuggetOsmiridium"));
-		GameRegistry.addShapelessRecipe(new ItemStack(osmiridiumNugget, 9), osmiridiumIngot);
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(bronzeIngot),
-				"III", "III", "III",
-				'I', "nuggetBronze"));
-		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(bronzeNugget, 9), "ingotBronze"));
+		if (bronzeNugget != null) {
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(bronzeIngot),
+					"III", "III", "III",
+					'I', "nuggetBronze"));
+			GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(bronzeNugget, 9), "ingotBronze"));
+		}
+		if (osmiridiumNugget != null) {
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(osmiridiumBlock),
+					"III", "III", "III",
+					'I', "ingotOsmiridium"));
+			GameRegistry.addShapelessRecipe(new ItemStack(osmiridiumIngot, 9), osmiridiumBlock);
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(osmiridiumIngot),
+					"III", "III", "III",
+					'I', "nuggetOsmiridium"));
+			GameRegistry.addShapelessRecipe(new ItemStack(osmiridiumNugget, 9), osmiridiumIngot);
+		}
 	}
 }

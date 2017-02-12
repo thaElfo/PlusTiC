@@ -24,6 +24,9 @@
         }],
         "osmiridium": [{
         	"custom": { "fluid": "osmiridium" }
+        }],
+        "titanium": [{
+        	"custom": { "fluid": "titanium" }
         }]
     }
 }

@@ -5,11 +5,11 @@
   "description": "Integrate various mods with Tinker's Construct",
   "version": "${version}",
   "mcversion": "${mcversion}",
-  "url": "",
+  "url": "https://minecraft.curseforge.com/projects/plustic",
   "updateUrl": "",
   "authorList": ["Landmaster (phuong0429)"],
   "credits": "",
-  "logoFile": "",
+  "logoFile": "assets/mcfmt/logo.png",
   "screenshots": [],
   "dependencies": []
 }

@@ -121,7 +121,8 @@ public class Global extends AbstractTrait {
 				"msg.plustic.globalmodifier.set",
 						event.getPos().getX(),
 						event.getPos().getY(),
-						event.getPos().getZ()));
+						event.getPos().getZ(),
+						event.getWorld().provider.getDimension()));
 	}
 	private ItemStack getWeapon(DamageSource source) {
 		if (source instanceof EntityDamageSource) {

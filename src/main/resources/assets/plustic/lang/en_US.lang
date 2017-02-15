@@ -17,4 +17,4 @@ item.alumitenugget.name=Alumite Nugget
 item.alumiteingot.name=Alumite Ingot
 tile.osmiridiumblock.name=Osmiridium Block
 tile.alumiteblock.name=Alumite Block
-msg.plustic.globalmodifier.set=Position: [x=%d, y=%d, z=%d]
+msg.plustic.globalmodifier.set=Linked inventory at [x=%d, y=%d, z=%d] and dimension %d

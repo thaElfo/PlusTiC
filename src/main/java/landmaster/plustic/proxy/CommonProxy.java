@@ -7,7 +7,7 @@ package landmaster.plustic.proxy;
 
 import net.minecraft.item.*;
 import net.minecraftforge.fluids.*;
-import slimeknights.tconstruct.library.materials.Material;
+import slimeknights.tconstruct.library.materials.*;
 
 /**
  * 

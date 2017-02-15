@@ -15,6 +15,7 @@ material.iridium.name=Iridium
 material.osmiridium.name=Osmiridium
 material.titanium.name=Titanium
 material.tnt.name=TNT
+material.alumite.name=Alumite
 
 modifier.bloodymary.name=Bloody Mary
 modifier.bloodymary.desc=§oBrought to you by the legendary Queen of England...§r\nDeals bonus damage depending on the amount of health already lost by the target. Also, a chance to drop a Coagulated Blood for each hit.
@@ -41,3 +42,7 @@ modifier.light.name=Lightweight
 modifier.light.desc=§oLow-weight§r\nAttack and mining speed increases.
 modifier.explosive.name=Explosive
 modifier.explosive.desc=§oKa-boom!§r\nAn explosion is created on each hit.
+modifier.global.name=Global Traveler
+modifier.global.desc=§oAround the world... and back§r\nRight-click a block in order for items from broken blocks and killed entities to get transported in there if it is an inventory.
+modifier.thundering.name=Thundering
+modifier.thundering.desc=§oRise, Thor!§r\nSummon a thunderbolt on impact.

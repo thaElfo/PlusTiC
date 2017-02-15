@@ -15,9 +15,10 @@ import net.minecraft.util.text.*;
 import net.minecraftforge.fluids.*;
 import net.minecraftforge.fml.common.*;
 import net.minecraftforge.fml.common.event.*;
-import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.common.registry.*;
 import net.minecraftforge.oredict.*;
 import net.minecraftforge.fml.common.Mod.*;
+import slimeknights.tconstruct.*;
 import slimeknights.tconstruct.library.*;
 import slimeknights.tconstruct.library.materials.*;
 import slimeknights.tconstruct.shared.*;
@@ -61,6 +62,51 @@ public class PlusTiC {
 			proxy.setRenderInfo(tnt, 0xFF4F4F);
 			TinkerRegistry.addMaterialStats(tnt, new ArrowShaftMaterialStats(0.95f, 0));
 			materials.put("tnt", tnt);
+			
+			if (TinkerIntegration.isIntegrated(TinkerFluids.aluminum)) {
+				// alumite is back! (with some changes)
+				Item alumiteIngot = new Item().setUnlocalizedName("alumiteingot")
+						.setRegistryName("alumiteingot");
+				GameRegistry.register(alumiteIngot);
+				OreDictionary.registerOre("ingotAlumite", alumiteIngot);
+				proxy.registerItemRenderer(alumiteIngot, 0, "alumiteingot");
+				
+				Item alumiteNugget = new Item().setUnlocalizedName("alumitenugget")
+						.setRegistryName("alumitenugget");
+				GameRegistry.register(alumiteNugget);
+				OreDictionary.registerOre("nuggetAlumite", alumiteNugget);
+				proxy.registerItemRenderer(alumiteNugget, 0, "alumitenugget");
+				
+				Block alumiteBlock = new MetalBlock("alumiteblock");
+				ItemBlock alumiteBlock_item = new ItemBlock(alumiteBlock);
+				GameRegistry.register(alumiteBlock);
+				GameRegistry.register(alumiteBlock_item, alumiteBlock.getRegistryName());
+				OreDictionary.registerOre("blockAlumite", alumiteBlock);
+				proxy.registerItemRenderer(alumiteBlock_item, 0, "alumiteblock");
+				
+				Material alumite = new Material("alumite", TextFormatting.RED);
+				alumite.addTrait(Global.global);
+				alumite.addItem("ingotAlumite", 1, Material.VALUE_Ingot);
+				alumite.setCraftable(false).setCastable(true);
+				proxy.setRenderInfo(alumite, 0xFFE0F1);
+				
+				FluidMolten alumiteFluid = Utils.fluidMetal("alumite", 0xFFE0F1);
+				alumiteFluid.setTemperature(890);
+				Utils.initFluidMetal(alumiteFluid);
+				alumite.setFluid(alumiteFluid);
+				TinkerRegistry.registerAlloy(new FluidStack(alumiteFluid, 3),
+						new FluidStack(TinkerFluids.aluminum, 5),
+						new FluidStack(TinkerFluids.iron, 2),
+						new FluidStack(TinkerFluids.obsidian, 2));
+				
+				TinkerRegistry.addMaterialStats(alumite,
+						new HeadMaterialStats(700, 6.8f, 5.5f, COBALT),
+						new HandleMaterialStats(1.10f, 70),
+						new ExtraMaterialStats(80),
+						new BowMaterialStats(0.65f, 1.6f, 7f));
+				
+				materials.put("alumite", alumite);
+			}
 		}
 		
 		if (config.bop && Loader.isModLoaded("BiomesOPlenty")) {
@@ -111,6 +157,7 @@ public class PlusTiC {
 	        
 	        Material amber = new Material("amber",TextFormatting.GOLD);
 	        amber.addTrait(shocking);
+	        amber.addTrait(Thundering.thundering, PROJECTILE);
 	        amber.addItem("gemAmber", 1, Material.VALUE_Ingot);
 	        amber.setCraftable(true);
 	        proxy.setRenderInfo(amber,0xFFD000);
@@ -118,6 +165,7 @@ public class PlusTiC {
 	        TinkerRegistry.addMaterialStats(amber, new HandleMaterialStats(1, 30));
 	        TinkerRegistry.addMaterialStats(amber, new ExtraMaterialStats(100));
 	        TinkerRegistry.addMaterialStats(amber, justWhy);
+	        TinkerRegistry.addMaterialStats(amber, new ArrowShaftMaterialStats(1, 5));
 	        materials.put("amber", amber);
 	        
 	        Material topaz = new Material("topaz",TextFormatting.GOLD);
@@ -322,6 +370,7 @@ public class PlusTiC {
 	        TinkerRegistry.addMaterialStats(titanium, new HandleMaterialStats(1.4f, 0));
 	        TinkerRegistry.addMaterialStats(titanium, new ExtraMaterialStats(40));
 	        TinkerRegistry.addMaterialStats(titanium, new BowMaterialStats(1.15f, 1.3f, 6.6f));
+	        TinkerRegistry.addMaterialStats(titanium, new FletchingMaterialStats(1.0f, 1.3f));
 	        
 	        materials.put("titanium", titanium);
 	        

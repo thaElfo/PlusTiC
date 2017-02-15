@@ -7,7 +7,7 @@ package landmaster.plustic.proxy;
 
 
 import javax.annotation.*;
-import landmaster.plustic.PlusTiC;
+import landmaster.plustic.*;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.block.model.*;
 import net.minecraft.client.renderer.block.statemap.*;

@@ -13,4 +13,8 @@ item.osmiridiumingot.name=Osmiridium Ingot
 item.osmiridiumnugget.name=Osmiridium Nugget
 item.bronzenugget.name=Bronze Nugget
 item.bronzeingot.name=Bronze Ingot
+item.alumitenugget.name=Alumite Nugget
+item.alumiteingot.name=Alumite Ingot
 tile.osmiridiumblock.name=Osmiridium Block
+tile.alumiteblock.name=Alumite Block
+msg.plustic.globalmodifier.set=Position: [x=%d, y=%d, z=%d]

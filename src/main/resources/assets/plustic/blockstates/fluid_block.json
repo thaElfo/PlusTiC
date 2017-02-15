@@ -27,6 +27,9 @@
         }],
         "titanium": [{
         	"custom": { "fluid": "titanium" }
+        }],
+        "alumite": [{
+        	"custom": { "fluid": "alumite" }
         }]
     }
 }

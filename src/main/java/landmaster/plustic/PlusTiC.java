@@ -431,6 +431,9 @@ public class PlusTiC {
 		Block osmiridiumBlock = Block.REGISTRY.getObject(new ResourceLocation(MODID, "osmiridiumblock"));
 		Item osmiridiumIngot = Item.REGISTRY.getObject(new ResourceLocation(MODID, "osmiridiumingot"));
 		Item osmiridiumNugget = Item.REGISTRY.getObject(new ResourceLocation(MODID, "osmiridiumnugget"));
+		Block alumiteBlock = Block.REGISTRY.getObject(new ResourceLocation(MODID, "alumiteblock"));
+		Item alumiteIngot = Item.REGISTRY.getObject(new ResourceLocation(MODID, "alumiteingot"));
+		Item alumiteNugget = Item.REGISTRY.getObject(new ResourceLocation(MODID, "alumitenugget"));
 		if (bronzeNugget != null) {
 			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(bronzeIngot),
 					"III", "III", "III",
@@ -446,6 +449,16 @@ public class PlusTiC {
 					"III", "III", "III",
 					'I', "nuggetOsmiridium"));
 			GameRegistry.addShapelessRecipe(new ItemStack(osmiridiumNugget, 9), osmiridiumIngot);
+		}
+		if (alumiteNugget != null) {
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(alumiteBlock),
+					"III", "III", "III",
+					'I', "ingotAlumite"));
+			GameRegistry.addShapelessRecipe(new ItemStack(alumiteIngot, 9), alumiteBlock);
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(alumiteIngot),
+					"III", "III", "III",
+					'I', "nuggetAlumite"));
+			GameRegistry.addShapelessRecipe(new ItemStack(alumiteNugget, 9), alumiteIngot);
 		}
 	}
 }

@@ -1,6 +1,7 @@
 package landmaster.plustic.traits;
 
 import java.util.*;
+import net.minecraft.client.resources.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.item.*;
 import net.minecraft.entity.player.*;
@@ -15,6 +16,7 @@ import net.minecraftforge.common.*;
 import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.player.*;
 import net.minecraftforge.event.world.*;
+import net.minecraftforge.fml.common.*;
 import net.minecraftforge.fml.common.eventhandler.*;
 import net.minecraftforge.items.*;
 import slimeknights.tconstruct.library.traits.*;
@@ -123,6 +125,19 @@ public class Global extends AbstractTrait {
 						event.getPos().getY(),
 						event.getPos().getZ(),
 						event.getWorld().provider.getDimension()));
+	}
+	@SubscribeEvent
+	public void tooltip(ItemTooltipEvent event) {
+		NBTTagCompound nbt = TagUtil.getTagSafe(event.getItemStack());
+		if (event.isCanceled()
+				|| event.getItemStack() == null
+				|| !FMLCommonHandler.instance().getSide().isClient()
+				|| !TinkerUtil.hasTrait(nbt, getIdentifier())) return;
+		event.getToolTip().add(I18n.format("tooltip.plustic.globalmodifier.info",
+				nbt.getInteger("x"),
+				nbt.getInteger("y"),
+				nbt.getInteger("z"),
+				nbt.getInteger("dim")));
 	}
 	private ItemStack getWeapon(DamageSource source) {
 		if (source instanceof EntityDamageSource) {

@@ -128,16 +128,19 @@ public class Global extends AbstractTrait {
 	}
 	@SubscribeEvent
 	public void tooltip(ItemTooltipEvent event) {
-		NBTTagCompound nbt = TagUtil.getTagSafe(event.getItemStack());
+		NBTTagCompound nbt0 = TagUtil.getTagSafe(event.getItemStack());
 		if (event.isCanceled()
 				|| event.getItemStack() == null
 				|| !FMLCommonHandler.instance().getSide().isClient()
-				|| !TinkerUtil.hasTrait(nbt, getIdentifier())) return;
-		event.getToolTip().add(I18n.format("tooltip.plustic.globalmodifier.info",
-				nbt.getInteger("x"),
-				nbt.getInteger("y"),
-				nbt.getInteger("z"),
-				nbt.getInteger("dim")));
+				|| !TinkerUtil.hasTrait(nbt0, getIdentifier())) return;
+		if (nbt0.hasKey("global", 10)) {
+			NBTTagCompound nbt = nbt0.getCompoundTag("global");
+			event.getToolTip().add(I18n.format("tooltip.plustic.globalmodifier.info",
+					nbt.getInteger("x"),
+					nbt.getInteger("y"),
+					nbt.getInteger("z"),
+					nbt.getInteger("dim")));
+		}
 	}
 	private ItemStack getWeapon(DamageSource source) {
 		if (source instanceof EntityDamageSource) {

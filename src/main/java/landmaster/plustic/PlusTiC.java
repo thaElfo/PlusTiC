@@ -34,7 +34,7 @@ import static slimeknights.tconstruct.tools.TinkerTraits.*;
 @Mod(modid = PlusTiC.MODID, name = "PlusTiC", version = PlusTiC.VERSION, dependencies = "required-after:mantle;required-after:tconstruct;after:Mekanism;after:BiomesOPlenty;after:Botania;after:advancedRocketry")
 public class PlusTiC {
 	public static final String MODID = "plustic";
-	public static final String VERSION = "1.3";
+	public static final String VERSION = "2.0";
 	
 	public static Config config;
 	
@@ -144,7 +144,7 @@ public class PlusTiC {
 	        TinkerRegistry.addMaterialStats(peridot, new BowMaterialStats(1.4f,1.4f,4));
 	        materials.put("peridot", peridot);
 	        
-	        Material malachite = new Material("malachite",TextFormatting.DARK_GREEN);
+	        Material malachite = new Material("malachite_gem",TextFormatting.DARK_GREEN);
 	        malachite.addTrait(NaturesWrath.natureswrath);
 	        malachite.addItem("gemMalachite", 1, Material.VALUE_Ingot);
 	        malachite.setCraftable(true);
@@ -158,6 +158,7 @@ public class PlusTiC {
 	        Material amber = new Material("amber",TextFormatting.GOLD);
 	        amber.addTrait(shocking);
 	        amber.addTrait(Thundering.thundering, PROJECTILE);
+	        amber.addTrait(Thundering.thundering, SHAFT);
 	        amber.addItem("gemAmber", 1, Material.VALUE_Ingot);
 	        amber.setCraftable(true);
 	        proxy.setRenderInfo(amber,0xFFD000);
@@ -418,6 +419,16 @@ public class PlusTiC {
 	        	
 	        	materials.put("osmiridium", osmiridium);
 	        }
+		}
+		
+		if (config.armorPlus && Loader.isModLoaded("armorplus")) {
+			Material witherBone = new Material("witherbone", TextFormatting.BLACK);
+			witherBone.addTrait(Apocalypse.apocalypse);
+			witherBone.addItem("witherBone", 1, Material.VALUE_Ingot);
+			witherBone.setCraftable(true);
+			proxy.setRenderInfo(witherBone, 0x000000);
+			TinkerRegistry.addMaterialStats(witherBone, new ArrowShaftMaterialStats(1.0f, 20));
+			materials.put("witherbone", witherBone);
 		}
 		
 	    

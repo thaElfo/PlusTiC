@@ -1,7 +1,7 @@
 material.sapphire.name=Sapphire
 material.ruby.name=Ruby
 material.peridot.name=Peridot
-material.malachite.name=Malachite
+material.malachite_gem.name=Malachite
 material.amber.name=Amber
 material.topaz.name=Topaz
 material.tanzanite.name=Tanzanite
@@ -16,6 +16,7 @@ material.osmiridium.name=Osmiridium
 material.titanium.name=Titanium
 material.tnt.name=TNT
 material.alumite.name=Alumite
+material.witherbone.name=Wither Bone
 
 modifier.bloodymary.name=Bloody Mary
 modifier.bloodymary.desc=§oBrought to you by the legendary Queen of England...§r\nDeals bonus damage depending on the amount of health already lost by the target. Also, a chance to drop a Coagulated Blood for each hit.

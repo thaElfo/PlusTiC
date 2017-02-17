@@ -9,6 +9,7 @@ public class Config extends Configuration {
 	public boolean mekanism;
 	public boolean botania;
 	public boolean advancedRocketry;
+	public boolean armorPlus;
 	
 	public Config(FMLPreInitializationEvent event) {
 		super(event.getSuggestedConfigurationFile());
@@ -20,6 +21,7 @@ public class Config extends Configuration {
 		mekanism = getBoolean("Enable Mekanism integration", "modules", true, "Integrate with Mekanism");
 		botania = getBoolean("Enable Botania integration", "modules", true, "Integrate with Botania");
 		advancedRocketry = getBoolean("Enable Advanced Rocketry integration", "modules", true, "Integrate with Advanced Rocketry");
+		armorPlus = getBoolean("Enable ArmorPlus integration", "modules", true, "Integrate with ArmorPlus");
 		if (hasChanged()) save();
 	}
 }

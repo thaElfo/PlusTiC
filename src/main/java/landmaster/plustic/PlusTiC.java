@@ -27,14 +27,10 @@ import static slimeknights.tconstruct.library.materials.MaterialTypes.*;
 import static slimeknights.tconstruct.library.utils.HarvestLevels.*;
 import static slimeknights.tconstruct.tools.TinkerTraits.*;
 
-/**
- * 
- * @author Landmaster
- */
-@Mod(modid = PlusTiC.MODID, name = "PlusTiC", version = PlusTiC.VERSION, dependencies = "required-after:mantle;required-after:tconstruct;after:Mekanism;after:BiomesOPlenty;after:Botania;after:advancedRocketry")
+@Mod(modid = PlusTiC.MODID, name = "PlusTiC", version = PlusTiC.VERSION, dependencies = "required-after:mantle;required-after:tconstruct;after:Mekanism;after:BiomesOPlenty;after:Botania;after:advancedRocketry;after:armorplus")
 public class PlusTiC {
 	public static final String MODID = "plustic";
-	public static final String VERSION = "2.0";
+	public static final String VERSION = "2.1";
 	
 	public static Config config;
 	
@@ -429,6 +425,18 @@ public class PlusTiC {
 			proxy.setRenderInfo(witherBone, 0x000000);
 			TinkerRegistry.addMaterialStats(witherBone, new ArrowShaftMaterialStats(1.0f, 20));
 			materials.put("witherbone", witherBone);
+			
+			Material guardianScale = new Material("guardianscale", TextFormatting.AQUA);
+			guardianScale.addTrait(DivineShield.divineShield, HEAD);
+			guardianScale.addTrait(aquadynamic);
+			guardianScale.addItem("scaleGuardian", 1, Material.VALUE_Ingot);
+			guardianScale.setCraftable(true);
+			proxy.setRenderInfo(guardianScale, 0x00FFFF);
+			TinkerRegistry.addMaterialStats(guardianScale, new HeadMaterialStats(600, 6.2f, 7, COBALT));
+			TinkerRegistry.addMaterialStats(guardianScale, new HandleMaterialStats(0.9f, 40));
+			TinkerRegistry.addMaterialStats(guardianScale, new ExtraMaterialStats(80));
+			TinkerRegistry.addMaterialStats(guardianScale, new BowMaterialStats(0.85f, 1.2f, 5.5f));
+			materials.put("guardianscale", guardianScale);
 		}
 		
 	    

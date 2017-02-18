@@ -17,6 +17,7 @@ material.titanium.name=Titanium
 material.tnt.name=TNT
 material.alumite.name=Alumite
 material.witherbone.name=Wither Bone
+material.guardianscale.name=Guardian Scale
 
 modifier.bloodymary.name=Bloody Mary
 modifier.bloodymary.desc=§oBrought to you by the legendary Queen of England...§r\nDeals bonus damage depending on the amount of health already lost by the target. Also, a chance to drop a Coagulated Blood for each hit.
@@ -47,3 +48,5 @@ modifier.global.name=Global Traveler
 modifier.global.desc=§oAround the world... and back§r\nRight-click a block in order for items from broken blocks and killed entities to get transported in there if it is an inventory.
 modifier.thundering.name=Thundering
 modifier.thundering.desc=§oRise, Thor!§r\nSummon a thunderbolt on impact.
+modifier.divineshield.name=Divine Shield
+modifier.divineshield.desc=§oOf the guardians, by the guardians, and for the guardians§r\nWhile this tool is in your hand, you are granted fire resistance. Also, damage is reduced, but at a durability cost.

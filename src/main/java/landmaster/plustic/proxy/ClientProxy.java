@@ -1,10 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package landmaster.plustic.proxy;
-
 
 import javax.annotation.*;
 import landmaster.plustic.*;
@@ -19,10 +13,6 @@ import net.minecraftforge.fluids.*;
 import net.minecraftforge.client.model.*;
 import slimeknights.tconstruct.library.materials.*;
 
-/**
- * 
- * @author Landmaster
- */
 public class ClientProxy extends CommonProxy {
     @Override
     public void registerItemRenderer(Item item, int meta, String id) {

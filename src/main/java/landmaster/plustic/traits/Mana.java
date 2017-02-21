@@ -26,7 +26,7 @@ public class Mana extends AbstractTrait {
 			List<ItemStack[]> ivs = Arrays.asList(ep.inventory.mainInventory,ep.inventory.armorInventory,ep.inventory.offHandInventory);
 			for (ItemStack[] iv: ivs) {
 				for (int i=0; i<iv.length; ++i) {
-					if (ManaItemHandler.requestManaExact(iv[i], ep, 100, true)) {
+					if (ManaItemHandler.requestManaExactForTool(iv[i], ep, 100, true)) {
 						ep.inventory.markDirty();
 						ToolHelper.healTool(tool, 1, ep);
 						return;
@@ -38,7 +38,7 @@ public class Mana extends AbstractTrait {
 				ItemStack is = ib.getStackInSlot(i);
 				if (is == null) continue;
 				is = is.copy();
-				if (ManaItemHandler.requestManaExact(is, ep, 100, true)) {
+				if (ManaItemHandler.requestManaExactForTool(is, ep, 100, true)) {
 					ToolHelper.healTool(tool, 1, ep);
 					ib.setStackInSlot(i, is);
 					return;
@@ -55,7 +55,7 @@ public class Mana extends AbstractTrait {
 			List<ItemStack[]> ivs = Arrays.asList(ep.inventory.mainInventory,ep.inventory.armorInventory,ep.inventory.offHandInventory);
 			for (ItemStack[] iv: ivs) {
 				for (int i=0; i<iv.length; ++i) {
-					if (ManaItemHandler.requestManaExact(iv[i], ep, 100, true)) {
+					if (ManaItemHandler.requestManaExactForTool(iv[i], ep, 100, true)) {
 						ep.inventory.markDirty();
 						if (--newDamage <= 0) break manadraw;
 					}
@@ -66,7 +66,7 @@ public class Mana extends AbstractTrait {
 				ItemStack is = ib.getStackInSlot(i);
 				if (is == null) continue;
 				is = is.copy();
-				if (ManaItemHandler.requestManaExact(is, ep, 100, true)) {
+				if (ManaItemHandler.requestManaExactForTool(is, ep, 100, true)) {
 					ib.setStackInSlot(i, is);
 					if (--newDamage <= 0) break manadraw;
 				}

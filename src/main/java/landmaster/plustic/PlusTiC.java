@@ -30,7 +30,7 @@ import static slimeknights.tconstruct.tools.TinkerTraits.*;
 @Mod(modid = PlusTiC.MODID, name = "PlusTiC", version = PlusTiC.VERSION, dependencies = "required-after:mantle;required-after:tconstruct;after:Mekanism;after:BiomesOPlenty;after:Botania;after:advancedRocketry;after:armorplus")
 public class PlusTiC {
 	public static final String MODID = "plustic";
-	public static final String VERSION = "2.1";
+	public static final String VERSION = "2.2";
 	
 	public static Config config;
 	
@@ -54,6 +54,7 @@ public class PlusTiC {
 			Material tnt = new Material("tnt",TextFormatting.RED);
 			tnt.addTrait(Explosive.explosive);
 			tnt.addItem(Blocks.TNT, Material.VALUE_Ingot);
+			tnt.setRepresentativeItem(Blocks.TNT);
 			tnt.setCraftable(true);
 			proxy.setRenderInfo(tnt, 0xFF4F4F);
 			TinkerRegistry.addMaterialStats(tnt, new ArrowShaftMaterialStats(0.95f, 0));
@@ -84,6 +85,7 @@ public class PlusTiC {
 				alumite.addTrait(Global.global);
 				alumite.addItem("ingotAlumite", 1, Material.VALUE_Ingot);
 				alumite.setCraftable(false).setCastable(true);
+				alumite.setRepresentativeItem(alumiteIngot);
 				proxy.setRenderInfo(alumite, 0xFFE0F1);
 				
 				FluidMolten alumiteFluid = Utils.fluidMetal("alumite", 0xFFE0F1);
@@ -110,6 +112,7 @@ public class PlusTiC {
 	        sapphire.addTrait(aquadynamic);
 	        sapphire.addItem("gemSapphire", 1, Material.VALUE_Ingot);
 	        sapphire.setCraftable(true);
+	        Utils.setDispItem(sapphire, "biomesoplenty", "gem", 6);
 	        proxy.setRenderInfo(sapphire,0x0000FF);
 	        TinkerRegistry.addMaterialStats(sapphire, new HeadMaterialStats(700, 5, 6.4f, COBALT));
 	        TinkerRegistry.addMaterialStats(sapphire, new HandleMaterialStats(1, 100));
@@ -122,6 +125,7 @@ public class PlusTiC {
 	        ruby.addTrait(sharp,HEAD);
 	        ruby.addItem("gemRuby", 1, Material.VALUE_Ingot);
 	        ruby.setCraftable(true);
+	        Utils.setDispItem(ruby, "biomesoplenty", "gem", 1);
 	        proxy.setRenderInfo(ruby,0xFF0000);
 	        TinkerRegistry.addMaterialStats(ruby, new HeadMaterialStats(660, 4.6f, 6.4f, COBALT));
 	        TinkerRegistry.addMaterialStats(ruby, new HandleMaterialStats(1.2f, 0));
@@ -133,6 +137,7 @@ public class PlusTiC {
 	        peridot.addTrait(NaturesBlessing.naturesblessing);
 	        peridot.addItem("gemPeridot", 1, Material.VALUE_Ingot);
 	        peridot.setCraftable(true);
+	        Utils.setDispItem(peridot, "biomesoplenty", "gem", 2);
 	        proxy.setRenderInfo(peridot,0xBEFA5C);
 	        TinkerRegistry.addMaterialStats(peridot, new HeadMaterialStats(640, 4.0f, 6.1f, COBALT));
 	        TinkerRegistry.addMaterialStats(peridot, new HandleMaterialStats(1.3f, -30));
@@ -144,6 +149,7 @@ public class PlusTiC {
 	        malachite.addTrait(NaturesWrath.natureswrath);
 	        malachite.addItem("gemMalachite", 1, Material.VALUE_Ingot);
 	        malachite.setCraftable(true);
+	        Utils.setDispItem(malachite, "biomesoplenty", "gem", 5);
 	        proxy.setRenderInfo(malachite,0x007523);
 	        TinkerRegistry.addMaterialStats(malachite, new HeadMaterialStats(640, 3.0f, 6.1f, COBALT));
 	        TinkerRegistry.addMaterialStats(malachite, new HandleMaterialStats(1.3f, -30));
@@ -157,6 +163,7 @@ public class PlusTiC {
 	        amber.addTrait(Thundering.thundering, SHAFT);
 	        amber.addItem("gemAmber", 1, Material.VALUE_Ingot);
 	        amber.setCraftable(true);
+	        Utils.setDispItem(amber, "biomesoplenty", "gem", 7);
 	        proxy.setRenderInfo(amber,0xFFD000);
 	        TinkerRegistry.addMaterialStats(amber, new HeadMaterialStats(730, 4.6f, 5.7f, COBALT));
 	        TinkerRegistry.addMaterialStats(amber, new HandleMaterialStats(1, 30));
@@ -169,6 +176,7 @@ public class PlusTiC {
 	        topaz.addTrait(NaturesPower.naturespower);
 	        topaz.addItem("gemTopaz", 1, Material.VALUE_Ingot);
 	        topaz.setCraftable(true);
+	        Utils.setDispItem(topaz, "biomesoplenty", "gem", 3);
 	        proxy.setRenderInfo(topaz,0xFFFF00);
 	        TinkerRegistry.addMaterialStats(topaz, new HeadMaterialStats(690, 6, 6, COBALT));
 	        TinkerRegistry.addMaterialStats(topaz, new HandleMaterialStats(0.8f, 70));
@@ -180,6 +188,7 @@ public class PlusTiC {
 	        tanzanite.addTrait(freezing);
 	        tanzanite.addItem("gemTanzanite", 1, Material.VALUE_Ingot);
 	        tanzanite.setCraftable(true);
+	        Utils.setDispItem(tanzanite, "biomesoplenty", "gem", 4);
 	        proxy.setRenderInfo(tanzanite,0x6200FF);
 	        TinkerRegistry.addMaterialStats(tanzanite, new HeadMaterialStats(650, 3, 7, COBALT));
 	        TinkerRegistry.addMaterialStats(tanzanite, new HandleMaterialStats(0.7f, 0));
@@ -189,8 +198,11 @@ public class PlusTiC {
 	        
 	        Material amethyst = new Material("amethyst",TextFormatting.LIGHT_PURPLE);
 	        amethyst.addTrait(Apocalypse.apocalypse);
-	        amethyst.addItem("gemAmethyst", 1, Material.VALUE_Ingot);
+	        amethyst.addItem(
+	        		Item.REGISTRY.getObject(new ResourceLocation("biomesoplenty", "gem")),
+	        		1, Material.VALUE_Ingot);
 	        amethyst.setCraftable(true);
+	        Utils.setDispItem(amethyst, "biomesoplenty", "gem");
 	        proxy.setRenderInfo(amethyst,0xFF00FF);
 	        TinkerRegistry.addMaterialStats(amethyst, new HeadMaterialStats(1200, 6, 10, COBALT));
 	        TinkerRegistry.addMaterialStats(amethyst, new HandleMaterialStats(1.6f, 100));
@@ -277,6 +289,7 @@ public class PlusTiC {
 	        terrasteel.addTrait(Terrafirma.terrafirma[1],HEAD);
 	        terrasteel.addItem("ingotTerrasteel", 1, Material.VALUE_Ingot);
 	        terrasteel.setCraftable(false).setCastable(true);
+	        Utils.setDispItem(terrasteel, "botania", "manaResource", 4);
 	        proxy.setRenderInfo(terrasteel, 0x00FF00);
 	        
 	        FluidMolten terrasteelFluid = Utils.fluidMetal("terrasteel", 0x00FF00);
@@ -296,6 +309,7 @@ public class PlusTiC {
 	        elementium.addTrait(Elemental.elemental,HEAD);
 	        elementium.addItem("ingotElvenElementium", 1, Material.VALUE_Ingot);
 	        elementium.setCraftable(false).setCastable(true);
+	        Utils.setDispItem(elementium, "botania", "manaResource", 7);
 	        proxy.setRenderInfo(elementium, 0xF66AFD);
 	        
 	        FluidMolten elementiumFluid = Utils.fluidMetal("elementium", 0xF66AFD);
@@ -315,6 +329,7 @@ public class PlusTiC {
 	        manasteel.addTrait(Mana.mana);
 	        manasteel.addItem("ingotManasteel", 1, Material.VALUE_Ingot);
 	        manasteel.setCraftable(false).setCastable(true);
+	        Utils.setDispItem(manasteel, "botania", "manaResource");
 	        proxy.setRenderInfo(manasteel, 0x54E5FF);
 	        
 	        FluidMolten manasteelFluid = Utils.fluidMetal("manasteel", 0x54E5FF);
@@ -337,6 +352,7 @@ public class PlusTiC {
 			iridium.addTrait(alien, HEAD);
 			iridium.addItem("ingotIridium", 1, Material.VALUE_Ingot);
 			iridium.setCraftable(false).setCastable(true);
+			Utils.setDispItem(iridium, "libvulpes", "productingot", 10);
 			proxy.setRenderInfo(iridium, 0xE5E5E5);
 			
 			FluidMolten iridiumFluid = Utils.fluidMetal("iridium", 0xE5E5E5);
@@ -356,6 +372,7 @@ public class PlusTiC {
 	        titanium.addTrait(Anticorrosion.anticorrosion, HEAD);
 	        titanium.addItem("ingotTitanium", 1, Material.VALUE_Ingot);
 	        titanium.setCraftable(false).setCastable(true);
+	        Utils.setDispItem(titanium, "libvulpes", "productingot", 7);
 	        proxy.setRenderInfo(titanium, 0xDCE1EA);
 	        
 	        FluidMolten titaniumFluid = Utils.fluidMetal("titanium", 0xDCE1EA);
@@ -398,6 +415,7 @@ public class PlusTiC {
 	        	osmiridium.addTrait(Anticorrosion.anticorrosion, HEAD);
 	        	osmiridium.addItem("ingotOsmiridium", 1, Material.VALUE_Ingot);
 	        	osmiridium.setCraftable(false).setCastable(true);
+	        	osmiridium.setRepresentativeItem(osmiridiumIngot);
 	        	proxy.setRenderInfo(osmiridium, 0x666DFF);
 	        	
 	        	FluidMolten osmiridiumFluid = Utils.fluidMetal("osmiridium", 0x666DFF);
@@ -445,6 +463,12 @@ public class PlusTiC {
 	
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
+		// CURSE YOU, MEKANISM AND ARMORPLUS! YOU REGISTERED THE OREDICTS IN INIT INSTEAD OF PREINIT!
+		Utils.setDispItem(materials.get("refinedObsidian"), "mekanism", "Ingot");
+		Utils.setDispItem(materials.get("osmium"), "mekanism", "Ingot", 1);
+		Utils.setDispItem(materials.get("witherbone"), "armorplus", "wither_bone");
+		Utils.setDispItem(materials.get("guardianscale"), "armorplus", "guardian_scale");
+		
 		Item bronzeNugget = Item.REGISTRY.getObject(new ResourceLocation(MODID, "bronzenugget"));
 		Item bronzeIngot = Item.REGISTRY.getObject(new ResourceLocation(MODID, "bronzeingot"));
 		Block osmiridiumBlock = Block.REGISTRY.getObject(new ResourceLocation(MODID, "osmiridiumblock"));

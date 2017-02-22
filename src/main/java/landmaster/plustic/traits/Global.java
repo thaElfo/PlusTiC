@@ -19,6 +19,7 @@ import net.minecraftforge.event.world.*;
 import net.minecraftforge.fml.common.*;
 import net.minecraftforge.fml.common.eventhandler.*;
 import net.minecraftforge.items.*;
+import slimeknights.tconstruct.library.tools.*;
 import slimeknights.tconstruct.library.traits.*;
 import slimeknights.tconstruct.library.utils.*;
 
@@ -29,9 +30,15 @@ public class Global extends AbstractTrait {
 		super("global", 0xFFE0F1);
 		MinecraftForge.EVENT_BUS.register(this);
 	}
-	@Override
-	public void blockHarvestDrops(ItemStack tool, BlockEvent.HarvestDropsEvent event) {
-		if (event.getWorld().isRemote) return;
+	@SubscribeEvent(priority = EventPriority.LOWEST)
+	public void blockDrops(BlockEvent.HarvestDropsEvent event) {
+		if (event.getWorld().isRemote
+				|| event.getHarvester() == null) return;
+		ItemStack tool = DualToolHarvestUtils.getItemstackToUse(event.getHarvester(), event.getState());
+		if (!TinkerUtil.hasTrait(TagUtil.getTagSafe(tool), getIdentifier())) return;
+		__blockHarvestDrops(tool, event);
+	}
+	private void __blockHarvestDrops(ItemStack tool, BlockEvent.HarvestDropsEvent event) {
 		NBTTagCompound nbt0 = TagUtil.getTagSafe(tool);
 		if (nbt0.hasKey("global", 10) && ToolHelper.isToolEffective2(tool, event.getState())) {
 			NBTTagCompound nbt = nbt0.getCompoundTag("global");
@@ -60,11 +67,12 @@ public class Global extends AbstractTrait {
 					}
 				}
 			}
+			te.markDirty();
 		}
 	}
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void dropEvent(LivingDropsEvent event) {
-		World world0 = event.getEntityLiving().worldObj;
+		World world0 = event.getEntity().worldObj;
 		if (world0.isRemote
 				|| event.getEntityLiving().getHealth() > 0) return;
 		ItemStack weapon = getWeapon(event.getSource());
@@ -98,6 +106,7 @@ public class Global extends AbstractTrait {
 						}
 					}
 				}
+				te.markDirty();
 			}
 		}
 	}
@@ -106,6 +115,7 @@ public class Global extends AbstractTrait {
 		NBTTagCompound nbt = TagUtil.getTagSafe(event.getItemStack());
 		if (event.getWorld().isRemote
 				|| event.isCanceled()
+				|| !event.getEntityPlayer().isSneaking()
 				|| event.getItemStack() == null
 				|| event.getFace() == null
 				|| event.getWorld().getTileEntity(event.getPos()) == null

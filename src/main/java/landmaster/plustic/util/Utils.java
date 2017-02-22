@@ -3,6 +3,7 @@ package landmaster.plustic.util;
 import java.util.*;
 import net.minecraft.block.*;
 import net.minecraft.item.*;
+import net.minecraft.util.*;
 import net.minecraftforge.fluids.*;
 import net.minecraftforge.fml.common.registry.*;
 import org.apache.commons.lang3.StringUtils;
@@ -53,5 +54,13 @@ public class Utils {
 	public static BlockMolten registerMoltenBlock(Fluid fluid) {
 		BlockMolten block = new BlockMolten(fluid);
 		return registerBlock(block, "molten_" + fluid.getName());
+	}
+	
+	public static void setDispItem(Material mat, String modid, String name) {
+		mat.setRepresentativeItem(Item.REGISTRY.getObject(new ResourceLocation(modid, name)));
+	}
+	public static void setDispItem(Material mat, String modid, String name, int meta) {
+		ItemStack is = new ItemStack(Item.REGISTRY.getObject(new ResourceLocation(modid, name)), 1, meta);
+		mat.setRepresentativeItem(is);
 	}
 }

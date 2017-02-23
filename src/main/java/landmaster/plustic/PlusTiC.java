@@ -30,7 +30,7 @@ import static slimeknights.tconstruct.tools.TinkerTraits.*;
 @Mod(modid = PlusTiC.MODID, name = "PlusTiC", version = PlusTiC.VERSION, dependencies = "required-after:mantle;required-after:tconstruct;after:Mekanism;after:BiomesOPlenty;after:Botania;after:advancedRocketry;after:armorplus")
 public class PlusTiC {
 	public static final String MODID = "plustic";
-	public static final String VERSION = "2.2";
+	public static final String VERSION = "2.2a";
 	
 	public static Config config;
 	

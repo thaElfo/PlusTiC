@@ -57,9 +57,11 @@ public class Utils {
 	}
 	
 	public static void setDispItem(Material mat, String modid, String name) {
+		if (mat == null) return;
 		mat.setRepresentativeItem(Item.REGISTRY.getObject(new ResourceLocation(modid, name)));
 	}
 	public static void setDispItem(Material mat, String modid, String name, int meta) {
+		if (mat == null) return;
 		ItemStack is = new ItemStack(Item.REGISTRY.getObject(new ResourceLocation(modid, name)), 1, meta);
 		mat.setRepresentativeItem(is);
 	}

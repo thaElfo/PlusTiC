@@ -118,9 +118,11 @@ public class Global extends AbstractTrait {
 				|| !event.getEntityPlayer().isSneaking()
 				|| event.getItemStack() == null
 				|| event.getFace() == null
-				|| event.getWorld().getTileEntity(event.getPos()) == null
 				|| !TinkerUtil.hasTrait(nbt, getIdentifier()))
 			return;
+		TileEntity te = event.getWorld().getTileEntity(event.getPos());
+		if (te == null || te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY,
+				event.getFace()) == null) return;
 		NBTTagCompound global = new NBTTagCompound();
 		global.setInteger("x", event.getPos().getX());
 		global.setInteger("y", event.getPos().getY());

@@ -1,16 +1,20 @@
 package landmaster.plustic.proxy;
 
+import java.util.*;
 import javax.annotation.*;
 import landmaster.plustic.*;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.block.model.*;
 import net.minecraft.client.renderer.block.statemap.*;
+import net.minecraft.client.settings.*;
 import net.minecraft.block.*;
 import net.minecraft.block.state.*;
 import net.minecraft.item.*;
 import net.minecraft.util.*;
 import net.minecraftforge.fluids.*;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.client.model.*;
+import org.lwjgl.input.*;
 import slimeknights.tconstruct.library.materials.*;
 
 public class ClientProxy extends CommonProxy {
@@ -37,6 +41,13 @@ public class ClientProxy extends CommonProxy {
 			}
 			ModelLoader.setCustomStateMapper(block, mapper);
     	}
+    }
+    
+    @Override
+    public void registerKeyBindings() {
+    	keyBindings = Arrays.asList(
+    			new KeyBinding("key.plustic_release_entity.desc", Keyboard.KEY_0, "key.categories.plustic"));
+    	for (KeyBinding kb: keyBindings) ClientRegistry.registerKeyBinding(kb);
     }
     
     public static class FluidStateMapper extends StateMapperBase implements ItemMeshDefinition {

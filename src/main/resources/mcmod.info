@@ -6,7 +6,7 @@
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "https://minecraft.curseforge.com/projects/plustic",
-  "updateUrl": "",
+  "updateUrl": "https://minecraft.curseforge.com/projects/plustic/files",
   "authorList": ["Landmaster (phuong0429)"],
   "credits": "",
   "logoFile": "assets/mcfmt/logo.png",

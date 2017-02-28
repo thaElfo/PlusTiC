@@ -30,6 +30,12 @@
         }],
         "alumite": [{
         	"custom": { "fluid": "alumite" }
+        }],
+        "coal": [{
+        	"custom": { "fluid": "coal" }
+        }],
+        "darksteel": [{
+        	"custom": { "fluid": "darksteel" }
         }]
     }
 }

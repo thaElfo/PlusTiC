@@ -1,15 +1,16 @@
 package landmaster.plustic.config;
 
 import net.minecraftforge.common.config.*;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.*;
 
 public class Config extends Configuration {
-	public boolean base;
-	public boolean bop;
-	public boolean mekanism;
-	public boolean botania;
-	public boolean advancedRocketry;
-	public boolean armorPlus;
+	public static boolean base;
+	public static boolean bop;
+	public static boolean mekanism;
+	public static boolean botania;
+	public static boolean advancedRocketry;
+	public static boolean armorPlus;
+	public static boolean enderIO;
 	
 	public Config(FMLPreInitializationEvent event) {
 		super(event.getSuggestedConfigurationFile());
@@ -22,6 +23,7 @@ public class Config extends Configuration {
 		botania = getBoolean("Enable Botania integration", "modules", true, "Integrate with Botania");
 		advancedRocketry = getBoolean("Enable Advanced Rocketry integration", "modules", true, "Integrate with Advanced Rocketry");
 		armorPlus = getBoolean("Enable ArmorPlus integration", "modules", true, "Integrate with ArmorPlus");
+		enderIO = getBoolean("Enable EnderIO integration", "modules", true, "Integrate with EnderIO");
 		if (hasChanged()) save();
 	}
 }

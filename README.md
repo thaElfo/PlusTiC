@@ -6,3 +6,4 @@ Minecraft mod for integrating various mods with Tinkers Construct
 - Botania by Vazkii
 - Advanced Rocketry by zmaster587
 - ArmorPlus by Moritz30
+- EnderIO by crazypants

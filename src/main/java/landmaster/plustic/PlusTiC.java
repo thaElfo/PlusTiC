@@ -5,6 +5,7 @@ import landmaster.plustic.block.*;
 import landmaster.plustic.proxy.*;
 import landmaster.plustic.config.*;
 import landmaster.plustic.fluids.*;
+import landmaster.plustic.net.*;
 import landmaster.plustic.util.*;
 import landmaster.plustic.traits.*;
 import net.minecraft.block.*;
@@ -21,16 +22,17 @@ import net.minecraftforge.fml.common.Mod.*;
 import slimeknights.tconstruct.*;
 import slimeknights.tconstruct.library.*;
 import slimeknights.tconstruct.library.materials.*;
+import slimeknights.tconstruct.library.smeltery.*;
 import slimeknights.tconstruct.shared.*;
 
 import static slimeknights.tconstruct.library.materials.MaterialTypes.*;
 import static slimeknights.tconstruct.library.utils.HarvestLevels.*;
 import static slimeknights.tconstruct.tools.TinkerTraits.*;
 
-@Mod(modid = PlusTiC.MODID, name = "PlusTiC", version = PlusTiC.VERSION, dependencies = "required-after:mantle;required-after:tconstruct;after:Mekanism;after:BiomesOPlenty;after:Botania;after:advancedRocketry;after:armorplus")
+@Mod(modid = PlusTiC.MODID, name = "PlusTiC", version = PlusTiC.VERSION, dependencies = "required-after:mantle;required-after:tconstruct;after:Mekanism;after:BiomesOPlenty;after:Botania;after:advancedRocketry;after:armorplus;after:EnderIO")
 public class PlusTiC {
 	public static final String MODID = "plustic";
-	public static final String VERSION = "2.2a";
+	public static final String VERSION = "3.0";
 	
 	public static Config config;
 	
@@ -50,7 +52,7 @@ public class PlusTiC {
 		
 		BowMaterialStats justWhy = new BowMaterialStats(0.2f, 0.4f, -1f);
 		
-		if (config.base) {
+		if (Config.base) {
 			Material tnt = new Material("tnt",TextFormatting.RED);
 			tnt.addTrait(Explosive.explosive);
 			tnt.addItem(Blocks.TNT, Material.VALUE_Ingot);
@@ -64,17 +66,20 @@ public class PlusTiC {
 				// alumite is back! (with some changes)
 				Item alumiteIngot = new Item().setUnlocalizedName("alumiteingot")
 						.setRegistryName("alumiteingot");
+				alumiteIngot.setCreativeTab(TinkerRegistry.tabGeneral);
 				GameRegistry.register(alumiteIngot);
 				OreDictionary.registerOre("ingotAlumite", alumiteIngot);
 				proxy.registerItemRenderer(alumiteIngot, 0, "alumiteingot");
 				
 				Item alumiteNugget = new Item().setUnlocalizedName("alumitenugget")
 						.setRegistryName("alumitenugget");
+				alumiteNugget.setCreativeTab(TinkerRegistry.tabGeneral);
 				GameRegistry.register(alumiteNugget);
 				OreDictionary.registerOre("nuggetAlumite", alumiteNugget);
 				proxy.registerItemRenderer(alumiteNugget, 0, "alumitenugget");
 				
 				Block alumiteBlock = new MetalBlock("alumiteblock");
+				alumiteBlock.setCreativeTab(TinkerRegistry.tabGeneral);
 				ItemBlock alumiteBlock_item = new ItemBlock(alumiteBlock);
 				GameRegistry.register(alumiteBlock);
 				GameRegistry.register(alumiteBlock_item, alumiteBlock.getRegistryName());
@@ -107,7 +112,7 @@ public class PlusTiC {
 			}
 		}
 		
-		if (config.bop && Loader.isModLoaded("BiomesOPlenty")) {
+		if (Config.bop && Loader.isModLoaded("BiomesOPlenty")) {
 	        Material sapphire = new Material("sapphire",TextFormatting.BLUE);
 	        sapphire.addTrait(aquadynamic);
 	        sapphire.addItem("gemSapphire", 1, Material.VALUE_Ingot);
@@ -212,25 +217,30 @@ public class PlusTiC {
 		}
 		
 		
-		if (config.mekanism && Loader.isModLoaded("Mekanism")) {
+		if (Config.mekanism && Loader.isModLoaded("Mekanism")) {
 			// ugly workaround for dusts not melting
 			Item tinDust = new Item().setUnlocalizedName("tindust").setRegistryName("tindust");
+			tinDust.setCreativeTab(TinkerRegistry.tabGeneral);
 			GameRegistry.register(tinDust);
 			OreDictionary.registerOre("dustTin", tinDust);
 			proxy.registerItemRenderer(tinDust, 0, "tindust");
 			Item osmiumDust = new Item().setUnlocalizedName("osmiumdust").setRegistryName("osmiumdust");
+			osmiumDust.setCreativeTab(TinkerRegistry.tabGeneral);
 			GameRegistry.register(osmiumDust);
 			OreDictionary.registerOre("dustOsmium", osmiumDust);
 			proxy.registerItemRenderer(osmiumDust, 0, "osmiumdust");
 			Item steelDust = new Item().setUnlocalizedName("steeldust").setRegistryName("steeldust");
+			steelDust.setCreativeTab(TinkerRegistry.tabGeneral);
 			GameRegistry.register(steelDust);
 			OreDictionary.registerOre("dustSteel", steelDust);
 			proxy.registerItemRenderer(steelDust, 0, "steeldust");
 			Item bronzeNugget = new Item().setUnlocalizedName("bronzenugget").setRegistryName("bronzenugget");
+			bronzeNugget.setCreativeTab(TinkerRegistry.tabGeneral);
 			GameRegistry.register(bronzeNugget);
 			OreDictionary.registerOre("nuggetBronze", bronzeNugget);
 			proxy.registerItemRenderer(bronzeNugget, 0, "bronzenugget");
 			Item bronzeIngot = new Item().setUnlocalizedName("bronzeingot").setRegistryName("bronzeingot");
+			bronzeIngot.setCreativeTab(TinkerRegistry.tabGeneral);
 			GameRegistry.register(bronzeIngot);
 			OreDictionary.registerOre("ingotBronze", bronzeIngot);
 			proxy.registerItemRenderer(bronzeIngot, 0, "bronzeingot");
@@ -282,7 +292,7 @@ public class PlusTiC {
 	        materials.put("refinedObsidian", refinedObsidian);
 		}
 		
-		if (config.botania && Loader.isModLoaded("Botania")) {
+		if (Config.botania && Loader.isModLoaded("Botania")) {
 			Material terrasteel = new Material("terrasteel",TextFormatting.GREEN);
 	        terrasteel.addTrait(Mana.mana);
 	        terrasteel.addTrait(Terrafirma.terrafirma[0]);
@@ -346,7 +356,7 @@ public class PlusTiC {
 	        materials.put("manasteel", manasteel);
 		}
 		
-		if (config.advancedRocketry && Loader.isModLoaded("advancedRocketry")) {
+		if (Config.advancedRocketry && Loader.isModLoaded("advancedRocketry")) {
 			Material iridium = new Material("iridium", TextFormatting.GRAY);
 			iridium.addTrait(dense);
 			iridium.addTrait(alien, HEAD);
@@ -389,21 +399,24 @@ public class PlusTiC {
 	        materials.put("titanium", titanium);
 	        
 	        
-	        if (config.mekanism && Loader.isModLoaded("Mekanism")) {
+	        if (Config.mekanism && Loader.isModLoaded("Mekanism")) {
 	        	// osmiridium
 	        	Item osmiridiumIngot = new Item().setUnlocalizedName("osmiridiumingot")
 	        			.setRegistryName("osmiridiumingot");
+	        	osmiridiumIngot.setCreativeTab(TinkerRegistry.tabGeneral);
 	        	GameRegistry.register(osmiridiumIngot);
 	        	OreDictionary.registerOre("ingotOsmiridium", osmiridiumIngot);
 	        	proxy.registerItemRenderer(osmiridiumIngot, 0, "osmiridiumingot");
 	        	
 	        	Item osmiridiumNugget = new Item().setUnlocalizedName("osmiridiumnugget")
 	        			.setRegistryName("osmiridiumnugget");
+	        	osmiridiumNugget.setCreativeTab(TinkerRegistry.tabGeneral);
 	        	GameRegistry.register(osmiridiumNugget);
 	        	OreDictionary.registerOre("nuggetOsmiridium", osmiridiumNugget);
 	        	proxy.registerItemRenderer(osmiridiumNugget, 0, "osmiridiumnugget");
 	        	
 	        	MetalBlock osmiridiumBlock = new MetalBlock("osmiridiumblock");
+	        	osmiridiumBlock.setCreativeTab(TinkerRegistry.tabGeneral);
 	        	ItemBlock osmiridiumBlock_item = new ItemBlock(osmiridiumBlock);
 	        	GameRegistry.register(osmiridiumBlock);
 	        	GameRegistry.register(osmiridiumBlock_item, osmiridiumBlock.getRegistryName());
@@ -435,7 +448,7 @@ public class PlusTiC {
 	        }
 		}
 		
-		if (config.armorPlus && Loader.isModLoaded("armorplus")) {
+		if (Config.armorPlus && Loader.isModLoaded("armorplus")) {
 			Material witherBone = new Material("witherbone", TextFormatting.BLACK);
 			witherBone.addTrait(Apocalypse.apocalypse);
 			witherBone.addItem("witherBone", 1, Material.VALUE_Ingot);
@@ -457,12 +470,54 @@ public class PlusTiC {
 			materials.put("guardianscale", guardianScale);
 		}
 		
+		if (Config.enderIO && Loader.isModLoaded("EnderIO")) {
+			Fluid coalFluid = Utils.fluidMetal("coal", 0x111111);
+			coalFluid.setTemperature(500);
+			Utils.initFluidMetal(coalFluid);
+			MeltingRecipe coalMelting = TinkerRegistry.getMelting(new ItemStack(Items.COAL));
+			int amountPerCoal = Material.VALUE_Ingot;
+			if (coalMelting == null) {
+				TinkerRegistry.registerMelting("coal", coalFluid, amountPerCoal);
+			} else {
+				amountPerCoal = coalMelting.getResult().amount;
+				coalFluid = coalMelting.getResult().getFluid();
+			}
+			
+			Material darkSteel = new Material("darksteel_plustic_enderio", TextFormatting.DARK_GRAY);
+			darkSteel.addTrait(Portly.portly, HEAD);
+			darkSteel.addTrait(coldblooded);
+			darkSteel.addItem("ingotDarkSteel");
+			darkSteel.setCraftable(false).setCastable(true);
+			Utils.setDispItem(darkSteel, "enderio", "itemAlloy", 6);
+			proxy.setRenderInfo(darkSteel, 0x333333);
+			
+			FluidMolten darkSteelFluid = Utils.fluidMetal("darksteel", 0x333333);
+			darkSteelFluid.setTemperature(800);
+			Utils.initFluidMetal(darkSteelFluid);
+			darkSteel.setFluid(darkSteelFluid);
+			int denom = Utils.gcd(Material.VALUE_Ingot, Material.VALUE_SearedBlock, Material.VALUE_Ingot, amountPerCoal);
+			TinkerRegistry.registerAlloy(new FluidStack(darkSteelFluid, Material.VALUE_Ingot/denom),
+					new FluidStack(TinkerFluids.obsidian, Material.VALUE_SearedBlock/denom),
+					new FluidStack(TinkerFluids.iron, Material.VALUE_Ingot/denom),
+					new FluidStack(coalFluid, amountPerCoal/denom));
+			
+			TinkerRegistry.addMaterialStats(darkSteel,
+					new HeadMaterialStats(666, 7, 4, OBSIDIAN),
+					new HandleMaterialStats(1.05f, 40),
+					new ExtraMaterialStats(40),
+					new BowMaterialStats(0.38f, 2.05f, 10));
+			materials.put("darkSteel", darkSteel);
+		}
+		
 	    
 	    Utils.integrate(materials,materialIntegrations);
 	}
 	
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
+		proxy.registerKeyBindings();
+		PacketHandler.init();
+		
 		// CURSE YOU, MEKANISM AND ARMORPLUS! YOU REGISTERED THE OREDICTS IN INIT INSTEAD OF PREINIT!
 		Utils.setDispItem(materials.get("refinedObsidian"), "mekanism", "Ingot");
 		Utils.setDispItem(materials.get("osmium"), "mekanism", "Ingot", 1);

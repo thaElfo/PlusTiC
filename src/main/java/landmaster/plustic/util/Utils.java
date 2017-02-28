@@ -7,7 +7,7 @@ import net.minecraft.util.*;
 import net.minecraftforge.fluids.*;
 import net.minecraftforge.fml.common.registry.*;
 import org.apache.commons.lang3.StringUtils;
-import landmaster.plustic.PlusTiC;
+import landmaster.plustic.*;
 import landmaster.plustic.fluids.*;
 import slimeknights.tconstruct.smeltery.block.*;
 import slimeknights.tconstruct.library.*;
@@ -31,7 +31,7 @@ public class Utils {
 		return registerFluid(new FluidMolten(name,color));
 	}
 	
-	public static void initFluidMetal(FluidMolten fluid) {
+	public static void initFluidMetal(Fluid fluid) {
 		Utils.registerMoltenBlock(fluid);
         PlusTiC.proxy.registerFluidModels(fluid);
 	}
@@ -64,5 +64,14 @@ public class Utils {
 		if (mat == null) return;
 		ItemStack is = new ItemStack(Item.REGISTRY.getObject(new ResourceLocation(modid, name)), 1, meta);
 		mat.setRepresentativeItem(is);
+	}
+	
+	public static int gcd(int a, int b, int... rest) {
+		if (rest.length > 0) {
+			int[] rest1 = new int[rest.length-1];
+			System.arraycopy(rest, 1, rest1, 0, rest1.length);
+			return gcd(gcd(a,b), rest[0], rest1);
+		}
+		return b==0 ? a : gcd(b, a%b);
 	}
 }

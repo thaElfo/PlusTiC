@@ -1,3 +1,5 @@
+fluid.plustic.darksteel.name=Molten Dark Steel
+fluid.plustic.coal.name=Molten Coal
 fluid.plustic.osmium.name=Molten Osmium
 fluid.plustic.refinedobsidian.name=Molten Refined Obsidian
 fluid.plustic.terrasteel.name=Molten Terrasteel
@@ -7,6 +9,7 @@ fluid.plustic.iridium.name=Molten Iridium
 fluid.plustic.osmiridium.name=Molten Osmiridium
 fluid.plustic.titanium.name=Molten Titanium
 fluid.plustic.alumite.name=Molten Alumite
+
 item.tindust.name=Tin Dust
 item.osmiumdust.name=Osmium Dust
 item.steeldust.name=Steel Dust
@@ -16,7 +19,16 @@ item.bronzenugget.name=Bronze Nugget
 item.bronzeingot.name=Bronze Ingot
 item.alumitenugget.name=Alumite Nugget
 item.alumiteingot.name=Alumite Ingot
+
 tile.osmiridiumblock.name=Osmiridium Block
 tile.alumiteblock.name=Alumite Block
+
 msg.plustic.globalmodifier.set=Linked inventory at [x=%d, y=%d, z=%d] and dimension %d
+msg.plustic.portlymodifier.set=Captured entity %s
+msg.plustic.portlymodifier.unset=Released entity %s
+
 tooltip.plustic.globalmodifier.info=Linked inventory at [x=%d, y=%d, z=%d] and dimension %d
+tooltip.plustic.portlymodifier.info=Entity: %s
+
+key.categories.plustic=PlusTiC
+key.plustic_release_entity.desc=Release Entity

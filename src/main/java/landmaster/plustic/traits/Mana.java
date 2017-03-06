@@ -13,6 +13,7 @@ import slimeknights.tconstruct.library.utils.*;
 import vazkii.botania.api.mana.*;
 
 public class Mana extends AbstractTrait {
+	public static final int MANA_DRAW = 100;
 	public static final Mana mana = new Mana();
 	
 	public Mana() {
@@ -26,7 +27,7 @@ public class Mana extends AbstractTrait {
 			List<ItemStack[]> ivs = Arrays.asList(ep.inventory.mainInventory,ep.inventory.armorInventory,ep.inventory.offHandInventory);
 			for (ItemStack[] iv: ivs) {
 				for (int i=0; i<iv.length; ++i) {
-					if (ManaItemHandler.requestManaExactForTool(iv[i], ep, 100, true)) {
+					if (ManaItemHandler.requestManaExactForTool(iv[i], ep, MANA_DRAW, true)) {
 						ep.inventory.markDirty();
 						ToolHelper.healTool(tool, 1, ep);
 						return;
@@ -36,9 +37,8 @@ public class Mana extends AbstractTrait {
 			IBaublesItemHandler ib = BaublesApi.getBaublesHandler(ep);
 			for (int i=0; i<ib.getSlots(); ++i) {
 				ItemStack is = ib.getStackInSlot(i);
-				if (is == null) continue;
-				is = is.copy();
-				if (ManaItemHandler.requestManaExactForTool(is, ep, 100, true)) {
+				is = ItemStack.copyItemStack(is);
+				if (ManaItemHandler.requestManaExactForTool(is, ep, MANA_DRAW, true)) {
 					ToolHelper.healTool(tool, 1, ep);
 					ib.setStackInSlot(i, is);
 					return;
@@ -55,7 +55,7 @@ public class Mana extends AbstractTrait {
 			List<ItemStack[]> ivs = Arrays.asList(ep.inventory.mainInventory,ep.inventory.armorInventory,ep.inventory.offHandInventory);
 			for (ItemStack[] iv: ivs) {
 				for (int i=0; i<iv.length; ++i) {
-					if (ManaItemHandler.requestManaExactForTool(iv[i], ep, 100, true)) {
+					if (ManaItemHandler.requestManaExactForTool(iv[i], ep, MANA_DRAW, true)) {
 						ep.inventory.markDirty();
 						if (--newDamage <= 0) break manadraw;
 					}
@@ -64,9 +64,8 @@ public class Mana extends AbstractTrait {
 			IBaublesItemHandler ib = BaublesApi.getBaublesHandler(ep);
 			for (int i=0; i<ib.getSlots(); ++i) {
 				ItemStack is = ib.getStackInSlot(i);
-				if (is == null) continue;
-				is = is.copy();
-				if (ManaItemHandler.requestManaExactForTool(is, ep, 100, true)) {
+				is = ItemStack.copyItemStack(is);
+				if (ManaItemHandler.requestManaExactForTool(is, ep, MANA_DRAW, true)) {
 					ib.setStackInSlot(i, is);
 					if (--newDamage <= 0) break manadraw;
 				}

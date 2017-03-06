@@ -32,3 +32,6 @@ tooltip.plustic.portlymodifier.info=Entity: %s
 
 key.categories.plustic=PlusTiC
 key.plustic_release_entity.desc=Release Entity
+key.plustic_toggle_gui.desc=Toggle GUI
+
+gui.header.toggle=Toggle Modifiers

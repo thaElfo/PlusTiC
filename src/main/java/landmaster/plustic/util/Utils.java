@@ -5,13 +5,17 @@ import net.minecraft.block.*;
 import net.minecraft.item.*;
 import net.minecraft.util.*;
 import net.minecraftforge.fluids.*;
+import net.minecraftforge.fml.common.*;
 import net.minecraftforge.fml.common.registry.*;
 import org.apache.commons.lang3.StringUtils;
 import landmaster.plustic.*;
+import landmaster.plustic.config.Config;
 import landmaster.plustic.fluids.*;
+import landmaster.plustic.modifiers.*;
 import slimeknights.tconstruct.smeltery.block.*;
 import slimeknights.tconstruct.library.*;
 import slimeknights.tconstruct.library.materials.*;
+import slimeknights.tconstruct.library.modifiers.*;
 
 public class Utils {
 	public static void integrate(Map<String,Material> materials,Map<String,MaterialIntegration> materialIntegrations) {
@@ -25,6 +29,23 @@ public class Utils {
 			mi.integrateRecipes();
 			materialIntegrations.put(ent.getKey(), mi);
 		});
+	}
+	
+	public static void registerModifiers() {
+		if (Config.enderIO && Loader.isModLoaded("EnderIO")) {
+			TinkerRegistry.registerModifier(ModEndlectric.endlectric);
+			addModifierItem(ModEndlectric.endlectric, "enderio", "itemBasicCapacitor", 1);
+		}
+	}
+	
+	public static void addModifierItem(Modifier modifier, String modid, String name) {
+		addModifierItem(modifier, modid, name, 0);
+	}
+	
+	public static void addModifierItem(Modifier modifier, String modid, String name, int meta) {
+		if (modifier == null) return;
+		ItemStack is = new ItemStack(Item.REGISTRY.getObject(new ResourceLocation(modid,name)), 1, meta);
+		modifier.addItem(is, 1, 1);
 	}
 	
 	public static FluidMolten fluidMetal(String name, int color) {

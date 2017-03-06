@@ -3,6 +3,7 @@ package landmaster.plustic;
 import java.util.*;
 import landmaster.plustic.block.*;
 import landmaster.plustic.proxy.*;
+import landmaster.plustic.toggle.*;
 import landmaster.plustic.config.*;
 import landmaster.plustic.fluids.*;
 import landmaster.plustic.net.*;
@@ -13,6 +14,7 @@ import net.minecraft.init.*;
 import net.minecraft.item.*;
 import net.minecraft.util.*;
 import net.minecraft.util.text.*;
+import net.minecraftforge.common.*;
 import net.minecraftforge.fluids.*;
 import net.minecraftforge.fml.common.*;
 import net.minecraftforge.fml.common.event.*;
@@ -37,7 +39,7 @@ public class PlusTiC {
 	public static Config config;
 	
 	@Mod.Instance(PlusTiC.MODID)
-	public static PlusTiC instance;
+	public static PlusTiC INSTANCE;
 	
 	@SidedProxy(serverSide = "landmaster.plustic.proxy.CommonProxy", clientSide = "landmaster.plustic.proxy.ClientProxy")
 	public static CommonProxy proxy;
@@ -113,107 +115,107 @@ public class PlusTiC {
 		}
 		
 		if (Config.bop && Loader.isModLoaded("BiomesOPlenty")) {
-	        Material sapphire = new Material("sapphire",TextFormatting.BLUE);
-	        sapphire.addTrait(aquadynamic);
-	        sapphire.addItem("gemSapphire", 1, Material.VALUE_Ingot);
-	        sapphire.setCraftable(true);
-	        Utils.setDispItem(sapphire, "biomesoplenty", "gem", 6);
-	        proxy.setRenderInfo(sapphire,0x0000FF);
-	        TinkerRegistry.addMaterialStats(sapphire, new HeadMaterialStats(700, 5, 6.4f, COBALT));
-	        TinkerRegistry.addMaterialStats(sapphire, new HandleMaterialStats(1, 100));
-	        TinkerRegistry.addMaterialStats(sapphire, new ExtraMaterialStats(120));
-	        TinkerRegistry.addMaterialStats(sapphire, new BowMaterialStats(1,1.5f,4));
-	        materials.put("sapphire", sapphire);
-	        
-	        Material ruby = new Material("ruby",TextFormatting.RED);
-	        ruby.addTrait(BloodyMary.bloodymary);
-	        ruby.addTrait(sharp,HEAD);
-	        ruby.addItem("gemRuby", 1, Material.VALUE_Ingot);
-	        ruby.setCraftable(true);
-	        Utils.setDispItem(ruby, "biomesoplenty", "gem", 1);
-	        proxy.setRenderInfo(ruby,0xFF0000);
-	        TinkerRegistry.addMaterialStats(ruby, new HeadMaterialStats(660, 4.6f, 6.4f, COBALT));
-	        TinkerRegistry.addMaterialStats(ruby, new HandleMaterialStats(1.2f, 0));
-	        TinkerRegistry.addMaterialStats(ruby, new ExtraMaterialStats(20));
-	        TinkerRegistry.addMaterialStats(ruby, new BowMaterialStats(1.5f,1.4f,4));
-	        materials.put("ruby", ruby);
-	        
-	        Material peridot = new Material("peridot",TextFormatting.GREEN);
-	        peridot.addTrait(NaturesBlessing.naturesblessing);
-	        peridot.addItem("gemPeridot", 1, Material.VALUE_Ingot);
-	        peridot.setCraftable(true);
-	        Utils.setDispItem(peridot, "biomesoplenty", "gem", 2);
-	        proxy.setRenderInfo(peridot,0xBEFA5C);
-	        TinkerRegistry.addMaterialStats(peridot, new HeadMaterialStats(640, 4.0f, 6.1f, COBALT));
-	        TinkerRegistry.addMaterialStats(peridot, new HandleMaterialStats(1.3f, -30));
-	        TinkerRegistry.addMaterialStats(peridot, new ExtraMaterialStats(20));
-	        TinkerRegistry.addMaterialStats(peridot, new BowMaterialStats(1.4f,1.4f,4));
-	        materials.put("peridot", peridot);
-	        
-	        Material malachite = new Material("malachite_gem",TextFormatting.DARK_GREEN);
-	        malachite.addTrait(NaturesWrath.natureswrath);
-	        malachite.addItem("gemMalachite", 1, Material.VALUE_Ingot);
-	        malachite.setCraftable(true);
-	        Utils.setDispItem(malachite, "biomesoplenty", "gem", 5);
-	        proxy.setRenderInfo(malachite,0x007523);
-	        TinkerRegistry.addMaterialStats(malachite, new HeadMaterialStats(640, 3.0f, 6.1f, COBALT));
-	        TinkerRegistry.addMaterialStats(malachite, new HandleMaterialStats(1.3f, -30));
-	        TinkerRegistry.addMaterialStats(malachite, new ExtraMaterialStats(20));
-	        TinkerRegistry.addMaterialStats(malachite, new BowMaterialStats(1.4f,1.4f,4));
-	        materials.put("malachite", malachite);
-	        
-	        Material amber = new Material("amber",TextFormatting.GOLD);
-	        amber.addTrait(shocking);
-	        amber.addTrait(Thundering.thundering, PROJECTILE);
-	        amber.addTrait(Thundering.thundering, SHAFT);
-	        amber.addItem("gemAmber", 1, Material.VALUE_Ingot);
-	        amber.setCraftable(true);
-	        Utils.setDispItem(amber, "biomesoplenty", "gem", 7);
-	        proxy.setRenderInfo(amber,0xFFD000);
-	        TinkerRegistry.addMaterialStats(amber, new HeadMaterialStats(730, 4.6f, 5.7f, COBALT));
-	        TinkerRegistry.addMaterialStats(amber, new HandleMaterialStats(1, 30));
-	        TinkerRegistry.addMaterialStats(amber, new ExtraMaterialStats(100));
-	        TinkerRegistry.addMaterialStats(amber, justWhy);
-	        TinkerRegistry.addMaterialStats(amber, new ArrowShaftMaterialStats(1, 5));
-	        materials.put("amber", amber);
-	        
-	        Material topaz = new Material("topaz",TextFormatting.GOLD);
-	        topaz.addTrait(NaturesPower.naturespower);
-	        topaz.addItem("gemTopaz", 1, Material.VALUE_Ingot);
-	        topaz.setCraftable(true);
-	        Utils.setDispItem(topaz, "biomesoplenty", "gem", 3);
-	        proxy.setRenderInfo(topaz,0xFFFF00);
-	        TinkerRegistry.addMaterialStats(topaz, new HeadMaterialStats(690, 6, 6, COBALT));
-	        TinkerRegistry.addMaterialStats(topaz, new HandleMaterialStats(0.8f, 70));
-	        TinkerRegistry.addMaterialStats(topaz, new ExtraMaterialStats(65));
-	        TinkerRegistry.addMaterialStats(topaz, new BowMaterialStats(0.4f,1.4f,7));
-	        materials.put("topaz", topaz);
-	        
-	        Material tanzanite = new Material("tanzanite",TextFormatting.LIGHT_PURPLE);
-	        tanzanite.addTrait(freezing);
-	        tanzanite.addItem("gemTanzanite", 1, Material.VALUE_Ingot);
-	        tanzanite.setCraftable(true);
-	        Utils.setDispItem(tanzanite, "biomesoplenty", "gem", 4);
-	        proxy.setRenderInfo(tanzanite,0x6200FF);
-	        TinkerRegistry.addMaterialStats(tanzanite, new HeadMaterialStats(650, 3, 7, COBALT));
-	        TinkerRegistry.addMaterialStats(tanzanite, new HandleMaterialStats(0.7f, 0));
-	        TinkerRegistry.addMaterialStats(tanzanite, new ExtraMaterialStats(25));
-	        TinkerRegistry.addMaterialStats(tanzanite, justWhy);
-	        materials.put("tanzanite", tanzanite);
-	        
-	        Material amethyst = new Material("amethyst",TextFormatting.LIGHT_PURPLE);
-	        amethyst.addTrait(Apocalypse.apocalypse);
-	        amethyst.addItem(
-	        		Item.REGISTRY.getObject(new ResourceLocation("biomesoplenty", "gem")),
-	        		1, Material.VALUE_Ingot);
-	        amethyst.setCraftable(true);
-	        Utils.setDispItem(amethyst, "biomesoplenty", "gem");
-	        proxy.setRenderInfo(amethyst,0xFF00FF);
-	        TinkerRegistry.addMaterialStats(amethyst, new HeadMaterialStats(1200, 6, 10, COBALT));
-	        TinkerRegistry.addMaterialStats(amethyst, new HandleMaterialStats(1.6f, 100));
-	        TinkerRegistry.addMaterialStats(amethyst, new ExtraMaterialStats(100));
-	        TinkerRegistry.addMaterialStats(amethyst, new BowMaterialStats(0.65f, 1.7f, 6.5f));
-	        materials.put("amethyst", amethyst);
+			Material sapphire = new Material("sapphire",TextFormatting.BLUE);
+			sapphire.addTrait(aquadynamic);
+			sapphire.addItem("gemSapphire", 1, Material.VALUE_Ingot);
+			sapphire.setCraftable(true);
+			Utils.setDispItem(sapphire, "biomesoplenty", "gem", 6);
+			proxy.setRenderInfo(sapphire,0x0000FF);
+			TinkerRegistry.addMaterialStats(sapphire, new HeadMaterialStats(700, 5, 6.4f, COBALT));
+			TinkerRegistry.addMaterialStats(sapphire, new HandleMaterialStats(1, 100));
+			TinkerRegistry.addMaterialStats(sapphire, new ExtraMaterialStats(120));
+			TinkerRegistry.addMaterialStats(sapphire, new BowMaterialStats(1,1.5f,4));
+			materials.put("sapphire", sapphire);
+			
+			Material ruby = new Material("ruby",TextFormatting.RED);
+			ruby.addTrait(BloodyMary.bloodymary);
+			ruby.addTrait(sharp,HEAD);
+			ruby.addItem("gemRuby", 1, Material.VALUE_Ingot);
+			ruby.setCraftable(true);
+			Utils.setDispItem(ruby, "biomesoplenty", "gem", 1);
+			proxy.setRenderInfo(ruby,0xFF0000);
+			TinkerRegistry.addMaterialStats(ruby, new HeadMaterialStats(660, 4.6f, 6.4f, COBALT));
+			TinkerRegistry.addMaterialStats(ruby, new HandleMaterialStats(1.2f, 0));
+			TinkerRegistry.addMaterialStats(ruby, new ExtraMaterialStats(20));
+			TinkerRegistry.addMaterialStats(ruby, new BowMaterialStats(1.5f,1.4f,4));
+			materials.put("ruby", ruby);
+			
+			Material peridot = new Material("peridot",TextFormatting.GREEN);
+			peridot.addTrait(NaturesBlessing.naturesblessing);
+			peridot.addItem("gemPeridot", 1, Material.VALUE_Ingot);
+			peridot.setCraftable(true);
+			Utils.setDispItem(peridot, "biomesoplenty", "gem", 2);
+			proxy.setRenderInfo(peridot,0xBEFA5C);
+			TinkerRegistry.addMaterialStats(peridot, new HeadMaterialStats(640, 4.0f, 6.1f, COBALT));
+			TinkerRegistry.addMaterialStats(peridot, new HandleMaterialStats(1.3f, -30));
+			TinkerRegistry.addMaterialStats(peridot, new ExtraMaterialStats(20));
+			TinkerRegistry.addMaterialStats(peridot, new BowMaterialStats(1.4f,1.4f,4));
+			materials.put("peridot", peridot);
+			
+			Material malachite = new Material("malachite_gem",TextFormatting.DARK_GREEN);
+			malachite.addTrait(NaturesWrath.natureswrath);
+			malachite.addItem("gemMalachite", 1, Material.VALUE_Ingot);
+			malachite.setCraftable(true);
+			Utils.setDispItem(malachite, "biomesoplenty", "gem", 5);
+			proxy.setRenderInfo(malachite,0x007523);
+			TinkerRegistry.addMaterialStats(malachite, new HeadMaterialStats(640, 3.0f, 6.1f, COBALT));
+			TinkerRegistry.addMaterialStats(malachite, new HandleMaterialStats(1.3f, -30));
+			TinkerRegistry.addMaterialStats(malachite, new ExtraMaterialStats(20));
+			TinkerRegistry.addMaterialStats(malachite, new BowMaterialStats(1.4f,1.4f,4));
+			materials.put("malachite", malachite);
+			
+			Material amber = new Material("amber",TextFormatting.GOLD);
+			amber.addTrait(shocking);
+			amber.addTrait(Thundering.thundering, PROJECTILE);
+			amber.addTrait(Thundering.thundering, SHAFT);
+			amber.addItem("gemAmber", 1, Material.VALUE_Ingot);
+			amber.setCraftable(true);
+			Utils.setDispItem(amber, "biomesoplenty", "gem", 7);
+			proxy.setRenderInfo(amber,0xFFD000);
+			TinkerRegistry.addMaterialStats(amber, new HeadMaterialStats(730, 4.6f, 5.7f, COBALT));
+			TinkerRegistry.addMaterialStats(amber, new HandleMaterialStats(1, 30));
+			TinkerRegistry.addMaterialStats(amber, new ExtraMaterialStats(100));
+			TinkerRegistry.addMaterialStats(amber, justWhy);
+			TinkerRegistry.addMaterialStats(amber, new ArrowShaftMaterialStats(1, 5));
+			materials.put("amber", amber);
+			
+			Material topaz = new Material("topaz",TextFormatting.GOLD);
+			topaz.addTrait(NaturesPower.naturespower);
+			topaz.addItem("gemTopaz", 1, Material.VALUE_Ingot);
+			topaz.setCraftable(true);
+			Utils.setDispItem(topaz, "biomesoplenty", "gem", 3);
+			proxy.setRenderInfo(topaz,0xFFFF00);
+			TinkerRegistry.addMaterialStats(topaz, new HeadMaterialStats(690, 6, 6, COBALT));
+			TinkerRegistry.addMaterialStats(topaz, new HandleMaterialStats(0.8f, 70));
+			TinkerRegistry.addMaterialStats(topaz, new ExtraMaterialStats(65));
+			TinkerRegistry.addMaterialStats(topaz, new BowMaterialStats(0.4f,1.4f,7));
+			materials.put("topaz", topaz);
+			
+			Material tanzanite = new Material("tanzanite",TextFormatting.LIGHT_PURPLE);
+			tanzanite.addTrait(freezing);
+			tanzanite.addItem("gemTanzanite", 1, Material.VALUE_Ingot);
+			tanzanite.setCraftable(true);
+			Utils.setDispItem(tanzanite, "biomesoplenty", "gem", 4);
+			proxy.setRenderInfo(tanzanite,0x6200FF);
+			TinkerRegistry.addMaterialStats(tanzanite, new HeadMaterialStats(650, 3, 7, COBALT));
+			TinkerRegistry.addMaterialStats(tanzanite, new HandleMaterialStats(0.7f, 0));
+			TinkerRegistry.addMaterialStats(tanzanite, new ExtraMaterialStats(25));
+			TinkerRegistry.addMaterialStats(tanzanite, justWhy);
+			materials.put("tanzanite", tanzanite);
+			
+			Material amethyst = new Material("amethyst",TextFormatting.LIGHT_PURPLE);
+			amethyst.addTrait(Apocalypse.apocalypse);
+			amethyst.addItem(
+					Item.REGISTRY.getObject(new ResourceLocation("biomesoplenty", "gem")),
+					1, Material.VALUE_Ingot);
+			amethyst.setCraftable(true);
+			Utils.setDispItem(amethyst, "biomesoplenty", "gem");
+			proxy.setRenderInfo(amethyst,0xFF00FF);
+			TinkerRegistry.addMaterialStats(amethyst, new HeadMaterialStats(1200, 6, 10, COBALT));
+			TinkerRegistry.addMaterialStats(amethyst, new HandleMaterialStats(1.6f, 100));
+			TinkerRegistry.addMaterialStats(amethyst, new ExtraMaterialStats(100));
+			TinkerRegistry.addMaterialStats(amethyst, new BowMaterialStats(0.65f, 1.7f, 6.5f));
+			materials.put("amethyst", amethyst);
 		}
 		
 		
@@ -511,10 +513,13 @@ public class PlusTiC {
 		
 	    
 	    Utils.integrate(materials,materialIntegrations);
+	    Utils.registerModifiers();
 	}
 	
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
+		MinecraftForge.EVENT_BUS.register(Toggle.class);
+		
 		proxy.registerKeyBindings();
 		PacketHandler.init();
 		

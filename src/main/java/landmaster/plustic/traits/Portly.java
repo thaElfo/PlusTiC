@@ -13,10 +13,12 @@ import net.minecraftforge.common.*;
 import net.minecraftforge.event.entity.player.*;
 import net.minecraftforge.fml.common.*;
 import net.minecraftforge.fml.common.eventhandler.*;
+import net.minecraftforge.fml.relauncher.*;
 import slimeknights.tconstruct.library.traits.*;
 import slimeknights.tconstruct.library.utils.*;
 
 public class Portly extends AbstractTrait {
+	public static final int DURABILITY_COST = 15;
 	public static final Portly portly = new Portly();
 	
 	public Portly() {
@@ -41,6 +43,7 @@ public class Portly extends AbstractTrait {
 				|| !event.getEntityPlayer().isSneaking()
 				|| event.getItemStack() == null
 				|| !TinkerUtil.hasTrait(nbt, getIdentifier())
+				|| ToolHelper.getCurrentDurability(event.getItemStack()) < DURABILITY_COST
 				|| nbt.hasKey("portlyGentleman", 10)
 				|| event.getTarget() instanceof EntityPlayer)
 			return;
@@ -49,16 +52,17 @@ public class Portly extends AbstractTrait {
 			event.getItemStack().setTagCompound(nbt);
 			event.getWorld().removeEntity(event.getTarget());
 		}
+		ToolHelper.damageTool(event.getItemStack(), DURABILITY_COST, event.getEntityLiving());
 		event.getEntityPlayer().swingArm(event.getHand());
 		event.getEntityPlayer().addChatMessage(new TextComponentTranslation(
 				"msg.plustic.portlymodifier.set", nbt.getCompoundTag("portlyGentleman").getString("id")));
 	}
+	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public void tooltip(ItemTooltipEvent event) {
 		NBTTagCompound nbt = TagUtil.getTagSafe(event.getItemStack());
 		if (event.isCanceled()
 				|| event.getItemStack() == null
-				|| !FMLCommonHandler.instance().getSide().isClient()
 				|| !TinkerUtil.hasTrait(nbt, getIdentifier())) return;
 		if (nbt.hasKey("portlyGentleman", 10)) {
 			event.getToolTip().add(I18n.format("tooltip.plustic.portlymodifier.info",

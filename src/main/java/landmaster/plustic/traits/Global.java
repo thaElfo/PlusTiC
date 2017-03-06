@@ -1,6 +1,8 @@
 package landmaster.plustic.traits;
 
 import java.util.*;
+
+import landmaster.plustic.toggle.*;
 import net.minecraft.client.resources.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.item.*;
@@ -16,8 +18,8 @@ import net.minecraftforge.common.*;
 import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.player.*;
 import net.minecraftforge.event.world.*;
-import net.minecraftforge.fml.common.*;
 import net.minecraftforge.fml.common.eventhandler.*;
+import net.minecraftforge.fml.relauncher.*;
 import net.minecraftforge.items.*;
 import slimeknights.tconstruct.library.tools.*;
 import slimeknights.tconstruct.library.traits.*;
@@ -29,7 +31,9 @@ public class Global extends AbstractTrait {
 	public Global() {
 		super("global", 0xFFE0F1);
 		MinecraftForge.EVENT_BUS.register(this);
+		Toggle.toggleable.add(identifier);
 	}
+	
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void blockDrops(BlockEvent.HarvestDropsEvent event) {
 		if (event.getWorld().isRemote
@@ -39,6 +43,7 @@ public class Global extends AbstractTrait {
 		__blockHarvestDrops(tool, event);
 	}
 	private void __blockHarvestDrops(ItemStack tool, BlockEvent.HarvestDropsEvent event) {
+		if (!Toggle.getToggleState(tool, identifier)) return;
 		NBTTagCompound nbt0 = TagUtil.getTagSafe(tool);
 		if (nbt0.hasKey("global", 10) && ToolHelper.isToolEffective2(tool, event.getState())) {
 			NBTTagCompound nbt = nbt0.getCompoundTag("global");
@@ -78,6 +83,7 @@ public class Global extends AbstractTrait {
 		ItemStack weapon = getWeapon(event.getSource());
 		NBTTagCompound nbt0 = TagUtil.getTagSafe(weapon);
 		if (TinkerUtil.hasTrait(nbt0, getIdentifier())) {
+			if (!Toggle.getToggleState(weapon, identifier)) return;
 			if (nbt0.hasKey("global", 10)) {
 				NBTTagCompound nbt = nbt0.getCompoundTag("global");
 				WorldServer world = DimensionManager.getWorld(nbt.getInteger("dim"));
@@ -138,12 +144,12 @@ public class Global extends AbstractTrait {
 						event.getPos().getZ(),
 						event.getWorld().provider.getDimension()));
 	}
+	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public void tooltip(ItemTooltipEvent event) {
 		NBTTagCompound nbt0 = TagUtil.getTagSafe(event.getItemStack());
 		if (event.isCanceled()
 				|| event.getItemStack() == null
-				|| !FMLCommonHandler.instance().getSide().isClient()
 				|| !TinkerUtil.hasTrait(nbt0, getIdentifier())) return;
 		if (nbt0.hasKey("global", 10)) {
 			NBTTagCompound nbt = nbt0.getCompoundTag("global");
@@ -162,5 +168,4 @@ public class Global extends AbstractTrait {
 		}
 		return null;
 	}
-
 }

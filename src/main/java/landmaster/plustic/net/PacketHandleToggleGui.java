@@ -1,7 +1,7 @@
 package landmaster.plustic.net;
 
 import io.netty.buffer.*;
-import landmaster.plustic.toggle.*;
+import landmaster.plustic.api.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.nbt.*;
 import net.minecraft.util.*;

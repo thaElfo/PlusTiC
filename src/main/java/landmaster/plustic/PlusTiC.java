@@ -1,9 +1,10 @@
 package landmaster.plustic;
 
 import java.util.*;
+
+import landmaster.plustic.api.*;
 import landmaster.plustic.block.*;
 import landmaster.plustic.proxy.*;
-import landmaster.plustic.toggle.*;
 import landmaster.plustic.config.*;
 import landmaster.plustic.fluids.*;
 import landmaster.plustic.net.*;

@@ -1,4 +1,4 @@
-package landmaster.plustic.toggle;
+package landmaster.plustic.api;
 
 import java.io.*;
 import java.util.*;
@@ -13,14 +13,23 @@ import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
 import net.minecraft.util.*;
+import net.minecraftforge.event.entity.player.*;
 import net.minecraftforge.fml.common.eventhandler.*;
 import net.minecraftforge.fml.common.gameevent.*;
 import net.minecraftforge.fml.relauncher.*;
+import slimeknights.tconstruct.library.tools.*;
 import slimeknights.tconstruct.library.utils.*;
 
+/**
+ * 
+ * Class for toggleable modifiers
+ * @author Landmaster
+ *
+ */
 public class Toggle {
-	public static final int GUI_ID = 1;
-	
+	/**
+	 * Add the identifier name to this set to allow toggling.
+	 */
 	public static Set<String> toggleable = new HashSet<>();
 	
 	public static class Gui extends GuiScreen {
@@ -45,16 +54,8 @@ public class Toggle {
 			identifiers = new ArrayList<>();
 			enableds = new ArrayList<>();
 			NBTTagCompound nbt = TagUtil.getTagSafe(this.player.getHeldItemMainhand());
-			NBTTagList modifiers = TagUtil.getBaseModifiersTagList(nbt);
 			NBTTagList traits = TagUtil.getTraitsTagList(nbt);
 			String identifier;
-			for (int i=0; i<modifiers.tagCount(); ++i) {
-				identifier = modifiers.getStringTagAt(i);
-				if (toggleable.contains(identifier)) {
-					identifiers.add(identifier);
-					enableds.add(getToggleState(nbt, identifier));
-				}
-			}
 			for (int i=0; i<traits.tagCount(); ++i) {
 				identifier = traits.getStringTagAt(i);
 				if (toggleable.contains(identifier)){
@@ -85,7 +86,10 @@ public class Toggle {
 				mc.renderEngine.bindTexture(background);
 				drawTexturedModalRect(guiLeft+96, guiTop+18*(i+1)+1,176+(enabled ? 0 : 12), 0, 12, 12);
 				if (isPointInRegion(7, 18*(i+1), 114, 16, mouseX, mouseY)) {
-					drawHoveringText(Arrays.asList("Click to toggle"), mouseX, mouseY);
+					drawHoveringText(Arrays.asList(I18n.format("tooltip.plustic.toggle.info"),
+							I18n.format("tooltip.plustic.toggle.state."+enabled,
+									I18n.format("modifier."+identifier+".name"))
+							), mouseX, mouseY);
 				}
 			}
 		}
@@ -129,33 +133,61 @@ public class Toggle {
 		}
 	}
 	
+	@SideOnly(Side.CLIENT)
+	@SubscribeEvent
+	public static void tooltip(ItemTooltipEvent event) {
+		if (event.getItemStack() == null
+				|| !(event.getItemStack().getItem() instanceof ToolCore))
+			return;
+		NBTTagCompound nbt = TagUtil.getTagSafe(event.getItemStack());
+		NBTTagList traits = TagUtil.getTraitsTagList(nbt);
+		NBTTagCompound toggle = TagUtil.getTagSafe(nbt, "PlusTiC_toggle");
+		for (int i=0; i<traits.tagCount(); ++i) {
+			String identifier = traits.getStringTagAt(i);
+			if (toggleable.contains(identifier)) {
+				boolean enabled = !toggle.hasKey(identifier);
+				event.getToolTip().add(I18n.format("tooltip.plustic.toggle.state."+enabled,
+									I18n.format("modifier."+identifier+".name")));
+			}
+		}
+	}
+	
 	public static boolean canToggle(ItemStack is) {
 		return canToggle(TagUtil.getTagSafe(is));
 	}
 	
 	public static boolean canToggle(NBTTagCompound nbt) {
-		NBTTagList modifiers = TagUtil.getBaseModifiersTagList(nbt);
 		NBTTagList traits = TagUtil.getTraitsTagList(nbt);
-		for (int i=0; i<modifiers.tagCount(); ++i) {
-			if (toggleable.contains(modifiers.getStringTagAt(i))) return true;
-		}
 		for (int i=0; i<traits.tagCount(); ++i) {
 			if (toggleable.contains(traits.getStringTagAt(i))) return true;
 		}
 		return false;
 	}
 	
+	/**
+	 * Check whether a modifier/trait is enabled.
+	 * @param is the itemstack
+	 * @param identifier the identifier for the modifier/trait
+	 * @return whether the modifier/trait is enabled
+	 */
 	public static boolean getToggleState(ItemStack is, String identifier) {
 		NBTTagCompound nbt = TagUtil.getTagSafe(is);
 		return getToggleState(nbt, identifier);
 	}
 	
+	/**
+	 * Check whether a modifier/trait is enabled.
+	 * @see landmaster.plustic.api.Toggle#getToggleState(ItemStack, String)
+	 */
 	public static boolean getToggleState(NBTTagCompound nbt, String identifier) {
 		NBTTagCompound toggle = TagUtil.getTagSafe(nbt, "PlusTiC_toggle");
 		return (TinkerUtil.hasTrait(nbt, identifier) || TinkerUtil.hasModifier(nbt, identifier))
 				&& (!toggleable.contains(identifier) || !toggle.hasKey(identifier));
 	}
 	
+	/**
+	 * Set whether the modifier/trait is enabled.
+	 */
 	public static void setToggleState(NBTTagCompound nbt, String identifier, boolean value) {
 		if (!toggleable.contains(identifier)
 				|| !(TinkerUtil.hasTrait(nbt, identifier) || TinkerUtil.hasModifier(nbt, identifier))) return;

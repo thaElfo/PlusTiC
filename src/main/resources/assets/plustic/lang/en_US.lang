@@ -29,6 +29,9 @@ msg.plustic.portlymodifier.unset=Released entity %s
 
 tooltip.plustic.globalmodifier.info=Linked inventory at [x=%d, y=%d, z=%d] and dimension %d
 tooltip.plustic.portlymodifier.info=Entity: %s
+tooltip.plustic.toggle.info=Click to toggle
+tooltip.plustic.toggle.state.true=%s currently enabled
+tooltip.plustic.toggle.state.false=%s currently disabled
 
 key.categories.plustic=PlusTiC
 key.plustic_release_entity.desc=Release Entity

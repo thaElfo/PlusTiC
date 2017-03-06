@@ -2,7 +2,7 @@ package landmaster.plustic.traits;
 
 import java.util.*;
 
-import landmaster.plustic.toggle.*;
+import landmaster.plustic.api.*;
 import net.minecraft.client.resources.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.item.*;

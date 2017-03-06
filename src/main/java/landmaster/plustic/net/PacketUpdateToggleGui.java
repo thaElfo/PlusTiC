@@ -1,7 +1,7 @@
 package landmaster.plustic.net;
 
 import io.netty.buffer.*;
-import landmaster.plustic.toggle.Toggle;
+import landmaster.plustic.api.*;
 import net.minecraft.client.*;
 import net.minecraftforge.fml.common.network.*;
 import net.minecraftforge.fml.common.network.simpleimpl.*;
@@ -35,5 +35,4 @@ public class PacketUpdateToggleGui implements IMessage, IMessageHandler<PacketUp
 		ByteBufUtils.writeUTF8String(buf, identifier);
 		buf.writeBoolean(value);
 	}
-
 }

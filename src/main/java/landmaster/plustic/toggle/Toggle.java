@@ -115,7 +115,6 @@ public class Toggle {
 		}
 		
 		public void update(String identifier, boolean value) {
-			System.out.println("UPDATE: "+identifier+" "+value);
 			int ind = identifiers.indexOf(identifier);
 			if (ind>=0) enableds.set(ind, value);
 		}

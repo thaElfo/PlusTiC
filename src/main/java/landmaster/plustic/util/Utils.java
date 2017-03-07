@@ -34,7 +34,7 @@ public class Utils {
 	public static void registerModifiers() {
 		if (Config.enderIO && Loader.isModLoaded("EnderIO")) {
 			TinkerRegistry.registerModifier(ModEndlectric.endlectric);
-			addModifierItem(ModEndlectric.endlectric, "enderio", "itemBasicCapacitor", 1);
+			addModifierItem(ModEndlectric.endlectric, "enderio", "itemBasicCapacitor", 2);
 		}
 	}
 	

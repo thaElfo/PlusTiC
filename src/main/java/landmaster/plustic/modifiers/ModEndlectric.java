@@ -5,7 +5,7 @@ import baubles.api.*;
 import baubles.api.cap.*;
 import cofh.api.energy.*;
 import landmaster.plustic.api.*;
-import landmaster.plustic.config.Config;
+import landmaster.plustic.config.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
@@ -14,7 +14,7 @@ import slimeknights.tconstruct.library.modifiers.*;
 import slimeknights.tconstruct.library.utils.*;
 
 public class ModEndlectric extends ModifierTrait {
-	public static final int ENERGY_DRAW = 100;
+	public static final int ENERGY_DRAW = 200;
 	public static final ModEndlectric endlectric = new ModEndlectric();
 	
 	public ModEndlectric() {
@@ -60,6 +60,6 @@ public class ModEndlectric extends ModifierTrait {
 	}
 	private float augmentDamage(float old, NBTTagCompound modifierTag) {
 		ModifierNBT data = ModifierNBT.readTag(modifierTag);
-		return old + data.level*1.7f;
+		return old + 2*(float)Math.pow(data.level, 1.4);
 	}
 }

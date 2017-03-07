@@ -10,6 +10,7 @@ import net.minecraftforge.fml.common.event.*;
 public class Config extends Configuration {
 	public static boolean base;
 	public static boolean bop;
+	public static boolean projectRed;
 	public static boolean mekanism;
 	public static boolean botania;
 	public static boolean advancedRocketry;
@@ -24,12 +25,13 @@ public class Config extends Configuration {
 	public void sync() {
 		base = getBoolean("Enable vanilla TiC addons", "modules", true, "Add features to vanilla Tinkers Construct");
 		bop = getBoolean("Enable BoP integration", "modules", true, "Integrate with Biomes o' Plenty");
+		projectRed = getBoolean("Enable Project Red integration", "modules", true, "Integrate with Project Red-Exploration");
 		mekanism = getBoolean("Enable Mekanism integration", "modules", true, "Integrate with Mekanism");
 		botania = getBoolean("Enable Botania integration", "modules", true, "Integrate with Botania");
-		advancedRocketry = getBoolean("Enable Advanced Rocketry integration", "modules", true, "Integrate with Advanced Rocketry");
+		advancedRocketry = getBoolean("Enable Advanced Rocketry integration", "modules", true, "Integrate with Advanced Rocketry (actually LibVulpes)");
 		armorPlus = getBoolean("Enable ArmorPlus integration", "modules", true, "Integrate with ArmorPlus");
 		enderIO = getBoolean("Enable EnderIO integration", "modules", true, "Integrate with EnderIO");
-		String[] arr = getStringList("Items that Endlectric will not drain from", "tweaks", new String[] {}, "Enter in the format \"modid:name;meta\" (leave blank to match any meta)");
+		String[] arr = getStringList("Items that Endlectric will not drain from", "tweaks", new String[] {}, "Enter in the format \"modid:name;meta\" (leave meta blank to match any meta)");
 		int meta = -1;
 		for (int i=0; i<arr.length; ++i) {
 			String[] loc_meta = arr[i].split(";");

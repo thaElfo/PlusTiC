@@ -48,15 +48,28 @@ public class PlusTiC {
 	public static Map<String,Material> materials = new HashMap<>();
 	public static Map<String,MaterialIntegration> materialIntegrations = new HashMap<>();
 	
+	public static final BowMaterialStats justWhy = new BowMaterialStats(0.2f, 0.4f, -1f);
+	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		Config config = new Config(event);
 		config.sync();
 		
-		BowMaterialStats justWhy = new BowMaterialStats(0.2f, 0.4f, -1f);
-		
+		initBase();
+		initBoP();
+		initMekanism();
+		initBotania();
+		initAdvRocketry();
+		initArmorPlus();
+		initEnderIO();
+	    
+	    Utils.integrate(materials,materialIntegrations);
+	    Utils.registerModifiers();
+	}
+	
+	private void initBase() {
 		if (Config.base) {
-			Material tnt = new Material("tnt",TextFormatting.RED);
+			Material tnt = new Material("tnt", TextFormatting.RED);
 			tnt.addTrait(Explosive.explosive);
 			tnt.addItem(Blocks.TNT, Material.VALUE_Ingot);
 			tnt.setRepresentativeItem(Blocks.TNT);
@@ -114,13 +127,15 @@ public class PlusTiC {
 				materials.put("alumite", alumite);
 			}
 		}
-		
-		if (Config.bop && Loader.isModLoaded("BiomesOPlenty")) {
+	}
+	private void initBoP() {
+		if ((Config.bop && Loader.isModLoaded("BiomesOPlenty"))
+				|| (Config.projectRed && Loader.isModLoaded("projectred-exploration"))) {
 			Material sapphire = new Material("sapphire",TextFormatting.BLUE);
 			sapphire.addTrait(aquadynamic);
 			sapphire.addItem("gemSapphire", 1, Material.VALUE_Ingot);
 			sapphire.setCraftable(true);
-			Utils.setDispItem(sapphire, "biomesoplenty", "gem", 6);
+			sapphire.setRepresentativeItem(OreDictionary.getOres("gemSapphire").get(0));
 			proxy.setRenderInfo(sapphire,0x0000FF);
 			TinkerRegistry.addMaterialStats(sapphire, new HeadMaterialStats(700, 5, 6.4f, COBALT));
 			TinkerRegistry.addMaterialStats(sapphire, new HandleMaterialStats(1, 100));
@@ -133,7 +148,7 @@ public class PlusTiC {
 			ruby.addTrait(sharp,HEAD);
 			ruby.addItem("gemRuby", 1, Material.VALUE_Ingot);
 			ruby.setCraftable(true);
-			Utils.setDispItem(ruby, "biomesoplenty", "gem", 1);
+			ruby.setRepresentativeItem(OreDictionary.getOres("gemRuby").get(0));
 			proxy.setRenderInfo(ruby,0xFF0000);
 			TinkerRegistry.addMaterialStats(ruby, new HeadMaterialStats(660, 4.6f, 6.4f, COBALT));
 			TinkerRegistry.addMaterialStats(ruby, new HandleMaterialStats(1.2f, 0));
@@ -145,14 +160,15 @@ public class PlusTiC {
 			peridot.addTrait(NaturesBlessing.naturesblessing);
 			peridot.addItem("gemPeridot", 1, Material.VALUE_Ingot);
 			peridot.setCraftable(true);
-			Utils.setDispItem(peridot, "biomesoplenty", "gem", 2);
+			peridot.setRepresentativeItem(OreDictionary.getOres("gemPeridot").get(0));
 			proxy.setRenderInfo(peridot,0xBEFA5C);
 			TinkerRegistry.addMaterialStats(peridot, new HeadMaterialStats(640, 4.0f, 6.1f, COBALT));
 			TinkerRegistry.addMaterialStats(peridot, new HandleMaterialStats(1.3f, -30));
 			TinkerRegistry.addMaterialStats(peridot, new ExtraMaterialStats(20));
 			TinkerRegistry.addMaterialStats(peridot, new BowMaterialStats(1.4f,1.4f,4));
 			materials.put("peridot", peridot);
-			
+		}
+		if (Config.bop && Loader.isModLoaded("BiomesOPlenty")) {
 			Material malachite = new Material("malachite_gem",TextFormatting.DARK_GREEN);
 			malachite.addTrait(NaturesWrath.natureswrath);
 			malachite.addItem("gemMalachite", 1, Material.VALUE_Ingot);
@@ -218,8 +234,8 @@ public class PlusTiC {
 			TinkerRegistry.addMaterialStats(amethyst, new BowMaterialStats(0.65f, 1.7f, 6.5f));
 			materials.put("amethyst", amethyst);
 		}
-		
-		
+	}
+	private void initMekanism() {
 		if (Config.mekanism && Loader.isModLoaded("Mekanism")) {
 			// ugly workaround for dusts not melting
 			Item tinDust = new Item().setUnlocalizedName("tindust").setRegistryName("tindust");
@@ -294,7 +310,8 @@ public class PlusTiC {
 	        
 	        materials.put("refinedObsidian", refinedObsidian);
 		}
-		
+	}
+	private void initBotania() {
 		if (Config.botania && Loader.isModLoaded("Botania")) {
 			Material terrasteel = new Material("terrasteel",TextFormatting.GREEN);
 	        terrasteel.addTrait(Mana.mana);
@@ -358,8 +375,9 @@ public class PlusTiC {
 	        
 	        materials.put("manasteel", manasteel);
 		}
-		
-		if (Config.advancedRocketry && Loader.isModLoaded("advancedRocketry")) {
+	}
+	private void initAdvRocketry() {
+		if (Config.advancedRocketry && Loader.isModLoaded("libVulpes")) {
 			Material iridium = new Material("iridium", TextFormatting.GRAY);
 			iridium.addTrait(dense);
 			iridium.addTrait(alien, HEAD);
@@ -450,7 +468,8 @@ public class PlusTiC {
 	        	materials.put("osmiridium", osmiridium);
 	        }
 		}
-		
+	}
+	private void initArmorPlus() {
 		if (Config.armorPlus && Loader.isModLoaded("armorplus")) {
 			Material witherBone = new Material("witherbone", TextFormatting.BLACK);
 			witherBone.addTrait(Apocalypse.apocalypse);
@@ -472,18 +491,24 @@ public class PlusTiC {
 			TinkerRegistry.addMaterialStats(guardianScale, new BowMaterialStats(0.85f, 1.2f, 5.5f));
 			materials.put("guardianscale", guardianScale);
 		}
-		
+	}
+	private void initEnderIO() {
 		if (Config.enderIO && Loader.isModLoaded("EnderIO")) {
 			Fluid coalFluid = Utils.fluidMetal("coal", 0x111111);
+			Fluid oldCoalFluid = null;
 			coalFluid.setTemperature(500);
 			Utils.initFluidMetal(coalFluid);
 			MeltingRecipe coalMelting = TinkerRegistry.getMelting(new ItemStack(Items.COAL));
-			int amountPerCoal = Material.VALUE_Ingot;
+			int amountPerCoalOld = Material.VALUE_Ingot;
 			if (coalMelting == null) {
-				TinkerRegistry.registerMelting("coal", coalFluid, amountPerCoal);
+				TinkerRegistry.registerMelting("coal", coalFluid, Material.VALUE_Ingot);
+				TinkerRegistry.registerBasinCasting(new ItemStack(Blocks.COAL_BLOCK),
+						null, coalFluid, Material.VALUE_Ingot*9);
+				TinkerRegistry.registerTableCasting(new ItemStack(Items.COAL),
+						null, coalFluid, Material.VALUE_Ingot);
 			} else {
-				amountPerCoal = coalMelting.getResult().amount;
-				coalFluid = coalMelting.getResult().getFluid();
+				amountPerCoalOld = coalMelting.getResult().amount;
+				oldCoalFluid = coalMelting.getResult().getFluid();
 			}
 			
 			Material darkSteel = new Material("darksteel_plustic_enderio", TextFormatting.DARK_GRAY);
@@ -498,11 +523,17 @@ public class PlusTiC {
 			darkSteelFluid.setTemperature(800);
 			Utils.initFluidMetal(darkSteelFluid);
 			darkSteel.setFluid(darkSteelFluid);
-			int denom = Utils.gcd(Material.VALUE_Ingot, Material.VALUE_SearedBlock, Material.VALUE_Ingot, amountPerCoal);
-			TinkerRegistry.registerAlloy(new FluidStack(darkSteelFluid, Material.VALUE_Ingot/denom),
-					new FluidStack(TinkerFluids.obsidian, Material.VALUE_SearedBlock/denom),
-					new FluidStack(TinkerFluids.iron, Material.VALUE_Ingot/denom),
-					new FluidStack(coalFluid, amountPerCoal/denom));
+			TinkerRegistry.registerAlloy(new FluidStack(darkSteelFluid, 1),
+					new FluidStack(TinkerFluids.obsidian, 2),
+					new FluidStack(TinkerFluids.iron, 1),
+					new FluidStack(coalFluid, 1));
+			if (oldCoalFluid != null) {
+				int denom = Utils.gcd(Material.VALUE_Ingot, Material.VALUE_SearedBlock, Material.VALUE_Ingot, amountPerCoalOld);
+				TinkerRegistry.registerAlloy(new FluidStack(darkSteelFluid, Material.VALUE_Ingot/denom),
+						new FluidStack(TinkerFluids.obsidian, Material.VALUE_SearedBlock/denom),
+						new FluidStack(TinkerFluids.iron, Material.VALUE_Ingot/denom),
+						new FluidStack(oldCoalFluid, amountPerCoalOld/denom));
+			}
 			
 			TinkerRegistry.addMaterialStats(darkSteel,
 					new HeadMaterialStats(666, 7, 4, OBSIDIAN),
@@ -511,10 +542,6 @@ public class PlusTiC {
 					new BowMaterialStats(0.38f, 2.05f, 10));
 			materials.put("darkSteel", darkSteel);
 		}
-		
-	    
-	    Utils.integrate(materials,materialIntegrations);
-	    Utils.registerModifiers();
 	}
 	
 	@EventHandler

@@ -2,6 +2,8 @@ package landmaster.plustic.traits;
 
 import baubles.api.*;
 import baubles.api.cap.*;
+import landmaster.plustic.api.*;
+
 import java.util.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
@@ -9,7 +11,6 @@ import net.minecraft.item.*;
 import net.minecraft.world.*;
 import slimeknights.tconstruct.library.traits.*;
 import slimeknights.tconstruct.library.utils.*;
-//import vazkii.botania.api.*;
 import vazkii.botania.api.mana.*;
 
 public class Mana extends AbstractTrait {
@@ -18,11 +19,15 @@ public class Mana extends AbstractTrait {
 	
 	public Mana() {
 		super("mana", 0x54E5FF);
+		Toggle.toggleable.add(identifier);
 	}
 	
 	@Override
 	public void onUpdate(ItemStack tool, World world, Entity entity, int itemSlot, boolean isSelected) {
-		if (!world.isRemote && entity instanceof EntityPlayer && ToolHelper.getCurrentDurability(tool) < ToolHelper.getMaxDurability(tool)) {
+		if (!world.isRemote
+				&& entity instanceof EntityPlayer
+				&& ToolHelper.getCurrentDurability(tool) < ToolHelper.getMaxDurability(tool)
+				&& Toggle.getToggleState(tool, identifier)) {
 			EntityPlayer ep = (EntityPlayer)entity;
 			List<ItemStack[]> ivs = Arrays.asList(ep.inventory.mainInventory,ep.inventory.armorInventory,ep.inventory.offHandInventory);
 			for (ItemStack[] iv: ivs) {
@@ -50,7 +55,7 @@ public class Mana extends AbstractTrait {
 	@Override
 	public int onToolDamage(ItemStack tool, int damage, int newDamage, EntityLivingBase entity) {
 		manadraw:
-		if (entity instanceof EntityPlayer && newDamage > 0) {
+		if (entity instanceof EntityPlayer && newDamage > 0 && Toggle.getToggleState(tool, identifier)) {
 			EntityPlayer ep = (EntityPlayer)entity;
 			List<ItemStack[]> ivs = Arrays.asList(ep.inventory.mainInventory,ep.inventory.armorInventory,ep.inventory.offHandInventory);
 			for (ItemStack[] iv: ivs) {

@@ -76,7 +76,7 @@ public class Toggle {
 			fontRendererObj.drawString(I18n.format("gui.header.toggle"), guiLeft+5, guiTop+5, 0xFFFFFF);
 			
 			mc.renderEngine.bindTexture(background);
-			for (int i=0; i<OPTIONS_PER_PAGE; ++i) {
+			for (int i=0; i<Math.min(OPTIONS_PER_PAGE, identifiers.size() - page*OPTIONS_PER_PAGE); ++i) {
 				drawTexturedModalRect(guiLeft+7, guiTop+18*(i+1), 0, 128, 114, 16);
 			}
 			for (int i=page*OPTIONS_PER_PAGE; i<Math.min((page+1)*OPTIONS_PER_PAGE, identifiers.size()); ++i) {

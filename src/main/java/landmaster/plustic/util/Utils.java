@@ -7,9 +7,11 @@ import net.minecraft.util.*;
 import net.minecraftforge.fluids.*;
 import net.minecraftforge.fml.common.*;
 import net.minecraftforge.fml.common.registry.*;
+import net.minecraftforge.oredict.*;
+
 import org.apache.commons.lang3.StringUtils;
 import landmaster.plustic.*;
-import landmaster.plustic.config.Config;
+import landmaster.plustic.config.*;
 import landmaster.plustic.fluids.*;
 import landmaster.plustic.modifiers.*;
 import slimeknights.tconstruct.smeltery.block.*;
@@ -85,6 +87,11 @@ public class Utils {
 		if (mat == null) return;
 		ItemStack is = new ItemStack(Item.REGISTRY.getObject(new ResourceLocation(modid, name)), 1, meta);
 		mat.setRepresentativeItem(is);
+	}
+	public static void setDispItem(Material mat, String ore) {
+		List<ItemStack> ores = OreDictionary.getOres(ore);
+		if (mat == null || ores.size() < 1) return;
+		mat.setRepresentativeItem(ores.get(0));
 	}
 	
 	public static int gcd(int a, int b, int... rest) {

@@ -1,5 +1,6 @@
 package landmaster.plustic.traits;
 
+import landmaster.plustic.api.*;
 import net.minecraft.entity.*;
 import net.minecraft.init.*;
 import net.minecraft.item.*;
@@ -17,6 +18,7 @@ public class DivineShield extends AbstractTrait {
 	public DivineShield() {
 		super("divineshield", 0x00FFFF);
 		MinecraftForge.EVENT_BUS.register(this);
+		Toggle.toggleable.add(identifier);
 	}
 	
 	@Override
@@ -29,10 +31,12 @@ public class DivineShield extends AbstractTrait {
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void defend(LivingHurtEvent event) {
 		if (event.getEntity().getEntityWorld().isRemote
+				|| !Toggle.getToggleState(event.getEntityLiving().getHeldItemMainhand(), identifier)
 				|| event.isCanceled()
 				|| !TinkerUtil.hasTrait(
 						TagUtil.getTagSafe(event.getEntityLiving().getHeldItemMainhand()),
-						getIdentifier())) return;
+						getIdentifier()))
+			return;
 		event.setAmount(event.getAmount() * 0.85f);
 		ToolHelper.damageTool(event.getEntityLiving().getHeldItemMainhand(), 1, event.getEntityLiving());
 	}

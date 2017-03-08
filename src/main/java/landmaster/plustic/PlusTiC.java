@@ -514,7 +514,7 @@ public class PlusTiC {
 			Material darkSteel = new Material("darksteel_plustic_enderio", TextFormatting.DARK_GRAY);
 			darkSteel.addTrait(Portly.portly, HEAD);
 			darkSteel.addTrait(coldblooded);
-			darkSteel.addItem("ingotDarkSteel");
+			darkSteel.addItem("ingotDarkSteel", 1, Material.VALUE_Ingot);
 			darkSteel.setCraftable(false).setCastable(true);
 			Utils.setDispItem(darkSteel, "enderio", "itemAlloy", 6);
 			proxy.setRenderInfo(darkSteel, 0x333333);

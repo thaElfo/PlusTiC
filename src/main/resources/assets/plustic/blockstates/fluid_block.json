@@ -36,6 +36,9 @@
         }],
         "darksteel": [{
         	"custom": { "fluid": "darksteel" }
+        }],
+        "signalum": [{
+        	"custom": { "fluid": "signalum" }
         }]
     }
 }

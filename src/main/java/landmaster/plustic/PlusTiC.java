@@ -32,10 +32,10 @@ import static slimeknights.tconstruct.library.materials.MaterialTypes.*;
 import static slimeknights.tconstruct.library.utils.HarvestLevels.*;
 import static slimeknights.tconstruct.tools.TinkerTraits.*;
 
-@Mod(modid = PlusTiC.MODID, name = "PlusTiC", version = PlusTiC.VERSION, dependencies = "required-after:mantle;required-after:tconstruct;after:Mekanism;after:BiomesOPlenty;after:Botania;after:advancedRocketry;after:armorplus;after:EnderIO")
+@Mod(modid = PlusTiC.MODID, name = "PlusTiC", version = PlusTiC.VERSION, dependencies = "required-after:mantle;required-after:tconstruct;after:Mekanism;after:BiomesOPlenty;after:Botania;after:advancedRocketry;after:armorplus;after:EnderIO;after:projectred-exploration")
 public class PlusTiC {
 	public static final String MODID = "plustic";
-	public static final String VERSION = "3.0";
+	public static final String VERSION = "3.0a";
 	
 	public static Config config;
 	
@@ -62,6 +62,7 @@ public class PlusTiC {
 		initAdvRocketry();
 		initArmorPlus();
 		initEnderIO();
+		initTF();
 	    
 	    Utils.integrate(materials,materialIntegrations);
 	    Utils.registerModifiers();
@@ -501,11 +502,11 @@ public class PlusTiC {
 			MeltingRecipe coalMelting = TinkerRegistry.getMelting(new ItemStack(Items.COAL));
 			int amountPerCoalOld = Material.VALUE_Ingot;
 			if (coalMelting == null) {
-				TinkerRegistry.registerMelting("coal", coalFluid, Material.VALUE_Ingot);
+				TinkerRegistry.registerMelting("coal", coalFluid, 100);
 				TinkerRegistry.registerBasinCasting(new ItemStack(Blocks.COAL_BLOCK),
-						null, coalFluid, Material.VALUE_Ingot*9);
+						null, coalFluid, 900);
 				TinkerRegistry.registerTableCasting(new ItemStack(Items.COAL),
-						null, coalFluid, Material.VALUE_Ingot);
+						null, coalFluid, 100);
 			} else {
 				amountPerCoalOld = coalMelting.getResult().amount;
 				oldCoalFluid = coalMelting.getResult().getFluid();
@@ -523,10 +524,10 @@ public class PlusTiC {
 			darkSteelFluid.setTemperature(800);
 			Utils.initFluidMetal(darkSteelFluid);
 			darkSteel.setFluid(darkSteelFluid);
-			TinkerRegistry.registerAlloy(new FluidStack(darkSteelFluid, 1),
-					new FluidStack(TinkerFluids.obsidian, 2),
-					new FluidStack(TinkerFluids.iron, 1),
-					new FluidStack(coalFluid, 1));
+			TinkerRegistry.registerAlloy(new FluidStack(darkSteelFluid, 36),
+					new FluidStack(TinkerFluids.obsidian, 72),
+					new FluidStack(TinkerFluids.iron, 36),
+					new FluidStack(coalFluid, 25));
 			if (oldCoalFluid != null) {
 				int denom = Utils.gcd(Material.VALUE_Ingot, Material.VALUE_SearedBlock, Material.VALUE_Ingot, amountPerCoalOld);
 				TinkerRegistry.registerAlloy(new FluidStack(darkSteelFluid, Material.VALUE_Ingot/denom),
@@ -541,6 +542,32 @@ public class PlusTiC {
 					new ExtraMaterialStats(40),
 					new BowMaterialStats(0.38f, 2.05f, 10));
 			materials.put("darkSteel", darkSteel);
+		}
+	}
+	private void initTF() {
+		if (Config.thermalFoundation && Loader.isModLoaded("thermalfoundation")) {
+			Material signalum = new Material("signalum_plustic", TextFormatting.RED);
+			signalum.addTrait(BloodyMary.bloodymary);
+			signalum.addItem("ingotSignalum", 1, Material.VALUE_Ingot);
+			signalum.setCraftable(false).setCastable(true);
+			Utils.setDispItem(signalum, "ingotSignalum");
+			proxy.setRenderInfo(signalum, 0xD84100);
+			
+			FluidMolten signalumFluid = Utils.fluidMetal("signalum", 0xD84100);
+			signalumFluid.setTemperature(930);
+			Utils.initFluidMetal(signalumFluid);
+			signalum.setFluid(signalumFluid);
+			TinkerRegistry.registerAlloy(new FluidStack(signalumFluid, 72),
+					new FluidStack(TinkerFluids.copper, 54),
+					new FluidStack(TinkerFluids.silver, 18),
+					new FluidStack(FluidRegistry.getFluid("redstone"), 125));
+			
+			TinkerRegistry.addMaterialStats(signalum,
+					new HeadMaterialStats(690, 7.5f, 5.2f, OBSIDIAN),
+					new HandleMaterialStats(1.2f, 0),
+					new ExtraMaterialStats(55),
+					new BowMaterialStats(1.2f, 1.6f, 4.4f));
+			materials.put("signalum", signalum);
 		}
 	}
 	

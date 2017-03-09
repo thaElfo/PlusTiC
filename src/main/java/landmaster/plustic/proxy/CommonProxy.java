@@ -4,9 +4,11 @@ import java.util.*;
 import net.minecraft.client.settings.*;
 import net.minecraft.item.*;
 import net.minecraftforge.fluids.*;
+import net.minecraftforge.fml.relauncher.*;
 import slimeknights.tconstruct.library.materials.*;
 
 public class CommonProxy {
+	@SideOnly(Side.CLIENT)
 	public static List<KeyBinding> keyBindings;
 	
 	public void registerItemRenderer(Item item, int meta, String id) {

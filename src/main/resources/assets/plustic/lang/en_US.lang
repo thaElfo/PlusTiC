@@ -1,4 +1,3 @@
-fluid.plustic.darksteel.name=Molten Dark Steel
 fluid.plustic.coal.name=Molten Coal
 fluid.plustic.osmium.name=Molten Osmium
 fluid.plustic.refinedobsidian.name=Molten Refined Obsidian
@@ -10,6 +9,8 @@ fluid.plustic.osmiridium.name=Molten Osmiridium
 fluid.plustic.titanium.name=Molten Titanium
 fluid.plustic.alumite.name=Molten Alumite
 fluid.plustic.signalum.name=Molten Signalum
+fluid.plustic.platinum.name=Molten Platinum
+fluid.plustic.enderium.name=Molten Enderium
 
 item.tindust.name=Tin Dust
 item.osmiumdust.name=Osmium Dust

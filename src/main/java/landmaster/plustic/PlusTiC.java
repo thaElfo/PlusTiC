@@ -25,7 +25,6 @@ import net.minecraftforge.fml.common.Mod.*;
 import slimeknights.tconstruct.*;
 import slimeknights.tconstruct.library.*;
 import slimeknights.tconstruct.library.materials.*;
-import slimeknights.tconstruct.library.smeltery.*;
 import slimeknights.tconstruct.shared.*;
 
 import static slimeknights.tconstruct.library.materials.MaterialTypes.*;
@@ -36,7 +35,7 @@ import static slimeknights.tconstruct.tools.TinkerTraits.*;
 public class PlusTiC {
 	public static final String MODID = "plustic";
 	public static final String NAME = "PlusTiC";
-	public static final String VERSION = "3.0b";
+	public static final String VERSION = "3.1";
 	public static final String DEPENDS = "required-after:mantle;required-after:tconstruct;after:Mekanism;after:BiomesOPlenty;after:Botania;after:advancedRocketry;after:armorplus;after:EnderIO;after:projectred-exploration;after:thermalfoundation";
 	
 	public static Config config;
@@ -498,21 +497,14 @@ public class PlusTiC {
 	private void initEnderIO() {
 		if (Config.enderIO && Loader.isModLoaded("EnderIO")) {
 			Fluid coalFluid = Utils.fluidMetal("coal", 0x111111);
-			Fluid oldCoalFluid = null;
 			coalFluid.setTemperature(500);
 			Utils.initFluidMetal(coalFluid);
-			MeltingRecipe coalMelting = TinkerRegistry.getMelting(new ItemStack(Items.COAL));
-			int amountPerCoalOld = Material.VALUE_Ingot;
-			if (coalMelting == null) {
-				TinkerRegistry.registerMelting("coal", coalFluid, 100);
-				TinkerRegistry.registerBasinCasting(new ItemStack(Blocks.COAL_BLOCK),
-						null, coalFluid, 900);
-				TinkerRegistry.registerTableCasting(new ItemStack(Items.COAL),
-						null, coalFluid, 100);
-			} else {
-				amountPerCoalOld = coalMelting.getResult().amount;
-				oldCoalFluid = coalMelting.getResult().getFluid();
-			}
+			
+			TinkerRegistry.registerMelting("coal", coalFluid, 100);
+			TinkerRegistry.registerBasinCasting(new ItemStack(Blocks.COAL_BLOCK),
+					null, coalFluid, 900);
+			TinkerRegistry.registerTableCasting(new ItemStack(Items.COAL),
+					null, coalFluid, 100);
 			
 			Material darkSteel = new Material("darksteel_plustic_enderio", TextFormatting.DARK_GRAY);
 			darkSteel.addTrait(Portly.portly, HEAD);
@@ -522,21 +514,13 @@ public class PlusTiC {
 			Utils.setDispItem(darkSteel, "enderio", "itemAlloy", 6);
 			proxy.setRenderInfo(darkSteel, 0x333333);
 			
-			FluidMolten darkSteelFluid = Utils.fluidMetal("darksteel", 0x333333);
-			darkSteelFluid.setTemperature(800);
-			Utils.initFluidMetal(darkSteelFluid);
+			Fluid darkSteelFluid = FluidRegistry.getFluid("darksteel");
 			darkSteel.setFluid(darkSteelFluid);
+			
 			TinkerRegistry.registerAlloy(new FluidStack(darkSteelFluid, 36),
 					new FluidStack(TinkerFluids.obsidian, 72),
 					new FluidStack(TinkerFluids.iron, 36),
 					new FluidStack(coalFluid, 25));
-			if (oldCoalFluid != null) {
-				int denom = Utils.gcd(Material.VALUE_Ingot, Material.VALUE_SearedBlock, Material.VALUE_Ingot, amountPerCoalOld);
-				TinkerRegistry.registerAlloy(new FluidStack(darkSteelFluid, Material.VALUE_Ingot/denom),
-						new FluidStack(TinkerFluids.obsidian, Material.VALUE_SearedBlock/denom),
-						new FluidStack(TinkerFluids.iron, Material.VALUE_Ingot/denom),
-						new FluidStack(oldCoalFluid, amountPerCoalOld/denom));
-			}
 			
 			TinkerRegistry.addMaterialStats(darkSteel,
 					new HeadMaterialStats(666, 7, 4, OBSIDIAN),
@@ -570,6 +554,43 @@ public class PlusTiC {
 					new ExtraMaterialStats(55),
 					new BowMaterialStats(1.2f, 1.6f, 4.4f));
 			materials.put("signalum", signalum);
+			
+			Material enderium = new Material("enderium_plustic", TextFormatting.DARK_GREEN);
+			enderium.addTrait(Portly.portly, HEAD);
+			enderium.addTrait(Global.global);
+			enderium.addTrait(enderference);
+			enderium.addTrait(endspeed, PROJECTILE);
+			enderium.addItem("ingotEnderium", 1, Material.VALUE_Ingot);
+			enderium.setCraftable(false).setCastable(true);
+			Utils.setDispItem(enderium, "ingotEnderium");
+			proxy.setRenderInfo(enderium, 0x007068);
+			
+			FluidMolten platinumFluid = Utils.fluidMetal("platinum", 0xB7E7FF);
+			platinumFluid.setTemperature(680);
+			Utils.initFluidMetal(platinumFluid);
+			MaterialIntegration platinumI = new MaterialIntegration(null, platinumFluid, "Platinum");
+			platinumI.integrate();
+			platinumI.integrateRecipes();
+			materialIntegrations.put("platinum", platinumI);
+			
+			FluidMolten enderiumFluid = Utils.fluidMetal("enderium", 0x007068);
+			enderiumFluid.setTemperature(970);
+			Utils.initFluidMetal(enderiumFluid);
+			enderium.setFluid(enderiumFluid);
+			TinkerRegistry.registerAlloy(new FluidStack(enderiumFluid, 144),
+					new FluidStack(TinkerFluids.tin, 72),
+					new FluidStack(TinkerFluids.silver, 36),
+					new FluidStack(platinumFluid, 36),
+					new FluidStack(FluidRegistry.getFluid("ender"), 250),
+					new FluidStack(FluidRegistry.getFluid("pyrotheum"), 125));
+			
+			TinkerRegistry.addMaterialStats(enderium,
+					new HeadMaterialStats(800, 7.5f, 7, COBALT),
+					new HandleMaterialStats(1.05f, -5),
+					new ExtraMaterialStats(65),
+					new BowMaterialStats(0.9f, 1.9f, 8));
+			
+			materials.put("enderium", enderium);
 		}
 	}
 	

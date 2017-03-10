@@ -39,6 +39,12 @@
         }],
         "signalum": [{
         	"custom": { "fluid": "signalum" }
+        }],
+        "platinum": [{
+        	"custom": { "fluid": "platinum" }
+        }],
+        "enderium": [{
+        	"custom": { "fluid": "enderium" }
         }]
     }
 }

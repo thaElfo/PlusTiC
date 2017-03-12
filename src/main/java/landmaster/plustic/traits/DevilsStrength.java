@@ -18,7 +18,7 @@ public class DevilsStrength extends AbstractTrait {
 	
 	@Override
 	public float damage(ItemStack tool, EntityLivingBase player, EntityLivingBase target, float damage, float newDamage, boolean isCritical) {
-		if (player.dimension != 0) {
+		if (player.getEntityWorld().provider.getDimension() != 0) {
 			newDamage += BONUS;
 		}
 		return super.damage(tool, player, target, damage, newDamage, isCritical);

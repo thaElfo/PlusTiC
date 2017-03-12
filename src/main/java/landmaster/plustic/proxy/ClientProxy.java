@@ -47,7 +47,8 @@ public class ClientProxy extends CommonProxy {
 	public void registerKeyBindings() {
 		keyBindings = Arrays.asList(
 				new KeyBinding("key.plustic_release_entity.desc", Keyboard.KEY_0, "key.categories.plustic"),
-				new KeyBinding("key.plustic_toggle_gui.desc", Keyboard.KEY_I, "key.categories.plustic"));
+				new KeyBinding("key.plustic_toggle_gui.desc", Keyboard.KEY_I, "key.categories.plustic"),
+				new KeyBinding("key.plustic_set_portal.desc", Keyboard.KEY_N, "key.categories.plustic"));
 		for (KeyBinding kb: keyBindings) ClientRegistry.registerKeyBinding(kb);
 	}
 	

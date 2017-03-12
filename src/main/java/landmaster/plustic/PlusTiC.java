@@ -560,6 +560,7 @@ public class PlusTiC {
 			enderium.addTrait(Global.global);
 			enderium.addTrait(enderference);
 			enderium.addTrait(endspeed, PROJECTILE);
+			enderium.addTrait(endspeed, SHAFT);
 			enderium.addItem("ingotEnderium", 1, Material.VALUE_Ingot);
 			enderium.setCraftable(false).setCastable(true);
 			Utils.setDispItem(enderium, "ingotEnderium");
@@ -591,6 +592,27 @@ public class PlusTiC {
 					new BowMaterialStats(0.9f, 1.9f, 8));
 			
 			materials.put("enderium", enderium);
+			
+			Material nickel = new Material("nickel", TextFormatting.YELLOW);
+			nickel.addTrait(NickOfTime.nickOfTime, HEAD);
+			nickel.addTrait(magnetic);
+			nickel.addItem("ingotNickel", 1, Material.VALUE_Ingot);
+			nickel.setCraftable(false).setCastable(true);
+			Utils.setDispItem(nickel, "ingotNickel");
+			proxy.setRenderInfo(nickel, 0xFFF98E);
+			
+			FluidMolten nickelFluid = Utils.fluidMetal("nickel", 0xFFF98E);
+			nickelFluid.setTemperature(780);
+			Utils.initFluidMetal(nickelFluid);
+			nickel.setFluid(nickelFluid);
+			
+			TinkerRegistry.addMaterialStats(nickel,
+					new HeadMaterialStats(460, 6, 4.5f, OBSIDIAN),
+					new HandleMaterialStats(1, -5),
+					new ExtraMaterialStats(70),
+					justWhy);
+			
+			materials.put("nickel", nickel);
 		}
 	}
 	

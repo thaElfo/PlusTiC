@@ -11,6 +11,7 @@ fluid.plustic.alumite.name=Molten Alumite
 fluid.plustic.signalum.name=Molten Signalum
 fluid.plustic.platinum.name=Molten Platinum
 fluid.plustic.enderium.name=Molten Enderium
+fluid.plustic.nickel.name=Molten Nickel
 
 item.tindust.name=Tin Dust
 item.osmiumdust.name=Osmium Dust
@@ -28,6 +29,8 @@ tile.alumiteblock.name=Alumite Block
 msg.plustic.globalmodifier.set=Linked inventory at [x=%d, y=%d, z=%d] and dimension %d
 msg.plustic.portlymodifier.set=Captured entity %s
 msg.plustic.portlymodifier.unset=Released entity %s
+msg.plustic.nickmodifier.set=Set teleportation point to be [x=%d, y=%d, z=%d] in dimension %d
+msg.plustic.nickmodifier.use=Just in the nick of time!
 
 tooltip.plustic.globalmodifier.info=Linked inventory at [x=%d, y=%d, z=%d] and dimension %d
 tooltip.plustic.portlymodifier.info=Entity: %s
@@ -38,5 +41,6 @@ tooltip.plustic.toggle.state.false=%s currently disabled
 key.categories.plustic=PlusTiC
 key.plustic_release_entity.desc=Release Entity
 key.plustic_toggle_gui.desc=Toggle GUI
+key.plustic_set_portal.desc=Set Portal
 
 gui.header.toggle=Toggle Modifiers

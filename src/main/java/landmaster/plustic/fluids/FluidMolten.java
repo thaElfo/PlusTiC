@@ -1,9 +1,9 @@
 package landmaster.plustic.fluids;
 
-import net.minecraft.item.EnumRarity;
-import net.minecraft.util.ResourceLocation;
-import landmaster.plustic.PlusTiC;
-import slimeknights.tconstruct.library.fluid.FluidColored;
+import net.minecraft.item.*;
+import net.minecraft.util.*;
+import landmaster.plustic.*;
+import slimeknights.tconstruct.library.fluid.*;
 
 public class FluidMolten extends FluidColored {
 	

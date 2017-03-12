@@ -13,5 +13,6 @@ public class PacketHandler {
 		INSTANCE.registerMessage(PacketReleaseEntity.class, PacketReleaseEntity.class, msgInd++, Side.SERVER);
 		INSTANCE.registerMessage(PacketHandleToggleGui.class, PacketHandleToggleGui.class, msgInd++, Side.SERVER);
 		INSTANCE.registerMessage(PacketUpdateToggleGui.class, PacketUpdateToggleGui.class, msgInd++, Side.CLIENT);
+		INSTANCE.registerMessage(PacketSetPortal.class, PacketSetPortal.class, msgInd++, Side.SERVER);
 	}
 }

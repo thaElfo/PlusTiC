@@ -45,6 +45,9 @@
         }],
         "enderium": [{
         	"custom": { "fluid": "enderium" }
+        }],
+        "nickel": [{
+        	"custom": { "fluid": "nickel" }
         }]
     }
 }

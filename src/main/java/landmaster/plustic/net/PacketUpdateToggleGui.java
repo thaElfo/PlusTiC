@@ -18,9 +18,11 @@ public class PacketUpdateToggleGui implements IMessage, IMessageHandler<PacketUp
 
 	@Override
 	public IMessage onMessage(PacketUpdateToggleGui message, MessageContext ctx) {
-		if (Minecraft.getMinecraft().currentScreen instanceof Toggle.Gui) {
-			((Toggle.Gui)Minecraft.getMinecraft().currentScreen).update(message.identifier, message.value);
-		}
+		Minecraft.getMinecraft().addScheduledTask(() -> {
+			if (Minecraft.getMinecraft().currentScreen instanceof Toggle.Gui) {
+				((Toggle.Gui)Minecraft.getMinecraft().currentScreen).update(message.identifier, message.value);
+			}
+		});
 		return null;
 	}
 

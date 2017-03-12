@@ -34,6 +34,7 @@ msg.plustic.nickmodifier.use=Just in the nick of time!
 
 tooltip.plustic.globalmodifier.info=Linked inventory at [x=%d, y=%d, z=%d] and dimension %d
 tooltip.plustic.portlymodifier.info=Entity: %s
+tooltip.plustic.nickmodifier.info=Teleportation point: [x=%d, y=%d, z=%d]; dimension %d
 tooltip.plustic.toggle.info=Click to toggle
 tooltip.plustic.toggle.state.true=%s currently enabled
 tooltip.plustic.toggle.state.false=%s currently disabled

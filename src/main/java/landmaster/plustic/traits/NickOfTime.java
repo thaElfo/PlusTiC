@@ -4,6 +4,7 @@ import landmaster.plustic.api.*;
 import landmaster.plustic.net.*;
 import landmaster.plustic.proxy.*;
 import landmaster.plustic.util.*;
+import net.minecraft.client.resources.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.init.*;
@@ -15,8 +16,10 @@ import net.minecraft.util.text.*;
 import net.minecraft.world.*;
 import net.minecraftforge.common.*;
 import net.minecraftforge.event.entity.living.*;
+import net.minecraftforge.event.entity.player.*;
 import net.minecraftforge.fml.common.*;
 import net.minecraftforge.fml.common.eventhandler.*;
+import net.minecraftforge.fml.relauncher.*;
 import net.minecraftforge.items.*;
 import slimeknights.tconstruct.library.traits.*;
 import slimeknights.tconstruct.library.utils.*;
@@ -65,6 +68,23 @@ public class NickOfTime extends AbstractTrait {
 					return;
 				}
 			}
+		}
+	}
+	
+	@SideOnly(Side.CLIENT)
+	@SubscribeEvent
+	public void tooltip(ItemTooltipEvent event) {
+		NBTTagCompound nbt0 = TagUtil.getTagSafe(event.getItemStack());
+		if (event.isCanceled()
+				|| event.getItemStack() == null
+				|| !TinkerUtil.hasTrait(nbt0, getIdentifier())) return;
+		if (nbt0.hasKey("nickoftime", 10)) {
+			NBTTagCompound nbt = nbt0.getCompoundTag("nickoftime");
+			event.getToolTip().add(I18n.format("tooltip.plustic.nickmodifier.info",
+					nbt.getInteger("x"),
+					nbt.getInteger("y"),
+					nbt.getInteger("z"),
+					nbt.getInteger("dim")));
 		}
 	}
 	

@@ -59,10 +59,14 @@ public class NickOfTime extends AbstractTrait {
 			IItemHandler ih = event.getEntity().getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 			for (int i=0; i<ih.getSlots(); ++i) {
 				ItemStack is = ih.extractItem(i, ENDER_COST, true);
-				if (is != null && is.getItem() == Items.ENDER_PEARL) {
+				if (is != null && is.getItem() == Items.ENDER_PEARL && is.stackSize >= ENDER_COST) {
 					teleportPlayerTo((EntityPlayerMP)event.getEntity(), coord);
 					ih.extractItem(i, ENDER_COST, false);
 					event.setCanceled(true);
+					event.getEntityLiving().removePotionEffect(MobEffects.WITHER);
+					event.getEntityLiving().removePotionEffect(MobEffects.POISON);
+					event.getEntityLiving().extinguish();
+					event.getEntityLiving().addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 160));
 					event.getEntity().addChatMessage(new TextComponentTranslation(
 							"msg.plustic.nickmodifier.use"));
 					return;

@@ -589,7 +589,8 @@ public class PlusTiC {
 					new HeadMaterialStats(800, 7.5f, 7, COBALT),
 					new HandleMaterialStats(1.05f, -5),
 					new ExtraMaterialStats(65),
-					new BowMaterialStats(0.9f, 1.9f, 8));
+					new BowMaterialStats(0.9f, 1.9f, 8),
+					new ArrowShaftMaterialStats(1, 12));
 			
 			materials.put("enderium", enderium);
 			
@@ -601,16 +602,14 @@ public class PlusTiC {
 			Utils.setDispItem(nickel, "ingotNickel");
 			proxy.setRenderInfo(nickel, 0xFFF98E);
 			
-			FluidMolten nickelFluid = Utils.fluidMetal("nickel", 0xFFF98E);
-			nickelFluid.setTemperature(780);
-			Utils.initFluidMetal(nickelFluid);
-			nickel.setFluid(nickelFluid);
+			nickel.setFluid(TinkerFluids.nickel);
 			
 			TinkerRegistry.addMaterialStats(nickel,
 					new HeadMaterialStats(460, 6, 4.5f, OBSIDIAN),
 					new HandleMaterialStats(1, -5),
 					new ExtraMaterialStats(70),
-					justWhy);
+					justWhy,
+					new FletchingMaterialStats(0.95f, 1.05f));
 			
 			materials.put("nickel", nickel);
 		}

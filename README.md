@@ -1,5 +1,7 @@
 # PlusTiC
 Minecraft mod for integrating various mods with Tinkers Construct
+
+CurseForge page: https://minecraft.curseforge.com/projects/plustic
 ## Supported mods
 - Biomes o Plenty by Glitchfiend
 - Project Red by MrTJP

@@ -582,8 +582,7 @@ public class PlusTiC {
 					new FluidStack(TinkerFluids.tin, 72),
 					new FluidStack(TinkerFluids.silver, 36),
 					new FluidStack(platinumFluid, 36),
-					new FluidStack(FluidRegistry.getFluid("ender"), 250),
-					new FluidStack(FluidRegistry.getFluid("pyrotheum"), 125));
+					new FluidStack(FluidRegistry.getFluid("ender"), 250));
 			
 			TinkerRegistry.addMaterialStats(enderium,
 					new HeadMaterialStats(800, 7.5f, 7, COBALT),

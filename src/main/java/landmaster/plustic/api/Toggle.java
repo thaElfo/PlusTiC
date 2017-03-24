@@ -30,7 +30,7 @@ public class Toggle {
 	/**
 	 * Add the identifier name to this set to allow toggling.
 	 */
-	public static Set<String> toggleable = new HashSet<>();
+	public static final Set<String> toggleable = new HashSet<>();
 	
 	public static class Gui extends GuiScreen {
 		public static final int OPTIONS_PER_PAGE = 6;

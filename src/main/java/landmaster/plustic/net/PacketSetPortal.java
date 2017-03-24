@@ -1,7 +1,7 @@
 package landmaster.plustic.net;
 
 import io.netty.buffer.*;
-import landmaster.plustic.traits.*;
+import landmaster.plustic.api.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.nbt.*;
 import net.minecraft.util.*;
@@ -20,7 +20,7 @@ public class PacketSetPortal implements IMessage, IMessageHandler<PacketSetPorta
 			if (ep.getEntityWorld().isRemote)
 				return;
 			NBTTagCompound nbt = TagUtil.getTagSafe(ep.getHeldItemMainhand());
-			if (TinkerUtil.hasTrait(nbt, NickOfTime.nickOfTime.identifier)) {
+			if (Portal.canUse(nbt)) {
 				Vec3d eye = ep.getPositionVector().addVector(0, ep.getEyeHeight(), 0);
 				Vec3d look = ep.getLookVec().scale(5);
 				RayTraceResult rtr = ep.getEntityWorld().rayTraceBlocks(eye, eye.add(look));
@@ -30,10 +30,10 @@ public class PacketSetPortal implements IMessage, IMessageHandler<PacketSetPorta
 				nick.setInteger("y", rtr.getBlockPos().getY());
 				nick.setInteger("z", rtr.getBlockPos().getZ());
 				nick.setInteger("dim", ep.getEntityWorld().provider.getDimension());
-				nbt.setTag("nickoftime", nick);
+				nbt.setTag(Portal.PORTAL_NBT, nick);
 				ep.getHeldItemMainhand().setTagCompound(nbt);
 				ep.addChatMessage(new TextComponentTranslation(
-						"msg.plustic.nickmodifier.set", nick.getInteger("x"),
+						"msg.plustic.portal.set", nick.getInteger("x"),
 						nick.getInteger("y"), nick.getInteger("z"), nick.getInteger("dim")));
 			}
 		});

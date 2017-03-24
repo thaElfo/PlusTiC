@@ -29,12 +29,13 @@ tile.alumiteblock.name=Alumite Block
 msg.plustic.globalmodifier.set=Linked inventory at [x=%d, y=%d, z=%d] and dimension %d
 msg.plustic.portlymodifier.set=Captured entity %s
 msg.plustic.portlymodifier.unset=Released entity %s
-msg.plustic.nickmodifier.set=Set teleportation point to be [x=%d, y=%d, z=%d] in dimension %d
+msg.plustic.portal.set=Set teleportation point to be [x=%d, y=%d, z=%d] in dimension %d
 msg.plustic.nickmodifier.use=Just in the nick of time!
+msg.plustic.brownmagic.use=You're kidding.
 
 tooltip.plustic.globalmodifier.info=Linked inventory at [x=%d, y=%d, z=%d] and dimension %d
 tooltip.plustic.portlymodifier.info=Entity: %s
-tooltip.plustic.nickmodifier.info=Teleportation point: [x=%d, y=%d, z=%d]; dimension %d
+tooltip.plustic.portal.info=Teleportation point: [x=%d, y=%d, z=%d]; dimension %d
 tooltip.plustic.toggle.info=Click to toggle
 tooltip.plustic.toggle.state.true=%s currently enabled
 tooltip.plustic.toggle.state.false=%s currently disabled
@@ -43,5 +44,8 @@ key.categories.plustic=PlusTiC
 key.plustic_release_entity.desc=Release Entity
 key.plustic_toggle_gui.desc=Toggle GUI
 key.plustic_set_portal.desc=Set Portal
+key.plustic_brown_magic.desc=Activate Brown Magic
+
+entity.plustic.BlindBandit.name=Blind Bandit
 
 gui.header.toggle=Toggle Modifiers

@@ -1,5 +1,7 @@
 package landmaster.plustic.util;
 
+import java.util.*;
+
 import net.minecraft.block.state.*;
 import net.minecraft.entity.*;
 import net.minecraft.nbt.*;
@@ -28,9 +30,21 @@ public class Coord4D {
 		dimensionId = dimension;
 	}
 	
+	public Coord4D(BlockPos pos, World world) {
+		this(pos.getX(), pos.getY(), pos.getZ(), world.provider.getDimension());
+	}
+	
 	public static Coord4D fromNBT(NBTTagCompound nbt) {
 		if (nbt.getSize() == 0) return null;
 		return new Coord4D(nbt.getInteger("x"), nbt.getInteger("y"), nbt.getInteger("z"), nbt.getInteger("dim"));
+	}
+	
+	public NBTTagCompound toNBT(NBTTagCompound nbt) {
+		nbt.setInteger("x", xCoord);
+		nbt.setInteger("y", yCoord);
+		nbt.setInteger("z", zCoord);
+		nbt.setInteger("dim", dimensionId);
+		return nbt;
 	}
 	
 	public Coord4D add(int x, int y, int z) {
@@ -38,9 +52,22 @@ public class Coord4D {
 	}
 	
 	public IBlockState blockState() {
-		WorldServer world = DimensionManager.getWorld(dimensionId);
+		WorldServer world = world();
 		if (world == null) return null;
-		return world.getBlockState(new BlockPos(xCoord, yCoord, zCoord));
+		return world.getBlockState(pos());
+	}
+	
+	public BlockPos pos() {
+		return new BlockPos(xCoord, yCoord, zCoord);
+	}
+	
+	public WorldServer world() {
+		return DimensionManager.getWorld(dimensionId);
+	}
+	
+	@Override
+	public String toString() {
+		return String.format(Locale.US, "[x=%d, y=%d, z=%d] @ dimension %d", xCoord, yCoord, zCoord, dimensionId);
 	}
 	
 	@Override

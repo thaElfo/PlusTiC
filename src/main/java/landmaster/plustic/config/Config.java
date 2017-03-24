@@ -17,6 +17,7 @@ public class Config extends Configuration {
 	public static boolean armorPlus;
 	public static boolean enderIO;
 	public static boolean thermalFoundation;
+	public static boolean draconicEvolution;
 	public static ArrayListMultimap<Item, ItemStack> endlectricBlacklist = ArrayListMultimap.create();
 	
 	public Config(FMLPreInitializationEvent event) {
@@ -33,6 +34,7 @@ public class Config extends Configuration {
 		armorPlus = getBoolean("Enable ArmorPlus integration", "modules", true, "Integrate with ArmorPlus");
 		enderIO = getBoolean("Enable EnderIO integration", "modules", true, "Integrate with EnderIO");
 		thermalFoundation = getBoolean("Enable Thermal Foundation integration", "modules", true, "Integrate with Thermal Foundation");
+		draconicEvolution = getBoolean("Enable Draconic Evolution integration", "modules", true, "Integrate with Draconic Evolution");
 		String[] arr = getStringList("Items that Endlectric will not drain from", "tweaks", new String[] {}, "Enter in the format \"modid:name;meta\" (leave meta blank to match any meta)");
 		int meta = -1;
 		for (int i=0; i<arr.length; ++i) {

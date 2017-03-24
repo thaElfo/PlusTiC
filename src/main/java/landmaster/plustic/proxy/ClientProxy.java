@@ -3,6 +3,8 @@ package landmaster.plustic.proxy;
 import java.util.*;
 import javax.annotation.*;
 import landmaster.plustic.*;
+import landmaster.plustic.entity.*;
+import landmaster.plustic.entity.render.RenderBlindBandit;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.block.model.*;
 import net.minecraft.client.renderer.block.statemap.*;
@@ -48,8 +50,15 @@ public class ClientProxy extends CommonProxy {
 		keyBindings = Arrays.asList(
 				new KeyBinding("key.plustic_release_entity.desc", Keyboard.KEY_0, "key.categories.plustic"),
 				new KeyBinding("key.plustic_toggle_gui.desc", Keyboard.KEY_I, "key.categories.plustic"),
-				new KeyBinding("key.plustic_set_portal.desc", Keyboard.KEY_N, "key.categories.plustic"));
+				new KeyBinding("key.plustic_set_portal.desc", Keyboard.KEY_N, "key.categories.plustic"),
+				new KeyBinding("key.plustic_brown_magic.desc", Keyboard.KEY_O, "key.categories.plustic"));
 		for (KeyBinding kb: keyBindings) ClientRegistry.registerKeyBinding(kb);
+	}
+	
+	@Override
+	public void initEntities() {
+		super.initEntities();
+		RenderingRegistry.registerEntityRenderingHandler(EntityBlindBandit.class, RenderBlindBandit.FACTORY);
 	}
 	
 	public static class FluidStateMapper extends StateMapperBase implements ItemMeshDefinition {

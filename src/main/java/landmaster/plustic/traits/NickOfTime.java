@@ -1,25 +1,16 @@
 package landmaster.plustic.traits;
 
 import landmaster.plustic.api.*;
-import landmaster.plustic.net.*;
-import landmaster.plustic.proxy.*;
 import landmaster.plustic.util.*;
-import net.minecraft.client.resources.*;
-import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.init.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
-import net.minecraft.network.play.server.*;
 import net.minecraft.potion.*;
 import net.minecraft.util.text.*;
-import net.minecraft.world.*;
 import net.minecraftforge.common.*;
 import net.minecraftforge.event.entity.living.*;
-import net.minecraftforge.event.entity.player.*;
-import net.minecraftforge.fml.common.*;
 import net.minecraftforge.fml.common.eventhandler.*;
-import net.minecraftforge.fml.relauncher.*;
 import net.minecraftforge.items.*;
 import slimeknights.tconstruct.library.traits.*;
 import slimeknights.tconstruct.library.utils.*;
@@ -33,15 +24,7 @@ public class NickOfTime extends AbstractTrait {
 		super("nickoftime", 0xFFF98E);
 		MinecraftForge.EVENT_BUS.register(this);
 		Toggle.toggleable.add(identifier);
-	}
-	
-	@Override
-	public void onUpdate(ItemStack tool, World world, Entity entity, int itemSlot, boolean isSelected) {
-		if (isSelected && FMLCommonHandler.instance().getSide().isClient()) {
-			if (CommonProxy.keyBindings.get(2).isPressed()) {
-				PacketHandler.INSTANCE.sendToServer(new PacketSetPortal());
-			}
-		}
+		Portal.portalable.add(identifier);
 	}
 	
 	@SubscribeEvent(priority = EventPriority.LOWEST)
@@ -53,14 +36,14 @@ public class NickOfTime extends AbstractTrait {
 				&& event.getEntityLiving().getHealth() <= event.getAmount()
 				&& TinkerUtil.hasTrait(nbt, identifier)
 				&& Toggle.getToggleState(nbt, identifier)
-				&& nbt.hasKey("nickoftime", 10)
-				&& canTeleport((EntityPlayer)event.getEntity(),
-						(coord = Coord4D.fromNBT(nbt.getCompoundTag("nickoftime"))))) {
+				&& nbt.hasKey(Portal.PORTAL_NBT, 10)
+				&& Utils.canTeleportTo((EntityPlayer)event.getEntity(),
+						(coord = Coord4D.fromNBT(nbt.getCompoundTag(Portal.PORTAL_NBT))))) {
 			IItemHandler ih = event.getEntity().getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 			for (int i=0; i<ih.getSlots(); ++i) {
 				ItemStack is = ih.extractItem(i, ENDER_COST, true);
 				if (is != null && is.getItem() == Items.ENDER_PEARL && is.stackSize >= ENDER_COST) {
-					teleportPlayerTo((EntityPlayerMP)event.getEntity(), coord);
+					Utils.teleportPlayerTo((EntityPlayerMP)event.getEntity(), coord);
 					ih.extractItem(i, ENDER_COST, false);
 					event.setCanceled(true);
 					event.getEntityLiving().removePotionEffect(MobEffects.WITHER);
@@ -72,71 +55,6 @@ public class NickOfTime extends AbstractTrait {
 					return;
 				}
 			}
-		}
-	}
-	
-	@SideOnly(Side.CLIENT)
-	@SubscribeEvent
-	public void tooltip(ItemTooltipEvent event) {
-		NBTTagCompound nbt0 = TagUtil.getTagSafe(event.getItemStack());
-		if (event.isCanceled()
-				|| event.getItemStack() == null
-				|| !TinkerUtil.hasTrait(nbt0, getIdentifier())) return;
-		if (nbt0.hasKey("nickoftime", 10)) {
-			NBTTagCompound nbt = nbt0.getCompoundTag("nickoftime");
-			event.getToolTip().add(I18n.format("tooltip.plustic.nickmodifier.info",
-					nbt.getInteger("x"),
-					nbt.getInteger("y"),
-					nbt.getInteger("z"),
-					nbt.getInteger("dim")));
-		}
-	}
-	
-	private boolean canTeleport(EntityPlayer player, Coord4D dest) {
-		if (dest == null) return false;
-		for (int i=1; i<=2; ++i) {
-			if (dest.add(0, i, 0).blockState().getBlock() != Blocks.AIR) {
-				return false;
-			}
-		}
-		return true;
-	}
-	
-	public static void teleportPlayerTo(EntityPlayerMP player, Coord4D coord) {
-		if (player.dimension != coord.dimensionId) {
-			int id = player.dimension;
-			WorldServer oldWorld = player.mcServer.worldServerForDimension(player.dimension);
-			player.dimension = coord.dimensionId;
-			WorldServer newWorld = player.mcServer.worldServerForDimension(player.dimension);
-			player.connection.sendPacket(new SPacketRespawn(player.dimension, player.worldObj.getDifficulty(), newWorld.getWorldInfo().getTerrainType(), player.interactionManager.getGameType()));
-			oldWorld.removeEntityDangerously(player);
-			player.isDead = false;
-
-			if(player.isEntityAlive())
-			{
-				newWorld.spawnEntityInWorld(player);
-				player.setLocationAndAngles(coord.xCoord+0.5, coord.yCoord+1, coord.zCoord+0.5, player.rotationYaw, player.rotationPitch);
-				newWorld.updateEntityWithOptionalForce(player, false);
-				player.setWorld(newWorld);
-			}
-
-			player.mcServer.getPlayerList().preparePlayer(player, oldWorld);
-			player.connection.setPlayerLocation(coord.xCoord+0.5, coord.yCoord+1, coord.zCoord+0.5, player.rotationYaw, player.rotationPitch);
-			player.interactionManager.setWorld(newWorld);
-			player.mcServer.getPlayerList().updateTimeAndWeatherForPlayer(player, newWorld);
-			player.mcServer.getPlayerList().syncPlayerInventory(player);
-
-			for(PotionEffect potioneffect : player.getActivePotionEffects())
-			{
-				player.connection.sendPacket(new SPacketEntityEffect(player.getEntityId(), potioneffect));
-			}
-
-			player.connection.sendPacket(new SPacketSetExperience(player.experience, player.experienceTotal, player.experienceLevel)); // Force XP sync
-
-			FMLCommonHandler.instance().firePlayerChangedDimensionEvent(player, id, coord.dimensionId);
-		}
-		else {
-			player.connection.setPlayerLocation(coord.xCoord+0.5, coord.yCoord+1, coord.zCoord+0.5, player.rotationYaw, player.rotationPitch);
 		}
 	}
 }

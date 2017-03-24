@@ -1,19 +1,24 @@
 package landmaster.plustic.util;
 
 import java.util.*;
-import net.minecraft.block.*;
-import net.minecraft.item.*;
-import net.minecraft.util.*;
-import net.minecraftforge.fluids.*;
-import net.minecraftforge.fml.common.*;
-import net.minecraftforge.fml.common.registry.*;
-import net.minecraftforge.oredict.*;
 
 import org.apache.commons.lang3.StringUtils;
+
 import landmaster.plustic.*;
 import landmaster.plustic.config.*;
 import landmaster.plustic.fluids.*;
 import landmaster.plustic.modifiers.*;
+import net.minecraft.block.*;
+import net.minecraft.entity.player.*;
+import net.minecraft.item.*;
+import net.minecraft.network.play.server.*;
+import net.minecraft.potion.*;
+import net.minecraft.util.*;
+import net.minecraft.world.*;
+import net.minecraftforge.fluids.*;
+import net.minecraftforge.fml.common.*;
+import net.minecraftforge.fml.common.registry.*;
+import net.minecraftforge.oredict.*;
 import slimeknights.tconstruct.smeltery.block.*;
 import slimeknights.tconstruct.library.*;
 import slimeknights.tconstruct.library.materials.*;
@@ -101,5 +106,53 @@ public class Utils {
 			return gcd(gcd(a,b), rest[0], rest1);
 		}
 		return b==0 ? a : gcd(b, a%b);
+	}
+
+	public static void teleportPlayerTo(EntityPlayerMP player, Coord4D coord) {
+		if (player.dimension != coord.dimensionId) {
+			int id = player.dimension;
+			WorldServer oldWorld = player.mcServer.worldServerForDimension(player.dimension);
+			player.dimension = coord.dimensionId;
+			WorldServer newWorld = player.mcServer.worldServerForDimension(player.dimension);
+			player.connection.sendPacket(new SPacketRespawn(player.dimension, player.worldObj.getDifficulty(), newWorld.getWorldInfo().getTerrainType(), player.interactionManager.getGameType()));
+			oldWorld.removeEntityDangerously(player);
+			player.isDead = false;
+	
+			if(player.isEntityAlive())
+			{
+				newWorld.spawnEntityInWorld(player);
+				player.setLocationAndAngles(coord.xCoord+0.5, coord.yCoord+1, coord.zCoord+0.5, player.rotationYaw, player.rotationPitch);
+				newWorld.updateEntityWithOptionalForce(player, false);
+				player.setWorld(newWorld);
+			}
+	
+			player.mcServer.getPlayerList().preparePlayer(player, oldWorld);
+			player.connection.setPlayerLocation(coord.xCoord+0.5, coord.yCoord+1, coord.zCoord+0.5, player.rotationYaw, player.rotationPitch);
+			player.interactionManager.setWorld(newWorld);
+			player.mcServer.getPlayerList().updateTimeAndWeatherForPlayer(player, newWorld);
+			player.mcServer.getPlayerList().syncPlayerInventory(player);
+	
+			for(PotionEffect potioneffect : player.getActivePotionEffects())
+			{
+				player.connection.sendPacket(new SPacketEntityEffect(player.getEntityId(), potioneffect));
+			}
+	
+			player.connection.sendPacket(new SPacketSetExperience(player.experience, player.experienceTotal, player.experienceLevel)); // Force XP sync
+	
+			FMLCommonHandler.instance().firePlayerChangedDimensionEvent(player, id, coord.dimensionId);
+		}
+		else {
+			player.connection.setPlayerLocation(coord.xCoord+0.5, coord.yCoord+1, coord.zCoord+0.5, player.rotationYaw, player.rotationPitch);
+		}
+	}
+
+	public static boolean canTeleportTo(EntityPlayer player, Coord4D dest) {
+		if (dest == null) return false;
+		for (int i=1; i<=2; ++i) {
+			if (dest.add(0, i, 0).blockState().getCollisionBoundingBox(dest.world(), dest.pos()) != null) {
+				return false;
+			}
+		}
+		return true;
 	}
 }

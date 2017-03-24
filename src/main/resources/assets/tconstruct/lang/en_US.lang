@@ -22,6 +22,7 @@ material.darksteel_plustic_enderio.name=Dark Steel
 material.signalum_plustic.name=Signalum
 material.enderium_plustic.name=Enderium
 material.nickel.name=Nickel
+material.wyvern_plustic.name=Wyvern
 
 modifier.bloodymary.name=Bloody Mary
 modifier.bloodymary.desc=§oBrought to you by the legendary Queen of England...§r\nDeals bonus damage depending on the amount of health already lost by the target. Also, a chance to drop a Coagulated Blood for each hit.
@@ -60,3 +61,7 @@ modifier.endlectric.name=Endlectric
 modifier.endlectric.desc=§oCHARGE!§r\nDraws energy from items in the player's inventory to do bonus damage.
 modifier.nickoftime.name=Nick of Time
 modifier.nickoftime.desc=§oPhew!§r\nPress the "set portal" key (default "N") to set a virtual portal on the block you are pointing at. If you are attacked with an attack that would normally kill you, you have 8 ender pearls to spare, and the portal has enough space above, then the pearls are consumed, you are teleported to the virtual portal, and you are spared. (The tool must be in your hand.)
+modifier.blindbandit.name=Blind Bandit
+modifier.blindbandit.desc=§oPulling a Rachel (no, she's not from Avatar)§r\nA mob called the "Blind Bandit" will sometimes be summoned for a limited time after you attack or are attacked. She will attack hostile mobs, and will also attack those who dare attack her, barring you.
+modifier.brownmagic.name=Brown Magic
+modifier.brownmagic.desc=§oYou're weird.§r\nPress the "set portal" key (default "N") to set a virtual portal on the block you are pointing at. By default, press "Y" to teleport there (if there is enough space).

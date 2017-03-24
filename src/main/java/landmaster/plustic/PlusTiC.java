@@ -2,6 +2,7 @@ package landmaster.plustic;
 
 import java.util.*;
 
+import com.brandon3055.draconicevolution.DEFeatures;
 import landmaster.plustic.api.*;
 import landmaster.plustic.block.*;
 import landmaster.plustic.proxy.*;
@@ -36,7 +37,7 @@ public class PlusTiC {
 	public static final String MODID = "plustic";
 	public static final String NAME = "PlusTiC";
 	public static final String VERSION = "3.1";
-	public static final String DEPENDS = "required-after:mantle;required-after:tconstruct;after:Mekanism;after:BiomesOPlenty;after:Botania;after:advancedRocketry;after:armorplus;after:EnderIO;after:projectred-exploration;after:thermalfoundation";
+	public static final String DEPENDS = "required-after:mantle;required-after:tconstruct;after:Mekanism;after:BiomesOPlenty;after:Botania;after:advancedRocketry;after:armorplus;after:EnderIO;after:projectred-exploration;after:thermalfoundation;after:draconicevolution;after:landcore";
 	
 	public static Config config;
 	
@@ -53,8 +54,9 @@ public class PlusTiC {
 	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
-		Config config = new Config(event);
-		config.sync();
+		(config = new Config(event)).sync();
+		
+		proxy.initEntities();
 		
 		initBase();
 		initBoP();
@@ -64,6 +66,7 @@ public class PlusTiC {
 		initArmorPlus();
 		initEnderIO();
 		initTF();
+		initDraconicEvolution();
 	    
 	    Utils.integrate(materials,materialIntegrations);
 	    Utils.registerModifiers();
@@ -613,10 +616,26 @@ public class PlusTiC {
 			materials.put("nickel", nickel);
 		}
 	}
+	private void initDraconicEvolution() {
+		if (Config.draconicEvolution && Loader.isModLoaded("draconicevolution")) {
+			Material wyvern = new Material("wyvern_plustic", TextFormatting.DARK_PURPLE);
+			wyvern.addTrait(BrownMagic.brownmagic, HEAD);
+			wyvern.addTrait(BlindBandit.blindbandit, HEAD);
+			wyvern.addTrait(Portly.portly);
+			wyvern.addItem(DEFeatures.wyvernCore, 1, Material.VALUE_Ingot);
+			wyvern.setRepresentativeItem(DEFeatures.wyvernCore);
+			proxy.setRenderInfo(wyvern, 0x7F00FF);
+			TinkerRegistry.addMaterialStats(wyvern, new HeadMaterialStats(2000, 8, 15, 8));
+			TinkerRegistry.addMaterialStats(wyvern, new HandleMaterialStats(1.6f, 130));
+			TinkerRegistry.addMaterialStats(wyvern, new ExtraMaterialStats(240));
+			TinkerRegistry.addMaterialStats(wyvern, new BowMaterialStats(1.6f, 2, 11));
+			materials.put("wyvern_core", wyvern);
+		}
+	}
 	
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
-		MinecraftForge.EVENT_BUS.register(Toggle.class);
+		registerAPIHandlers();
 		
 		proxy.registerKeyBindings();
 		PacketHandler.init();
@@ -631,6 +650,15 @@ public class PlusTiC {
 		Utils.setDispItem(materials.get("ruby"), "gemRuby");
 		Utils.setDispItem(materials.get("peridot"), "gemPeridot");
 		
+		initRecipes();
+	}
+	
+	private void registerAPIHandlers() {
+		MinecraftForge.EVENT_BUS.register(Toggle.class);
+		MinecraftForge.EVENT_BUS.register(Portal.class);
+	}
+	
+	private void initRecipes() {
 		Item bronzeNugget = Item.REGISTRY.getObject(new ResourceLocation(MODID, "bronzenugget"));
 		Item bronzeIngot = Item.REGISTRY.getObject(new ResourceLocation(MODID, "bronzeingot"));
 		Block osmiridiumBlock = Block.REGISTRY.getObject(new ResourceLocation(MODID, "osmiridiumblock"));

@@ -30,14 +30,16 @@ public class DivineShield extends AbstractTrait {
 	
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void defend(LivingHurtEvent event) {
+		ItemStack tool = event.getEntityLiving().getHeldItemMainhand();
 		if (event.getEntity().getEntityWorld().isRemote
-				|| !Toggle.getToggleState(event.getEntityLiving().getHeldItemMainhand(), identifier)
+				|| !Toggle.getToggleState(tool, identifier)
 				|| event.isCanceled()
 				|| !TinkerUtil.hasTrait(
-						TagUtil.getTagSafe(event.getEntityLiving().getHeldItemMainhand()),
-						getIdentifier()))
+						TagUtil.getTagSafe(tool),
+						getIdentifier())
+				|| ToolHelper.getCurrentDurability(tool) < 1)
 			return;
 		event.setAmount(event.getAmount() * 0.85f);
-		ToolHelper.damageTool(event.getEntityLiving().getHeldItemMainhand(), 1, event.getEntityLiving());
+		ToolHelper.damageTool(tool, 1, event.getEntityLiving());
 	}
 }

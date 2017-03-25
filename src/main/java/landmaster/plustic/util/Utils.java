@@ -4,10 +4,12 @@ import java.util.*;
 
 import org.apache.commons.lang3.StringUtils;
 
+import cofh.api.energy.*;
 import landmaster.plustic.*;
 import landmaster.plustic.config.*;
 import landmaster.plustic.fluids.*;
 import landmaster.plustic.modifiers.*;
+import net.darkhax.tesla.capability.*;
 import net.minecraft.block.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
@@ -15,6 +17,7 @@ import net.minecraft.network.play.server.*;
 import net.minecraft.potion.*;
 import net.minecraft.util.*;
 import net.minecraft.world.*;
+import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.fluids.*;
 import net.minecraftforge.fml.common.*;
 import net.minecraftforge.fml.common.registry.*;
@@ -154,5 +157,21 @@ public class Utils {
 			}
 		}
 		return true;
+	}
+	
+	public static int extractEnergy(ItemStack is, int amount, boolean simulate) {
+		if (is != null) {
+			if (is.getItem() instanceof IEnergyContainerItem) {
+				IEnergyContainerItem energy = ((IEnergyContainerItem)is.getItem());
+				return energy.extractEnergy(is, amount, simulate);
+			}
+			if (is.hasCapability(CapabilityEnergy.ENERGY, null)) {
+				return is.getCapability(CapabilityEnergy.ENERGY, null).extractEnergy(amount, simulate);
+			}
+			if (Loader.isModLoaded("tesla") && is.hasCapability(TeslaCapabilities.CAPABILITY_PRODUCER, null)) {
+				return (int)is.getCapability(TeslaCapabilities.CAPABILITY_PRODUCER, null).takePower(amount, simulate);
+			}
+		}
+		return 0;
 	}
 }

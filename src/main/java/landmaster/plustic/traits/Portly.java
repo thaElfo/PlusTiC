@@ -18,7 +18,6 @@ import slimeknights.tconstruct.library.traits.*;
 import slimeknights.tconstruct.library.utils.*;
 
 public class Portly extends AbstractTrait {
-	public static final int DURABILITY_COST = 15;
 	public static final Portly portly = new Portly();
 	
 	public Portly() {
@@ -43,7 +42,7 @@ public class Portly extends AbstractTrait {
 				|| !event.getEntityPlayer().isSneaking()
 				|| event.getItemStack() == null
 				|| !TinkerUtil.hasTrait(nbt, getIdentifier())
-				|| ToolHelper.getCurrentDurability(event.getItemStack()) < DURABILITY_COST
+				|| ToolHelper.getCurrentDurability(event.getItemStack()) < durabilityCost(event.getTarget())
 				|| nbt.hasKey("portlyGentleman", 10)
 				|| event.getTarget() instanceof EntityPlayer)
 			return;
@@ -52,7 +51,7 @@ public class Portly extends AbstractTrait {
 			event.getItemStack().setTagCompound(nbt);
 			event.getWorld().removeEntity(event.getTarget());
 		}
-		ToolHelper.damageTool(event.getItemStack(), DURABILITY_COST, event.getEntityLiving());
+		ToolHelper.damageTool(event.getItemStack(), durabilityCost(event.getTarget()), event.getEntityLiving());
 		event.getEntityPlayer().swingArm(event.getHand());
 		event.getEntityPlayer().addChatMessage(new TextComponentTranslation(
 				"msg.plustic.portlymodifier.set", nbt.getCompoundTag("portlyGentleman").getString("id")));
@@ -68,5 +67,9 @@ public class Portly extends AbstractTrait {
 			event.getToolTip().add(I18n.format("tooltip.plustic.portlymodifier.info",
 					nbt.getCompoundTag("portlyGentleman").getString("id")));
 		}
+	}
+	private int durabilityCost(Entity entity) {
+		return Math.max(15, entity instanceof EntityLivingBase ?
+				(int)((EntityLivingBase)entity).getHealth() : 15);
 	}
 }

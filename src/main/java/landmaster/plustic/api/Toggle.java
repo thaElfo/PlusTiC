@@ -48,8 +48,6 @@ public class Toggle {
 		
 		public Gui(EntityPlayer player) {
 			this.player = player;
-			guiLeft = (width - xSize) / 2;
-	        guiTop = (height - ySize) / 2;
 			page = 0;
 			identifiers = new ArrayList<>();
 			enableds = new ArrayList<>();
@@ -63,6 +61,13 @@ public class Toggle {
 					enableds.add(getToggleState(nbt, identifier));
 				}
 			}
+		}
+		
+		@Override
+		public void initGui() {
+			super.initGui();
+			guiLeft = (width - xSize) / 2;
+	        guiTop = (height - ySize) / 2;
 		}
 		
 		@Override

@@ -3,7 +3,9 @@ package landmaster.plustic.traits;
 import landmaster.plustic.api.*;
 import landmaster.plustic.entity.*;
 import net.minecraft.entity.*;
+import net.minecraft.entity.monster.*;
 import net.minecraft.item.*;
+import net.minecraft.util.*;
 import net.minecraftforge.common.*;
 import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.fml.common.eventhandler.*;
@@ -21,9 +23,9 @@ public class BlindBandit extends AbstractTrait {
 	
 	@Override
 	public void afterHit(ItemStack tool, EntityLivingBase player, EntityLivingBase target, float damageDealt, boolean wasCritical, boolean wasHit) {
-		if (wasHit && target.isEntityAlive() && random.nextFloat() < 0.38f
+		if (wasHit && target.isEntityAlive() && target instanceof IMob && random.nextFloat() < 0.38f
 				&& Toggle.getToggleState(tool, identifier)) {
-			EntityBlindBandit bandit = new EntityBlindBandit(player.worldObj);
+			EntityBlindBandit bandit = new EntityBlindBandit(player.worldObj, player, target);
 			bandit.setPosition(player.posX,
 					player.posY,
 					player.posZ);
@@ -39,10 +41,13 @@ public class BlindBandit extends AbstractTrait {
 				|| event.isCanceled()
 				|| !TinkerUtil.hasTrait(
 						TagUtil.getTagSafe(tool),
-						getIdentifier()))
+						getIdentifier())
+				|| !(event.getSource() instanceof EntityDamageSource)
+				|| !(event.getSource().getEntity() instanceof EntityLivingBase))
 			return;
 		if (random.nextFloat() < 0.38f) {
-			EntityBlindBandit bandit = new EntityBlindBandit(event.getEntity().worldObj, event.getEntity());
+			EntityLivingBase target = (EntityLivingBase)event.getSource().getEntity();
+			EntityBlindBandit bandit = new EntityBlindBandit(event.getEntity().worldObj, event.getEntity(), target);
 			bandit.setPosition(event.getEntity().posX,
 					event.getEntity().posY,
 					event.getEntity().posZ);

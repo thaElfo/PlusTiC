@@ -58,6 +58,6 @@ public class ModEndlectric extends ModifierTrait {
 	}
 	private float augmentDamage(float old, NBTTagCompound modifierTag) {
 		ModifierNBT data = ModifierNBT.readTag(modifierTag);
-		return old + 2.5f*(float)Math.pow(data.level, 1.4);
+		return old + 5*data.level;
 	}
 }

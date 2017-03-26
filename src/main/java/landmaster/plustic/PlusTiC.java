@@ -620,7 +620,7 @@ public class PlusTiC {
 		if (Config.draconicEvolution && Loader.isModLoaded("draconicevolution")) {
 			Material wyvern = new Material("wyvern_plustic", TextFormatting.DARK_PURPLE);
 			wyvern.addTrait(BrownMagic.brownmagic, HEAD);
-			wyvern.addTrait(BlindBandit.blindbandit);
+			wyvern.addTrait(BlindBandit.blindbandit, HEAD);
 			wyvern.addTrait(Portly.portly);
 			wyvern.addItem(DEFeatures.wyvernCore, 1, Material.VALUE_Ingot);
 			wyvern.setCraftable(true);
@@ -635,6 +635,7 @@ public class PlusTiC {
 			Material awakened = new Material("awakened_plustic", TextFormatting.GOLD);
 			awakened.addTrait(RudeAwakening.rudeawakening, HEAD);
 			awakened.addTrait(BrownMagic.brownmagic, HEAD);
+			awakened.addTrait(BlindBandit.blindbandit);
 			awakened.addTrait(Apocalypse.apocalypse);
 			awakened.addTrait(Global.global);
 			awakened.addItem(DEFeatures.awakenedCore, 1, Material.VALUE_Ingot);

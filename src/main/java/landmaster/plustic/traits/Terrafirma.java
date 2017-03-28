@@ -1,15 +1,16 @@
 package landmaster.plustic.traits;
 
+import java.util.*;
+
+import com.google.common.collect.*;
+
 import net.minecraft.entity.*;
 import net.minecraft.item.*;
 import net.minecraft.world.*;
 import slimeknights.tconstruct.library.traits.*;
 
 public class Terrafirma extends AbstractTraitLeveled {
-	public static final Terrafirma[] terrafirma = new Terrafirma[] {
-			new Terrafirma(1),
-			new Terrafirma(2)
-	};
+	public static final List<Terrafirma> terrafirma = ImmutableList.of(new Terrafirma(1), new Terrafirma(2));
 	
 	public Terrafirma(int levels) {
 		super("terrafirma", 0x00FF00, 3, levels);

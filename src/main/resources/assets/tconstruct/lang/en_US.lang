@@ -25,6 +25,7 @@ material.nickel.name=Nickel
 material.wyvern_plustic.name=Wyvern
 material.awakened_plustic.name=Awakened
 material.mirion.name=Mirion
+material.livingwood_plustic.name=Livingwood
 
 modifier.bloodymary.name=Bloody Mary
 modifier.bloodymary.desc=§oBrought to you by the legendary Queen of England...§r\nDeals bonus damage depending on the amount of health already lost by the target. Also, a chance to drop a Coagulated Blood for each hit.
@@ -71,3 +72,5 @@ modifier.rudeawakening.name=Rude Awakening
 modifier.rudeawakening.desc=§oThe hydra grovels before me...§r\nDamage pierces armor.
 modifier.mirabile.name=Mirabile Visu
 modifier.mirabile.desc=§oWonderful to see§r\nOccasionally, a gold or diamond ore will appear in stone immediately surrounding you (at the cost of durability).
+modifier.botanical.name=Botanical
+modifier.botanical.desc=§oI eat zombies for breakfast§r\nIncreases the amount of modifier slots; the effect stacks greatly.

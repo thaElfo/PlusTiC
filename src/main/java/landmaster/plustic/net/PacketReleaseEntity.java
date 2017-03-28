@@ -4,6 +4,7 @@ import io.netty.buffer.*;
 import landmaster.plustic.traits.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
+import net.minecraft.init.*;
 import net.minecraft.nbt.*;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
@@ -44,6 +45,8 @@ public class PacketReleaseEntity implements IMessage, IMessageHandler<PacketRele
 			String id = nbt.getCompoundTag("portlyGentleman").getString("id");
 			nbt.removeTag("portlyGentleman");
 			ep.getHeldItemMainhand().setTagCompound(nbt);
+			ep.playSound(SoundEvents.ENTITY_ENDERMEN_TELEPORT, 1.0f, 1.0f);
+			ep.swingArm(EnumHand.MAIN_HAND);
 			ep.addChatMessage(new TextComponentTranslation(
 					"msg.plustic.portlymodifier.unset", id));
 		});

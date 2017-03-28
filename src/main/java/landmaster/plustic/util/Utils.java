@@ -164,7 +164,7 @@ public class Utils {
 	public static int extractEnergy(ItemStack is, int amount, boolean simulate) {
 		if (is != null) {
 			if (is.getItem() instanceof IEnergyContainerItem) {
-				IEnergyContainerItem energy = ((IEnergyContainerItem)is.getItem());
+				IEnergyContainerItem energy = (IEnergyContainerItem)is.getItem();
 				return energy.extractEnergy(is, amount, simulate);
 			}
 			if (is.hasCapability(CapabilityEnergy.ENERGY, null)) {

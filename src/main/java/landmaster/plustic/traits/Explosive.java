@@ -14,6 +14,6 @@ public class Explosive extends AbstractTrait {
 	@Override
 	public void onHit(ItemStack tool, EntityLivingBase player, EntityLivingBase target, float damage, boolean isCritical) {
 		if (!player.getEntityWorld().isRemote)
-			target.getEntityWorld().createExplosion(target, target.posX, target.posY, target.posZ, 2.4f, false);
+			target.getEntityWorld().createExplosion(player, target.posX, target.posY, target.posZ, 2.4f, false);
 	}
 }

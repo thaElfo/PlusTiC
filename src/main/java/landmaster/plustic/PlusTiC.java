@@ -1,10 +1,10 @@
 package landmaster.plustic;
 
 import java.util.*;
+import org.apache.logging.log4j.*;
 
 import com.brandon3055.draconicevolution.DEFeatures;
 import landmaster.plustic.api.*;
-import landmaster.plustic.block.*;
 import landmaster.plustic.proxy.*;
 import landmaster.plustic.config.*;
 import landmaster.plustic.fluids.*;
@@ -37,7 +37,7 @@ public class PlusTiC {
 	public static final String MODID = "plustic";
 	public static final String NAME = "PlusTiC";
 	public static final String VERSION = "4.0";
-	public static final String DEPENDS = "required-after:mantle;required-after:tconstruct;after:Mekanism;after:BiomesOPlenty;after:Botania;after:advancedRocketry;after:armorplus;after:EnderIO;after:projectred-exploration;after:thermalfoundation;after:draconicevolution;after:landcore;after:tesla";
+	public static final String DEPENDS = "required-after:mantle;required-after:tconstruct;after:Mekanism;after:BiomesOPlenty;after:Botania;after:advancedRocketry;after:armorplus;after:EnderIO;after:projectred-exploration;after:thermalfoundation;after:draconicevolution;after:landcore;after:tesla;after:baubles";
 	
 	public static Config config;
 	
@@ -47,8 +47,10 @@ public class PlusTiC {
 	@SidedProxy(serverSide = "landmaster.plustic.proxy.CommonProxy", clientSide = "landmaster.plustic.proxy.ClientProxy")
 	public static CommonProxy proxy;
 	
-	public static Map<String,Material> materials = new HashMap<>();
-	public static Map<String,MaterialIntegration> materialIntegrations = new HashMap<>();
+	public static final Logger log = LogManager.getLogger(MODID.toUpperCase(Locale.US/* to avoid problems with Turkish */));
+	
+	public static final Map<String,Material> materials = new HashMap<>();
+	public static final Map<String,MaterialIntegration> materialIntegrations = new HashMap<>();
 	
 	public static final BowMaterialStats justWhy = new BowMaterialStats(0.2f, 0.4f, -1f);
 	
@@ -85,33 +87,13 @@ public class PlusTiC {
 			
 			if (TinkerIntegration.isIntegrated(TinkerFluids.aluminum)) {
 				// alumite is back! (with some changes)
-				Item alumiteIngot = new Item().setUnlocalizedName("alumiteingot")
-						.setRegistryName("alumiteingot");
-				alumiteIngot.setCreativeTab(TinkerRegistry.tabGeneral);
-				GameRegistry.register(alumiteIngot);
-				OreDictionary.registerOre("ingotAlumite", alumiteIngot);
-				proxy.registerItemRenderer(alumiteIngot, 0, "alumiteingot");
-				
-				Item alumiteNugget = new Item().setUnlocalizedName("alumitenugget")
-						.setRegistryName("alumitenugget");
-				alumiteNugget.setCreativeTab(TinkerRegistry.tabGeneral);
-				GameRegistry.register(alumiteNugget);
-				OreDictionary.registerOre("nuggetAlumite", alumiteNugget);
-				proxy.registerItemRenderer(alumiteNugget, 0, "alumitenugget");
-				
-				Block alumiteBlock = new MetalBlock("alumiteblock");
-				alumiteBlock.setCreativeTab(TinkerRegistry.tabGeneral);
-				ItemBlock alumiteBlock_item = new ItemBlock(alumiteBlock);
-				GameRegistry.register(alumiteBlock);
-				GameRegistry.register(alumiteBlock_item, alumiteBlock.getRegistryName());
-				OreDictionary.registerOre("blockAlumite", alumiteBlock);
-				proxy.registerItemRenderer(alumiteBlock_item, 0, "alumiteblock");
+				Utils.ItemMatGroup alumiteGroup = Utils.registerMatGroup("alumite");
 				
 				Material alumite = new Material("alumite", TextFormatting.RED);
 				alumite.addTrait(Global.global);
 				alumite.addItem("ingotAlumite", 1, Material.VALUE_Ingot);
 				alumite.setCraftable(false).setCastable(true);
-				alumite.setRepresentativeItem(alumiteIngot);
+				alumite.setRepresentativeItem(alumiteGroup.ingot);
 				proxy.setRenderInfo(alumite, 0xFFE0F1);
 				
 				FluidMolten alumiteFluid = Utils.fluidMetal("alumite", 0xFFE0F1);
@@ -379,7 +361,36 @@ public class PlusTiC {
 	        TinkerRegistry.addMaterialStats(manasteel, new BowMaterialStats(1, 1.1f, 1));
 	        
 	        materials.put("manasteel", manasteel);
-		}
+	        
+	        // MIRION ALLOY
+        	Utils.ItemMatGroup mirionGroup = Utils.registerMatGroup("mirion");
+        	
+        	Material mirion = new Material("mirion", TextFormatting.YELLOW);
+        	mirion.addTrait(Mirabile.mirabile, HEAD);
+        	mirion.addTrait(Mana.mana);
+        	mirion.addItem("ingotMirion", 1, Material.VALUE_Ingot);
+        	mirion.setCraftable(false).setCastable(true);
+        	mirion.setRepresentativeItem(mirionGroup.ingot);
+        	proxy.setRenderInfo(mirion, 0xDDFF00);
+        	
+        	FluidMolten mirionFluid = Utils.fluidMetal("mirion", 0xDDFF00);
+        	mirionFluid.setTemperature(777);
+        	Utils.initFluidMetal(mirionFluid);
+        	mirion.setFluid(mirionFluid);
+        	TinkerRegistry.registerAlloy(new FluidStack(mirionFluid, 4*18),
+        			new FluidStack(terrasteelFluid, 18),
+        			new FluidStack(manasteelFluid, 18),
+        			new FluidStack(elementiumFluid, 18),
+        			new FluidStack(TinkerFluids.cobalt, 18),
+        			new FluidStack(TinkerFluids.glass, 125));
+        	
+        	TinkerRegistry.addMaterialStats(mirion, new HeadMaterialStats(1919, 9, 9, 5));
+        	TinkerRegistry.addMaterialStats(mirion, new HandleMaterialStats(1.1f, 40));
+        	TinkerRegistry.addMaterialStats(mirion, new ExtraMaterialStats(90));
+        	TinkerRegistry.addMaterialStats(mirion, new BowMaterialStats(1.35f, 1.5f, 5.5f));
+        	
+        	materials.put("mirion", mirion);
+        }
 	}
 	private void initAdvRocketry() {
 		if (Config.advancedRocketry && Loader.isModLoaded("libVulpes")) {
@@ -427,34 +438,14 @@ public class PlusTiC {
 	        
 	        if (Config.mekanism && Loader.isModLoaded("Mekanism")) {
 	        	// osmiridium
-	        	Item osmiridiumIngot = new Item().setUnlocalizedName("osmiridiumingot")
-	        			.setRegistryName("osmiridiumingot");
-	        	osmiridiumIngot.setCreativeTab(TinkerRegistry.tabGeneral);
-	        	GameRegistry.register(osmiridiumIngot);
-	        	OreDictionary.registerOre("ingotOsmiridium", osmiridiumIngot);
-	        	proxy.registerItemRenderer(osmiridiumIngot, 0, "osmiridiumingot");
-	        	
-	        	Item osmiridiumNugget = new Item().setUnlocalizedName("osmiridiumnugget")
-	        			.setRegistryName("osmiridiumnugget");
-	        	osmiridiumNugget.setCreativeTab(TinkerRegistry.tabGeneral);
-	        	GameRegistry.register(osmiridiumNugget);
-	        	OreDictionary.registerOre("nuggetOsmiridium", osmiridiumNugget);
-	        	proxy.registerItemRenderer(osmiridiumNugget, 0, "osmiridiumnugget");
-	        	
-	        	MetalBlock osmiridiumBlock = new MetalBlock("osmiridiumblock");
-	        	osmiridiumBlock.setCreativeTab(TinkerRegistry.tabGeneral);
-	        	ItemBlock osmiridiumBlock_item = new ItemBlock(osmiridiumBlock);
-	        	GameRegistry.register(osmiridiumBlock);
-	        	GameRegistry.register(osmiridiumBlock_item, osmiridiumBlock.getRegistryName());
-	        	OreDictionary.registerOre("blockOsmiridium", osmiridiumBlock);
-	        	proxy.registerItemRenderer(osmiridiumBlock_item, 0, "osmiridiumblock");
+	        	Utils.ItemMatGroup osmiridiumGroup = Utils.registerMatGroup("osmiridium");
 	        	
 	        	Material osmiridium = new Material("osmiridium", TextFormatting.LIGHT_PURPLE);
 	        	osmiridium.addTrait(DevilsStrength.devilsstrength);
 	        	osmiridium.addTrait(Anticorrosion.anticorrosion, HEAD);
 	        	osmiridium.addItem("ingotOsmiridium", 1, Material.VALUE_Ingot);
 	        	osmiridium.setCraftable(false).setCastable(true);
-	        	osmiridium.setRepresentativeItem(osmiridiumIngot);
+	        	osmiridium.setRepresentativeItem(osmiridiumGroup.ingot);
 	        	proxy.setRenderInfo(osmiridium, 0x666DFF);
 	        	
 	        	FluidMolten osmiridiumFluid = Utils.fluidMetal("osmiridium", 0x666DFF);
@@ -678,12 +669,19 @@ public class PlusTiC {
 	private void initRecipes() {
 		Item bronzeNugget = Item.REGISTRY.getObject(new ResourceLocation(MODID, "bronzenugget"));
 		Item bronzeIngot = Item.REGISTRY.getObject(new ResourceLocation(MODID, "bronzeingot"));
+		
 		Block osmiridiumBlock = Block.REGISTRY.getObject(new ResourceLocation(MODID, "osmiridiumblock"));
 		Item osmiridiumIngot = Item.REGISTRY.getObject(new ResourceLocation(MODID, "osmiridiumingot"));
 		Item osmiridiumNugget = Item.REGISTRY.getObject(new ResourceLocation(MODID, "osmiridiumnugget"));
+		
 		Block alumiteBlock = Block.REGISTRY.getObject(new ResourceLocation(MODID, "alumiteblock"));
 		Item alumiteIngot = Item.REGISTRY.getObject(new ResourceLocation(MODID, "alumiteingot"));
 		Item alumiteNugget = Item.REGISTRY.getObject(new ResourceLocation(MODID, "alumitenugget"));
+		
+		Block mirionBlock = Block.REGISTRY.getObject(new ResourceLocation(MODID, "mirionblock"));
+		Item mirionIngot = Item.REGISTRY.getObject(new ResourceLocation(MODID, "mirioningot"));
+		Item mirionNugget = Item.REGISTRY.getObject(new ResourceLocation(MODID, "mirionnugget"));
+		
 		if (bronzeNugget != null) {
 			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(bronzeIngot),
 					"III", "III", "III",
@@ -709,6 +707,16 @@ public class PlusTiC {
 					"III", "III", "III",
 					'I', "nuggetAlumite"));
 			GameRegistry.addShapelessRecipe(new ItemStack(alumiteNugget, 9), alumiteIngot);
+		}
+		if (mirionNugget != null) {
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(mirionBlock),
+					"III", "III", "III",
+					'I', "ingotMirion"));
+			GameRegistry.addShapelessRecipe(new ItemStack(mirionIngot, 9), mirionBlock);
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(mirionIngot),
+					"III", "III", "III",
+					'I', "nuggetMirion"));
+			GameRegistry.addShapelessRecipe(new ItemStack(mirionNugget, 9), mirionIngot);
 		}
 	}
 }

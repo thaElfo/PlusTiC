@@ -48,6 +48,9 @@
         }],
         "nickel": [{
         	"custom": { "fluid": "nickel" }
+        }],
+        "mirion": [{
+        	"custom": { "fluid": "mirion" }
         }]
     }
 }

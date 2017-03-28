@@ -6,6 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import cofh.api.energy.*;
 import landmaster.plustic.*;
+import landmaster.plustic.block.*;
 import landmaster.plustic.config.*;
 import landmaster.plustic.fluids.*;
 import landmaster.plustic.modifiers.*;
@@ -17,7 +18,7 @@ import net.minecraft.network.play.server.*;
 import net.minecraft.potion.*;
 import net.minecraft.util.*;
 import net.minecraft.world.*;
-import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.energy.*;
 import net.minecraftforge.fluids.*;
 import net.minecraftforge.fml.common.*;
 import net.minecraftforge.fml.common.registry.*;
@@ -28,16 +29,17 @@ import slimeknights.tconstruct.library.materials.*;
 import slimeknights.tconstruct.library.modifiers.*;
 
 public class Utils {
-	public static void integrate(Map<String,Material> materials,Map<String,MaterialIntegration> materialIntegrations) {
-		materials.entrySet().forEach(ent -> {
+	public static void integrate(Map<String,Material> materials,
+			Map<String,MaterialIntegration> materialIntegrations) {
+		materials.forEach((k, v) -> {
 			MaterialIntegration mi;
-			if (ent.getValue().getFluid() != null)
-				mi = new MaterialIntegration(ent.getValue(),ent.getValue().getFluid(),StringUtils.capitalize(ent.getKey())).toolforge();
+			if (v.getFluid() != null)
+				mi = new MaterialIntegration(v, v.getFluid(), StringUtils.capitalize(k)).toolforge();
 			else
-				mi = new MaterialIntegration(ent.getValue());
+				mi = new MaterialIntegration(v);
 			mi.integrate();
 			mi.integrateRecipes();
-			materialIntegrations.put(ent.getKey(), mi);
+			materialIntegrations.put(k, mi);
 		});
 	}
 	
@@ -173,5 +175,43 @@ public class Utils {
 			}
 		}
 		return 0;
+	}
+	
+	public static class ItemMatGroup {
+		public Item nugget, ingot;
+		public Block block;
+		public ItemMatGroup() {}
+		public ItemMatGroup(Item nugget, Item ingot, Block block) {
+			this.nugget = nugget;
+			this.ingot = ingot;
+			this.block = block;
+		}
+	}
+	
+	public static ItemMatGroup registerMatGroup(String name) {
+		ItemMatGroup img = new ItemMatGroup();
+		img.nugget = new Item().setUnlocalizedName(name+"nugget")
+				.setRegistryName(name+"nugget");
+		img.nugget.setCreativeTab(TinkerRegistry.tabGeneral);
+		GameRegistry.register(img.nugget);
+		OreDictionary.registerOre("nugget"+StringUtils.capitalize(name), img.nugget);
+		PlusTiC.proxy.registerItemRenderer(img.nugget, 0, name+"nugget");
+		
+		img.ingot = new Item().setUnlocalizedName(name+"ingot")
+				.setRegistryName(name+"ingot");
+		img.ingot.setCreativeTab(TinkerRegistry.tabGeneral);
+		GameRegistry.register(img.ingot);
+		OreDictionary.registerOre("ingot"+StringUtils.capitalize(name), img.ingot);
+		PlusTiC.proxy.registerItemRenderer(img.ingot, 0, name+"ingot");
+		
+		img.block = new MetalBlock(name+"block");
+		img.block.setCreativeTab(TinkerRegistry.tabGeneral);
+		ItemBlock bitem = new ItemBlock(img.block);
+		GameRegistry.register(img.block);
+		GameRegistry.register(bitem, img.block.getRegistryName());
+		OreDictionary.registerOre("block"+StringUtils.capitalize(name), img.block);
+		PlusTiC.proxy.registerItemRenderer(bitem, 0, name+"block");
+		
+		return img;
 	}
 }

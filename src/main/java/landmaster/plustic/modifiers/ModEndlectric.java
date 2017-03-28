@@ -10,6 +10,7 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
+import net.minecraftforge.fml.common.Loader;
 import slimeknights.tconstruct.library.modifiers.*;
 import slimeknights.tconstruct.library.utils.*;
 
@@ -40,6 +41,7 @@ public class ModEndlectric extends ModifierTrait {
 					}
 				}
 			}
+			if (!Loader.isModLoaded("baubles")) break energydraw;
 			IBaublesItemHandler ib = BaublesApi.getBaublesHandler(ep);
 			for (int i=0; i<ib.getSlots(); ++i) {
 				ItemStack is = ib.getStackInSlot(i);

@@ -548,6 +548,27 @@ public class PlusTiC {
 					new BowMaterialStats(1.2f, 1.6f, 4.4f));
 			materials.put("signalum", signalum);
 			
+			Material platinum = new Material("platinum_plustic", TextFormatting.BLUE);
+			platinum.addTrait(Global.global, HEAD);
+			platinum.addTrait(Heavy.heavy);
+			platinum.addTrait(Anticorrosion.anticorrosion);
+			platinum.addItem("ingotPlatinum", 1, Material.VALUE_Ingot);
+			platinum.setCraftable(false).setCastable(true);
+			Utils.setDispItem(platinum, "ingotPlatinum");
+			proxy.setRenderInfo(platinum, 0xB7E7FF);
+			
+			FluidMolten platinumFluid = Utils.fluidMetal("platinum", 0xB7E7FF);
+			platinumFluid.setTemperature(680);
+			Utils.initFluidMetal(platinumFluid);
+			platinum.setFluid(platinumFluid);
+			
+			TinkerRegistry.addMaterialStats(platinum, new HeadMaterialStats(720, 8, 6, COBALT),
+					new HandleMaterialStats(1.05f, -5),
+					new ExtraMaterialStats(60),
+					new BowMaterialStats(0.85f, 1.8f, 8));
+			
+			materials.put("platinum", platinum);
+			
 			Material enderium = new Material("enderium_plustic", TextFormatting.DARK_GREEN);
 			enderium.addTrait(Portly.portly, HEAD);
 			enderium.addTrait(Global.global);
@@ -558,14 +579,6 @@ public class PlusTiC {
 			enderium.setCraftable(false).setCastable(true);
 			Utils.setDispItem(enderium, "ingotEnderium");
 			proxy.setRenderInfo(enderium, 0x007068);
-			
-			FluidMolten platinumFluid = Utils.fluidMetal("platinum", 0xB7E7FF);
-			platinumFluid.setTemperature(680);
-			Utils.initFluidMetal(platinumFluid);
-			MaterialIntegration platinumI = new MaterialIntegration(null, platinumFluid, "Platinum");
-			platinumI.integrate();
-			platinumI.integrateRecipes();
-			materialIntegrations.put("platinum", platinumI);
 			
 			FluidMolten enderiumFluid = Utils.fluidMetal("enderium", 0x007068);
 			enderiumFluid.setTemperature(970);

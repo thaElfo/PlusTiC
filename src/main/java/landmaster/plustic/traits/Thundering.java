@@ -14,8 +14,7 @@ public class Thundering extends AbstractTrait {
 	
 	@Override
 	public void afterHit(ItemStack tool, EntityLivingBase player, EntityLivingBase target, float damageDealt, boolean wasCritical, boolean wasHit) {
-		if (wasHit)
-			target.getEntityWorld().addWeatherEffect(
+		target.getEntityWorld().addWeatherEffect(
 				new EntityLightningBolt(target.getEntityWorld(), target.posX, target.posY, target.posZ, false)
 				);
 	}

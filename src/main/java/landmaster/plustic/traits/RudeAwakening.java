@@ -1,6 +1,7 @@
 package landmaster.plustic.traits;
 
 import net.minecraft.entity.*;
+import net.minecraft.entity.monster.*;
 import net.minecraft.item.*;
 import net.minecraft.util.*;
 import net.minecraftforge.common.*;
@@ -19,7 +20,7 @@ public class RudeAwakening extends AbstractTrait {
 	
 	@SubscribeEvent(priority = EventPriority.LOWEST/* for now */)
 	public void attack(LivingHurtEvent event) {
-		if (event.getSource() instanceof EntityDamageSource) {
+		if (event.getSource() instanceof EntityDamageSource && event.getEntity() instanceof IMob) {
 			Entity ent = event.getSource().getEntity();
 			if (ent instanceof EntityLivingBase) {
 				ItemStack tool = ((EntityLivingBase)ent).getHeldItemMainhand();

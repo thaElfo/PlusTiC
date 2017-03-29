@@ -121,8 +121,10 @@ public class EntityBlindBandit extends EntityCreature {
             f += EnchantmentHelper.getModifierForCreature(this.getHeldItemMainhand(), ((EntityLivingBase)entityIn).getCreatureAttribute());
             i += EnchantmentHelper.getKnockbackModifier(this);
         }
-
-        boolean flag = entityIn.attackEntityFrom(DamageSource.causeMobDamage(this).setDamageBypassesArmor(), f);
+        
+        DamageSource src = DamageSource.causeMobDamage(this);
+        src.setDamageBypassesArmor();
+        boolean flag = entityIn.attackEntityFrom(src, f);
 
         if (flag)
         {
@@ -173,9 +175,9 @@ public class EntityBlindBandit extends EntityCreature {
         // Here we set various attributes for our mob. Like maximum health, armor, speed, ...
         this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(35.0D);
         this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.5D);
-        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(6.5D);
-        this.getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(12.0D);
-        this.getEntityAttribute(SharedMonsterAttributes.ARMOR_TOUGHNESS).setBaseValue(3.0D);
+        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(4D);
+        this.getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(19.0D);
+        this.getEntityAttribute(SharedMonsterAttributes.ARMOR_TOUGHNESS).setBaseValue(8.0D);
     }
 	
 	@Override

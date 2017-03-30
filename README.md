@@ -12,3 +12,4 @@ CurseForge page: https://minecraft.curseforge.com/projects/plustic
 - EnderIO by crazypants
 - Thermal Foundation by CoFH
 - Draconic Evolution by brandon3055
+- Actually Additions by Ellpeck

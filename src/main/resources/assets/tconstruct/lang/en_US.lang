@@ -27,6 +27,7 @@ material.wyvern_plustic.name=Wyvern
 material.awakened_plustic.name=Awakened
 material.mirion.name=Mirion
 material.livingwood_plustic.name=Livingwood
+material.blackquartz_plustic.name=Black Quartz
 
 modifier.bloodymary.name=Bloody Mary
 modifier.bloodymary.desc=§oBrought to you by the legendary Queen of England...§r\nDeals bonus damage depending on the amount of health already lost by the target. Also, a chance to drop a Coagulated Blood for each hit.

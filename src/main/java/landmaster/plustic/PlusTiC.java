@@ -37,7 +37,7 @@ public class PlusTiC {
 	public static final String MODID = "plustic";
 	public static final String NAME = "PlusTiC";
 	public static final String VERSION = "4.0";
-	public static final String DEPENDS = "required-after:mantle;required-after:tconstruct;after:Mekanism;after:BiomesOPlenty;after:Botania;after:advancedRocketry;after:armorplus;after:EnderIO;after:projectred-exploration;after:thermalfoundation;after:draconicevolution;after:landcore;after:tesla;after:baubles";
+	public static final String DEPENDS = "required-after:mantle;required-after:tconstruct;after:Mekanism;after:BiomesOPlenty;after:Botania;after:advancedRocketry;after:armorplus;after:EnderIO;after:projectred-exploration;after:thermalfoundation;after:draconicevolution;after:landcore;after:tesla;after:baubles;after:actuallyadditions";
 	
 	public static Config config;
 	
@@ -70,6 +70,7 @@ public class PlusTiC {
 		initEnderIO();
 		initTF();
 		initDraconicEvolution();
+		initActAdd();
 		
 		Utils.integrate(materials, materialIntegrations);
 		Utils.registerModifiers();
@@ -303,6 +304,7 @@ public class PlusTiC {
 			Material terrasteel = new Material("terrasteel", TextFormatting.GREEN);
 			terrasteel.addTrait(Mana.mana);
 			terrasteel.addTrait(Terrafirma.terrafirma.get(0));
+			terrasteel.addTrait(Mana.mana, HEAD);
 			terrasteel.addTrait(Terrafirma.terrafirma.get(1), HEAD);
 			terrasteel.addItem("ingotTerrasteel", 1, Material.VALUE_Ingot);
 			terrasteel.setCraftable(false).setCastable(true);
@@ -314,15 +316,16 @@ public class PlusTiC {
 			Utils.initFluidMetal(terrasteelFluid);
 			terrasteel.setFluid(terrasteelFluid);
 			
-			TinkerRegistry.addMaterialStats(terrasteel, new HeadMaterialStats(1562, 9, 5, OBSIDIAN));
-			TinkerRegistry.addMaterialStats(terrasteel, new HandleMaterialStats(1f, 10));
+			TinkerRegistry.addMaterialStats(terrasteel, new HeadMaterialStats(1562, 9, 6.5f, COBALT));
+			TinkerRegistry.addMaterialStats(terrasteel, new HandleMaterialStats(1.4f, 10));
 			TinkerRegistry.addMaterialStats(terrasteel, new ExtraMaterialStats(10));
-			TinkerRegistry.addMaterialStats(terrasteel, new BowMaterialStats(0.4f, 2f, 9f));
+			TinkerRegistry.addMaterialStats(terrasteel, new BowMaterialStats(0.55f, 2f, 11f));
 			
 			materials.put("terrasteel", terrasteel);
 			
 			Material elementium = new Material("elementium", TextFormatting.LIGHT_PURPLE);
 			elementium.addTrait(Mana.mana);
+			elementium.addTrait(Mana.mana, HEAD);
 			elementium.addTrait(Elemental.elemental, HEAD);
 			elementium.addItem("ingotElvenElementium", 1, Material.VALUE_Ingot);
 			elementium.setCraftable(false).setCastable(true);
@@ -334,9 +337,9 @@ public class PlusTiC {
 			Utils.initFluidMetal(elementiumFluid);
 			elementium.setFluid(elementiumFluid);
 			
-			TinkerRegistry.addMaterialStats(elementium, new HeadMaterialStats(204, 6.00f, 4.00f, DIAMOND),
-					new HandleMaterialStats(0.85f, 60), new ExtraMaterialStats(50));
-			TinkerRegistry.addMaterialStats(elementium, new BowMaterialStats(0.5f, 1.5f, 7f));
+			TinkerRegistry.addMaterialStats(elementium, new HeadMaterialStats(540, 7.00f, 6.00f, OBSIDIAN),
+					new HandleMaterialStats(1.25f, 150), new ExtraMaterialStats(60));
+			TinkerRegistry.addMaterialStats(elementium, new BowMaterialStats(0.8f, 1.5f, 7.5f));
 			
 			materials.put("elvenElementium", elementium);
 			
@@ -646,6 +649,22 @@ public class PlusTiC {
 		}
 	}
 	
+	private void initActAdd() {
+		if (Config.actuallyAdditions && Loader.isModLoaded("actuallyadditions")) {
+			Material blackQuartz = new Material("blackquartz_plustic", TextFormatting.BLACK);
+			blackQuartz.addTrait(DevilsStrength.devilsstrength);
+			blackQuartz.addTrait(crude2);
+			blackQuartz.addItem("gemQuartzBlack", 1, Material.VALUE_Ingot);
+			blackQuartz.setCraftable(true);
+			proxy.setRenderInfo(blackQuartz, 0x000000);
+			TinkerRegistry.addMaterialStats(blackQuartz, new HeadMaterialStats(380, 6, 4.5f, DIAMOND),
+					new HandleMaterialStats(0.8f, 0),
+					new ExtraMaterialStats(50),
+					justWhy);
+			materials.put("blackquartz", blackQuartz);
+		}
+	}
+	
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
 		registerAPIHandlers();
@@ -659,6 +678,9 @@ public class PlusTiC {
 		Utils.setDispItem(materials.get("osmium"), "mekanism", "Ingot", 1);
 		Utils.setDispItem(materials.get("witherbone"), "armorplus", "wither_bone");
 		Utils.setDispItem(materials.get("guardianscale"), "armorplus", "guardian_scale");
+		
+		// YOU TOO, ACTUALLY ADDITIONS!
+		Utils.setDispItem(materials.get("blackquartz"), "actuallyadditions", "itemMisc", 5);
 		
 		Utils.setDispItem(materials.get("sapphire"), "gemSapphire");
 		Utils.setDispItem(materials.get("ruby"), "gemRuby");

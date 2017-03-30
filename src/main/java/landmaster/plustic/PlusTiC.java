@@ -37,7 +37,7 @@ public class PlusTiC {
 	public static final String MODID = "plustic";
 	public static final String NAME = "PlusTiC";
 	public static final String VERSION = "4.1.0.0";
-	public static final String DEPENDS = "required-after:mantle;required-after:tconstruct;after:Mekanism;after:BiomesOPlenty;after:Botania;after:advancedRocketry;after:armorplus;after:EnderIO;after:projectred-exploration;after:thermalfoundation;after:draconicevolution;after:landcore;after:tesla;after:baubles;after:actuallyadditions";
+	public static final String DEPENDS = "required-after:mantle;required-after:tconstruct;after:Mekanism;after:BiomesOPlenty;after:Botania;after:advancedRocketry;after:armorplus;after:EnderIO;after:projectred-exploration;after:thermalfoundation;after:substratum;after:draconicevolution;after:landcore;after:tesla;after:baubles;after:actuallyadditions";
 	
 	public static Config config;
 	
@@ -531,7 +531,7 @@ public class PlusTiC {
 	}
 	
 	private void initTF() {
-		if (Config.thermalFoundation && Loader.isModLoaded("thermalfoundation")) {
+		if (Config.thermalFoundation && (Loader.isModLoaded("thermalfoundation") || Loader.isModLoaded("substratum"))) {
 			Material signalum = new Material("signalum_plustic", TextFormatting.RED);
 			signalum.addTrait(BloodyMary.bloodymary);
 			signalum.addItem("ingotSignalum", 1, Material.VALUE_Ingot);

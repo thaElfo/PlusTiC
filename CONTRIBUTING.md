@@ -1,0 +1,1 @@
+- **FOR THE LAST TIME, DO NOT OPEN ANY MORE ISSUES CONCERNING A MATERIAL REGISTRY CONFLICT WITH NATURAL PLEDGE!** This is easily fixed by changing the config in either PlusTiC or Natural Pledge to disable either mod's integration, which resolves this.

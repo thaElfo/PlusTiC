@@ -544,7 +544,7 @@ public class PlusTiC {
 			Utils.initFluidMetal(signalumFluid);
 			signalum.setFluid(signalumFluid);
 			TinkerRegistry.registerAlloy(new FluidStack(signalumFluid, 72), new FluidStack(TinkerFluids.copper, 54),
-					new FluidStack(TinkerFluids.silver, 18), new FluidStack(FluidRegistry.getFluid("redstone"), 125));
+					new FluidStack(TinkerFluids.silver, 18), new FluidStack(FluidRegistry.getFluid(Loader.isModLoaded("thermalfoundation") ? "redstone" : "liquidRedstone"), 125));
 			
 			TinkerRegistry.addMaterialStats(signalum, new HeadMaterialStats(690, 7.5f, 5.2f, OBSIDIAN),
 					new HandleMaterialStats(1.2f, 0), new ExtraMaterialStats(55),
@@ -589,7 +589,7 @@ public class PlusTiC {
 			enderium.setFluid(enderiumFluid);
 			TinkerRegistry.registerAlloy(new FluidStack(enderiumFluid, 144), new FluidStack(TinkerFluids.tin, 72),
 					new FluidStack(TinkerFluids.silver, 36), new FluidStack(platinumFluid, 36),
-					new FluidStack(FluidRegistry.getFluid("ender"), 250));
+					new FluidStack(FluidRegistry.getFluid(Loader.isModLoaded("thermalfoundation") ? "ender" : "liquidEnderpearl"), 250));
 			
 			TinkerRegistry.addMaterialStats(enderium, new HeadMaterialStats(800, 7.5f, 7, COBALT),
 					new HandleMaterialStats(1.05f, -5), new ExtraMaterialStats(65), new BowMaterialStats(0.9f, 1.9f, 8),

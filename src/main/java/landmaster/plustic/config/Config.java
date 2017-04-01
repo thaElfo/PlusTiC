@@ -19,6 +19,7 @@ public class Config extends Configuration {
 	public static boolean thermalFoundation;
 	public static boolean draconicEvolution;
 	public static boolean actuallyAdditions;
+	public static boolean substratum;
 	public static ArrayListMultimap<Item, ItemStack> endlectricBlacklist = ArrayListMultimap.create();
 	
 	public Config(FMLPreInitializationEvent event) {
@@ -37,7 +38,11 @@ public class Config extends Configuration {
 		thermalFoundation = getBoolean("Enable Thermal Foundation integration", "modules", true, "Integrate with Thermal Foundation");
 		draconicEvolution = getBoolean("Enable Draconic Evolution integration", "modules", true, "Integrate with Draconic Evolution");
 		actuallyAdditions = getBoolean("Enable Actually Additions support", "modules", true, "Integrate with Actually Additions");
+		substratum = getBoolean("Enable Substratum support", "modules", true, "Integrate with Substratum");
+		
+		
 		String[] arr = getStringList("Items that Endlectric will not drain from", "tweaks", new String[] {}, "Enter in the format \"modid:name;meta\" (leave meta blank to match any meta)");
+		
 		int meta = -1;
 		for (int i=0; i<arr.length; ++i) {
 			String[] loc_meta = arr[i].split(";");

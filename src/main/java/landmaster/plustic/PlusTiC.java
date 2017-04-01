@@ -531,7 +531,7 @@ public class PlusTiC {
 	}
 	
 	private void initTF() {
-		if (Config.thermalFoundation && (Loader.isModLoaded("thermalfoundation") || Loader.isModLoaded("substratum"))) {
+		if ((Config.thermalFoundation && Loader.isModLoaded("thermalfoundation")) || (Config.substratum && Loader.isModLoaded("substratum"))) {
 			Material signalum = new Material("signalum_plustic", TextFormatting.RED);
 			signalum.addTrait(BloodyMary.bloodymary);
 			signalum.addItem("ingotSignalum", 1, Material.VALUE_Ingot);

@@ -2,9 +2,11 @@ package landmaster.plustic.util;
 
 import java.util.*;
 
+import io.netty.buffer.*;
 import net.minecraft.block.state.*;
 import net.minecraft.entity.*;
 import net.minecraft.nbt.*;
+import net.minecraft.tileentity.*;
 import net.minecraft.util.math.*;
 import net.minecraft.world.*;
 import net.minecraftforge.common.*;
@@ -47,6 +49,14 @@ public class Coord4D {
 		return nbt;
 	}
 	
+	public static Coord4D fromByteBuf(ByteBuf bb) {
+		return new Coord4D(bb.readInt(), bb.readInt(), bb.readInt(), bb.readInt());
+	}
+	
+	public ByteBuf toByteBuf(ByteBuf bb) {
+		return bb.writeInt(xCoord).writeInt(yCoord).writeInt(zCoord).writeInt(dimensionId);
+	}
+	
 	public Coord4D add(int x, int y, int z) {
 		return new Coord4D(xCoord+x, yCoord+y, zCoord+z, dimensionId);
 	}
@@ -55,6 +65,12 @@ public class Coord4D {
 		WorldServer world = world();
 		if (world == null) return null;
 		return world.getBlockState(pos());
+	}
+	
+	public TileEntity TE() {
+		WorldServer world = world();
+		if (world == null) return null;
+		return world.getTileEntity(pos());
 	}
 	
 	public BlockPos pos() {

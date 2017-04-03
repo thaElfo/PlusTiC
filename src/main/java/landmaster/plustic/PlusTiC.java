@@ -37,7 +37,7 @@ public class PlusTiC {
 	public static final String MODID = "plustic";
 	public static final String NAME = "PlusTiC";
 	public static final String VERSION = "4.1.0.0";
-	public static final String DEPENDS = "required-after:mantle;required-after:tconstruct;after:Mekanism;after:BiomesOPlenty;after:Botania;after:advancedRocketry;after:armorplus;after:EnderIO;after:projectred-exploration;after:thermalfoundation;after:substratum;after:draconicevolution;after:landcore;after:tesla;after:baubles;after:actuallyadditions";
+	public static final String DEPENDS = "required-after:mantle;required-after:tconstruct;required-after:CodeChickenLib;after:Mekanism;after:BiomesOPlenty;after:Botania;after:advancedRocketry;after:armorplus;after:EnderIO;after:projectred-exploration;after:thermalfoundation;after:substratum;after:draconicevolution;after:landcore;after:tesla;after:baubles;after:actuallyadditions";
 	
 	public static Config config;
 	
@@ -239,6 +239,8 @@ public class PlusTiC {
 			GameRegistry.register(steelDust);
 			OreDictionary.registerOre("dustSteel", steelDust);
 			proxy.registerItemRenderer(steelDust, 0, "steeldust");
+			
+			
 			Item bronzeNugget = new Item().setUnlocalizedName("bronzenugget").setRegistryName("bronzenugget");
 			bronzeNugget.setCreativeTab(TinkerRegistry.tabGeneral);
 			GameRegistry.register(bronzeNugget);
@@ -249,6 +251,7 @@ public class PlusTiC {
 			GameRegistry.register(bronzeIngot);
 			OreDictionary.registerOre("ingotBronze", bronzeIngot);
 			proxy.registerItemRenderer(bronzeIngot, 0, "bronzeingot");
+			
 			
 			// ugly workaround for molten tin not registering
 			if (OreDictionary.getOres("ingotTin").size() == 0

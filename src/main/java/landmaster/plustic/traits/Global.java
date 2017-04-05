@@ -3,6 +3,7 @@ package landmaster.plustic.traits;
 import java.util.*;
 
 import landmaster.plustic.api.*;
+import landmaster.plustic.util.*;
 import net.minecraft.client.resources.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.item.*;
@@ -11,7 +12,6 @@ import net.minecraft.item.*;
 import net.minecraft.nbt.*;
 import net.minecraft.tileentity.*;
 import net.minecraft.util.*;
-import net.minecraft.util.math.*;
 import net.minecraft.util.text.*;
 import net.minecraft.world.*;
 import net.minecraftforge.common.*;
@@ -47,13 +47,8 @@ public class Global extends AbstractTrait {
 		NBTTagCompound nbt0 = TagUtil.getTagSafe(tool);
 		if (nbt0.hasKey("global", 10) && ToolHelper.isToolEffective2(tool, event.getState())) {
 			NBTTagCompound nbt = nbt0.getCompoundTag("global");
-			WorldServer world = DimensionManager.getWorld(nbt.getInteger("dim"));
-			if (world == null) return;
-			TileEntity te = world.getTileEntity(new BlockPos(
-					nbt.getInteger("x"),
-					nbt.getInteger("y"),
-					nbt.getInteger("z")
-					));
+			Coord4D coord = Coord4D.fromNBT(nbt);
+			TileEntity te = coord.TE();
 			if (te == null) return;
 			IItemHandler ih = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY,
 					EnumFacing.VALUES[nbt.getByte("facing")]);
@@ -86,13 +81,8 @@ public class Global extends AbstractTrait {
 			if (!Toggle.getToggleState(weapon, identifier)) return;
 			if (nbt0.hasKey("global", 10)) {
 				NBTTagCompound nbt = nbt0.getCompoundTag("global");
-				WorldServer world = DimensionManager.getWorld(nbt.getInteger("dim"));
-				if (world == null) return;
-				TileEntity te = world.getTileEntity(new BlockPos(
-						nbt.getInteger("x"),
-						nbt.getInteger("y"),
-						nbt.getInteger("z")
-						));
+				Coord4D coord = Coord4D.fromNBT(nbt);
+				TileEntity te = coord.TE();
 				if (te == null) return;
 				IItemHandler ih = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY,
 						EnumFacing.VALUES[nbt.getByte("facing")]);
@@ -130,19 +120,17 @@ public class Global extends AbstractTrait {
 		if (te == null || te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY,
 				event.getFace()) == null) return;
 		NBTTagCompound global = new NBTTagCompound();
-		global.setInteger("x", event.getPos().getX());
-		global.setInteger("y", event.getPos().getY());
-		global.setInteger("z", event.getPos().getZ());
-		global.setInteger("dim", event.getWorld().provider.getDimension());
+		Coord4D coord = new Coord4D(event.getPos(), event.getWorld());
+		coord.toNBT(global);
 		global.setByte("facing", (byte)event.getFace().ordinal());
 		nbt.setTag("global", global);
 		event.getItemStack().setTagCompound(nbt);
 		event.getEntityPlayer().addChatMessage(new TextComponentTranslation(
 				"msg.plustic.globalmodifier.set",
-						event.getPos().getX(),
-						event.getPos().getY(),
-						event.getPos().getZ(),
-						event.getWorld().provider.getDimension()));
+						coord.xCoord,
+						coord.yCoord,
+						coord.zCoord,
+						coord.dimensionId));
 	}
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent

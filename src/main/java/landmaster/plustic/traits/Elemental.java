@@ -53,7 +53,7 @@ public class Elemental extends AbstractTrait {
 	
 	@Override
 	public void afterHit(ItemStack tool, EntityLivingBase player, EntityLivingBase target, float damageDealt, boolean wasCritical, boolean wasHit) {
-		if (wasHit && random.nextFloat() < 0.14) {
+		if (wasHit && random.nextFloat() < 0.22f) {
 			int rand = random.nextInt(4);
 			switch (rand) {
 			case 0: // Water

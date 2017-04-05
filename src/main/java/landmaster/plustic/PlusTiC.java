@@ -1,9 +1,16 @@
 package landmaster.plustic;
 
 import java.util.*;
+
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.*;
 
 import com.brandon3055.draconicevolution.DEFeatures;
+import com.progwml6.natura.nether.*;
+import com.progwml6.natura.nether.block.logs.*;
+import com.progwml6.natura.nether.block.planks.*;
+import com.progwml6.natura.shared.*;
+
 import landmaster.plustic.api.*;
 import landmaster.plustic.proxy.*;
 import landmaster.plustic.config.*;
@@ -37,7 +44,13 @@ public class PlusTiC {
 	public static final String MODID = "plustic";
 	public static final String NAME = "PlusTiC";
 	public static final String VERSION = "4.1.0.0";
-	public static final String DEPENDS = "required-after:mantle;required-after:tconstruct;required-after:CodeChickenLib;after:Mekanism;after:BiomesOPlenty;after:Botania;after:advancedRocketry;after:armorplus;after:EnderIO;after:projectred-exploration;after:thermalfoundation;after:substratum;after:draconicevolution;after:landcore;after:tesla;after:baubles;after:actuallyadditions";
+	public static final String DEPENDS = "required-after:mantle;"
+			+ "required-after:tconstruct;required-after:CodeChickenLib;"
+			+ "after:Mekanism;after:BiomesOPlenty;after:Botania;after:advancedRocketry;"
+			+ "after:armorplus;after:EnderIO;after:projectred-exploration;"
+			+ "after:thermalfoundation;after:substratum;after:draconicevolution;"
+			+ "after:landcore;after:tesla;after:baubles;after:actuallyadditions;"
+			+ "after:natura";
 	
 	public static Config config;
 	
@@ -71,8 +84,9 @@ public class PlusTiC {
 		initTF();
 		initDraconicEvolution();
 		initActAdd();
+		initNatura();
 		
-		Utils.integrate(materials, materialIntegrations);
+		PlusTiC.integrate(materials, materialIntegrations);
 		Utils.registerModifiers();
 	}
 	
@@ -86,6 +100,20 @@ public class PlusTiC {
 			proxy.setRenderInfo(tnt, 0xFF4F4F);
 			TinkerRegistry.addMaterialStats(tnt, new ArrowShaftMaterialStats(0.95f, 0));
 			materials.put("tnt", tnt);
+			
+			Material emerald = new Material("emerald_plustic", TextFormatting.GREEN);
+			emerald.addTrait(Terrafirma.terrafirma.get(0));
+			emerald.addTrait(Elemental.elemental, HEAD);
+			emerald.addItem("gemEmerald", 1, Material.VALUE_Ingot);
+			emerald.setRepresentativeItem(Items.EMERALD);
+			emerald.setCraftable(false).setCastable(true);
+			proxy.setRenderInfo(emerald, 0x13DB52);
+			emerald.setFluid(TinkerFluids.emerald);
+			TinkerRegistry.addMaterialStats(emerald, new HeadMaterialStats(1222, 7, 7, COBALT),
+					new HandleMaterialStats(1.1f, 0),
+					new ExtraMaterialStats(70),
+					new BowMaterialStats(1.1f, 1, 0.9f));
+			materials.put("emerald", emerald);
 			
 			if (TinkerIntegration.isIntegrated(TinkerFluids.aluminum)) {
 				// alumite is back! (with some changes)
@@ -665,7 +693,61 @@ public class PlusTiC {
 					new ExtraMaterialStats(50),
 					justWhy);
 			materials.put("blackquartz", blackQuartz);
+			
+			Material Void = new Material("void_actadd_plustic", TextFormatting.BLACK);
+			Void.addTrait(Unnamed.unnamed, HEAD);
+			Void.addTrait(crude, HEAD);
+			Void.addTrait(crude);
+			ItemStack voidStack = new ItemStack(Item.REGISTRY.getObject(
+					new ResourceLocation("ActuallyAdditions:itemCrystal")),
+					1, 3);
+			Void.addItem(voidStack, 1, Material.VALUE_Ingot);
+			Void.setRepresentativeItem(voidStack);
+			Void.setCraftable(true);
+			proxy.setRenderInfo(Void, 0x222222);
+			TinkerRegistry.addMaterialStats(Void, new HeadMaterialStats(480, 7, 4.4f, OBSIDIAN),
+					new HandleMaterialStats(1, 0),
+					new ExtraMaterialStats(140),
+					new BowMaterialStats(1, 1.3f, 3.5f));
+			materials.put("Void", Void);
 		}
+	}
+	
+	private void initNatura() {
+		if (Config.natura && Loader.isModLoaded("natura")) {
+			boolean warned = false;
+			
+			Material darkwood = new Material("darkwood_plustic", TextFormatting.DARK_BLUE);
+			darkwood.addTrait(DarkTraveler.darktraveler);
+			darkwood.addTrait(ecological);
+			ItemStack darkwoodPlankStack = new ItemStack(NaturaNether.netherPlanks,
+					1, BlockNetherPlanks.PlankType.DARKWOOD.getMeta());
+			ItemStack darkwoodLogStack = new ItemStack(NaturaNether.netherLog,
+					1, BlockNetherLog.LogType.DARKWOOD.getMeta());
+			darkwood.addItem(darkwoodPlankStack, 1, Material.VALUE_Ingot);
+			darkwood.addItem(darkwoodLogStack, 1, 4*Material.VALUE_Ingot);
+			try {
+				darkwood.addItem(NaturaCommons.darkwood_stick, 1, Material.VALUE_Shard);
+			} catch (NoSuchFieldError e) {
+				warned = warnNatura(warned);
+			}
+			darkwood.setRepresentativeItem(darkwoodPlankStack);
+			darkwood.setCraftable(true);
+			proxy.setRenderInfo(darkwood, 0x000044);
+			TinkerRegistry.addMaterialStats(darkwood,
+					new HeadMaterialStats(350, 5f, 3f, COBALT),
+                    new HandleMaterialStats(1.3f, -5),
+                    new ExtraMaterialStats(90),
+                    new BowMaterialStats(1.2f, 1.3f, 3));
+			materials.put("darkwood", darkwood);
+		}
+	}
+	
+	private boolean warnNatura(boolean warned) {
+		if (!warned) {
+			log.warn("It is recommended that you have at least Natura 4.1.0.29 for integration");
+		}
+		return true;
 	}
 	
 	@EventHandler
@@ -742,5 +824,19 @@ public class PlusTiC {
 					new ShapedOreRecipe(new ItemStack(mirionIngot), "III", "III", "III", 'I', "nuggetMirion"));
 			GameRegistry.addShapelessRecipe(new ItemStack(mirionNugget, 9), mirionIngot);
 		}
+	}
+
+	private static void integrate(Map<String,Material> materials,
+			Map<String,MaterialIntegration> materialIntegrations) {
+		materials.forEach((k, v) -> {
+			MaterialIntegration mi;
+			if (v.getFluid() != null && v.getFluid() != TinkerFluids.emerald)
+				mi = new MaterialIntegration(v, v.getFluid(), StringUtils.capitalize(k)).toolforge();
+			else
+				mi = new MaterialIntegration(v);
+			mi.integrate();
+			mi.integrateRecipes();
+			materialIntegrations.put(k, mi);
+		});
 	}
 }

@@ -28,6 +28,9 @@ material.awakened_plustic.name=Awakened
 material.mirion.name=Mirion
 material.livingwood_plustic.name=Livingwood
 material.blackquartz_plustic.name=Black Quartz
+material.void_actadd_plustic.name=Void
+material.emerald_plustic.name=Emerald
+material.darkwood_plustic.name=Darkwood
 
 modifier.bloodymary.name=Bloody Mary
 modifier.bloodymary.desc=§oBrought to you by the legendary Queen of England...§r\nDeals bonus damage depending on the amount of health already lost by the target. Also, a chance to drop a Coagulated Blood for each hit.
@@ -78,3 +81,7 @@ modifier.botanical.name=Botanical
 modifier.botanical.desc=§oI eat zombies for breakfast§r\nIncreases the amount of modifier slots; the effect stacks greatly.
 modifier.heavy.name=Heavy Metal
 modifier.heavy.desc=§oHeave-ho!§r\nIncreased knockback + Slowness on target.
+modifier.unnamed.name=He Who Must Not Be Named
+modifier.unnamed.desc=§oIt's you-know-who...§r\nBonus damage accrued for each entity of the same type as the target close to it.
+modifier.darktraveler.name=Dark Traveler
+modifier.darktraveler.desc=§oAll hail...the King of Chaos!§r\nSurrounding mobs get randomly afflicted with damage.

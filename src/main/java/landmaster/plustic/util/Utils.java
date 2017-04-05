@@ -29,20 +29,6 @@ import slimeknights.tconstruct.library.materials.*;
 import slimeknights.tconstruct.library.modifiers.*;
 
 public class Utils {
-	public static void integrate(Map<String,Material> materials,
-			Map<String,MaterialIntegration> materialIntegrations) {
-		materials.forEach((k, v) -> {
-			MaterialIntegration mi;
-			if (v.getFluid() != null)
-				mi = new MaterialIntegration(v, v.getFluid(), StringUtils.capitalize(k)).toolforge();
-			else
-				mi = new MaterialIntegration(v);
-			mi.integrate();
-			mi.integrateRecipes();
-			materialIntegrations.put(k, mi);
-		});
-	}
-	
 	public static void registerModifiers() {
 		if (Config.enderIO && Loader.isModLoaded("EnderIO")) {
 			TinkerRegistry.registerModifier(ModEndlectric.endlectric);

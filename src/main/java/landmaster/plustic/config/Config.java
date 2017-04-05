@@ -20,7 +20,8 @@ public class Config extends Configuration {
 	public static boolean draconicEvolution;
 	public static boolean actuallyAdditions;
 	public static boolean substratum;
-	public static ArrayListMultimap<Item, ItemStack> endlectricBlacklist = ArrayListMultimap.create();
+	public static boolean natura;
+	private static final ArrayListMultimap<Item, ItemStack> endlectricBlacklist = ArrayListMultimap.create();
 	
 	public Config(FMLPreInitializationEvent event) {
 		super(event.getSuggestedConfigurationFile());
@@ -39,7 +40,7 @@ public class Config extends Configuration {
 		draconicEvolution = getBoolean("Enable Draconic Evolution integration", "modules", true, "Integrate with Draconic Evolution");
 		actuallyAdditions = getBoolean("Enable Actually Additions support", "modules", true, "Integrate with Actually Additions");
 		substratum = getBoolean("Enable Substratum support", "modules", true, "Integrate with Substratum");
-		
+		natura = getBoolean("Enable Natura support", "modules", true, "Integrate with Natura");
 		
 		String[] arr = getStringList("Items that Endlectric will not drain from", "tweaks", new String[] {}, "Enter in the format \"modid:name;meta\" (leave meta blank to match any meta)");
 		

@@ -43,7 +43,7 @@ import static slimeknights.tconstruct.tools.TinkerTraits.*;
 public class PlusTiC {
 	public static final String MODID = "plustic";
 	public static final String NAME = "PlusTiC";
-	public static final String VERSION = "4.1.0.0";
+	public static final String VERSION = "4.2.0.0";
 	public static final String DEPENDS = "required-after:mantle;"
 			+ "required-after:tconstruct;required-after:CodeChickenLib;"
 			+ "after:Mekanism;after:BiomesOPlenty;after:Botania;after:advancedRocketry;"
@@ -86,7 +86,7 @@ public class PlusTiC {
 		initActAdd();
 		initNatura();
 		
-		PlusTiC.integrate(materials, materialIntegrations);
+		integrate(materials, materialIntegrations);
 		Utils.registerModifiers();
 	}
 	

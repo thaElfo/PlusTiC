@@ -6,15 +6,13 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.*;
 
 import com.brandon3055.draconicevolution.DEFeatures;
-import com.progwml6.natura.nether.*;
-import com.progwml6.natura.nether.block.logs.*;
-import com.progwml6.natura.nether.block.planks.*;
 import com.progwml6.natura.shared.*;
 
 import landmaster.plustic.api.*;
 import landmaster.plustic.proxy.*;
 import landmaster.plustic.config.*;
 import landmaster.plustic.fluids.*;
+import landmaster.plustic.modules.*;
 import landmaster.plustic.net.*;
 import landmaster.plustic.util.*;
 import landmaster.plustic.traits.*;
@@ -43,7 +41,7 @@ import static slimeknights.tconstruct.tools.TinkerTraits.*;
 public class PlusTiC {
 	public static final String MODID = "plustic";
 	public static final String NAME = "PlusTiC";
-	public static final String VERSION = "4.2.0.0";
+	public static final String VERSION = "4.2.0.1";
 	public static final String DEPENDS = "required-after:mantle;"
 			+ "required-after:tconstruct;required-after:CodeChickenLib;"
 			+ "after:Mekanism;after:BiomesOPlenty;after:Botania;after:advancedRocketry;"
@@ -720,18 +718,14 @@ public class PlusTiC {
 			Material darkwood = new Material("darkwood_plustic", TextFormatting.DARK_BLUE);
 			darkwood.addTrait(DarkTraveler.darktraveler);
 			darkwood.addTrait(ecological);
-			ItemStack darkwoodPlankStack = new ItemStack(NaturaNether.netherPlanks,
-					1, BlockNetherPlanks.PlankType.DARKWOOD.getMeta());
-			ItemStack darkwoodLogStack = new ItemStack(NaturaNether.netherLog,
-					1, BlockNetherLog.LogType.DARKWOOD.getMeta());
-			darkwood.addItem(darkwoodPlankStack, 1, Material.VALUE_Ingot);
-			darkwood.addItem(darkwoodLogStack, 1, 4*Material.VALUE_Ingot);
+			darkwood.addItem(NaturaModule.darkwoodPlankStack, 1, Material.VALUE_Ingot);
+			darkwood.addItem(NaturaModule.darkwoodLogStack, 1, 4*Material.VALUE_Ingot);
 			try {
 				darkwood.addItem(NaturaCommons.darkwood_stick, 1, Material.VALUE_Shard);
 			} catch (NoSuchFieldError e) {
 				warned = warnNatura(warned);
 			}
-			darkwood.setRepresentativeItem(darkwoodPlankStack);
+			darkwood.setRepresentativeItem(NaturaModule.darkwoodPlankStack);
 			darkwood.setCraftable(true);
 			proxy.setRenderInfo(darkwood, 0x000044);
 			TinkerRegistry.addMaterialStats(darkwood,

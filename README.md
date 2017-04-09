@@ -13,3 +13,4 @@ CurseForge page: https://minecraft.curseforge.com/projects/plustic
 - Thermal Foundation by CoFH
 - Draconic Evolution by brandon3055
 - Actually Additions by Ellpeck
+- Natura by mDiyo

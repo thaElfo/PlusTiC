@@ -13,6 +13,7 @@ import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
 import net.minecraft.util.*;
+import net.minecraftforge.common.*;
 import net.minecraftforge.event.entity.player.*;
 import net.minecraftforge.fml.common.eventhandler.*;
 import net.minecraftforge.fml.common.gameevent.*;
@@ -27,6 +28,10 @@ import slimeknights.tconstruct.library.utils.*;
  *
  */
 public class Toggle {
+	static {
+		MinecraftForge.EVENT_BUS.register(Toggle.class);
+	}
+	
 	/**
 	 * Add the identifier name to this set to allow toggling.
 	 */

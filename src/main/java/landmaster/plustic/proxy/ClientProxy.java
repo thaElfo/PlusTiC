@@ -4,7 +4,7 @@ import java.util.*;
 import javax.annotation.*;
 import landmaster.plustic.*;
 import landmaster.plustic.entity.*;
-import landmaster.plustic.entity.render.RenderBlindBandit;
+import landmaster.plustic.entity.render.*;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.block.model.*;
 import net.minecraft.client.renderer.block.statemap.*;
@@ -17,7 +17,12 @@ import net.minecraftforge.fluids.*;
 import net.minecraftforge.fml.client.registry.*;
 import net.minecraftforge.client.model.*;
 import org.lwjgl.input.*;
+
+import slimeknights.tconstruct.common.*;
+import slimeknights.tconstruct.library.*;
+import slimeknights.tconstruct.library.client.*;
 import slimeknights.tconstruct.library.materials.*;
+import slimeknights.tconstruct.library.tools.*;
 
 public class ClientProxy extends CommonProxy {
 	@Override
@@ -56,9 +61,26 @@ public class ClientProxy extends CommonProxy {
 	}
 	
 	@Override
+	public void registerToolModel(ToolCore tc) {
+		ModelRegisterUtil.registerToolModel(tc);
+	}
+	
+	@Override
 	public void initEntities() {
 		super.initEntities();
 		RenderingRegistry.registerEntityRenderingHandler(EntityBlindBandit.class, RenderBlindBandit.FACTORY);
+	}
+	
+	@Override
+	public void initToolGuis() {
+		if (PlusTiC.katana != null) {
+			ToolBuildGuiInfo katanaInfo = new ToolBuildGuiInfo(PlusTiC.katana);
+			katanaInfo.addSlotPosition(33, 42 + 18); // handle
+			katanaInfo.addSlotPosition(33 + 20, 42 - 20); // 1st blade
+			katanaInfo.addSlotPosition(33, 42); // 2nd blade
+			katanaInfo.addSlotPosition(33 - 18, 42 + 18); // binding
+			TinkerRegistryClient.addToolBuilding(katanaInfo);
+		}
 	}
 	
 	public static class FluidStateMapper extends StateMapperBase implements ItemMeshDefinition {

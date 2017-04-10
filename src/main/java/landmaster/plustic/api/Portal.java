@@ -7,6 +7,7 @@ import landmaster.plustic.proxy.*;
 import net.minecraft.client.*;
 import net.minecraft.client.resources.*;
 import net.minecraft.nbt.*;
+import net.minecraftforge.common.*;
 import net.minecraftforge.event.entity.player.*;
 import net.minecraftforge.fml.common.eventhandler.*;
 import net.minecraftforge.fml.common.gameevent.*;
@@ -14,6 +15,10 @@ import net.minecraftforge.fml.relauncher.*;
 import slimeknights.tconstruct.library.utils.*;
 
 public class Portal {
+	static {
+		MinecraftForge.EVENT_BUS.register(Portal.class);
+	}
+	
 	public static final String PORTAL_NBT = "nickoftime";
 	
 	public static final Set<String> portalable = new HashSet<>();

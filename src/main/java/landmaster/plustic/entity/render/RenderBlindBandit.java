@@ -10,7 +10,7 @@ import net.minecraftforge.fml.client.registry.*;
 
 public class RenderBlindBandit extends RenderLiving<EntityBlindBandit> {
 	public static final Factory FACTORY = new Factory();
-	public static final ResourceLocation tex = new ResourceLocation(PlusTiC.MODID+":textures/entity/blindbandit.png");;
+	public static final ResourceLocation tex = new ResourceLocation(PlusTiC.MODID+":textures/entity/blindbandit.png");
 	
 	public RenderBlindBandit(RenderManager rendermanagerIn) {
 		super(rendermanagerIn, new ModelBlindBandit(), 0.5F);

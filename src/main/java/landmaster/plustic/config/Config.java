@@ -21,6 +21,9 @@ public class Config extends Configuration {
 	public static boolean actuallyAdditions;
 	public static boolean substratum;
 	public static boolean natura;
+	
+	public static boolean katana;
+	
 	private static final ArrayListMultimap<Item, ItemStack> endlectricBlacklist = ArrayListMultimap.create();
 	
 	public Config(FMLPreInitializationEvent event) {
@@ -41,6 +44,8 @@ public class Config extends Configuration {
 		actuallyAdditions = getBoolean("Enable Actually Additions support", "modules", true, "Integrate with Actually Additions");
 		substratum = getBoolean("Enable Substratum support", "modules", true, "Integrate with Substratum");
 		natura = getBoolean("Enable Natura support", "modules", true, "Integrate with Natura");
+		
+		katana = getBoolean("Enable Katana", "tools", true, "Enable Katana");
 		
 		String[] arr = getStringList("Items that Endlectric will not drain from", "tweaks", new String[] {}, "Enter in the format \"modid:name;meta\" (leave meta blank to match any meta)");
 		

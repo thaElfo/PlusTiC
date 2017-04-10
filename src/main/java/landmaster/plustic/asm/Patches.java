@@ -40,14 +40,18 @@ public class Patches {
         }
 	}
 	
-	private static Field harvestersF;
+	private static final Field harvestersF;
+	static {
+		try {
+			harvestersF = Block.class.getDeclaredField("harvesters");
+			harvestersF.setAccessible(true);
+		} catch (Throwable e) {
+			throw Throwables.propagate(e);
+		}
+	}
 	@SuppressWarnings("unchecked")
 	private static EntityPlayer harvester(Block block) {
 		try {
-			if (harvestersF == null) {
-				harvestersF = Block.class.getDeclaredField("harvesters");
-				harvestersF.setAccessible(true);
-			}
 			return ((ThreadLocal<EntityPlayer>)harvestersF.get(block)).get();
 		} catch (Throwable e) {
 			throw Throwables.propagate(e);

@@ -1,3 +1,6 @@
+item.katana.name=Katana
+item.katana.desc=The Katana is a special weapon that unleashes combos on the target(s).\nComplements the Shuriken
+
 fluid.plustic.coal.name=Molten Coal
 fluid.plustic.osmium.name=Molten Osmium
 fluid.plustic.refinedobsidian.name=Molten Refined Obsidian
@@ -43,6 +46,8 @@ tooltip.plustic.portal.info=Teleportation point: [x=%d, y=%d, z=%d]; dimension %
 tooltip.plustic.toggle.info=Click to toggle
 tooltip.plustic.toggle.state.true=%s currently §aenabled
 tooltip.plustic.toggle.state.false=%s currently §cdisabled
+
+meter.plustic.katana=COMBO LEVEL: %d
 
 key.categories.plustic=PlusTiC
 key.plustic_release_entity.desc=Release Entity

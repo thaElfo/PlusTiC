@@ -8,8 +8,8 @@ import org.apache.logging.log4j.*;
 import com.brandon3055.draconicevolution.DEFeatures;
 import com.progwml6.natura.shared.*;
 
-import landmaster.plustic.api.*;
 import landmaster.plustic.proxy.*;
+import landmaster.plustic.tools.*;
 import landmaster.plustic.config.*;
 import landmaster.plustic.fluids.*;
 import landmaster.plustic.modules.*;
@@ -21,7 +21,6 @@ import net.minecraft.init.*;
 import net.minecraft.item.*;
 import net.minecraft.util.*;
 import net.minecraft.util.text.*;
-import net.minecraftforge.common.*;
 import net.minecraftforge.fluids.*;
 import net.minecraftforge.fml.common.*;
 import net.minecraftforge.fml.common.event.*;
@@ -48,7 +47,7 @@ public class PlusTiC {
 			+ "after:armorplus;after:EnderIO;after:projectred-exploration;"
 			+ "after:thermalfoundation;after:substratum;after:draconicevolution;"
 			+ "after:landcore;after:tesla;after:baubles;after:actuallyadditions;"
-			+ "after:natura";
+			+ "after:natura;after:psi";
 	
 	public static Config config;
 	
@@ -66,12 +65,15 @@ public class PlusTiC {
 	
 	public static final BowMaterialStats justWhy = new BowMaterialStats(0.2f, 0.4f, -1f);
 	
+	public static ToolKatana katana;
+	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		(config = new Config(event)).sync();
 		
 		proxy.initEntities();
 		
+		initTools();
 		initBase();
 		initBoP();
 		initMekanism();
@@ -88,7 +90,16 @@ public class PlusTiC {
 		Utils.registerModifiers();
 	}
 	
-	private void initBase() {
+	private static void initTools() {
+		if (Config.katana) {
+			katana = new ToolKatana();
+			GameRegistry.register(katana);
+			TinkerRegistry.registerToolForgeCrafting(katana);
+			proxy.registerToolModel(katana);
+		}
+	}
+	
+	private static void initBase() {
 		if (Config.base) {
 			Material tnt = new Material("tnt", TextFormatting.RED);
 			tnt.addTrait(Explosive.explosive);
@@ -137,10 +148,28 @@ public class PlusTiC {
 				
 				materials.put("alumite", alumite);
 			}
+			
+			if (TinkerIntegration.isIntegrated(TinkerFluids.nickel)) {
+				Material nickel = new Material("nickel", TextFormatting.YELLOW);
+				nickel.addTrait(NickOfTime.nickOfTime, HEAD);
+				nickel.addTrait(magnetic);
+				nickel.addItem("ingotNickel", 1, Material.VALUE_Ingot);
+				nickel.setCraftable(false).setCastable(true);
+				Utils.setDispItem(nickel, "ingotNickel");
+				proxy.setRenderInfo(nickel, 0xFFF98E);
+				
+				nickel.setFluid(TinkerFluids.nickel);
+				
+				TinkerRegistry.addMaterialStats(nickel, new HeadMaterialStats(460, 6, 4.5f, OBSIDIAN),
+						new HandleMaterialStats(1, -5), new ExtraMaterialStats(70), justWhy,
+						new FletchingMaterialStats(0.95f, 1.05f));
+				
+				materials.put("nickel", nickel);
+			}
 		}
 	}
 	
-	private void initBoP() {
+	private static void initBoP() {
 		if ((Config.bop && Loader.isModLoaded("BiomesOPlenty"))
 				|| (Config.projectRed && Loader.isModLoaded("projectred-exploration"))) {
 			Material sapphire = new Material("sapphire", TextFormatting.BLUE);
@@ -247,7 +276,7 @@ public class PlusTiC {
 		}
 	}
 	
-	private void initMekanism() {
+	private static void initMekanism() {
 		if (Config.mekanism && Loader.isModLoaded("Mekanism")) {
 			// ugly workaround for dusts not melting
 			Item tinDust = new Item().setUnlocalizedName("tindust").setRegistryName("tindust");
@@ -328,7 +357,7 @@ public class PlusTiC {
 		}
 	}
 	
-	private void initBotania() {
+	private static void initBotania() {
 		if (Config.botania && Loader.isModLoaded("Botania")) {
 			Material terrasteel = new Material("terrasteel", TextFormatting.GREEN);
 			terrasteel.addTrait(Mana.mana);
@@ -409,6 +438,7 @@ public class PlusTiC {
 			
 			Material mirion = new Material("mirion", TextFormatting.YELLOW);
 			mirion.addTrait(Mirabile.mirabile, HEAD);
+			mirion.addTrait(Mana.mana, HEAD);
 			mirion.addTrait(Mana.mana);
 			mirion.addItem("ingotMirion", 1, Material.VALUE_Ingot);
 			mirion.setCraftable(false).setCastable(true);
@@ -432,7 +462,7 @@ public class PlusTiC {
 		}
 	}
 	
-	private void initAdvRocketry() {
+	private static void initAdvRocketry() {
 		if (Config.advancedRocketry && Loader.isModLoaded("libVulpes")) {
 			Material iridium = new Material("iridium", TextFormatting.GRAY);
 			iridium.addTrait(dense);
@@ -504,7 +534,7 @@ public class PlusTiC {
 		}
 	}
 	
-	private void initArmorPlus() {
+	private static void initArmorPlus() {
 		if (Config.armorPlus && Loader.isModLoaded("armorplus")) {
 			Material witherBone = new Material("witherbone", TextFormatting.BLACK);
 			witherBone.addTrait(Apocalypse.apocalypse);
@@ -528,7 +558,7 @@ public class PlusTiC {
 		}
 	}
 	
-	private void initEnderIO() {
+	private static void initEnderIO() {
 		if (Config.enderIO && Loader.isModLoaded("EnderIO")) {
 			Fluid coalFluid = Utils.fluidMetal("coal", 0x111111);
 			coalFluid.setTemperature(500);
@@ -559,7 +589,7 @@ public class PlusTiC {
 		}
 	}
 	
-	private void initTF() {
+	private static void initTF() {
 		if ((Config.thermalFoundation && Loader.isModLoaded("thermalfoundation")) || (Config.substratum && Loader.isModLoaded("substratum"))) {
 			Material signalum = new Material("signalum_plustic", TextFormatting.RED);
 			signalum.addTrait(BloodyMary.bloodymary);
@@ -625,26 +655,10 @@ public class PlusTiC {
 					new ArrowShaftMaterialStats(1, 12));
 			
 			materials.put("enderium", enderium);
-			
-			Material nickel = new Material("nickel", TextFormatting.YELLOW);
-			nickel.addTrait(NickOfTime.nickOfTime, HEAD);
-			nickel.addTrait(magnetic);
-			nickel.addItem("ingotNickel", 1, Material.VALUE_Ingot);
-			nickel.setCraftable(false).setCastable(true);
-			Utils.setDispItem(nickel, "ingotNickel");
-			proxy.setRenderInfo(nickel, 0xFFF98E);
-			
-			nickel.setFluid(TinkerFluids.nickel);
-			
-			TinkerRegistry.addMaterialStats(nickel, new HeadMaterialStats(460, 6, 4.5f, OBSIDIAN),
-					new HandleMaterialStats(1, -5), new ExtraMaterialStats(70), justWhy,
-					new FletchingMaterialStats(0.95f, 1.05f));
-			
-			materials.put("nickel", nickel);
 		}
 	}
 	
-	private void initDraconicEvolution() {
+	private static void initDraconicEvolution() {
 		if (Config.draconicEvolution && Loader.isModLoaded("draconicevolution")) {
 			Material wyvern = new Material("wyvern_plustic", TextFormatting.DARK_PURPLE);
 			wyvern.addTrait(BrownMagic.brownmagic, HEAD);
@@ -678,7 +692,7 @@ public class PlusTiC {
 		}
 	}
 	
-	private void initActAdd() {
+	private static void initActAdd() {
 		if (Config.actuallyAdditions && Loader.isModLoaded("actuallyadditions")) {
 			Material blackQuartz = new Material("blackquartz_plustic", TextFormatting.BLACK);
 			blackQuartz.addTrait(DevilsStrength.devilsstrength);
@@ -711,21 +725,21 @@ public class PlusTiC {
 		}
 	}
 	
-	private void initNatura() {
+	private static void initNatura() {
 		if (Config.natura && Loader.isModLoaded("natura")) {
 			boolean warned = false;
 			
 			Material darkwood = new Material("darkwood_plustic", TextFormatting.DARK_BLUE);
 			darkwood.addTrait(DarkTraveler.darktraveler);
 			darkwood.addTrait(ecological);
-			darkwood.addItem(NaturaModule.darkwoodPlankStack, 1, Material.VALUE_Ingot);
-			darkwood.addItem(NaturaModule.darkwoodLogStack, 1, 4*Material.VALUE_Ingot);
+			darkwood.addItem(NaturaModuleStuff.darkwoodPlankStack, 1, Material.VALUE_Ingot);
+			darkwood.addItem(NaturaModuleStuff.darkwoodLogStack, 1, 4*Material.VALUE_Ingot);
 			try {
 				darkwood.addItem(NaturaCommons.darkwood_stick, 1, Material.VALUE_Shard);
 			} catch (NoSuchFieldError e) {
 				warned = warnNatura(warned);
 			}
-			darkwood.setRepresentativeItem(NaturaModule.darkwoodPlankStack);
+			darkwood.setRepresentativeItem(NaturaModuleStuff.darkwoodPlankStack);
 			darkwood.setCraftable(true);
 			proxy.setRenderInfo(darkwood, 0x000044);
 			TinkerRegistry.addMaterialStats(darkwood,
@@ -737,17 +751,16 @@ public class PlusTiC {
 		}
 	}
 	
-	private boolean warnNatura(boolean warned) {
+	private static boolean warnNatura(boolean warned) {
 		if (!warned) {
-			log.warn("It is recommended that you have at least Natura 4.1.0.29 for integration");
+			log.warn("It is recommended that you have at least Natura 4.1.0.29 for integration (PlusTiC) with Tinkers Construct");
 		}
 		return true;
 	}
 	
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
-		registerAPIHandlers();
-		
+		proxy.initToolGuis();
 		proxy.registerKeyBindings();
 		PacketHandler.init();
 		
@@ -768,12 +781,7 @@ public class PlusTiC {
 		initRecipes();
 	}
 	
-	private void registerAPIHandlers() {
-		MinecraftForge.EVENT_BUS.register(Toggle.class);
-		MinecraftForge.EVENT_BUS.register(Portal.class);
-	}
-	
-	private void initRecipes() {
+	private static void initRecipes() {
 		Item bronzeNugget = Item.REGISTRY.getObject(new ResourceLocation(MODID, "bronzenugget"));
 		Item bronzeIngot = Item.REGISTRY.getObject(new ResourceLocation(MODID, "bronzeingot"));
 		

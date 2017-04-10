@@ -39,6 +39,9 @@ public class EntityBlindBandit extends EntityCreature {
 	}
 	
 	@Override
+	public void addPotionEffect(PotionEffect potioneffectIn) {}
+	
+	@Override
 	public boolean isImmuneToExplosions() {
 		return true;
 	}

@@ -6,7 +6,7 @@ import com.progwml6.natura.nether.block.planks.*;
 
 import net.minecraft.item.ItemStack;
 
-public class NaturaModule {
+public class NaturaModuleStuff {
 	public static final ItemStack darkwoodPlankStack = new ItemStack(NaturaNether.netherPlanks,
 			1, BlockNetherPlanks.PlankType.DARKWOOD.getMeta());
 	public static final ItemStack darkwoodLogStack = new ItemStack(NaturaNether.netherLog,

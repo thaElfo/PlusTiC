@@ -47,7 +47,7 @@ public class PlusTiC {
 			+ "after:armorplus;after:EnderIO;after:projectred-exploration;"
 			+ "after:thermalfoundation;after:substratum;after:draconicevolution;"
 			+ "after:landcore;after:tesla;after:baubles;after:actuallyadditions;"
-			+ "after:natura;after:psi";
+			+ "after:natura;after:Psi";
 	
 	public static Config config;
 	
@@ -85,6 +85,7 @@ public class PlusTiC {
 		initDraconicEvolution();
 		initActAdd();
 		initNatura();
+		initPsi();
 		
 		integrate(materials, materialIntegrations);
 		Utils.registerModifiers();
@@ -603,7 +604,7 @@ public class PlusTiC {
 			Utils.initFluidMetal(signalumFluid);
 			signalum.setFluid(signalumFluid);
 			TinkerRegistry.registerAlloy(new FluidStack(signalumFluid, 72), new FluidStack(TinkerFluids.copper, 54),
-					new FluidStack(TinkerFluids.silver, 18), new FluidStack(FluidRegistry.getFluid(Loader.isModLoaded("thermalfoundation") ? "redstone" : "liquidRedstone"), 125));
+					new FluidStack(TinkerFluids.silver, 18), new FluidStack(FluidRegistry.getFluid("redstone"), 125));
 			
 			TinkerRegistry.addMaterialStats(signalum, new HeadMaterialStats(690, 7.5f, 5.2f, OBSIDIAN),
 					new HandleMaterialStats(1.2f, 0), new ExtraMaterialStats(55),
@@ -648,7 +649,7 @@ public class PlusTiC {
 			enderium.setFluid(enderiumFluid);
 			TinkerRegistry.registerAlloy(new FluidStack(enderiumFluid, 144), new FluidStack(TinkerFluids.tin, 72),
 					new FluidStack(TinkerFluids.silver, 36), new FluidStack(platinumFluid, 36),
-					new FluidStack(FluidRegistry.getFluid(Loader.isModLoaded("thermalfoundation") ? "ender" : "liquidEnderpearl"), 250));
+					new FluidStack(FluidRegistry.getFluid("ender"), 250));
 			
 			TinkerRegistry.addMaterialStats(enderium, new HeadMaterialStats(800, 7.5f, 7, COBALT),
 					new HandleMaterialStats(1.05f, -5), new ExtraMaterialStats(65), new BowMaterialStats(0.9f, 1.9f, 8),
@@ -756,6 +757,30 @@ public class PlusTiC {
 			log.warn("It is recommended that you have at least Natura 4.1.0.29 for integration (PlusTiC) with Tinkers Construct");
 		}
 		return true;
+	}
+	
+	private static void initPsi() {
+		if (Config.psi && Loader.isModLoaded("Psi")) {
+			Material psimetal = new Material("psimetal", 0x6D9EFF);
+			psimetal.addTrait(Psicological.psicological);
+			psimetal.addItem("ingotPsi", 1, Material.VALUE_Ingot);
+			psimetal.setCraftable(false).setCastable(true);
+			Utils.setDispItem(psimetal, "ingotPsi");
+			proxy.setRenderInfo(psimetal, 0x6D9EFF);
+			
+			FluidMolten psimetalFluid = Utils.fluidMetal("psimetal", 0x6D9EFF);
+			psimetalFluid.setTemperature(696);
+			Utils.initFluidMetal(psimetalFluid);
+			psimetal.setFluid(psimetalFluid);
+			
+			TinkerRegistry.addMaterialStats(psimetal,
+					new HeadMaterialStats(620, 7f, 5, OBSIDIAN),
+					new HandleMaterialStats(1.3f, -10),
+					new ExtraMaterialStats(30),
+					new BowMaterialStats(1, 1.6f, 4));
+			
+			materials.put("psi", psimetal);
+		}
 	}
 	
 	@EventHandler

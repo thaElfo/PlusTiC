@@ -34,6 +34,10 @@ public class ToolKatana extends SwordCore {
 	public static final float DURABILITY_MODIFIER = 1.05f;
 	
 	public static final String COUNTER_TAG = "PlusTiC_Counter";
+	
+	static {
+		MinecraftForge.EVENT_BUS.register(ToolKatana.class);
+	}
 
 	public ToolKatana() {
 		super(PartMaterialType.handle(TinkerTools.toughToolRod),
@@ -41,16 +45,15 @@ public class ToolKatana extends SwordCore {
 				PartMaterialType.head(TinkerTools.largeSwordBlade),
 				PartMaterialType.extra(TinkerTools.toughBinding));
 		setUnlocalizedName("katana").setRegistryName("katana");
-		MinecraftForge.EVENT_BUS.register(this);
 	}
 	
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
-	public void render(RenderGameOverlayEvent event) {
+	public static void render(RenderGameOverlayEvent event) {
 		final Minecraft mc = Minecraft.getMinecraft();
-		ItemStack is = mc.thePlayer.getHeldItemMainhand();
+		final ItemStack is = mc.thePlayer.getHeldItemMainhand();
 		if (event.getType() == RenderGameOverlayEvent.ElementType.TEXT
-				&& is != null && is.getItem() == this) {
+				&& is != null && is.getItem() instanceof ToolKatana) {
 			float counter = TagUtil.getTagSafe(is).getFloat(COUNTER_TAG);
 			if (counter > 0) {
 				mc.fontRendererObj.drawString(I18n.format("meter.plustic.katana", counter),
@@ -113,6 +116,9 @@ public class ToolKatana extends SwordCore {
 			}
 			entity.hurtResistantTime = 0;
 			lastDamage(targetLiving, 0);
+			if (targetLiving.getTotalArmorValue() <= 0) {
+				damage += 2.6f; // increase damage against unarmored
+			}
 		}
 		NBTTagCompound tag = TagUtil.getTagSafe(stack);
 		float counter = tag.getFloat(COUNTER_TAG);

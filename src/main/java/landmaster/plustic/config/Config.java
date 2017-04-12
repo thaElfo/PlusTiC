@@ -1,7 +1,12 @@
 package landmaster.plustic.config;
 
 import java.util.*;
+
+import org.apache.commons.lang3.*;
+
 import com.google.common.collect.*;
+
+import landmaster.plustic.traits.*;
 import net.minecraft.item.*;
 import net.minecraft.util.*;
 import net.minecraftforge.common.config.*;
@@ -21,8 +26,11 @@ public class Config extends Configuration {
 	public static boolean actuallyAdditions;
 	public static boolean substratum;
 	public static boolean natura;
+	public static boolean psi;
 	
 	public static boolean katana;
+	
+	public static List<Integer> botan_amount;
 	
 	private static final ArrayListMultimap<Item, ItemStack> endlectricBlacklist = ArrayListMultimap.create();
 	
@@ -44,14 +52,28 @@ public class Config extends Configuration {
 		actuallyAdditions = getBoolean("Enable Actually Additions support", "modules", true, "Integrate with Actually Additions");
 		substratum = getBoolean("Enable Substratum support", "modules", true, "Integrate with Substratum");
 		natura = getBoolean("Enable Natura support", "modules", true, "Integrate with Natura");
+		psi = getBoolean("Enable Psi support", "modules", true, "Integrate with Psi");
 		
 		katana = getBoolean("Enable Katana", "tools", true, "Enable Katana");
 		
-		String[] arr = getStringList("Items that Endlectric will not drain from", "tweaks", new String[] {}, "Enter in the format \"modid:name;meta\" (leave meta blank to match any meta)");
+		String[] arr_endlectric = getStringList("Items that Endlectric will not drain from", "tweaks", new String[] {}, "Enter in the format \"modid:name;meta\" (leave meta blank to match any meta)");
+		
+		Property botan_amount_prop = this.get("tweaks", "Modifier values for Botanical", new int[0]);
+		botan_amount_prop.setLanguageKey("Modifiers added for Botanical modifier");
+		botan_amount_prop.setComment("Enter in order of level (defaults will be extrapolated if some left blank)");
+		botan_amount_prop.setMinValue(0);
+		botan_amount = new ArrayList<>(Arrays.asList(
+				ArrayUtils.toObject(botan_amount_prop.getIntList())));
+		if (botan_amount.size() <= 0) botan_amount.add(1);
+		while (botan_amount.size() < Botanical.MAX_LEVELS) {
+			botan_amount.add(botan_amount.get(botan_amount.size()-1) + 2);
+		}
+		botan_amount = Collections.unmodifiableList(botan_amount);
+		
 		
 		int meta = -1;
-		for (int i=0; i<arr.length; ++i) {
-			String[] loc_meta = arr[i].split(";");
+		for (int i=0; i<arr_endlectric.length; ++i) {
+			String[] loc_meta = arr_endlectric[i].split(";");
 			if (loc_meta.length > 1) {
 				try {
 					meta = Integer.valueOf(loc_meta[1]);

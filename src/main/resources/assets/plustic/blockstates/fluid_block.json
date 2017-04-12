@@ -51,6 +51,9 @@
         }],
         "mirion": [{
         	"custom": { "fluid": "mirion" }
+        }],
+        "psimetal": [{
+        	"custom": { "fluid": "psimetal" }
         }]
     }
 }

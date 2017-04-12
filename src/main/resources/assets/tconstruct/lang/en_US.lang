@@ -31,6 +31,7 @@ material.blackquartz_plustic.name=Black Quartz
 material.void_actadd_plustic.name=Void
 material.emerald_plustic.name=Emerald
 material.darkwood_plustic.name=Darkwood
+material.psimetal.name=Psimetal
 
 modifier.bloodymary.name=Bloody Mary
 modifier.bloodymary.desc=§oBrought to you by the legendary Queen of England...§r\nDeals bonus damage depending on the amount of health already lost by the target. Also, a chance to drop a Coagulated Blood for each hit.
@@ -85,3 +86,5 @@ modifier.unnamed.name=He Who Must Not Be Named
 modifier.unnamed.desc=§oIt's you-know-who...§r\nBonus damage accrued for each entity of the same type as the target close to it.
 modifier.darktraveler.name=Dark Traveler
 modifier.darktraveler.desc=§oAll hail...the King of Chaos!§r\nSurrounding mobs get randomly afflicted with damage.
+modifier.psicological.name=Psicological
+modifier.psicological.desc=§o...the reverse kind§r\nTools heal with Psi.

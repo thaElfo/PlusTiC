@@ -14,7 +14,7 @@ CurseForge page: https://minecraft.curseforge.com/projects/plustic
 - Draconic Evolution by brandon3055
 - Actually Additions by Ellpeck
 - Natura by mDiyo
-## Building
+## Using the source and building
 After cloning this repository, run the commands (with working directory in the folder with the repository)
 ```
 ./gradlew setupDecompWorkspace
@@ -25,3 +25,7 @@ For Eclipse, run
 ./gradlew eclipse
 ```
 and add the jars in ./libs to the build path.
+Build with
+```
+./gradlew build
+```

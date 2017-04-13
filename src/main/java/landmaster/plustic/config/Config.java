@@ -66,7 +66,7 @@ public class Config extends Configuration {
 				ArrayUtils.toObject(botan_amount_prop.getIntList())));
 		if (botan_amount.size() <= 0) botan_amount.add(1);
 		while (botan_amount.size() < Botanical.MAX_LEVELS) {
-			botan_amount.add(botan_amount.get(botan_amount.size()-1) + 2);
+			botan_amount.add(botan_amount.get(botan_amount.size()-1)<<1);
 		}
 		botan_amount = Collections.unmodifiableList(botan_amount);
 		

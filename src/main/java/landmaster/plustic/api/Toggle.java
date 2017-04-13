@@ -8,6 +8,7 @@ import landmaster.plustic.net.*;
 import landmaster.plustic.proxy.*;
 import net.minecraft.client.*;
 import net.minecraft.client.gui.*;
+import net.minecraft.client.renderer.*;
 import net.minecraft.client.resources.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
@@ -78,8 +79,8 @@ public class Toggle {
 		@Override
 		public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 			super.drawScreen(mouseX, mouseY, partialTicks);
-			guiLeft = (width - xSize) / 2;
-	        guiTop = (height - ySize) / 2;
+			GlStateManager.enableAlpha();
+			GlStateManager.color(1, 1, 1, 1);
 			
 			mc.renderEngine.bindTexture(background);
 			drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);

@@ -763,6 +763,7 @@ public class PlusTiC {
 		if (Config.psi && Loader.isModLoaded("Psi")) {
 			Material psimetal = new Material("psimetal", 0x6D9EFF);
 			psimetal.addTrait(Psicological.psicological);
+			psimetal.addTrait(Global.global);
 			psimetal.addItem("ingotPsi", 1, Material.VALUE_Ingot);
 			psimetal.setCraftable(false).setCastable(true);
 			Utils.setDispItem(psimetal, "ingotPsi");
@@ -780,6 +781,22 @@ public class PlusTiC {
 					new BowMaterialStats(1, 1.6f, 4));
 			
 			materials.put("psi", psimetal);
+			
+			Material psigem = new Material("psigem", 0x0843A3);
+			psigem.addTrait(Psicological.psicological);
+			psigem.addTrait(Portly.portly);
+			psigem.addItem("gemPsi", 1, Material.VALUE_Ingot);
+			psigem.setCraftable(true);
+			Utils.setDispItem(psigem, "gemPsi");
+			proxy.setRenderInfo(psigem, 0x0843A3);
+			
+			TinkerRegistry.addMaterialStats(psigem,
+					new HeadMaterialStats(620, 7f, 5, OBSIDIAN),
+					new HandleMaterialStats(1.3f, -10),
+					new ExtraMaterialStats(30),
+					new BowMaterialStats(1, 1.6f, 4));
+			
+			materials.put("psiGem", psigem);
 		}
 	}
 	

@@ -101,7 +101,7 @@ public class ToolKatana extends SwordCore {
 		super.onUpdate(stack, worldIn, entityIn, itemSlot, isSelected);
 		NBTTagCompound tag = TagUtil.getTagSafe(stack);
 		float counter = tag.getFloat(COUNTER_TAG);
-		counter = Math.max(counter-0.1f, 0);
+		counter = Math.max(counter-0.08f, 0);
 		tag.setFloat(COUNTER_TAG, counter);
 		stack.setTagCompound(tag);
 	}
@@ -123,7 +123,7 @@ public class ToolKatana extends SwordCore {
 		NBTTagCompound tag = TagUtil.getTagSafe(stack);
 		float counter = tag.getFloat(COUNTER_TAG);
 		damage += counter * 0.84f;
-		if (scaleDown) damage *= 0.64f;
+		if (scaleDown) damage *= 0.33f;
 		
 		boolean success = super.dealDamage(stack, player, entity, damage);
 		if (success) {

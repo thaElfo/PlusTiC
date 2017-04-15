@@ -591,7 +591,11 @@ public class PlusTiC {
 	}
 	
 	private static void initTF() {
-		if ((Config.thermalFoundation && Loader.isModLoaded("thermalfoundation")) || (Config.substratum && Loader.isModLoaded("substratum"))) {
+		if ((Config.thermalFoundation && Loader.isModLoaded("thermalfoundation"))
+				|| (Config.substratum && Loader.isModLoaded("substratum"))) {
+			Fluid redstoneFluid = FluidRegistry.getFluid(Loader.isModLoaded("thermalfoundation") ? "redstone" : "liquidredstone");
+			Fluid enderFluid = FluidRegistry.getFluid(Loader.isModLoaded("thermalfoundation") ? "ender" : "liquidenderpearl");
+			
 			Material signalum = new Material("signalum_plustic", TextFormatting.RED);
 			signalum.addTrait(BloodyMary.bloodymary);
 			signalum.addItem("ingotSignalum", 1, Material.VALUE_Ingot);
@@ -603,8 +607,10 @@ public class PlusTiC {
 			signalumFluid.setTemperature(930);
 			Utils.initFluidMetal(signalumFluid);
 			signalum.setFluid(signalumFluid);
-			TinkerRegistry.registerAlloy(new FluidStack(signalumFluid, 72), new FluidStack(TinkerFluids.copper, 54),
-					new FluidStack(TinkerFluids.silver, 18), new FluidStack(FluidRegistry.getFluid("redstone"), 125));
+			TinkerRegistry.registerAlloy(new FluidStack(signalumFluid, 72),
+					new FluidStack(TinkerFluids.copper, 54),
+					new FluidStack(TinkerFluids.silver, 18),
+					new FluidStack(redstoneFluid, 125));
 			
 			TinkerRegistry.addMaterialStats(signalum, new HeadMaterialStats(690, 7.5f, 5.2f, OBSIDIAN),
 					new HandleMaterialStats(1.2f, 0), new ExtraMaterialStats(55),
@@ -649,10 +655,13 @@ public class PlusTiC {
 			enderium.setFluid(enderiumFluid);
 			TinkerRegistry.registerAlloy(new FluidStack(enderiumFluid, 144), new FluidStack(TinkerFluids.tin, 72),
 					new FluidStack(TinkerFluids.silver, 36), new FluidStack(platinumFluid, 36),
-					new FluidStack(FluidRegistry.getFluid("ender"), 250));
+					new FluidStack(enderFluid, 250));
 			
-			TinkerRegistry.addMaterialStats(enderium, new HeadMaterialStats(800, 7.5f, 7, COBALT),
-					new HandleMaterialStats(1.05f, -5), new ExtraMaterialStats(65), new BowMaterialStats(0.9f, 1.9f, 8),
+			TinkerRegistry.addMaterialStats(enderium,
+					new HeadMaterialStats(800, 7.5f, 7, COBALT),
+					new HandleMaterialStats(1.05f, -5),
+					new ExtraMaterialStats(65),
+					new BowMaterialStats(0.9f, 1.9f, 8),
 					new ArrowShaftMaterialStats(1, 12));
 			
 			materials.put("enderium", enderium);

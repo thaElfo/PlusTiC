@@ -46,8 +46,7 @@ public class NickOfTime extends AbstractTrait {
 					Utils.teleportPlayerTo((EntityPlayerMP)event.getEntity(), coord);
 					ih.extractItem(i, ENDER_COST, false);
 					event.setCanceled(true);
-					event.getEntityLiving().removePotionEffect(MobEffects.WITHER);
-					event.getEntityLiving().removePotionEffect(MobEffects.POISON);
+					event.getEntityLiving().clearActivePotions();
 					event.getEntityLiving().extinguish();
 					event.getEntityLiving().addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 160));
 					event.getEntity().addChatMessage(new TextComponentTranslation(

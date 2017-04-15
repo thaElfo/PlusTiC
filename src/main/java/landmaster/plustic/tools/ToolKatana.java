@@ -27,18 +27,18 @@ import slimeknights.tconstruct.library.tinkering.*;
 import slimeknights.tconstruct.library.tools.*;
 import slimeknights.tconstruct.library.utils.*;
 import slimeknights.tconstruct.tools.*;
-import slimeknights.tconstruct.tools.melee.item.*;
 import slimeknights.tconstruct.tools.ranged.item.*;
 
 public class ToolKatana extends SwordCore {
-	public static final float DURABILITY_MODIFIER = 1.05f;
+	public static final float DURABILITY_MODIFIER = 0.88f;
+	public static final float MAX_COUNTER = 16;
 	
 	public static final String COUNTER_TAG = "PlusTiC_Counter";
 	
 	static {
 		MinecraftForge.EVENT_BUS.register(ToolKatana.class);
 	}
-
+	
 	public ToolKatana() {
 		super(PartMaterialType.handle(TinkerTools.toughToolRod),
 				PartMaterialType.head(TinkerTools.largeSwordBlade),
@@ -57,7 +57,7 @@ public class ToolKatana extends SwordCore {
 			float counter = TagUtil.getTagSafe(is).getFloat(COUNTER_TAG);
 			if (counter > 0) {
 				mc.fontRendererObj.drawString(I18n.format("meter.plustic.katana", counter),
-						5, 5, Color.HSBtoRGB(Math.min(counter/13/3, 1.0f/3), 1, 1) & 0xFFFFFF, true);
+						5, 5, Color.HSBtoRGB(Math.min(counter/(MAX_COUNTER*3), 1.0f/3), 1, 1) & 0xFFFFFF, true);
 			}
 		}
 	}
@@ -83,7 +83,7 @@ public class ToolKatana extends SwordCore {
 
 	@Override
 	public float damagePotential() {
-		return 0.95f;
+		return 0.77f;
 	}
 	
 	@Override
@@ -101,18 +101,18 @@ public class ToolKatana extends SwordCore {
 		super.onUpdate(stack, worldIn, entityIn, itemSlot, isSelected);
 		NBTTagCompound tag = TagUtil.getTagSafe(stack);
 		float counter = tag.getFloat(COUNTER_TAG);
-		counter = Math.max(counter-0.035f, 0);
+		counter = Math.max(counter-0.1f, 0);
 		tag.setFloat(COUNTER_TAG, counter);
 		stack.setTagCompound(tag);
 	}
 	
 	@Override
 	public boolean dealDamage(ItemStack stack, EntityLivingBase player, Entity entity, float damage) {
-		boolean hybrid = false;
+		boolean scaleDown = false;
 		if (entity instanceof EntityLivingBase) {
 			EntityLivingBase targetLiving = (EntityLivingBase)entity;
 			if (entity.hurtResistantTime > 0 && lastDamage(targetLiving) > 0) {
-				hybrid = true;
+				scaleDown = true;
 			}
 			entity.hurtResistantTime = 0;
 			lastDamage(targetLiving, 0);
@@ -122,17 +122,18 @@ public class ToolKatana extends SwordCore {
 		}
 		NBTTagCompound tag = TagUtil.getTagSafe(stack);
 		float counter = tag.getFloat(COUNTER_TAG);
-		damage += counter * 0.73f;
-		boolean success = hybrid ?
-				Rapier.dealHybridDamage(player instanceof EntityPlayer ?
-						DamageSource.causePlayerDamage((EntityPlayer)player)
-						: DamageSource.causeMobDamage(player), entity, damage)
-				: super.dealDamage(stack, player, entity, damage);
+		damage += counter * 0.84f;
+		if (scaleDown) damage *= 0.64f;
+		
+		boolean success = super.dealDamage(stack, player, entity, damage);
 		if (success) {
-			if (++counter > 33) counter = 33;
+			if (entity.isDead) counter += 0.7f;
+			if (scaleDown) counter += 0.6f;
+			counter += 0.8f;
+			if (++counter > MAX_COUNTER) counter = MAX_COUNTER;
 			if (entity instanceof EntityLivingBase) {
 				EntityLivingBase targetLiving = (EntityLivingBase)entity;
-				if (counter >= 13) {
+				if (counter >= 12) {
 					targetLiving.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 200, 3));
 				}
 				if (counter >= 9) {
@@ -164,7 +165,8 @@ public class ToolKatana extends SwordCore {
 	private static final Field lastDamageF;
 	static {
 		try {
-			lastDamageF = EntityLivingBase.class.getDeclaredField("field_110153_bc"/* lastDamage */);
+			lastDamageF = EntityLivingBase.class.getDeclaredField(
+					"field_110153_bc"/* lastDamage */);
 			lastDamageF.setAccessible(true);
 		} catch (Throwable e) {
 			throw Throwables.propagate(e);

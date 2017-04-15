@@ -21,7 +21,7 @@ public class DarkTraveler extends AbstractTrait {
 	@Override
 	public void onUpdate(ItemStack tool, World world, Entity entity, int itemSlot, boolean isSelected) {
 		if (world.isRemote || !isSelected) return;
-		if (random.nextFloat() < 0.035f && ToolHelper.getCurrentDurability(tool)>1) {
+		if (random.nextFloat() < 0.035f && ToolHelper.getCurrentDurability(tool) >= 1) {
 			List<EntityLiving> lst = world.getEntitiesWithinAABB(EntityLiving.class,
 					new AxisAlignedBB(entity.getPositionVector().subtract(8,8,8),
 							entity.getPositionVector().addVector(8,8,8)),

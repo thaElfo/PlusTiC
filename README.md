@@ -2,6 +2,8 @@
 Minecraft mod for integrating various mods with Tinkers Construct
 
 CurseForge page: https://minecraft.curseforge.com/projects/plustic
+## New tool(s)
+- Katana
 ## Supported mods
 - Biomes o Plenty by Glitchfiend
 - Project Red by MrTJP
@@ -14,6 +16,7 @@ CurseForge page: https://minecraft.curseforge.com/projects/plustic
 - Draconic Evolution by brandon3055
 - Actually Additions by Ellpeck
 - Natura by mDiyo
+- Psi by Vazkii
 ## Using the source and building
 After cloning this repository, run the commands (with working directory in the folder with the repository)
 ```

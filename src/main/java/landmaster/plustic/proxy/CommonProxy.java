@@ -6,10 +6,12 @@ import landmaster.plustic.*;
 import landmaster.plustic.entity.*;
 import net.minecraft.client.settings.*;
 import net.minecraft.item.*;
+import net.minecraft.util.*;
 import net.minecraftforge.fluids.*;
 import net.minecraftforge.fml.common.registry.*;
 import net.minecraftforge.fml.relauncher.*;
 import slimeknights.tconstruct.library.materials.*;
+import slimeknights.tconstruct.library.modifiers.*;
 import slimeknights.tconstruct.library.tools.*;
 
 public class CommonProxy {
@@ -29,6 +31,9 @@ public class CommonProxy {
 	}
 	
 	public void registerToolModel(ToolCore tc) {
+	}
+	
+	public void registerModifierModel(IModifier mod, ResourceLocation rl) {
 	}
 	
 	public void initEntities() {

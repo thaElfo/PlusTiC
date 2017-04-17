@@ -62,7 +62,8 @@ public class Mana extends AbstractTrait {
 				for (int i=0; i<iv.length; ++i) {
 					if (ManaItemHandler.requestManaExactForTool(iv[i], ep, MANA_DRAW, true)) {
 						ep.inventory.markDirty();
-						if (--newDamage <= 0) break manadraw;
+						--newDamage;
+						break manadraw;
 					}
 				}
 			}
@@ -72,7 +73,8 @@ public class Mana extends AbstractTrait {
 				is = ItemStack.copyItemStack(is);
 				if (ManaItemHandler.requestManaExactForTool(is, ep, MANA_DRAW, true)) {
 					ib.setStackInSlot(i, is);
-					if (--newDamage <= 0) break manadraw;
+					--newDamage;
+					break manadraw;
 				}
 			}
 		}

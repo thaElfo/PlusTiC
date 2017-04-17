@@ -1,5 +1,6 @@
 package landmaster.plustic.traits;
 
+import landmaster.plustic.api.*;
 import landmaster.plustic.util.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
@@ -16,6 +17,7 @@ public class Psicological extends AbstractTrait {
 	
 	public Psicological() {
 		super("psicological", 0x6D9EFF);
+		Toggle.toggleable.add(identifier);
 	}
 	
 	@Override
@@ -26,6 +28,7 @@ public class Psicological extends AbstractTrait {
 	@Override
 	public void onUpdate(ItemStack tool, World world, Entity entity, int itemSlot, boolean isSelected) {
 		if (entity instanceof EntityPlayer
+				&& Toggle.getToggleState(tool, identifier)
 				&& ToolHelper.getCurrentDurability(tool) < ToolHelper.getMaxDurability(tool)) {
 			if (PsiUtils.extractPsiExact((EntityPlayer)entity, PSI_COST) >= PSI_COST) {
 				ToolHelper.healTool(tool, 1, (EntityPlayer)entity);
@@ -35,7 +38,9 @@ public class Psicological extends AbstractTrait {
 	
 	@Override
 	public int onToolDamage(ItemStack tool, int damage, int newDamage, EntityLivingBase entity) {
-		if (entity instanceof EntityPlayer && newDamage >= 1) {
+		if (entity instanceof EntityPlayer
+				&& newDamage >= 1
+				&& Toggle.getToggleState(tool, identifier)) {
 			if (PsiUtils.extractPsiExact((EntityPlayer)entity, PSI_COST) >= PSI_COST) {
 				--newDamage;
 			}

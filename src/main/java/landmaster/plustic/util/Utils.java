@@ -7,9 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 import cofh.api.energy.*;
 import landmaster.plustic.*;
 import landmaster.plustic.block.*;
-import landmaster.plustic.config.*;
 import landmaster.plustic.fluids.*;
-import landmaster.plustic.modifiers.*;
 import net.darkhax.tesla.capability.*;
 import net.minecraft.block.*;
 import net.minecraft.entity.player.*;
@@ -29,11 +27,8 @@ import slimeknights.tconstruct.library.materials.*;
 import slimeknights.tconstruct.library.modifiers.*;
 
 public class Utils {
-	public static void registerModifiers() {
-		if (Config.enderIO && Loader.isModLoaded("EnderIO")) {
-			TinkerRegistry.registerModifier(ModEndlectric.endlectric);
-			addModifierItem(ModEndlectric.endlectric, "enderio", "itemBasicCapacitor", 2);
-		}
+	public static float clamp(float val, float min, float max) {
+	    return Math.max(min, Math.min(max, val));
 	}
 	
 	public static void addModifierItem(Modifier modifier, String modid, String name) {

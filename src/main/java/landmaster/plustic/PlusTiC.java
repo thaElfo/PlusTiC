@@ -6,7 +6,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.*;
 
 import landmaster.plustic.proxy.*;
-import landmaster.plustic.tools.*;
 import landmaster.plustic.config.*;
 import landmaster.plustic.modules.*;
 import landmaster.plustic.net.*;
@@ -52,8 +51,6 @@ public class PlusTiC {
 	
 	public static final BowMaterialStats justWhy = new BowMaterialStats(0.2f, 0.4f, -1f);
 	
-	public static ToolKatana katana;
-	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		(config = new Config(event)).sync();
@@ -75,7 +72,8 @@ public class PlusTiC {
 		ModulePsi.init();
 		
 		integrate(materials, materialIntegrations);
-		Utils.registerModifiers();
+		
+		ModuleModifiers.init();
 	}
 	
 	@EventHandler

@@ -5,6 +5,7 @@ import javax.annotation.*;
 import landmaster.plustic.*;
 import landmaster.plustic.entity.*;
 import landmaster.plustic.entity.render.*;
+import landmaster.plustic.modules.ModuleTools;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.block.model.*;
 import net.minecraft.client.renderer.block.statemap.*;
@@ -22,6 +23,7 @@ import slimeknights.tconstruct.common.*;
 import slimeknights.tconstruct.library.*;
 import slimeknights.tconstruct.library.client.*;
 import slimeknights.tconstruct.library.materials.*;
+import slimeknights.tconstruct.library.modifiers.IModifier;
 import slimeknights.tconstruct.library.tools.*;
 
 public class ClientProxy extends CommonProxy {
@@ -66,6 +68,11 @@ public class ClientProxy extends CommonProxy {
 	}
 	
 	@Override
+	public void registerModifierModel(IModifier mod, ResourceLocation rl) {
+		ModelRegisterUtil.registerModifierModel(mod, rl);
+	}
+	
+	@Override
 	public void initEntities() {
 		super.initEntities();
 		RenderingRegistry.registerEntityRenderingHandler(EntityBlindBandit.class, RenderBlindBandit.FACTORY);
@@ -73,8 +80,8 @@ public class ClientProxy extends CommonProxy {
 	
 	@Override
 	public void initToolGuis() {
-		if (PlusTiC.katana != null) {
-			ToolBuildGuiInfo katanaInfo = new ToolBuildGuiInfo(PlusTiC.katana);
+		if (ModuleTools.katana != null) {
+			ToolBuildGuiInfo katanaInfo = new ToolBuildGuiInfo(ModuleTools.katana);
 			katanaInfo.addSlotPosition(33, 42 + 18); // handle
 			katanaInfo.addSlotPosition(33 + 20, 42 - 20); // 1st blade
 			katanaInfo.addSlotPosition(33, 42); // 2nd blade

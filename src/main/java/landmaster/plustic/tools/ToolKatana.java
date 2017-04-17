@@ -1,21 +1,17 @@
 package landmaster.plustic.tools;
 
 import java.awt.Color;
-import java.lang.reflect.*;
 import java.util.*;
 
 import javax.annotation.*;
 
-import com.google.common.base.*;
-
+import landmaster.plustic.util.*;
 import net.minecraft.client.*;
 import net.minecraft.client.resources.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
-import net.minecraft.init.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
-import net.minecraft.potion.*;
 import net.minecraft.util.*;
 import net.minecraft.world.*;
 import net.minecraftforge.client.event.*;
@@ -31,12 +27,26 @@ import slimeknights.tconstruct.tools.ranged.item.*;
 
 public class ToolKatana extends SwordCore {
 	public static final float DURABILITY_MODIFIER = 0.88f;
-	public static final float MAX_COUNTER = 16;
 	
 	public static final String COUNTER_TAG = "PlusTiC_Counter";
 	
 	static {
 		MinecraftForge.EVENT_BUS.register(ToolKatana.class);
+	}
+	
+	private static float counter_multiplier(float attack) {
+		if (attack <= 5) {
+			return 1.2f;
+		}
+		if (attack <= 11) {
+			return 1.35f;
+		}
+		return 1.5f;
+	}
+	
+	public static float counter_cap(ItemStack tool) {
+		float attack = TagUtil.getToolStats(tool).attack;
+		return attack * counter_multiplier(attack);
 	}
 	
 	public ToolKatana() {
@@ -57,7 +67,7 @@ public class ToolKatana extends SwordCore {
 			float counter = TagUtil.getTagSafe(is).getFloat(COUNTER_TAG);
 			if (counter > 0) {
 				mc.fontRendererObj.drawString(I18n.format("meter.plustic.katana", counter),
-						5, 5, Color.HSBtoRGB(Math.min(counter/(MAX_COUNTER*3), 1.0f/3), 1, 1) & 0xFFFFFF, true);
+						5, 5, Color.HSBtoRGB(Math.min(counter/(counter_cap(is)*3), 1.0f/3), 1, 1) & 0xFFFFFF, true);
 			}
 		}
 	}
@@ -88,7 +98,7 @@ public class ToolKatana extends SwordCore {
 	
 	@Override
 	public float damageCutoff() {
-		return 48.0f;
+		return 22.0f;
 	}
 	
 	@Override
@@ -101,47 +111,30 @@ public class ToolKatana extends SwordCore {
 		super.onUpdate(stack, worldIn, entityIn, itemSlot, isSelected);
 		NBTTagCompound tag = TagUtil.getTagSafe(stack);
 		float counter = tag.getFloat(COUNTER_TAG);
-		counter = Math.max(counter-0.08f, 0);
+		counter -= 0.005f;
+		counter = Utils.clamp(counter, 0, counter_cap(stack));
 		tag.setFloat(COUNTER_TAG, counter);
 		stack.setTagCompound(tag);
 	}
 	
 	@Override
 	public boolean dealDamage(ItemStack stack, EntityLivingBase player, Entity entity, float damage) {
-		boolean scaleDown = false;
 		if (entity instanceof EntityLivingBase) {
 			EntityLivingBase targetLiving = (EntityLivingBase)entity;
-			if (entity.hurtResistantTime > 0 && lastDamage(targetLiving) > 0) {
-				scaleDown = true;
-			}
-			entity.hurtResistantTime = 0;
-			lastDamage(targetLiving, 0);
 			if (targetLiving.getTotalArmorValue() <= 0) {
 				damage += 2.6f; // increase damage against unarmored
 			}
 		}
 		NBTTagCompound tag = TagUtil.getTagSafe(stack);
 		float counter = tag.getFloat(COUNTER_TAG);
-		damage += counter * 0.84f;
-		if (scaleDown) damage *= 0.33f;
+		damage += counter * 1.4f;
 		
 		boolean success = super.dealDamage(stack, player, entity, damage);
 		if (success) {
-			if (entity.isDead) counter += 0.7f;
-			if (scaleDown) counter += 0.6f;
-			counter += 0.8f;
-			if (++counter > MAX_COUNTER) counter = MAX_COUNTER;
 			if (entity instanceof EntityLivingBase) {
 				EntityLivingBase targetLiving = (EntityLivingBase)entity;
-				if (counter >= 12) {
-					targetLiving.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 200, 3));
-				}
-				if (counter >= 9) {
-					targetLiving.addPotionEffect(new PotionEffect(MobEffects.WITHER, 200, 1));
-				}
-				if (counter >= 6) {
-					targetLiving.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 200, 1));
-				}
+				if (targetLiving.getHealth() <= 0) counter += 1.0f;
+				counter = Utils.clamp(counter, 0, counter_cap(stack));
 			}
 			tag.setFloat(COUNTER_TAG, counter);
 			stack.setTagCompound(tag);
@@ -161,12 +154,12 @@ public class ToolKatana extends SwordCore {
 		data.durability *= DURABILITY_MODIFIER;
 		return data;
 	}
-	
+	/*
 	private static final Field lastDamageF;
 	static {
 		try {
 			lastDamageF = EntityLivingBase.class.getDeclaredField(
-					"field_110153_bc"/* lastDamage */);
+					"field_110153_bc"); // lastDamage
 			lastDamageF.setAccessible(true);
 		} catch (Throwable e) {
 			throw Throwables.propagate(e);
@@ -179,13 +172,5 @@ public class ToolKatana extends SwordCore {
 		} catch (Throwable e) {
 			throw Throwables.propagate(e);
 		}
-	}
-	
-	private static void lastDamage(EntityLivingBase elb, float val) {
-		try {
-			lastDamageF.setFloat(elb, val);
-		} catch (Throwable e) {
-			throw Throwables.propagate(e);
-		}
-	}
+	}*/
 }

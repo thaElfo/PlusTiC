@@ -5,6 +5,7 @@ import java.util.*;
 
 import javax.annotation.*;
 
+import landmaster.plustic.config.*;
 import landmaster.plustic.util.*;
 import net.minecraft.client.*;
 import net.minecraft.client.resources.*;
@@ -127,7 +128,7 @@ public class ToolKatana extends SwordCore {
 		}
 		NBTTagCompound tag = TagUtil.getTagSafe(stack);
 		float counter = tag.getFloat(COUNTER_TAG);
-		damage += counter * 1.4f;
+		damage += counter * Config.katana_combo_multiplier;
 		
 		boolean success = super.dealDamage(stack, player, entity, damage);
 		if (success) {

@@ -69,7 +69,7 @@ public class ModuleBase {
 				PlusTiC.materials.put("alumite", alumite);
 			}
 			
-			if (TinkerIntegration.isIntegrated(TinkerFluids.nickel)) {
+			if (TinkerIntegration.isIntegrated(TinkerFluids.nickel) && TinkerRegistry.getMaterial("nickel") == Material.UNKNOWN) {
 				Material nickel = new Material("nickel", TextFormatting.YELLOW);
 				nickel.addTrait(NickOfTime.nickOfTime, HEAD);
 				nickel.addTrait(magnetic);

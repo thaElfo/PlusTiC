@@ -30,6 +30,8 @@ public class Config extends Configuration {
 	
 	public static boolean katana;
 	
+	public static float katana_combo_multiplier;
+	
 	public static List<Integer> botan_amount;
 	
 	private static final ArrayListMultimap<Item, ItemStack> endlectricBlacklist = ArrayListMultimap.create();
@@ -55,6 +57,7 @@ public class Config extends Configuration {
 		psi = getBoolean("Enable Psi support", "modules", true, "Integrate with Psi");
 		
 		katana = getBoolean("Enable Katana", "tools", true, "Enable Katana");
+		katana_combo_multiplier = getFloat("Katana combo multiplier", "tools", 1.25f, 0, Float.MAX_VALUE, "Multiply combo value by this to calculate bonus damage");
 		
 		String[] arr_endlectric = getStringList("Items that Endlectric will not drain from", "tweaks", new String[] {}, "Enter in the format \"modid:name;meta\" (leave meta blank to match any meta)");
 		

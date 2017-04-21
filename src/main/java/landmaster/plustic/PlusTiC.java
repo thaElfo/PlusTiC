@@ -115,6 +115,10 @@ public class PlusTiC {
 		Item mirionIngot = Item.REGISTRY.getObject(new ResourceLocation(MODID, "mirioningot"));
 		Item mirionNugget = Item.REGISTRY.getObject(new ResourceLocation(MODID, "mirionnugget"));
 		
+		Block invarBlock = Block.REGISTRY.getObject(new ResourceLocation(MODID, "invarblock"));
+		Item invarIngot = Item.REGISTRY.getObject(new ResourceLocation(MODID, "invaringot"));
+		Item invarNugget = Item.REGISTRY.getObject(new ResourceLocation(MODID, "invarnugget"));
+		
 		if (bronzeNugget != null) {
 			GameRegistry.addRecipe(
 					new ShapedOreRecipe(new ItemStack(bronzeIngot), "III", "III", "III", 'I', "nuggetBronze"));
@@ -143,6 +147,14 @@ public class PlusTiC {
 			GameRegistry.addRecipe(
 					new ShapedOreRecipe(new ItemStack(mirionIngot), "III", "III", "III", 'I', "nuggetMirion"));
 			GameRegistry.addShapelessRecipe(new ItemStack(mirionNugget, 9), mirionIngot);
+		}
+		if (invarNugget != null) {
+			GameRegistry.addRecipe(
+					new ShapedOreRecipe(new ItemStack(invarBlock), "III", "III", "III", 'I', "ingotInvar"));
+			GameRegistry.addShapelessRecipe(new ItemStack(invarIngot, 9), invarBlock);
+			GameRegistry.addRecipe(
+					new ShapedOreRecipe(new ItemStack(invarIngot), "III", "III", "III", 'I', "nuggetInvar"));
+			GameRegistry.addShapelessRecipe(new ItemStack(invarNugget, 9), invarIngot);
 		}
 	}
 

@@ -69,7 +69,8 @@ public class ModuleBase {
 				PlusTiC.materials.put("alumite", alumite);
 			}
 			
-			if (TinkerIntegration.isIntegrated(TinkerFluids.nickel) && TinkerRegistry.getMaterial("nickel") == Material.UNKNOWN) {
+			if (TinkerIntegration.isIntegrated(TinkerFluids.nickel)
+					&& TinkerRegistry.getMaterial("nickel") == Material.UNKNOWN) {
 				Material nickel = new Material("nickel", TextFormatting.YELLOW);
 				nickel.addTrait(NickOfTime.nickOfTime, HEAD);
 				nickel.addTrait(magnetic);
@@ -87,8 +88,34 @@ public class ModuleBase {
 				PlusTiC.materials.put("nickel", nickel);
 			}
 			
-			if (TinkerIntegration.isIntegrated(TinkerFluids.nickel) && TinkerRegistry.getMaterial("invar") == Material.UNKNOWN) {
-				//Material invar = new Material("invar", 0xD6D6D6);
+			if (TinkerIntegration.isIntegrated(TinkerFluids.nickel)
+					&& TinkerRegistry.getMaterial("invar") == Material.UNKNOWN) {
+				Utils.ItemMatGroup invarGroup = Utils.registerMatGroup("invar");
+				
+				Material invar = new Material("invar", 0xD6D6D6);
+				invar.addTrait(DevilsStrength.devilsstrength);
+				invar.addTrait(magnetic);
+				invar.addItem("ingotInvar", 1, Material.VALUE_Ingot);
+				invar.setCraftable(false).setCastable(true);
+				invar.setRepresentativeItem(invarGroup.ingot);
+				PlusTiC.proxy.setRenderInfo(invar, 0xD6D6D6);
+				
+				FluidMolten invarFluid = Utils.fluidMetal("invar", 0xD6D6D6);
+				invarFluid.setTemperature(1000);
+				Utils.initFluidMetal(invarFluid);
+				invar.setFluid(invarFluid);
+				TinkerRegistry.registerAlloy(new FluidStack(invarFluid, 3),
+						new FluidStack(TinkerFluids.iron, 2),
+						new FluidStack(TinkerFluids.nickel, 1));
+				
+				TinkerRegistry.addMaterialStats(invar,
+						new HeadMaterialStats(600, 6, 5f, OBSIDIAN),
+						new HandleMaterialStats(1.3f, 0),
+						new ExtraMaterialStats(100),
+						PlusTiC.justWhy,
+						new FletchingMaterialStats(1, 1.15f));
+				
+				PlusTiC.materials.put("invar", invar);
 			}
 		}
 	}

@@ -17,6 +17,7 @@ fluid.plustic.enderium.name=Molten Enderium
 fluid.plustic.nickel.name=Molten Nickel
 fluid.plustic.mirion.name=Molten Mirion
 fluid.plustic.psimetal.name=Molten Psimetal
+fluid.plustic.invar.name=Molten Invar
 
 item.tindust.name=Tin Dust
 item.osmiumdust.name=Osmium Dust
@@ -29,10 +30,13 @@ item.alumitenugget.name=Alumite Nugget
 item.alumiteingot.name=Alumite Ingot
 item.mirionnugget.name=Mirion Nugget
 item.mirioningot.name=Mirion Ingot
+item.invarnugget.name=Invar Nugget
+item.invaringot.name=Invar Ingot
 
 tile.osmiridiumblock.name=Osmiridium Block
 tile.alumiteblock.name=Alumite Block
 tile.mirionblock.name=Mirion Block
+tile.invarblock.name=Invar Block
 
 msg.plustic.globalmodifier.set=Linked inventory at [x=%d, y=%d, z=%d] and dimension %d
 msg.plustic.portlymodifier.set=Captured entity %s

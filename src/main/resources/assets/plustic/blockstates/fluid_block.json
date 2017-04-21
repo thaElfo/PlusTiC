@@ -54,6 +54,9 @@
         }],
         "psimetal": [{
         	"custom": { "fluid": "psimetal" }
+        }],
+        "invar": [{
+        	"custom": { "fluid": "invar" }
         }]
     }
 }

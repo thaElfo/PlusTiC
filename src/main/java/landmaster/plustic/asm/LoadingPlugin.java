@@ -8,6 +8,7 @@ import net.minecraftforge.fml.relauncher.*;
 @IFMLLoadingPlugin.Name(PlusTiC.NAME)
 @IFMLLoadingPlugin.MCVersion(value = "1.10.2")
 @IFMLLoadingPlugin.TransformerExclusions({"landmaster.plustic.asm"})
+@IFMLLoadingPlugin.SortingIndex(1)
 public class LoadingPlugin implements IFMLLoadingPlugin {
 	
 	@Override

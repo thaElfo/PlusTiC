@@ -86,6 +86,10 @@ public class ModuleBase {
 				
 				PlusTiC.materials.put("nickel", nickel);
 			}
+			
+			if (TinkerIntegration.isIntegrated(TinkerFluids.nickel) && TinkerRegistry.getMaterial("invar") == Material.UNKNOWN) {
+				//Material invar = new Material("invar", 0xD6D6D6);
+			}
 		}
 	}
 	

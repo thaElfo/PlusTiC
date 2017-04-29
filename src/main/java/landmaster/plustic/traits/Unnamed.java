@@ -16,9 +16,10 @@ public class Unnamed extends AbstractTrait {
 	
 	@Override
 	public float damage(ItemStack tool, EntityLivingBase player, EntityLivingBase target, float damage, float newDamage, boolean isCritical) {
-		List<? extends EntityLivingBase> lst = target.getEntityWorld().getEntitiesWithinAABB(target.getClass(), Utils.AABBfromVecs(
-				target.getPositionVector().subtract(8,8,8),
-				target.getPositionVector().addVector(8,8,8)),
+		List<? extends EntityLivingBase> lst = target.getEntityWorld().getEntitiesWithinAABB(target.getClass(),
+				Utils.AABBfromVecs(
+						target.getPositionVector().subtract(8,8,8),
+						target.getPositionVector().addVector(8,8,8)),
 				ent -> ent != target);
 		newDamage += lst.size();
 		return super.damage(tool, player, target, damage, newDamage, isCritical);

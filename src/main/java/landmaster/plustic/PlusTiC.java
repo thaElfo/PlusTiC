@@ -33,7 +33,7 @@ public class PlusTiC {
 			+ "after:armorplus;after:EnderIO;after:projectred-exploration;"
 			+ "after:thermalfoundation;after:substratum;after:draconicevolution;"
 			+ "after:landcore;after:tesla;after:baubles;after:actuallyadditions;"
-			+ "after:natura;after:Psi";
+			+ "after:natura;after:Psi;after:avaritia";
 	
 	public static Config config;
 	
@@ -70,6 +70,7 @@ public class PlusTiC {
 		ModuleActAdd.init();
 		ModuleNatura.init();
 		ModulePsi.init();
+		ModuleAvaritia.init();
 		
 		integrate(materials, materialIntegrations);
 		
@@ -91,6 +92,9 @@ public class PlusTiC {
 		
 		// YOU TOO, ACTUALLY ADDITIONS!
 		Utils.setDispItem(materials.get("blackquartz"), "actuallyadditions", "itemMisc", 5);
+		
+		// SAME HERE, AVARITIA!
+		Utils.setDispItem(materials.get("infinity"), "ingotInfinity");
 		
 		Utils.setDispItem(materials.get("sapphire"), "gemSapphire");
 		Utils.setDispItem(materials.get("ruby"), "gemRuby");

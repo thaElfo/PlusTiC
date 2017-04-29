@@ -27,6 +27,7 @@ public class Config extends Configuration {
 	public static boolean substratum;
 	public static boolean natura;
 	public static boolean psi;
+	public static boolean avaritia;
 	
 	public static boolean katana;
 	
@@ -55,6 +56,7 @@ public class Config extends Configuration {
 		substratum = getBoolean("Enable Substratum support", "modules", true, "Integrate with Substratum");
 		natura = getBoolean("Enable Natura support", "modules", true, "Integrate with Natura");
 		psi = getBoolean("Enable Psi support", "modules", true, "Integrate with Psi");
+		avaritia = getBoolean("Enable Avaritia support", "modules", true, "Integrate with Avaritia");
 		
 		katana = getBoolean("Enable Katana", "tools", true, "Enable Katana");
 		katana_combo_multiplier = getFloat("Katana combo multiplier", "tools", 1.25f, 0, Float.MAX_VALUE, "Multiply combo value by this to calculate bonus damage");

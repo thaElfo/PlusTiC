@@ -57,6 +57,9 @@
         }],
         "invar": [{
         	"custom": { "fluid": "invar" }
+        }],
+        "infinity": [{
+        	"custom": { "fluid": "infinity" }
         }]
     }
 }

@@ -24,6 +24,9 @@ public class CommonProxy {
 	public void setRenderInfo(Material mat, int color) {
 	}
 	
+	public void setRenderInfo(Material mat, int lo, int mid, int hi) {
+	}
+	
 	public void registerFluidModels(Fluid fluid) {
 	}
 	

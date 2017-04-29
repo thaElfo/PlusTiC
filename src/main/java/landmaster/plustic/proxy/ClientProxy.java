@@ -5,7 +5,7 @@ import javax.annotation.*;
 import landmaster.plustic.*;
 import landmaster.plustic.entity.*;
 import landmaster.plustic.entity.render.*;
-import landmaster.plustic.modules.ModuleTools;
+import landmaster.plustic.modules.*;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.block.model.*;
 import net.minecraft.client.renderer.block.statemap.*;
@@ -23,7 +23,7 @@ import slimeknights.tconstruct.common.*;
 import slimeknights.tconstruct.library.*;
 import slimeknights.tconstruct.library.client.*;
 import slimeknights.tconstruct.library.materials.*;
-import slimeknights.tconstruct.library.modifiers.IModifier;
+import slimeknights.tconstruct.library.modifiers.*;
 import slimeknights.tconstruct.library.tools.*;
 
 public class ClientProxy extends CommonProxy {
@@ -35,6 +35,11 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void setRenderInfo(Material mat, int color) {
 		mat.setRenderInfo(color);
+	}
+	
+	@Override
+	public void setRenderInfo(Material mat, int lo, int mid, int hi) {
+		mat.setRenderInfo(new MaterialRenderInfo.MultiColor(lo, mid, hi));
 	}
 	
 	@Override

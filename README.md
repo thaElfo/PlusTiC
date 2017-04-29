@@ -17,6 +17,7 @@ CurseForge page: https://minecraft.curseforge.com/projects/plustic
 - Actually Additions by Ellpeck
 - Natura by mDiyo
 - Psi by Vazkii
+- Avaritia by brandon3055
 ## Using the source and building
 After cloning this repository, run the commands (with working directory in the folder with the repository)
 ```

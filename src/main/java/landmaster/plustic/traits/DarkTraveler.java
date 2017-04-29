@@ -2,11 +2,11 @@ package landmaster.plustic.traits;
 
 import java.util.*;
 
+import landmaster.plustic.util.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.monster.*;
 import net.minecraft.item.*;
 import net.minecraft.util.*;
-import net.minecraft.util.math.*;
 import net.minecraft.world.*;
 import slimeknights.tconstruct.library.traits.*;
 import slimeknights.tconstruct.library.utils.*;
@@ -23,7 +23,7 @@ public class DarkTraveler extends AbstractTrait {
 		if (world.isRemote || !isSelected) return;
 		if (random.nextFloat() < 0.035f && ToolHelper.getCurrentDurability(tool) >= 1) {
 			List<EntityLiving> lst = world.getEntitiesWithinAABB(EntityLiving.class,
-					new AxisAlignedBB(entity.getPositionVector().subtract(8,8,8),
+					Utils.AABBfromVecs(entity.getPositionVector().subtract(8,8,8),
 							entity.getPositionVector().addVector(8,8,8)),
 					ent -> ent instanceof IMob && ent != entity);
 			if (lst.size() > 0) {

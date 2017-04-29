@@ -15,6 +15,7 @@ import net.minecraft.item.*;
 import net.minecraft.network.play.server.*;
 import net.minecraft.potion.*;
 import net.minecraft.util.*;
+import net.minecraft.util.math.*;
 import net.minecraft.world.*;
 import net.minecraftforge.energy.*;
 import net.minecraftforge.fluids.*;
@@ -27,6 +28,10 @@ import slimeknights.tconstruct.library.materials.*;
 import slimeknights.tconstruct.library.modifiers.*;
 
 public class Utils {
+	public static AxisAlignedBB AABBfromVecs(Vec3d v1, Vec3d v2) {
+		return new AxisAlignedBB(v1.xCoord, v1.yCoord, v1.zCoord, v2.xCoord, v2.yCoord, v2.zCoord);
+	}
+	
 	public static float clamp(float val, float min, float max) {
 	    return Math.max(min, Math.min(max, val));
 	}

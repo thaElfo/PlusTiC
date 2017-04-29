@@ -2,9 +2,9 @@ package landmaster.plustic.traits;
 
 import java.util.*;
 
+import landmaster.plustic.util.*;
 import net.minecraft.entity.*;
 import net.minecraft.item.*;
-import net.minecraft.util.math.*;
 import slimeknights.tconstruct.library.traits.*;
 
 public class Unnamed extends AbstractTrait {
@@ -16,7 +16,7 @@ public class Unnamed extends AbstractTrait {
 	
 	@Override
 	public float damage(ItemStack tool, EntityLivingBase player, EntityLivingBase target, float damage, float newDamage, boolean isCritical) {
-		List<? extends EntityLivingBase> lst = target.getEntityWorld().getEntitiesWithinAABB(target.getClass(), new AxisAlignedBB(
+		List<? extends EntityLivingBase> lst = target.getEntityWorld().getEntitiesWithinAABB(target.getClass(), Utils.AABBfromVecs(
 				target.getPositionVector().subtract(8,8,8),
 				target.getPositionVector().addVector(8,8,8)),
 				ent -> ent != target);

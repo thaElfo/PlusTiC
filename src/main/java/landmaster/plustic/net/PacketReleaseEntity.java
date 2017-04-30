@@ -39,7 +39,7 @@ public class PacketReleaseEntity implements IMessage, IMessageHandler<PacketRele
 					rtr.hitVec.xCoord+(bb.maxX-bb.minX)*0.5*offsetX,
 					rtr.hitVec.yCoord+(bb.maxY-bb.minY)*0.5*offsetY,
 					rtr.hitVec.zCoord+(bb.maxZ-bb.minZ)*0.5*offsetZ,
-					ep.getEntityWorld().rand.nextFloat()*360, 0);
+					ep.getRNG().nextFloat()*360, 0);
 			if (!ep.getEntityWorld().spawnEntityInWorld(ent)) return;
 			if (ent instanceof EntityLiving) ((EntityLiving)ent).playLivingSound();
 			String id = nbt.getCompoundTag("portlyGentleman").getString("id");

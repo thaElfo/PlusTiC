@@ -55,6 +55,9 @@ public class ToolKatana extends SwordCore {
 				PartMaterialType.head(TinkerTools.largeSwordBlade),
 				PartMaterialType.head(TinkerTools.largeSwordBlade),
 				PartMaterialType.extra(TinkerTools.toughBinding));
+		
+		this.addCategory(Category.WEAPON);
+		
 		setUnlocalizedName("katana").setRegistryName("katana");
 	}
 	

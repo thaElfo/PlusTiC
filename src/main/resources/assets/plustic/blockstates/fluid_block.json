@@ -60,6 +60,9 @@
         }],
         "infinity": [{
         	"custom": { "fluid": "infinity" }
+        }],
+        "lumium": [{
+        	"custom": { "fluid": "lumium" }
         }]
     }
 }

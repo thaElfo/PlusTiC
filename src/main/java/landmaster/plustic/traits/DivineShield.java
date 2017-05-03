@@ -23,8 +23,8 @@ public class DivineShield extends AbstractTrait {
 	
 	@Override
 	public void onUpdate(ItemStack tool, World world, Entity entity, int itemSlot, boolean isSelected) {
-		if (isSelected && entity instanceof EntityLiving) {
-			((EntityLiving)entity).addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 20));
+		if (isSelected && entity instanceof EntityLivingBase) {
+			((EntityLivingBase)entity).addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 20));
 		}
 	}
 	

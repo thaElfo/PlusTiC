@@ -3,6 +3,7 @@ package landmaster.plustic.modules;
 import static slimeknights.tconstruct.library.materials.MaterialTypes.*;
 import static slimeknights.tconstruct.library.utils.HarvestLevels.*;
 import static slimeknights.tconstruct.tools.TinkerTraits.*;
+import static slimeknights.tconstruct.tools.TinkerModifiers.*;
 
 import landmaster.plustic.*;
 import landmaster.plustic.config.*;
@@ -14,6 +15,7 @@ import net.minecraftforge.fluids.*;
 import net.minecraftforge.fml.common.*;
 import slimeknights.tconstruct.library.*;
 import slimeknights.tconstruct.library.materials.*;
+import slimeknights.tconstruct.library.traits.*;
 import slimeknights.tconstruct.shared.*;
 
 public class ModuleTF {
@@ -21,8 +23,35 @@ public class ModuleTF {
 	public static void init() {
 		if ((Config.thermalFoundation && Loader.isModLoaded("thermalfoundation"))
 				|| (Config.substratum && Loader.isModLoaded("substratum"))) {
+			
 			Fluid redstoneFluid = FluidRegistry.getFluid(Loader.isModLoaded("thermalfoundation") ? "redstone" : "liquidredstone");
 			Fluid enderFluid = FluidRegistry.getFluid(Loader.isModLoaded("thermalfoundation") ? "ender" : "liquidenderpearl");
+			Fluid glowstoneFluid = FluidRegistry.getFluid(Loader.isModLoaded("thermalfoundation") ? "glowstone" : "liquidglowstone");
+			
+			// START MATERIALS
+			
+			Material lumium = new Material("lumium_plustic", TextFormatting.YELLOW);
+			lumium.addTrait(Illuminati.illuminati);
+			lumium.addTrait((ITrait)modGlowing); // since Glowing is also a Trait
+			lumium.setCraftable(false).setCastable(true);
+			Utils.setDispItem(lumium, "ingotLumium");
+			PlusTiC.proxy.setRenderInfo(lumium, 0xFFFF7F);
+			
+			FluidMolten lumiumFluid = Utils.fluidMetal("lumium", 0xFFFF7F);
+			lumiumFluid.setTemperature(1000);
+			Utils.initFluidMetal(lumiumFluid);
+			lumium.setFluid(lumiumFluid);
+			TinkerRegistry.registerAlloy(new FluidStack(lumiumFluid, 72),
+					new FluidStack(TinkerFluids.tin, 54),
+					new FluidStack(TinkerFluids.silver, 18),
+					new FluidStack(glowstoneFluid, 125));
+			
+			TinkerRegistry.addMaterialStats(lumium,
+					new HeadMaterialStats(830, 7f, 6.5f, COBALT),
+					new HandleMaterialStats(1.1f, 40),
+					new ExtraMaterialStats(60),
+					new BowMaterialStats(1.5f, 1.8f, 4));
+			PlusTiC.materials.put("lumium", lumium);
 			
 			Material signalum = new Material("signalum_plustic", TextFormatting.RED);
 			signalum.addTrait(BloodyMary.bloodymary);

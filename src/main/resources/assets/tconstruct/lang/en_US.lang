@@ -35,6 +35,7 @@ material.darkwood_plustic.name=Darkwood
 material.psimetal.name=Psimetal
 material.psigem.name=Psigem
 material.infinity_avaritia_plustic.name=Infinity
+material.lumium_plustic.name=Lumium
 
 modifier.bloodymary.name=Bloody Mary
 modifier.bloodymary.desc=§oBrought to you by the legendary Queen of England...§r\nDeals bonus damage depending on the amount of health already lost by the target. Also, a chance to drop a Coagulated Blood for each hit.
@@ -91,3 +92,5 @@ modifier.darktraveler.name=Dark Traveler
 modifier.darktraveler.desc=§oAll hail...the King of Chaos!§r\nSurrounding mobs get randomly afflicted with damage.
 modifier.psicological.name=Psicological
 modifier.psicological.desc=§o...the reverse kind§r\nTools heal with Psi.
+modifier.illuminati.name=Illuminati
+modifier.illuminati.desc=§oConfirmed!§r\nWhile the tool is in your hand, nearby entities (that do not hold a tool with this trait) glow, and you become invisible.

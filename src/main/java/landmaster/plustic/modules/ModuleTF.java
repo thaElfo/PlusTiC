@@ -33,6 +33,7 @@ public class ModuleTF {
 			Material lumium = new Material("lumium_plustic", TextFormatting.YELLOW);
 			lumium.addTrait(Illuminati.illuminati);
 			lumium.addTrait((ITrait)modGlowing); // since Glowing is also a Trait
+			lumium.addItem("ingotLumium", 1, Material.VALUE_Ingot);
 			lumium.setCraftable(false).setCastable(true);
 			Utils.setDispItem(lumium, "ingotLumium");
 			PlusTiC.proxy.setRenderInfo(lumium, 0xFFFF7F);

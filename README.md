@@ -1,5 +1,5 @@
 # PlusTiC
-Minecraft mod for integrating various mods with Tinkers Construct
+Minecraft mod for adding new tools to and integrating various mods with Tinkers Construct
 
 CurseForge page: https://minecraft.curseforge.com/projects/plustic
 ## New tool(s)

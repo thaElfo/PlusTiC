@@ -1,3 +1,4 @@
 - **FOR THE LAST TIME, DO NOT OPEN ANY MORE ISSUES CONCERNING A MATERIAL REGISTRY CONFLICT WITH NATURAL PLEDGE!** This is easily fixed by changing the config in either PlusTiC or Natural Pledge to disable either mod's integration, which resolves this.
 - Before opening any issue concerning _unlinking_ Global Traveler, open the toggle GUI (defualt press "I") and disable Global Traveler first.
 - For pull requests: Tabs are preferred to spaces.
+- For localization, translate both [PlusTiC/src/main/resources/assets/tconstruct/lang/en_US.lang](src/main/resources/assets/tconstruct/lang/en_US.lang) and [PlusTiC/src/main/resources/assets/plustic/lang/en_US.lang](src/main/resources/assets/plustic/lang/en_US.lang)

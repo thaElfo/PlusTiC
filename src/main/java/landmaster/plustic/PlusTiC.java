@@ -27,8 +27,7 @@ public class PlusTiC {
 	public static final String MODID = "plustic";
 	public static final String NAME = "PlusTiC";
 	public static final String VERSION = "4.3.2.0";
-	public static final String DEPENDS = "required-after:mantle;"
-			+ "required-after:tconstruct;required-after:CodeChickenLib;"
+	public static final String DEPENDS = "required-after:mantle;required-after:tconstruct;"
 			+ "after:Mekanism;after:BiomesOPlenty;after:Botania;after:advancedRocketry;"
 			+ "after:armorplus;after:EnderIO;after:projectred-exploration;"
 			+ "after:thermalfoundation;after:substratum;after:draconicevolution;"

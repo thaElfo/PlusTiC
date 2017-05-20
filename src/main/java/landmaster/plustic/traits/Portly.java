@@ -50,6 +50,7 @@ public class Portly extends AbstractTrait {
 		synchronized (event.getTarget()) {
 			nbt.setTag("portlyGentleman", event.getTarget().serializeNBT());
 			event.getItemStack().setTagCompound(nbt);
+			event.getTarget().setDropItemsWhenDead(false);
 			event.getWorld().removeEntity(event.getTarget());
 		}
 		ToolHelper.damageTool(event.getItemStack(), durabilityCost(event.getTarget()), event.getEntityLiving());

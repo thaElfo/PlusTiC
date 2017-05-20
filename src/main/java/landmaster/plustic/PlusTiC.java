@@ -28,11 +28,12 @@ public class PlusTiC {
 	public static final String NAME = "PlusTiC";
 	public static final String VERSION = "4.3.2.0";
 	public static final String DEPENDS = "required-after:mantle;required-after:tconstruct;"
-			+ "after:Mekanism;after:BiomesOPlenty;after:Botania;after:advancedRocketry;"
-			+ "after:armorplus;after:EnderIO;after:projectred-exploration;"
+			+ "after:Mekanism;after:BiomesOPlenty;after:biomesoplenty;"
+			+ "after:Botania;after:botania;after:advancedRocketry;"
+			+ "after:armorplus;after:EnderIO;after:enderio;after:projectred-exploration;"
 			+ "after:thermalfoundation;after:substratum;after:draconicevolution;"
 			+ "after:landcore;after:tesla;after:baubles;after:actuallyadditions;"
-			+ "after:natura;after:Psi;after:avaritia";
+			+ "after:natura;after:Psi;after:avaritia;after:landcore;after:landcraft";
 	
 	public static Config config;
 	

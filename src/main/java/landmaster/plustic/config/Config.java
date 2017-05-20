@@ -28,6 +28,7 @@ public class Config extends Configuration {
 	public static boolean natura;
 	public static boolean psi;
 	public static boolean avaritia;
+	public static boolean landCraft;
 	
 	public static boolean katana;
 	
@@ -57,11 +58,12 @@ public class Config extends Configuration {
 		natura = getBoolean("Enable Natura support", "modules", true, "Integrate with Natura");
 		psi = getBoolean("Enable Psi support", "modules", true, "Integrate with Psi");
 		avaritia = getBoolean("Enable Avaritia support", "modules", true, "Integrate with Avaritia");
+		landCraft = getBoolean("Enable Land Craft support", "modules", true, "Integrate with Land Craft");
 		
 		katana = getBoolean("Enable Katana", "tools", true, "Enable Katana");
 		katana_combo_multiplier = getFloat("Katana combo multiplier", "tools", 1.25f, 0, Float.MAX_VALUE, "Multiply combo value by this to calculate bonus damage");
 		
-		String[] arr_endlectric = getStringList("Items that Endlectric will not drain from", "tweaks", new String[] {}, "Enter in the format \"modid:name;meta\" (leave meta blank to match any meta)");
+		String[] arr_endlectric = getStringList("Items that Endlectric will not drain from", "tweaks", new String[0], "Enter in the format \"modid:name;meta\" (leave meta blank to match any meta)");
 		
 		Property botan_amount_prop = this.get("tweaks", "Modifier values for Botanical", new int[0]);
 		botan_amount_prop.setLanguageKey("Modifiers added for Botanical modifier");

@@ -3,17 +3,30 @@ package landmaster.plustic.asm;
 import org.objectweb.asm.*;
 import org.objectweb.asm.tree.*;
 
+import com.google.common.collect.*;
+
 import net.minecraft.launchwrapper.*;
+import net.minecraftforge.fml.common.*;
 import net.minecraftforge.fml.common.asm.transformers.deobf.*;
 
 /**
  * <strong>I SWEAR … THOSE ********* WHO PUT ******* IMMUTABLE LISTS AS BLOCK DROPS!!
  * ESPECIALLY YOU, EXTRA UTILITIES!!</strong>
+ * @deprecated This transformer, it appears, will not be needed in 1.11.2.
  * @author Landmaster
  */
+@Deprecated
 public class Transform implements IClassTransformer {
 	private static String mapMethod(String owner, MethodNode node, boolean obf) {
-		return obf ? FMLDeobfuscatingRemapper.INSTANCE.mapMethodName(owner, node.name, node.desc) : node.name;
+		return mapMethod(owner, node.name, node.desc, obf);
+	}
+	
+	private static String mapMethod(String owner, String name, String desc, boolean obf) {
+		return obf ? FMLDeobfuscatingRemapper.INSTANCE.mapMethodName(owner, name, desc) : name;
+	}
+	
+	private static String mapClass(String name, boolean obf) {
+		return obf ? FMLDeobfuscatingRemapper.INSTANCE.map(name) : name;
 	}
 	
 	@Override
@@ -28,27 +41,32 @@ public class Transform implements IClassTransformer {
 			classNode.methods.stream()
 			.filter(methodNode -> mapMethod(name, methodNode, isObfuscated).equals("func_180653_a"))
 			.forEach(methodNode -> {
-				System.out.println("Patching method dropBlockAsItemWithChance");
+				FMLLog.info("Patching method dropBlockAsItemWithChance");
 				
-				// clear everything
-				methodNode.instructions.clear();
+				AbstractInsnNode insnPos = Iterables.find(methodNode.instructions::iterator,
+						insn -> insn.getOpcode() == Opcodes.INVOKEVIRTUAL
+						&& mapMethod(mapClass("net/minecraft/block/Block", isObfuscated),
+								"getDrops",
+								"(Lnet/minecraft/world/IBlockAccess;Lnet/minecraft/util/math/BlockPos;Lnet.minecrat.block.state.IBlockState;I)Ljava/util/List;",
+								isObfuscated).equals(((MethodInsnNode)insn).name));
 				
-				// load variables
-				methodNode.instructions.add(new VarInsnNode(Opcodes.ALOAD, 0));
-				methodNode.instructions.add(new VarInsnNode(Opcodes.ALOAD, 1));
-				methodNode.instructions.add(new VarInsnNode(Opcodes.ALOAD, 2));
-				methodNode.instructions.add(new VarInsnNode(Opcodes.ALOAD, 3));
-				methodNode.instructions.add(new VarInsnNode(Opcodes.FLOAD, 4));
-				methodNode.instructions.add(new VarInsnNode(Opcodes.ILOAD, 5));
+				InsnList insns = new InsnList();
+				insns.add(new InsnNode(Opcodes.DUP));
+				insns.add(new TypeInsnNode(Opcodes.INSTANCEOF, "java/util/ArrayList"));
 				
-				// patch method
-				methodNode.instructions.add(new MethodInsnNode(Opcodes.INVOKESTATIC,
-						"landmaster/plustic/asm/Patches",
-						"dropBlockAsItemWithChance",
-						"(Lnet/minecraft/block/Block;Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/state/IBlockState;FI)V",
-						false));
+				LabelNode label = new LabelNode();
+				insns.add(new JumpInsnNode(Opcodes.IFNE, label));
 				
-				methodNode.instructions.add(new InsnNode(Opcodes.RETURN));
+				insns.add(new VarInsnNode(Opcodes.ASTORE, 6));
+				insns.add(new TypeInsnNode(Opcodes.NEW, "java/util/ArrayList"));
+				insns.add(new InsnNode(Opcodes.DUP));
+				insns.add(new VarInsnNode(Opcodes.ALOAD, 6));
+				insns.add(new MethodInsnNode(Opcodes.INVOKESPECIAL, "java/util/ArrayList", "<init>", "(Ljava/util/Collection;)V", false));
+				
+				insns.add(new FrameNode(Opcodes.F_SAME1, 0, null, 1, new Object[] {"java/util/ArrayList"}));
+				insns.add(label);
+				
+				methodNode.instructions.insert(insnPos, insns);
 			});
 			ClassWriter classWriter = new ClassWriter(ClassWriter.COMPUTE_MAXS);
 			classNode.accept(classWriter);

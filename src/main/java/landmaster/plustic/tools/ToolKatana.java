@@ -6,7 +6,6 @@ import java.util.*;
 import javax.annotation.*;
 
 import landmaster.plustic.config.*;
-import landmaster.plustic.util.*;
 import net.minecraft.client.*;
 import net.minecraft.client.resources.*;
 import net.minecraft.entity.*;
@@ -14,6 +13,7 @@ import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
 import net.minecraft.util.*;
+import net.minecraft.util.math.*;
 import net.minecraft.world.*;
 import net.minecraftforge.client.event.*;
 import net.minecraftforge.common.*;
@@ -116,7 +116,7 @@ public class ToolKatana extends SwordCore {
 		NBTTagCompound tag = TagUtil.getTagSafe(stack);
 		float counter = tag.getFloat(COUNTER_TAG);
 		counter -= 0.005f;
-		counter = Utils.clamp(counter, 0, counter_cap(stack));
+		counter = MathHelper.clamp_float(counter, 0, counter_cap(stack));
 		tag.setFloat(COUNTER_TAG, counter);
 		stack.setTagCompound(tag);
 	}
@@ -138,7 +138,7 @@ public class ToolKatana extends SwordCore {
 			if (entity instanceof EntityLivingBase) {
 				EntityLivingBase targetLiving = (EntityLivingBase)entity;
 				if (targetLiving.getHealth() <= 0) counter += 1.0f;
-				counter = Utils.clamp(counter, 0, counter_cap(stack));
+				counter = MathHelper.clamp_float(counter, 0, counter_cap(stack));
 			}
 			tag.setFloat(COUNTER_TAG, counter);
 			stack.setTagCompound(tag);
@@ -158,23 +158,4 @@ public class ToolKatana extends SwordCore {
 		data.durability *= DURABILITY_MODIFIER;
 		return data;
 	}
-	/*
-	private static final Field lastDamageF;
-	static {
-		try {
-			lastDamageF = EntityLivingBase.class.getDeclaredField(
-					"field_110153_bc"); // lastDamage
-			lastDamageF.setAccessible(true);
-		} catch (Throwable e) {
-			throw Throwables.propagate(e);
-		}
-	}
-	
-	private static float lastDamage(EntityLivingBase elb) {
-		try {
-			return lastDamageF.getFloat(elb);
-		} catch (Throwable e) {
-			throw Throwables.propagate(e);
-		}
-	}*/
 }

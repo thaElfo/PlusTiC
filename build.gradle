@@ -92,5 +92,6 @@ jar {
     manifest {
 	    attributes 'FMLCorePluginContainsFMLMod': 'true'
 	    attributes 'FMLCorePlugin': 'landmaster.plustic.asm.LoadingPlugin'
+	    attributes 'FMLAT': 'plustic_at.cfg'
 	}
 }

@@ -9,11 +9,10 @@ public class PacketHandler {
 	public static final SimpleNetworkWrapper INSTANCE = NetworkRegistry.INSTANCE.newSimpleChannel(PlusTiC.MODID);
 	
 	public static void init() {
-		int msgInd = 0;
-		INSTANCE.registerMessage(PacketReleaseEntity.class, PacketReleaseEntity.class, msgInd++, Side.SERVER);
-		INSTANCE.registerMessage(PacketHandleToggleGui.class, PacketHandleToggleGui.class, msgInd++, Side.SERVER);
-		INSTANCE.registerMessage(PacketUpdateToggleGui.class, PacketUpdateToggleGui.class, msgInd++, Side.CLIENT);
-		INSTANCE.registerMessage(PacketSetPortal.class, PacketSetPortal.class, msgInd++, Side.SERVER);
-		INSTANCE.registerMessage(PacketBrownAbracadabra.class, PacketBrownAbracadabra.class, msgInd++, Side.SERVER);
+		INSTANCE.registerMessage(PacketReleaseEntity::onMessage, PacketReleaseEntity.class, 0, Side.SERVER);
+		INSTANCE.registerMessage(PacketHandleToggleGui::onMessage, PacketHandleToggleGui.class, 1, Side.SERVER);
+		INSTANCE.registerMessage(PacketUpdateToggleGui::onMessage, PacketUpdateToggleGui.class, 2, Side.CLIENT);
+		INSTANCE.registerMessage(PacketSetPortal::onMessage, PacketSetPortal.class, 3, Side.SERVER);
+		INSTANCE.registerMessage(PacketBrownAbracadabra::onMessage, PacketBrownAbracadabra.class, 4, Side.SERVER);
 	}
 }

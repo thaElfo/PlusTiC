@@ -2,9 +2,8 @@ package landmaster.plustic.config;
 
 import java.util.*;
 
-import org.apache.commons.lang3.*;
-
 import com.google.common.collect.*;
+import com.google.common.primitives.*;
 
 import landmaster.plustic.traits.*;
 import net.minecraft.item.*;
@@ -67,11 +66,10 @@ public class Config extends Configuration {
 		
 		Property botan_amount_prop = this.get("tweaks", "Modifier values for Botanical", new int[0]);
 		botan_amount_prop.setLanguageKey("Modifiers added for Botanical modifier");
-		botan_amount_prop.setComment("Enter in order of level (defaults will be extrapolated if some left blank)");
+		botan_amount_prop.setComment("Enter integer amounts in order of level (defaults will be extrapolated if some left blank)");
 		botan_amount_prop.setMinValue(0);
-		botan_amount = new ArrayList<>(Arrays.asList(
-				ArrayUtils.toObject(botan_amount_prop.getIntList())));
-		if (botan_amount.size() <= 0) botan_amount.add(1);
+		botan_amount = new ArrayList<>(Ints.asList(botan_amount_prop.getIntList()));
+		if (botan_amount.isEmpty()) botan_amount.add(1);
 		while (botan_amount.size() < Botanical.MAX_LEVELS) {
 			botan_amount.add(botan_amount.get(botan_amount.size()-1)<<1);
 		}

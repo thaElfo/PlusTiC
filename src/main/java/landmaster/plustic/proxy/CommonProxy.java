@@ -40,8 +40,7 @@ public class CommonProxy {
 	}
 	
 	public void initEntities() {
-		int id = 1;
-		EntityRegistry.registerModEntity(EntityBlindBandit.class, "BlindBandit", id++, PlusTiC.INSTANCE, 64, 3, true, 0xFF00FF, 0xFF0000);
+		EntityRegistry.registerModEntity(EntityBlindBandit.class, "BlindBandit", 1, PlusTiC.INSTANCE, 64, 3, true, 0xFF00FF, 0xFF0000);
 	}
 	
 	public void initToolGuis() {

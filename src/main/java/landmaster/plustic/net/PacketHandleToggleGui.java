@@ -10,7 +10,7 @@ import net.minecraftforge.fml.common.network.*;
 import net.minecraftforge.fml.common.network.simpleimpl.*;
 import slimeknights.tconstruct.library.utils.*;
 
-public class PacketHandleToggleGui implements IMessage, IMessageHandler<PacketHandleToggleGui, IMessage> {
+public class PacketHandleToggleGui implements IMessage {
 	private String identifier;
 	
 	public PacketHandleToggleGui() {}
@@ -18,8 +18,7 @@ public class PacketHandleToggleGui implements IMessage, IMessageHandler<PacketHa
 		this.identifier = identifier;
 	}
 
-	@Override
-	public IMessage onMessage(PacketHandleToggleGui message, MessageContext ctx) {
+	public static IMessage onMessage(PacketHandleToggleGui message, MessageContext ctx) {
 		IThreadListener mainThread = (WorldServer)ctx.getServerHandler().playerEntity.getEntityWorld();
 		mainThread.addScheduledTask(() -> {
 			EntityPlayerMP ep = ctx.getServerHandler().playerEntity;

@@ -13,9 +13,8 @@ import net.minecraft.world.*;
 import net.minecraftforge.fml.common.network.simpleimpl.*;
 import slimeknights.tconstruct.library.utils.*;
 
-public class PacketReleaseEntity implements IMessage, IMessageHandler<PacketReleaseEntity, IMessage> {
-	@Override
-	public IMessage onMessage(PacketReleaseEntity message, MessageContext ctx) {
+public class PacketReleaseEntity implements IMessage {
+	public static IMessage onMessage(PacketReleaseEntity message, MessageContext ctx) {
 		IThreadListener mainThread = (WorldServer)ctx.getServerHandler().playerEntity.getEntityWorld();
 		mainThread.addScheduledTask(() -> {
 			EntityPlayer ep = ctx.getServerHandler().playerEntity;

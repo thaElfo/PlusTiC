@@ -5,6 +5,7 @@ import java.util.*;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.*;
 
+import gnu.trove.map.hash.*;
 import landmaster.plustic.proxy.*;
 import landmaster.plustic.config.*;
 import landmaster.plustic.modules.*;
@@ -46,8 +47,8 @@ public class PlusTiC {
 	public static final Logger log = LogManager.getLogger(
 			MODID.toUpperCase(Locale.US/* to avoid problems with Turkish */));
 	
-	public static final Map<String, Material> materials = new HashMap<>();
-	public static final Map<String, MaterialIntegration> materialIntegrations = new HashMap<>();
+	public static final Map<String, Material> materials = new THashMap<>();
+	public static final Map<String, MaterialIntegration> materialIntegrations = new THashMap<>();
 	
 	public static final BowMaterialStats justWhy = new BowMaterialStats(0.2f, 0.4f, -1f);
 	
@@ -57,7 +58,6 @@ public class PlusTiC {
 		
 		proxy.initEntities();
 		
-		ModuleTools.init();
 		ModuleBase.init();
 		ModuleBoP.init();
 		ModuleMekanism.init();
@@ -71,6 +71,8 @@ public class PlusTiC {
 		ModuleNatura.init();
 		ModulePsi.init();
 		ModuleAvaritia.init();
+		ModuleLandCraft.init();
+		ModuleTools.init();
 		
 		integrate(materials, materialIntegrations);
 		
@@ -166,10 +168,11 @@ public class PlusTiC {
 			Map<String,MaterialIntegration> materialIntegrations) {
 		materials.forEach((k, v) -> {
 			MaterialIntegration mi;
-			if (v.getFluid() != null && v.getFluid() != TinkerFluids.emerald)
+			if (v.getFluid() != null && v.getFluid() != TinkerFluids.emerald) {
 				mi = new MaterialIntegration(v, v.getFluid(), StringUtils.capitalize(k)).toolforge();
-			else
+			} else {
 				mi = new MaterialIntegration(v);
+			}
 			mi.integrate();
 			mi.integrateRecipes();
 			materialIntegrations.put(k, mi);

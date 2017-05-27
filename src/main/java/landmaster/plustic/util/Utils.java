@@ -2,6 +2,7 @@ package landmaster.plustic.util;
 
 import java.util.*;
 
+import org.apache.commons.lang3.*;
 import org.apache.commons.lang3.StringUtils;
 
 import cofh.api.energy.*;
@@ -28,12 +29,12 @@ import slimeknights.tconstruct.library.materials.*;
 import slimeknights.tconstruct.library.modifiers.*;
 
 public class Utils {
-	public static AxisAlignedBB AABBfromVecs(Vec3d v1, Vec3d v2) {
-		return new AxisAlignedBB(v1.xCoord, v1.yCoord, v1.zCoord, v2.xCoord, v2.yCoord, v2.zCoord);
+	public static boolean matchesOre(ItemStack is, String od) {
+		return OreDictionary.doesOreNameExist(od) && is!=null && is.stackSize>0 && ArrayUtils.contains(OreDictionary.getOreIDs(is), OreDictionary.getOreID(od));
 	}
 	
-	public static float clamp(float val, float min, float max) {
-	    return Math.max(min, Math.min(max, val));
+	public static AxisAlignedBB AABBfromVecs(Vec3d v1, Vec3d v2) {
+		return new AxisAlignedBB(v1.xCoord, v1.yCoord, v1.zCoord, v2.xCoord, v2.yCoord, v2.zCoord);
 	}
 	
 	public static void addModifierItem(Modifier modifier, String modid, String name) {
@@ -41,9 +42,13 @@ public class Utils {
 	}
 	
 	public static void addModifierItem(Modifier modifier, String modid, String name, int meta) {
+		addModifierItem(modifier, modid, name, meta, 1, 1);
+	}
+	
+	public static void addModifierItem(Modifier modifier, String modid, String name, int meta, int needed, int matched) {
 		if (modifier == null) return;
 		ItemStack is = new ItemStack(Item.REGISTRY.getObject(new ResourceLocation(modid,name)), 1, meta);
-		modifier.addItem(is, 1, 1);
+		modifier.addItem(is, needed, matched);
 	}
 	
 	public static FluidMolten fluidMetal(String name, int color) {
@@ -51,7 +56,7 @@ public class Utils {
 	}
 	
 	public static void initFluidMetal(Fluid fluid) {
-		Utils.registerMoltenBlock(fluid);
+		registerMoltenBlock(fluid);
         PlusTiC.proxy.registerFluidModels(fluid);
 	}
 	

@@ -63,6 +63,21 @@
         }],
         "lumium": [{
         	"custom": { "fluid": "lumium" }
+        }],
+        "kelline": [{
+        	"custom": { "fluid": "kelline" }
+        }],
+        "garfax": [{
+        	"custom": { "fluid": "garfax" }
+        }],
+        "morganine": [{
+        	"custom": { "fluid": "morganine" }
+        }],
+        "racheline": [{
+        	"custom": { "fluid": "racheline" }
+        }],
+        "friscion": [{
+        	"custom": { "fluid": "friscion" }
         }]
     }
 }

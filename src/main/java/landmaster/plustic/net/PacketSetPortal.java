@@ -11,9 +11,9 @@ import net.minecraft.world.*;
 import net.minecraftforge.fml.common.network.simpleimpl.*;
 import slimeknights.tconstruct.library.utils.*;
 
-public class PacketSetPortal implements IMessage, IMessageHandler<PacketSetPortal, IMessage> {
-	@Override
-	public IMessage onMessage(PacketSetPortal message, MessageContext ctx) {
+public class PacketSetPortal implements IMessage {
+	
+	public static IMessage onMessage(PacketSetPortal message, MessageContext ctx) {
 		IThreadListener mainThread = (WorldServer)ctx.getServerHandler().playerEntity.getEntityWorld();
 		mainThread.addScheduledTask(() -> {
 			EntityPlayerMP ep = ctx.getServerHandler().playerEntity;

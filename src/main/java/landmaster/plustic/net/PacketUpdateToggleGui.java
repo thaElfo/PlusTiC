@@ -6,7 +6,7 @@ import net.minecraft.client.*;
 import net.minecraftforge.fml.common.network.*;
 import net.minecraftforge.fml.common.network.simpleimpl.*;
 
-public class PacketUpdateToggleGui implements IMessage, IMessageHandler<PacketUpdateToggleGui, IMessage> {
+public class PacketUpdateToggleGui implements IMessage {
 	private String identifier;
 	private boolean value;
 	
@@ -15,9 +15,8 @@ public class PacketUpdateToggleGui implements IMessage, IMessageHandler<PacketUp
 		this.identifier = identifier;
 		this.value = value;
 	}
-
-	@Override
-	public IMessage onMessage(PacketUpdateToggleGui message, MessageContext ctx) {
+	
+	public static IMessage onMessage(PacketUpdateToggleGui message, MessageContext ctx) {
 		Minecraft.getMinecraft().addScheduledTask(() -> {
 			if (Minecraft.getMinecraft().currentScreen instanceof Toggle.Gui) {
 				((Toggle.Gui)Minecraft.getMinecraft().currentScreen).update(message.identifier, message.value);

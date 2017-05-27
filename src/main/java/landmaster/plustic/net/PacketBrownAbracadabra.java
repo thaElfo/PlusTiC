@@ -13,9 +13,9 @@ import net.minecraft.world.*;
 import net.minecraftforge.fml.common.network.simpleimpl.*;
 import slimeknights.tconstruct.library.utils.*;
 
-public class PacketBrownAbracadabra implements IMessage, IMessageHandler<PacketBrownAbracadabra, IMessage> {
-	@Override
-	public IMessage onMessage(PacketBrownAbracadabra message, MessageContext ctx) {
+public class PacketBrownAbracadabra implements IMessage {
+	
+	public static IMessage onMessage(PacketBrownAbracadabra message, MessageContext ctx) {
 		IThreadListener mainThread = (WorldServer)ctx.getServerHandler().playerEntity.getEntityWorld();
 		mainThread.addScheduledTask(() -> {
 			EntityPlayerMP ep = ctx.getServerHandler().playerEntity;

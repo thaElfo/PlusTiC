@@ -72,6 +72,8 @@ public class PlusTiC {
 		ModulePsi.init();
 		ModuleAvaritia.init();
 		ModuleLandCraft.init();
+		ModuleLandCore.init();
+		
 		ModuleTools.init();
 		
 		integrate(materials, materialIntegrations);

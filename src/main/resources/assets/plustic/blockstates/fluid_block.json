@@ -78,6 +78,15 @@
         }],
         "friscion": [{
         	"custom": { "fluid": "friscion" }
+        }],
+        "thorium": [{
+        	"custom": { "fluid": "thorium" }
+        }],
+        "tungsten": [{
+        	"custom": { "fluid": "tungsten" }
+        }],
+        "landium": [{
+        	"custom": { "fluid": "landium" }
         }]
     }
 }

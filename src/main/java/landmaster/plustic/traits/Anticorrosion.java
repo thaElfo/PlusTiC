@@ -15,7 +15,7 @@ public class Anticorrosion extends AbstractTrait {
 	
 	@Override
 	public void onUpdate(ItemStack tool, World world, Entity entity, int itemSlot, boolean isSelected) {
-		if (!world.isRemote && entity instanceof EntityLivingBase && random.nextFloat() < 0.03f) {
+		if (!world.isRemote && isSelected && entity instanceof EntityLivingBase && random.nextFloat() < 0.03f) {
 			EntityLivingBase elb = (EntityLivingBase)entity;
 			elb.removePotionEffect(MobEffects.POISON);
 		}

@@ -29,6 +29,9 @@ fluid.plustic.garfax.name=Molten Garfax
 fluid.plustic.morganine.name=Molten Morganine
 fluid.plustic.racheline.name=Molten Racheline
 fluid.plustic.friscion.name=Molten Friscion
+fluid.plustic.thorium.name=Molten Thorium
+fluid.plustic.tungsten.name=Molten Tungsten
+fluid.plustic.landium.name=Molten Landium
 
 material.sapphire.name=Sapphire
 material.ruby.name=Ruby
@@ -73,6 +76,9 @@ material.garfax.name=Garfax
 material.morganine.name=Morganine
 material.racheline.name=Racheline
 material.friscion.name=Friscion
+material.thorium.name=Thorium
+material.tungsten.name=Tungsten
+material.landium.name=Landium
 
 modifier.bloodymary.name=Bloody Mary
 modifier.bloodymary.desc=§oBrought to you by the legendary Queen of England...§r\nDeals bonus damage depending on the amount of health already lost by the target. Also, a chance to drop a Coagulated Blood for each hit.
@@ -94,7 +100,7 @@ modifier.devilsstrength.name=Devil's Strength
 modifier.devilsstrength.desc=§oRivaling Satan...§r\nBonus damage to non-Overworld mobs.
 modifier.devilsstrength.extra=Vs Non-Overworld: +%s
 modifier.anticorrosion.name=Anti-Corrosion
-modifier.anticorrosion.desc=§oFor the times when you splash the chemical§r\nEvery tick, there is a small chance that the holder's poison is healed.
+modifier.anticorrosion.desc=§oFor the times when you splash the chemical§r\nEvery tick, there is a small chance that the holder's poison is healed (when held in hand).
 modifier.light.name=Light Metal
 modifier.light.desc=§oLow-weight§r\nAttack and mining speed increases.
 modifier.explosive.name=Explosive
@@ -139,7 +145,6 @@ modifier.morganlefay.name=Morgan Le Fay
 modifier.morganlefay.desc=§oLancelot...§r\nBonus magic damage (ranging from 0.0 to 5.0; Gaussian distributed) is afflicted (it is absolute).
 modifier.trash.name=Traaaaaassshhh!
 modifier.trash.desc=§oTraaaaaassshhh!§r\nRandom stuff is slowly generated when the tool is selected, but the tool is damaged slowly in this way.
-
 
 # MISCELLANEOUS
 

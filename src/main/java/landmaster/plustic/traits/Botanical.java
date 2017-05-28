@@ -21,7 +21,7 @@ public class Botanical extends AbstractTraitLeveled {
 	@Override
 	public void applyModifierEffect(NBTTagCompound rootCompound) {
 		NBTTagCompound toolTag = TagUtil.getToolTag(rootCompound);
-		int modifiers = toolTag.getInteger(Tags.FREE_MODIFIERS) + Config.botan_amount.get(levels-1);
+		int modifiers = toolTag.getInteger(Tags.FREE_MODIFIERS) + Config.getBotanAmount().get(levels-1);
 		toolTag.setInteger(Tags.FREE_MODIFIERS, Math.max(0, modifiers));
 		TagUtil.setToolTag(rootCompound, toolTag);
 	}

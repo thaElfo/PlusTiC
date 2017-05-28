@@ -21,9 +21,15 @@ import slimeknights.tconstruct.shared.*;
 public class ModuleTF {
 
 	public static void init() {
+		if (Config.thermalFoundation && Loader.isModLoaded("thermalfoundation")
+				&& Config.pyrotheumSmelt) {
+			// SMELTERY FUEL
+			Fluid pyrotheum = FluidRegistry.getFluid("pyrotheum");
+			TinkerRegistry.registerSmelteryFuel(new FluidStack(pyrotheum, 50), 100);
+		}
 		if ((Config.thermalFoundation && Loader.isModLoaded("thermalfoundation"))
 				|| (Config.substratum && Loader.isModLoaded("substratum"))) {
-			
+			// FETCH FLUIDS
 			Fluid redstoneFluid = FluidRegistry.getFluid(Loader.isModLoaded("thermalfoundation") ? "redstone" : "liquidredstone");
 			Fluid enderFluid = FluidRegistry.getFluid(Loader.isModLoaded("thermalfoundation") ? "ender" : "liquidenderpearl");
 			Fluid glowstoneFluid = FluidRegistry.getFluid(Loader.isModLoaded("thermalfoundation") ? "glowstone" : "liquidglowstone");

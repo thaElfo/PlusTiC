@@ -22,11 +22,11 @@ public class ModuleLandCraft {
 	public static void init() {
 		if (Config.landCraft && Loader.isModLoaded("landcraft")) {
 			List<Triple<String, Integer, Integer>> matData = Arrays.asList(
-					Triple.of("kelline", 0x7BFF00, 800),
-					Triple.of("garfax", 0x0000FF, 1100),
-					Triple.of("morganine", 0xFF00FF, 1900),
-					Triple.of("racheline", 0xD37DDC, 2500),
-					Triple.of("friscion", 0xD2FF1C, 800)
+					Triple.of("kelline", 0x7BFF00, 430),
+					Triple.of("garfax", 0x0000FF, 700),
+					Triple.of("morganine", 0xFF00FF, 1200),
+					Triple.of("racheline", 0xD37DDC, 1400),
+					Triple.of("friscion", 0xD2FF1C, 400)
 					);
 			Map<String, Material> mats = new THashMap<>();
 			matData.forEach(matDatum -> {

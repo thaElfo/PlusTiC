@@ -3,6 +3,8 @@ package landmaster.plustic.api;
 import java.io.*;
 import java.util.*;
 
+import org.lwjgl.opengl.*;
+
 import landmaster.plustic.*;
 import landmaster.plustic.net.*;
 import landmaster.plustic.proxy.*;
@@ -79,8 +81,10 @@ public class Toggle {
 		@Override
 		public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 			super.drawScreen(mouseX, mouseY, partialTicks);
-			GlStateManager.enableAlpha();
+			
 			GlStateManager.color(1, 1, 1, 1);
+			GlStateManager.enableAlpha();
+			GL11.glEnable(GL11.GL_BLEND);
 			
 			mc.renderEngine.bindTexture(background);
 			drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
@@ -188,7 +192,7 @@ public class Toggle {
 	
 	/**
 	 * Check whether a modifier/trait is enabled.
-	 * @see landmaster.plustic.api.Toggle#getToggleState(ItemStack, String)
+	 * @see #getToggleState(ItemStack, String)
 	 */
 	public static boolean getToggleState(NBTTagCompound nbt, String identifier) {
 		NBTTagCompound toggle = TagUtil.getTagSafe(nbt, "PlusTiC_toggle");

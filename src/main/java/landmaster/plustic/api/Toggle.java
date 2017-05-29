@@ -7,7 +7,6 @@ import org.lwjgl.opengl.*;
 
 import landmaster.plustic.*;
 import landmaster.plustic.net.*;
-import landmaster.plustic.proxy.*;
 import net.minecraft.client.*;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.renderer.*;
@@ -142,7 +141,7 @@ public class Toggle {
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public static void testAndToggle(InputEvent.KeyInputEvent event) {
-		if (CommonProxy.keyBindings.get(1).isPressed()
+		if (PlusTiC.proxy.isControlPressed("toggle_gui")
 				&& canToggle(Minecraft.getMinecraft().thePlayer.getHeldItemMainhand())) {
 			Minecraft.getMinecraft().displayGuiScreen(new Gui(Minecraft.getMinecraft().thePlayer));
 		}

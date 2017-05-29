@@ -7,6 +7,7 @@ import static slimeknights.tconstruct.tools.TinkerTraits.*;
 import landmaster.plustic.*;
 import landmaster.plustic.config.*;
 import landmaster.plustic.fluids.*;
+import landmaster.plustic.tools.stats.*;
 import landmaster.plustic.traits.*;
 import landmaster.plustic.util.*;
 import net.minecraft.init.*;
@@ -83,7 +84,7 @@ public class ModuleBase {
 				
 				TinkerRegistry.addMaterialStats(nickel, new HeadMaterialStats(460, 6, 4.5f, OBSIDIAN),
 						new HandleMaterialStats(1, -5), new ExtraMaterialStats(70), PlusTiC.justWhy,
-						new FletchingMaterialStats(0.95f, 1.05f));
+						new FletchingMaterialStats(0.95f, 1.05f), new BatteryCellMaterialStats(30000));
 				
 				PlusTiC.materials.put("nickel", nickel);
 			}

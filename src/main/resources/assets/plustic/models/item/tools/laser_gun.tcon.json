@@ -1,0 +1,9 @@
+{
+	"textures": {
+		"layer0": "plustic:items/laser_gun/handle",
+		"layer1": "plustic:items/laser_gun/pipe",
+		"layer2": "plustic:items/laser_gun/laser_medium",
+		"layer3": "plustic:items/laser_gun/battery",
+		"broken1": "plustic:items/laser_gun/pipe_broken"
+	}
+}

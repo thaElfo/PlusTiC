@@ -1,6 +1,7 @@
 package landmaster.plustic.proxy;
 
 import java.util.*;
+
 import javax.annotation.*;
 import landmaster.plustic.*;
 import landmaster.plustic.entity.*;
@@ -19,6 +20,8 @@ import net.minecraftforge.fml.client.registry.*;
 import net.minecraftforge.client.model.*;
 import org.lwjgl.input.*;
 
+import com.google.common.collect.ImmutableMap;
+
 import slimeknights.tconstruct.common.*;
 import slimeknights.tconstruct.library.*;
 import slimeknights.tconstruct.library.client.*;
@@ -27,6 +30,8 @@ import slimeknights.tconstruct.library.modifiers.*;
 import slimeknights.tconstruct.library.tools.*;
 
 public class ClientProxy extends CommonProxy {
+	private static Map<String, KeyBinding> keyBindings;
+	
 	@Override
 	public void registerItemRenderer(Item item, int meta, String id) {
 	    ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(PlusTiC.MODID + ":" + id, "inventory"));
@@ -59,12 +64,12 @@ public class ClientProxy extends CommonProxy {
 	
 	@Override
 	public void registerKeyBindings() {
-		keyBindings = Arrays.asList(
-				new KeyBinding("key.plustic_release_entity.desc", Keyboard.KEY_0, "key.categories.plustic"),
-				new KeyBinding("key.plustic_toggle_gui.desc", Keyboard.KEY_I, "key.categories.plustic"),
-				new KeyBinding("key.plustic_set_portal.desc", Keyboard.KEY_N, "key.categories.plustic"),
-				new KeyBinding("key.plustic_brown_magic.desc", Keyboard.KEY_O, "key.categories.plustic"));
-		for (KeyBinding kb: keyBindings) ClientRegistry.registerKeyBinding(kb);
+		keyBindings = ImmutableMap.of(
+				"release_entity", new KeyBinding("key.plustic_release_entity.desc", Keyboard.KEY_0, "key.categories.plustic"),
+				"toggle_gui", new KeyBinding("key.plustic_toggle_gui.desc", Keyboard.KEY_I, "key.categories.plustic"),
+				"set_portal", new KeyBinding("key.plustic_set_portal.desc", Keyboard.KEY_N, "key.categories.plustic"),
+				"brown_magic", new KeyBinding("key.plustic_brown_magic.desc", Keyboard.KEY_O, "key.categories.plustic"));
+		for (KeyBinding kb: keyBindings.values()) ClientRegistry.registerKeyBinding(kb);
 	}
 	
 	@Override
@@ -75,6 +80,11 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void registerModifierModel(IModifier mod, ResourceLocation rl) {
 		ModelRegisterUtil.registerModifierModel(mod, rl);
+	}
+	
+	@Override
+	public <T extends Item & IToolPart> void registerToolPartModel(T part) {
+		ModelRegisterUtil.registerPartModel(part);
 	}
 	
 	@Override
@@ -93,6 +103,20 @@ public class ClientProxy extends CommonProxy {
 			katanaInfo.addSlotPosition(33 - 18, 42 + 18); // binding
 			TinkerRegistryClient.addToolBuilding(katanaInfo);
 		}
+		
+		if (ModuleTools.laserGun != null) {
+			ToolBuildGuiInfo laserGunInfo = new ToolBuildGuiInfo(ModuleTools.laserGun);
+			laserGunInfo.addSlotPosition(7, 64);
+			laserGunInfo.addSlotPosition(25, 38);
+			laserGunInfo.addSlotPosition(49, 38);
+			laserGunInfo.addSlotPosition(7, 38);
+			TinkerRegistryClient.addToolBuilding(laserGunInfo);
+		}
+	}
+	
+	@Override
+	public boolean isControlPressed(String control) {
+		return keyBindings.get(control).isPressed();
 	}
 	
 	public static class FluidStateMapper extends StateMapperBase implements ItemMeshDefinition {

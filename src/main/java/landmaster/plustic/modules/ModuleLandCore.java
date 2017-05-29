@@ -13,6 +13,7 @@ import gnu.trove.map.hash.*;
 import landmaster.plustic.*;
 import landmaster.plustic.config.*;
 import landmaster.plustic.fluids.*;
+import landmaster.plustic.tools.stats.*;
 import landmaster.plustic.traits.*;
 import landmaster.plustic.util.Utils;
 import net.minecraftforge.fml.common.*;
@@ -52,6 +53,7 @@ public class ModuleLandCore {
 						new HeadMaterialStats(500, 6.5f, 4.5f, DIAMOND),
 						new HandleMaterialStats(0.7f, -50),
 						new ExtraMaterialStats(200),
+						new BatteryCellMaterialStats(40000),
 						PlusTiC.justWhy);
 			}
 			
@@ -76,7 +78,8 @@ public class ModuleLandCore {
 						new HeadMaterialStats(1500, 8.7f, 5.5f, OBSIDIAN),
 						new HandleMaterialStats(1.5f, -100),
 						new ExtraMaterialStats(380),
-						new BowMaterialStats(1.0f, 1.6f, 5));
+						new BowMaterialStats(1.0f, 1.6f, 5),
+						new LaserMediumMaterialStats(7.0f));
 			}
 			
 			PlusTiC.materials.putAll(mats);

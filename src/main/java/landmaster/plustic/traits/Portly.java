@@ -1,7 +1,7 @@
 package landmaster.plustic.traits;
 
+import landmaster.plustic.*;
 import landmaster.plustic.net.*;
-import landmaster.plustic.proxy.*;
 import net.minecraft.client.resources.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
@@ -29,7 +29,7 @@ public class Portly extends AbstractTrait {
 	@Override
 	public void onUpdate(ItemStack tool, World world, Entity entity, int itemSlot, boolean isSelected) {
 		if (isSelected && FMLCommonHandler.instance().getSide().isClient()) {
-			if (CommonProxy.keyBindings.get(0).isPressed()) {
+			if (PlusTiC.proxy.isControlPressed("release_entity")) {
 				PacketHandler.INSTANCE.sendToServer(new PacketReleaseEntity());
 			}
 		}

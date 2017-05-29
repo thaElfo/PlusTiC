@@ -35,6 +35,7 @@ public class Config extends Configuration {
 	public static boolean pyrotheumSmelt;
 	
 	public static boolean katana;
+	public static boolean laserGun;
 	
 	public static float katana_combo_multiplier;
 	
@@ -103,6 +104,8 @@ public class Config extends Configuration {
 		// TOOLS
 		katana = getBoolean("Enable Katana", "tools", true, "Enable Katana");
 		katana_combo_multiplier = getFloat("Katana combo multiplier", "tools", 1.25f, 0, Float.MAX_VALUE, "Multiply combo value by this to calculate bonus damage");
+		
+		laserGun = getBoolean("Enable Laser Gun", "tools", true, "Enable Laser Gun");
 		
 		// Trash
 		String[] trash_things_arr = getStringList("Trash generation", "tweaks",

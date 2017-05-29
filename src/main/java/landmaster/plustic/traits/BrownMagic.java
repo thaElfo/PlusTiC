@@ -1,8 +1,8 @@
 package landmaster.plustic.traits;
 
+import landmaster.plustic.*;
 import landmaster.plustic.api.*;
 import landmaster.plustic.net.*;
-import landmaster.plustic.proxy.*;
 import net.minecraft.entity.*;
 import net.minecraft.item.*;
 import net.minecraft.world.*;
@@ -20,7 +20,7 @@ public class BrownMagic extends AbstractTrait {
 	@Override
 	public void onUpdate(ItemStack tool, World world, Entity entity, int itemSlot, boolean isSelected) {
 		if (isSelected && FMLCommonHandler.instance().getSide().isClient()) {
-			if (CommonProxy.keyBindings.get(3).isPressed()) {
+			if (PlusTiC.proxy.isControlPressed("brown_magic")) {
 				PacketHandler.INSTANCE.sendToServer(new PacketBrownAbracadabra());
 			}
 		}

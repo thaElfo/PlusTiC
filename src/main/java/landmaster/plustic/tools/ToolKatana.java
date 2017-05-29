@@ -150,10 +150,19 @@ public class ToolKatana extends SwordCore {
 	public float getRepairModifierForPart(int index) {
 	    return DURABILITY_MODIFIER;
 	}
-
+	
 	@Override
 	protected ToolNBT buildTagData(List<Material> materials) {
-		ToolNBT data = buildDefaultTag(materials);
+		HandleMaterialStats handle = materials.get(0).getStatsOrUnknown(MaterialTypes.HANDLE);
+	    HeadMaterialStats head0 = materials.get(1).getStatsOrUnknown(MaterialTypes.HEAD);
+	    HeadMaterialStats head1 = materials.get(2).getStatsOrUnknown(MaterialTypes.HEAD);
+	    ExtraMaterialStats binding = materials.get(3).getStatsOrUnknown(MaterialTypes.EXTRA);
+	    
+	    ToolNBT data = new ToolNBT();
+	    data.head(head0, head1);
+	    data.extra(binding);
+	    data.handle(handle);
+	    
 		data.attack += 1f;
 		data.durability *= DURABILITY_MODIFIER;
 		return data;

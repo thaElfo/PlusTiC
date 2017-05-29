@@ -2,8 +2,8 @@ package landmaster.plustic.api;
 
 import java.util.*;
 
+import landmaster.plustic.*;
 import landmaster.plustic.net.*;
-import landmaster.plustic.proxy.*;
 import net.minecraft.client.*;
 import net.minecraft.client.resources.*;
 import net.minecraft.nbt.*;
@@ -35,7 +35,7 @@ public class Portal {
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public static void testSetPortal(InputEvent.KeyInputEvent event) {
-		if (CommonProxy.keyBindings.get(2).isPressed()
+		if (PlusTiC.proxy.isControlPressed("set_portal")
 				&& canUse(TagUtil.getTagSafe(
 						Minecraft.getMinecraft().thePlayer.getHeldItemMainhand()))) {
 			PacketHandler.INSTANCE.sendToServer(new PacketSetPortal());

@@ -1,5 +1,5 @@
 - **FOR THE LAST TIME, DO NOT OPEN ANY MORE ISSUES CONCERNING A MATERIAL REGISTRY CONFLICT WITH NATURAL PLEDGE!** This is easily fixed by changing the config in either PlusTiC or Natural Pledge to disable either mod's integration, which resolves this.
-- **IMPORTANT**: *BEFORE POSTING AN ISSUE CONCERNING A MATERIAL REGISTRY CONFLICT WITH MOAR TINKERS:* As of May 6, 2017, @Bartz24 has yet to create a config for his mod. It's his fault not only for creating the conflict (PlusTiC already has configs), ***but also for creating a dupe of this mod in the first place—and it doesn't even add any tools to boot!***
+- **IMPORTANT**: *BEFORE POSTING AN ISSUE CONCERNING A MATERIAL REGISTRY CONFLICT WITH MOAR TINKERS:* ***TURN OFF CONFIGS FOR CONFLICTING MATERIALS!***
 - Before opening any issue concerning _unlinking_ Global Traveler, open the toggle GUI (defualt press "I") and disable Global Traveler first.
 - For pull requests: Tabs are preferred to spaces.
 - There used to be two lang files to translate. This has been reduced to one.

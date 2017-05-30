@@ -23,7 +23,9 @@ import net.minecraftforge.fml.relauncher.*;
 public class EntityBlindBandit extends EntityCreature {
 	private static final DataParameter<Boolean> ARMS_RAISED = EntityDataManager.createKey(EntityBlindBandit.class, DataSerializers.BOOLEAN);
 	
-	private int countdown = 240;
+	public static final int MAX_COUNTDOWN = 300;
+	
+	private int countdown = MAX_COUNTDOWN;
 	private @Nullable UUID summonerId;
 	
 	public EntityBlindBandit(World worldIn) {

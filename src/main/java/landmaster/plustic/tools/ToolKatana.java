@@ -113,12 +113,14 @@ public class ToolKatana extends SwordCore {
 	@Override
 	public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
 		super.onUpdate(stack, worldIn, entityIn, itemSlot, isSelected);
-		NBTTagCompound tag = TagUtil.getTagSafe(stack);
-		float counter = tag.getFloat(COUNTER_TAG);
-		counter -= 0.005f;
-		counter = MathHelper.clamp_float(counter, 0, counter_cap(stack));
-		tag.setFloat(COUNTER_TAG, counter);
-		stack.setTagCompound(tag);
+		if (!worldIn.isRemote) {
+			NBTTagCompound tag = TagUtil.getTagSafe(stack);
+			float counter = tag.getFloat(COUNTER_TAG);
+			counter -= 0.005f;
+			counter = MathHelper.clamp_float(counter, 0, counter_cap(stack));
+			tag.setFloat(COUNTER_TAG, counter);
+			stack.setTagCompound(tag);
+		}
 	}
 	
 	@Override

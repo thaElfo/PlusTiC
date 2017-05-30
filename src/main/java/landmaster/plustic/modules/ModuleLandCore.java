@@ -53,7 +53,7 @@ public class ModuleLandCore {
 						new HeadMaterialStats(500, 6.5f, 4.5f, DIAMOND),
 						new HandleMaterialStats(0.7f, -50),
 						new ExtraMaterialStats(200),
-						new BatteryCellMaterialStats(40000),
+						new BatteryCellMaterialStats(100000),
 						PlusTiC.justWhy);
 			}
 			
@@ -79,7 +79,7 @@ public class ModuleLandCore {
 						new HandleMaterialStats(1.5f, -100),
 						new ExtraMaterialStats(380),
 						new BowMaterialStats(1.0f, 1.6f, 5),
-						new LaserMediumMaterialStats(7.0f));
+						new LaserMediumMaterialStats(7.0f, 30));
 			}
 			
 			PlusTiC.materials.putAll(mats);

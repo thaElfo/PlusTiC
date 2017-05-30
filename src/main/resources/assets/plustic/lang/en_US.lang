@@ -3,7 +3,7 @@
 item.katana.name=Katana
 item.katana.desc=The Katana is a special weapon that unleashes combos on the target(s).\nComplements the Shuriken
 item.laser_gun.name=Laser Gun
-item.laser_gun.desc=The Laser Gun is a special ranged weapon that fires accurate shots from afar, but requires both durability and energy.\nPew pew pew!
+item.laser_gun.desc=The Laser Gun is a special ranged weapon that fires accurate shots from afar, but requires both durability and energy.\nAttack depends on the laser medium, not the pipe piece.
 
 item.pipe_piece.name=Pipe Piece
 item.laser_medium.name=Laser Medium
@@ -18,6 +18,8 @@ stat.laser_medium.power.desc=How powerful the laser medium is.
 stat.battery_cell.name=Battery Cell
 stat.battery_cell.energy.name=Energy Capacity: §6%s RF
 stat.battery_cell.energy.desc=How much energy the tool can store.
+stat.battery_cell.range.name=Range: %s
+stat.battery_cell.range.desc=How far the laser extends.
 
 # TINKER MATERIALS
 

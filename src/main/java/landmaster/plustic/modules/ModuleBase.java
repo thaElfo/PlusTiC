@@ -84,7 +84,7 @@ public class ModuleBase {
 				
 				TinkerRegistry.addMaterialStats(nickel, new HeadMaterialStats(460, 6, 4.5f, OBSIDIAN),
 						new HandleMaterialStats(1, -5), new ExtraMaterialStats(70), PlusTiC.justWhy,
-						new FletchingMaterialStats(0.95f, 1.05f), new BatteryCellMaterialStats(30000));
+						new FletchingMaterialStats(0.95f, 1.05f), new BatteryCellMaterialStats(75000));
 				
 				PlusTiC.materials.put("nickel", nickel);
 			}

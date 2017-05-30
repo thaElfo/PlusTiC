@@ -49,8 +49,10 @@ public class ModuleTools {
 			tools.add(laserGun);
 			
 			// Vanilla Tinkers Laser material stats
-			TinkerRegistry.addMaterialStats(TinkerMaterials.prismarine, new LaserMediumMaterialStats(2.5f));
-			TinkerRegistry.addMaterialStats(TinkerMaterials.electrum, new BatteryCellMaterialStats(20000));
+			TinkerRegistry.addMaterialStats(TinkerMaterials.prismarine, new LaserMediumMaterialStats(2.5f, 20));
+			TinkerRegistry.addMaterialStats(TinkerMaterials.copper, new BatteryCellMaterialStats(55000));
+			TinkerRegistry.addMaterialStats(TinkerMaterials.silver, new BatteryCellMaterialStats(75000));
+			TinkerRegistry.addMaterialStats(TinkerMaterials.manyullyn, new BatteryCellMaterialStats(120000));
 		}
 		
 		if (Config.katana) {

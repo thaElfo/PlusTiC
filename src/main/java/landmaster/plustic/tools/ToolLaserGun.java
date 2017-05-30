@@ -4,9 +4,18 @@ import java.util.*;
 
 import javax.annotation.*;
 
+import org.lwjgl.opengl.*;
+
+import landmaster.plustic.*;
 import landmaster.plustic.modules.*;
 import landmaster.plustic.tools.nbt.*;
 import landmaster.plustic.tools.stats.*;
+import landmaster.plustic.util.*;
+import net.minecraft.client.*;
+import net.minecraft.client.entity.*;
+import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.VertexBuffer;
+import net.minecraft.client.renderer.vertex.*;
 import net.minecraft.creativetab.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
@@ -16,8 +25,12 @@ import net.minecraft.util.*;
 import net.minecraft.util.math.*;
 import net.minecraft.util.text.*;
 import net.minecraft.world.*;
+import net.minecraftforge.client.event.*;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.*;
 import net.minecraftforge.energy.*;
+import net.minecraftforge.fml.common.eventhandler.*;
+import net.minecraftforge.fml.relauncher.*;
 import slimeknights.tconstruct.library.materials.*;
 import slimeknights.tconstruct.library.tinkering.*;
 import slimeknights.tconstruct.library.tools.*;
@@ -26,6 +39,10 @@ import slimeknights.tconstruct.tools.*;
 
 public class ToolLaserGun extends TinkerToolCore implements cofh.api.energy.IEnergyContainerItem {
 	public static final float DURABILITY_MODIFIER = 1.5f;
+	
+	private float range(ItemStack is) {
+		return (new LaserNBT(TagUtil.getToolTag(is))).range;
+	}
 	
 	public static final String ATTACK_DURATION_TAG = "AttackDuration";
 	
@@ -41,6 +58,17 @@ public class ToolLaserGun extends TinkerToolCore implements cofh.api.energy.IEne
 		return (new ToolEnergyNBT(TagUtil.getToolTag(is))).energy;
 	}
 	
+	private static Optional<ItemStack> getActiveLaserGun(EntityLivingBase entity) {
+		return Arrays.stream(EnumHand.values())
+		.map(entity::getHeldItem)
+		.filter(stack -> stack != null
+				&& stack.getItem() instanceof ToolLaserGun
+				&& TagUtil.getTagSafe(stack).getInteger(ATTACK_DURATION_TAG) > 0)
+		.findFirst();
+	}
+	
+	public static final ResourceLocation LASER_LOC = new ResourceLocation(PlusTiC.MODID, "textures/effects/laserbeam.png");
+	
 	public ToolLaserGun() {
 		super(PartMaterialType.handle(TinkerTools.toughToolRod),
 				PartMaterialType.head(ModuleTools.pipe_piece),
@@ -49,19 +77,79 @@ public class ToolLaserGun extends TinkerToolCore implements cofh.api.energy.IEne
 		
 		this.addCategory(Category.WEAPON);
 		
+		MinecraftForge.EVENT_BUS.register(this);
+		
 		this.setUnlocalizedName("laser_gun").setRegistryName("laser_gun");
+	}
+	
+	@SideOnly(Side.CLIENT)
+	@SubscribeEvent
+	public void renderBeam(RenderWorldLastEvent event) {
+		double maxRange = LaserMediumMaterialStats.getMaxRange() + World.MAX_ENTITY_RADIUS;
+		Optional.ofNullable(Minecraft.getMinecraft().thePlayer)
+		.map(player -> Minecraft.getMinecraft().theWorld.getEntitiesWithinAABB(
+				EntityLivingBase.class, Utils.AABBfromVecs(
+						player.getPositionVector().subtract(maxRange, maxRange, maxRange),
+						player.getPositionVector().addVector(maxRange, maxRange, maxRange))))
+		.map(List::stream)
+		.ifPresent(stream -> stream.forEach(this::doRenderBeam));
+	}
+	
+	@SideOnly(Side.CLIENT)
+	private void doRenderBeam(EntityLivingBase shooter) {
+		getActiveLaserGun(shooter)
+		.ifPresent(stack -> {
+			GlStateManager.depthMask(false);
+            GlStateManager.enableBlend();
+			GlStateManager.blendFunc(GL11.GL_ONE, GL11.GL_ONE);
+			
+			GlStateManager.pushMatrix();
+			
+			EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
+			
+			float partialTicks = Minecraft.getMinecraft().getRenderPartialTicks();
+			double doubleX = player.lastTickPosX + (player.posX - player.lastTickPosX) * partialTicks;
+            double doubleY = player.lastTickPosY + (player.posY - player.lastTickPosY) * partialTicks;
+            double doubleZ = player.lastTickPosZ + (player.posZ - player.lastTickPosZ) * partialTicks;
+            
+            Vec3d vec = new Vec3d(doubleX, doubleY+player.getEyeHeight(), doubleZ);
+            Vec3d vec0 = shooter.getPositionVector().addVector(0, shooter.getEyeHeight()+0.2, 0);
+            Vec3d vec1 = Optional.ofNullable(EntityUtil.raytraceEntityPlayerLook(player, range(stack)))
+            		.map(rtr -> rtr.hitVec)
+            		.orElse(vec.add(player.getLookVec().scale(range(stack))));
+            
+            GlStateManager.translate(-doubleX, -doubleY, -doubleZ);
+			
+			Tessellator tessellator = Tessellator.getInstance();
+            VertexBuffer buffer = tessellator.getBuffer();
+            
+            Minecraft.getMinecraft().renderEngine.bindTexture(LASER_LOC);
+            
+            buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_LMAP_COLOR);
+            
+            ClientUtils.drawBeam(vec0, vec1, vec, 0.2f);
+            
+            tessellator.draw();
+			
+			GlStateManager.popMatrix();
+			
+			GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+		});
 	}
 	
 	@Override
 	public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
-		NBTTagCompound nbt = TagUtil.getTagSafe(stack);
-		nbt.setInteger(ATTACK_DURATION_TAG, MathHelper.clamp_int(nbt.getInteger(ATTACK_DURATION_TAG)-1, 0, Integer.MAX_VALUE));
-		stack.setTagCompound(nbt);
+		super.onUpdate(stack, worldIn, entityIn, itemSlot, isSelected);
+		if (!worldIn.isRemote) {
+			NBTTagCompound nbt = TagUtil.getTagSafe(stack);
+			nbt.setInteger(ATTACK_DURATION_TAG, MathHelper.clamp_int(nbt.getInteger(ATTACK_DURATION_TAG)-1, 0, Integer.MAX_VALUE));
+			stack.setTagCompound(nbt);
+		}
 	}
 	
 	@Override
 	public void getSubItems(@Nonnull Item itemIn, CreativeTabs tab, List<ItemStack> subItems) {
-		this.addDefaultSubItems(subItems, null, null, TinkerMaterials.prismarine, TinkerMaterials.electrum);
+		this.addDefaultSubItems(subItems, null, null, TinkerMaterials.prismarine, TinkerMaterials.manyullyn);
 	}
 
 	@Override
@@ -105,18 +193,13 @@ public class ToolLaserGun extends TinkerToolCore implements cofh.api.energy.IEne
 	    return info.getTooltip();
 	}
 	
-	@Override
-	public boolean onLeftClickEntity(ItemStack stack, EntityPlayer player, Entity entity) {
-		return false; // can only use laser attack
-	}
-	
 	/**
 	 * <strong>This is the real laser attack.</strong>
 	 * {@inheritDoc}
 	 */
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand) {
-		return Optional.ofNullable(EntityUtil.raytraceEntityPlayerLook(playerIn, 20))
+		return Optional.ofNullable(EntityUtil.raytraceEntityPlayerLook(playerIn, range(itemStackIn)))
 		.map(rtr -> rtr.entityHit)
 		.map(ent -> {
 			int energyTaken = this.energyPerAttack(itemStackIn);

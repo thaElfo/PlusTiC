@@ -20,7 +20,7 @@ import net.minecraftforge.fml.client.registry.*;
 import net.minecraftforge.client.model.*;
 import org.lwjgl.input.*;
 
-import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.*;
 
 import slimeknights.tconstruct.common.*;
 import slimeknights.tconstruct.library.*;
@@ -90,7 +90,7 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void initEntities() {
 		super.initEntities();
-		RenderingRegistry.registerEntityRenderingHandler(EntityBlindBandit.class, RenderBlindBandit.FACTORY);
+		RenderingRegistry.registerEntityRenderingHandler(EntityBlindBandit.class, RenderBlindBandit::new);
 	}
 	
 	@Override

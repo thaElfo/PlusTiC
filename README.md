@@ -5,6 +5,8 @@ CurseForge page: https://minecraft.curseforge.com/projects/plustic
 ## New tool(s)
 - Katana
 ## Supported mods
+- LandCore (by this mod's author)
+- LandCraft (also by this mod's author)
 - Biomes o Plenty by Glitchfiend
 - Project Red by MrTJP
 - Mekanism by aidencbrady

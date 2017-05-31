@@ -7,6 +7,7 @@ import landmaster.plustic.*;
 import landmaster.plustic.config.*;
 import landmaster.plustic.fluids.*;
 import landmaster.plustic.util.*;
+import mcjty.lib.tools.*;
 import net.minecraft.item.*;
 import net.minecraft.util.text.*;
 import net.minecraftforge.fml.common.*;
@@ -51,8 +52,8 @@ public class ModuleMekanism {
 			
 			
 			// ugly workaround for molten tin not registering
-			if (OreDictionary.getOres("ingotTin").size() == 0
-					|| TinkerRegistry.getMelting(OreDictionary.getOres("ingotTin").get(0)) == null) {
+			if (ItemStackTools.getOres("ingotTin").size() == 0
+					|| TinkerRegistry.getMelting(ItemStackTools.getOres("ingotTin").get(0)) == null) {
 				MaterialIntegration tinI = new MaterialIntegration(null, TinkerFluids.tin, "Tin");
 				tinI.integrate();
 				tinI.integrateRecipes();

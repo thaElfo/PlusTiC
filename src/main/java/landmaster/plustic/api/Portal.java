@@ -37,7 +37,7 @@ public class Portal {
 	public static void testSetPortal(InputEvent.KeyInputEvent event) {
 		if (PlusTiC.proxy.isControlPressed("set_portal")
 				&& canUse(TagUtil.getTagSafe(
-						Minecraft.getMinecraft().thePlayer.getHeldItemMainhand()))) {
+						Minecraft.getMinecraft().player.getHeldItemMainhand()))) {
 			PacketHandler.INSTANCE.sendToServer(new PacketSetPortal());
 		}
 	}

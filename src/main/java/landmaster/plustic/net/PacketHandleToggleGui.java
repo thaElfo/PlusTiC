@@ -19,9 +19,9 @@ public class PacketHandleToggleGui implements IMessage {
 	}
 
 	public static IMessage onMessage(PacketHandleToggleGui message, MessageContext ctx) {
-		IThreadListener mainThread = (WorldServer)ctx.getServerHandler().playerEntity.getEntityWorld();
+		IThreadListener mainThread = (WorldServer)ctx.getServerHandler().player.getEntityWorld();
 		mainThread.addScheduledTask(() -> {
-			EntityPlayerMP ep = ctx.getServerHandler().playerEntity;
+			EntityPlayerMP ep = ctx.getServerHandler().player;
 			if (ep.getEntityWorld().isRemote)
 				return;
 			NBTTagCompound nbt = TagUtil.getTagSafe(ep.getHeldItemMainhand());

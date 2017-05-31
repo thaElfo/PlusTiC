@@ -5,6 +5,7 @@ import java.util.*;
 import com.google.common.collect.*;
 
 import landmaster.plustic.util.*;
+import mcjty.lib.tools.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.monster.*;
 import net.minecraft.init.*;
@@ -62,7 +63,7 @@ public class HailHydra extends AbstractTrait {
 		}
 		if (random.nextFloat() < event.getAmount()/8.0f) { // probability increases with damage
 			event.getEntityLiving().addPotionEffect(new PotionEffect(MobEffects.ABSORPTION, 1600, 3));
-			event.getEntityLiving().addChatMessage(new TextComponentTranslation("msg.plustic.hailhydra.use"));
+			ChatTools.addChatMessage(event.getEntityLiving(), new TextComponentTranslation("msg.plustic.hailhydra.use"));
 		}
 	}
 	

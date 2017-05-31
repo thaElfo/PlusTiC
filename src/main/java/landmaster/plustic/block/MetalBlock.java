@@ -1,11 +1,11 @@
 package landmaster.plustic.block;
 
-import net.minecraft.block.*;
+import mcjty.lib.compat.*;
 import net.minecraft.block.material.*;
 import net.minecraft.util.math.*;
 import net.minecraft.world.*;
 
-public class MetalBlock extends Block {
+public class MetalBlock extends CompatBlock {
 	public MetalBlock(String name) {
 		super(Material.IRON);
 		this.setHarvestLevel("pickaxe", -1);

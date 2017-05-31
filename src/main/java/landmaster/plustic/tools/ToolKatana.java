@@ -65,24 +65,29 @@ public class ToolKatana extends SwordCore {
 	@SubscribeEvent
 	public static void render(RenderGameOverlayEvent event) {
 		final Minecraft mc = Minecraft.getMinecraft();
-		final ItemStack is = mc.thePlayer.getHeldItemMainhand();
+		final ItemStack is = mc.player.getHeldItemMainhand();
 		if (event.getType() == RenderGameOverlayEvent.ElementType.TEXT
 				&& is != null && is.getItem() instanceof ToolKatana) {
 			float counter = TagUtil.getTagSafe(is).getFloat(COUNTER_TAG);
 			if (counter > 0) {
-				mc.fontRendererObj.drawString(I18n.format("meter.plustic.katana", counter),
+				mc.fontRenderer.drawString(I18n.format("meter.plustic.katana", counter),
 						5, 5, Color.HSBtoRGB(Math.min(counter/(counter_cap(is)*3), 1.0f/3), 1, 1) & 0xFFFFFF, true);
 			}
 		}
 	}
 	
-	@Nonnull
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(@Nonnull ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand) {
+    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand hand) {
+		return this.func_77659_a(playerIn.getHeldItem(hand), worldIn, playerIn, hand);
+	}
+	
+	// for 1.10.2
+	@Nonnull
+	public ActionResult<ItemStack> func_77659_a(@Nonnull ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand) {
 		if (hand == EnumHand.MAIN_HAND && playerIn.getHeldItemOffhand() != null && !(playerIn.getHeldItemOffhand().getItem() instanceof Shuriken)) {
 			return ActionResult.newResult(EnumActionResult.SUCCESS, itemStackIn);
 		}
-		return super.onItemRightClick(itemStackIn, worldIn, playerIn, hand);
+		return ActionResult.newResult(EnumActionResult.PASS, itemStackIn);
 	}
 	
 	@Override
@@ -117,7 +122,7 @@ public class ToolKatana extends SwordCore {
 			NBTTagCompound tag = TagUtil.getTagSafe(stack);
 			float counter = tag.getFloat(COUNTER_TAG);
 			counter -= 0.005f;
-			counter = MathHelper.clamp_float(counter, 0, counter_cap(stack));
+			counter = MathHelper.clamp(counter, 0, counter_cap(stack));
 			tag.setFloat(COUNTER_TAG, counter);
 			stack.setTagCompound(tag);
 		}
@@ -140,7 +145,7 @@ public class ToolKatana extends SwordCore {
 			if (entity instanceof EntityLivingBase) {
 				EntityLivingBase targetLiving = (EntityLivingBase)entity;
 				if (targetLiving.getHealth() <= 0) counter += 1.0f;
-				counter = MathHelper.clamp_float(counter, 0, counter_cap(stack));
+				counter = MathHelper.clamp(counter, 0, counter_cap(stack));
 			}
 			tag.setFloat(COUNTER_TAG, counter);
 			stack.setTagCompound(tag);

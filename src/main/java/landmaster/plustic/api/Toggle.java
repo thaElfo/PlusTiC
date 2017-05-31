@@ -87,7 +87,7 @@ public class Toggle {
 			
 			mc.renderEngine.bindTexture(background);
 			drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
-			fontRendererObj.drawString(I18n.format("gui.header.toggle"), guiLeft+5, guiTop+5, 0xFFFFFF);
+			fontRenderer.drawString(I18n.format("gui.header.toggle"), guiLeft+5, guiTop+5, 0xFFFFFF);
 			
 			mc.renderEngine.bindTexture(background);
 			for (int i=0; i<Math.min(OPTIONS_PER_PAGE, identifiers.size() - page*OPTIONS_PER_PAGE); ++i) {
@@ -96,7 +96,7 @@ public class Toggle {
 			for (int i=page*OPTIONS_PER_PAGE; i<Math.min((page+1)*OPTIONS_PER_PAGE, identifiers.size()); ++i) {
 				String identifier = identifiers.get(i);
 				boolean enabled = enableds.get(i);
-				fontRendererObj.drawString(I18n.format("modifier."+identifier+".name"), guiLeft+10, guiTop+18*(i+1)+3, 0xFFFFFF);
+				fontRenderer.drawString(I18n.format("modifier."+identifier+".name"), guiLeft+10, guiTop+18*(i+1)+3, 0xFFFFFF);
 				mc.renderEngine.bindTexture(background);
 				drawTexturedModalRect(guiLeft+96, guiTop+18*(i+1)+1,176+(enabled ? 0 : 12), 0, 12, 12);
 				if (isPointInRegion(7, 18*(i+1), 114, 16, mouseX, mouseY)) {
@@ -142,8 +142,8 @@ public class Toggle {
 	@SubscribeEvent
 	public static void testAndToggle(InputEvent.KeyInputEvent event) {
 		if (PlusTiC.proxy.isControlPressed("toggle_gui")
-				&& canToggle(Minecraft.getMinecraft().thePlayer.getHeldItemMainhand())) {
-			Minecraft.getMinecraft().displayGuiScreen(new Gui(Minecraft.getMinecraft().thePlayer));
+				&& canToggle(Minecraft.getMinecraft().player.getHeldItemMainhand())) {
+			Minecraft.getMinecraft().displayGuiScreen(new Gui(Minecraft.getMinecraft().player));
 		}
 	}
 	

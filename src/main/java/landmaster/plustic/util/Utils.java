@@ -9,6 +9,7 @@ import cofh.api.energy.*;
 import landmaster.plustic.*;
 import landmaster.plustic.block.*;
 import landmaster.plustic.fluids.*;
+import mcjty.lib.tools.ItemStackTools;
 import net.darkhax.tesla.capability.*;
 import net.minecraft.block.*;
 import net.minecraft.entity.player.*;
@@ -30,7 +31,7 @@ import slimeknights.tconstruct.library.modifiers.*;
 
 public class Utils {
 	public static boolean matchesOre(ItemStack is, String od) {
-		return OreDictionary.doesOreNameExist(od) && is!=null && is.stackSize>0 && ArrayUtils.contains(OreDictionary.getOreIDs(is), OreDictionary.getOreID(od));
+		return OreDictionary.doesOreNameExist(od) && !ItemStackTools.isEmpty(is) && ArrayUtils.contains(OreDictionary.getOreIDs(is), OreDictionary.getOreID(od));
 	}
 	
 	public static AxisAlignedBB AABBfromVecs(Vec3d v1, Vec3d v2) {
@@ -110,13 +111,13 @@ public class Utils {
 			WorldServer oldWorld = player.mcServer.worldServerForDimension(player.dimension);
 			player.dimension = coord.dimensionId;
 			WorldServer newWorld = player.mcServer.worldServerForDimension(player.dimension);
-			player.connection.sendPacket(new SPacketRespawn(player.dimension, player.worldObj.getDifficulty(), newWorld.getWorldInfo().getTerrainType(), player.interactionManager.getGameType()));
+			player.connection.sendPacket(new SPacketRespawn(player.dimension, player.getEntityWorld().getDifficulty(), newWorld.getWorldInfo().getTerrainType(), player.interactionManager.getGameType()));
 			oldWorld.removeEntityDangerously(player);
 			player.isDead = false;
 	
 			if(player.isEntityAlive())
 			{
-				newWorld.spawnEntityInWorld(player);
+				newWorld.spawnEntity(player);
 				player.setLocationAndAngles(coord.xCoord+0.5, coord.yCoord+1, coord.zCoord+0.5, player.rotationYaw, player.rotationPitch);
 				newWorld.updateEntityWithOptionalForce(player, false);
 				player.setWorld(newWorld);

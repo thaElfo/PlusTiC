@@ -29,6 +29,7 @@ public class PlusTiC {
 	public static final String NAME = "PlusTiC";
 	public static final String VERSION = "4.5.0.0";
 	public static final String DEPENDS = "required-after:mantle;required-after:tconstruct@[1.10.2-2.6.5,);"
+			+ "required-after:compatlayer@[0.2.8,);"
 			+ "after:Mekanism;after:BiomesOPlenty;after:biomesoplenty;"
 			+ "after:Botania;after:botania;after:advancedRocketry;"
 			+ "after:armorplus;after:EnderIO;after:enderio;after:projectred-exploration;"
@@ -171,9 +172,9 @@ public class PlusTiC {
 		materials.forEach((k, v) -> {
 			MaterialIntegration mi;
 			if (v.getFluid() != null && v.getFluid() != TinkerFluids.emerald) {
-				mi = TinkerRegistry.integrate(v, v.getFluid(), StringUtils.capitalize(k)).toolforge();
+				mi = new MaterialIntegration(v, v.getFluid(), StringUtils.capitalize(k)).toolforge();
 			} else {
-				mi = TinkerRegistry.integrate(v);
+				mi = new MaterialIntegration(v);
 			}
 			mi.integrate(); mi.integrateRecipes();
 			materialIntegrations.put(k, mi);

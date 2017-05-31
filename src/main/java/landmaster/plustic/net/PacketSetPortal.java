@@ -2,6 +2,7 @@ package landmaster.plustic.net;
 
 import io.netty.buffer.*;
 import landmaster.plustic.api.*;
+import mcjty.lib.tools.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.nbt.*;
 import net.minecraft.util.*;
@@ -14,9 +15,9 @@ import slimeknights.tconstruct.library.utils.*;
 public class PacketSetPortal implements IMessage {
 	
 	public static IMessage onMessage(PacketSetPortal message, MessageContext ctx) {
-		IThreadListener mainThread = (WorldServer)ctx.getServerHandler().playerEntity.getEntityWorld();
+		IThreadListener mainThread = (WorldServer)ctx.getServerHandler().player.getEntityWorld();
 		mainThread.addScheduledTask(() -> {
-			EntityPlayerMP ep = ctx.getServerHandler().playerEntity;
+			EntityPlayerMP ep = ctx.getServerHandler().player;
 			if (ep.getEntityWorld().isRemote)
 				return;
 			NBTTagCompound nbt = TagUtil.getTagSafe(ep.getHeldItemMainhand());
@@ -32,7 +33,7 @@ public class PacketSetPortal implements IMessage {
 				nick.setInteger("dim", ep.getEntityWorld().provider.getDimension());
 				nbt.setTag(Portal.PORTAL_NBT, nick);
 				ep.getHeldItemMainhand().setTagCompound(nbt);
-				ep.addChatMessage(new TextComponentTranslation(
+				ChatTools.addChatMessage(ep, new TextComponentTranslation(
 						"msg.plustic.portal.set", nick.getInteger("x"),
 						nick.getInteger("y"), nick.getInteger("z"), nick.getInteger("dim")));
 			}

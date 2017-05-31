@@ -18,13 +18,13 @@ public class NaturesBlessing extends AbstractTrait {
 	
 	@Override
 	public void afterBlockBreak(ItemStack tool, World world, IBlockState state, BlockPos pos, EntityLivingBase player, boolean wasEffective) {
-		dropBread(player.worldObj, pos.getX(), pos.getY(), pos.getZ(), 0.005f);
+		dropBread(player.getEntityWorld(), pos.getX(), pos.getY(), pos.getZ(), 0.005f);
 	}
 	
 	@Override
 	public void afterHit(ItemStack tool, EntityLivingBase player, EntityLivingBase target, float damageDealt, boolean wasCritical, boolean wasHit) {
 		if (wasHit && !target.isEntityAlive()) {
-			dropBread(target.worldObj,target.posX,target.posY,target.posZ,0.05f);
+			dropBread(target.getEntityWorld(),target.posX,target.posY,target.posZ,0.05f);
 			float rnd = random.nextFloat();
 			if (rnd < 0.3f) player.heal(3.2f);
 		}
@@ -33,7 +33,7 @@ public class NaturesBlessing extends AbstractTrait {
 	protected void dropBread(World world, double x, double y, double z, float chance) {
 		if (!world.isRemote && random.nextFloat() < chance) {
 			EntityItem entity = new EntityItem(world, x, y, z, new ItemStack(Items.BREAD));
-			world.spawnEntityInWorld(entity);
+			world.spawnEntity(entity);
 		}
 	}
 }

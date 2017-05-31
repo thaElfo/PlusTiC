@@ -85,14 +85,14 @@ public class ToolLaserGun extends TinkerToolCore implements cofh.api.energy.IEne
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public void renderBeam(RenderWorldLastEvent event) { // for this player
-		Optional.ofNullable(Minecraft.getMinecraft().thePlayer)
+		Optional.ofNullable(Minecraft.getMinecraft().player)
 		.ifPresent(this::doRenderBeam);
 	}
 	
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public void renderBeam(RenderPlayerEvent event) { // for other players
-		if (!event.getEntityPlayer().equals(Minecraft.getMinecraft().thePlayer)) { // exclude this player
+		if (!event.getEntityPlayer().equals(Minecraft.getMinecraft().player)) { // exclude this player
 			this.doRenderBeam(event.getEntityPlayer());
 		}
 	}
@@ -115,7 +115,7 @@ public class ToolLaserGun extends TinkerToolCore implements cofh.api.energy.IEne
 			
 			GlStateManager.pushMatrix();
 			
-			EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
+			EntityPlayerSP player = Minecraft.getMinecraft().player;
 			
 			float partialTicks = Minecraft.getMinecraft().getRenderPartialTicks();
 			double doubleX = player.lastTickPosX + (player.posX - player.lastTickPosX) * partialTicks;
@@ -152,13 +152,18 @@ public class ToolLaserGun extends TinkerToolCore implements cofh.api.energy.IEne
 		super.onUpdate(stack, worldIn, entityIn, itemSlot, isSelected);
 		if (!worldIn.isRemote) {
 			NBTTagCompound nbt = TagUtil.getTagSafe(stack);
-			nbt.setInteger(ATTACK_DURATION_TAG, MathHelper.clamp_int(nbt.getInteger(ATTACK_DURATION_TAG)-1, 0, Integer.MAX_VALUE));
+			nbt.setInteger(ATTACK_DURATION_TAG, MathHelper.clamp(nbt.getInteger(ATTACK_DURATION_TAG)-1, 0, Integer.MAX_VALUE));
 			stack.setTagCompound(nbt);
 		}
 	}
 	
 	@Override
-	public void getSubItems(@Nonnull Item itemIn, CreativeTabs tab, List<ItemStack> subItems) {
+	public void getSubItems(@Nonnull Item itemIn, CreativeTabs tab, NonNullList<ItemStack> list) {
+		this.func_150895_a(itemIn, tab, list);
+	}
+	
+	// for 1.10.2
+	public void func_150895_a(@Nonnull Item itemIn, CreativeTabs tab, List<ItemStack> subItems) {
 		this.addDefaultSubItems(subItems, null, null, TinkerMaterials.prismarine, TinkerMaterials.manyullyn);
 	}
 
@@ -208,7 +213,12 @@ public class ToolLaserGun extends TinkerToolCore implements cofh.api.energy.IEne
 	 * {@inheritDoc}
 	 */
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand) {
+    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand hand) {
+		return this.func_77659_a(playerIn.getHeldItem(hand), worldIn, playerIn, hand);
+	}
+	
+	// for 1.10.2
+	public ActionResult<ItemStack> func_77659_a(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand) {
 		NBTTagCompound nbt = TagUtil.getTagSafe(itemStackIn);
 		
 		ActionResult<ItemStack> res = Optional.ofNullable(EntityUtil.raytraceEntityPlayerLook(playerIn, range(itemStackIn)))

@@ -4,6 +4,7 @@ import java.util.*;
 
 import landmaster.plustic.api.*;
 import landmaster.plustic.util.*;
+import mcjty.lib.tools.*;
 import net.minecraft.client.resources.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.item.*;
@@ -58,7 +59,7 @@ public class Global extends AbstractTrait {
 				ItemStack stk = it.next();
 				for (int j=0; j<ih.getSlots(); ++j) {
 					ItemStack res = ih.insertItem(j, stk, false);
-					if (res != null && res.stackSize > 0) {
+					if (!ItemStackTools.isEmpty(res)) {
 						it.set(res);
 						stk = res;
 					} else {
@@ -72,7 +73,7 @@ public class Global extends AbstractTrait {
 	}
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void dropEvent(LivingDropsEvent event) {
-		World world0 = event.getEntity().worldObj;
+		World world0 = event.getEntity().getEntityWorld();
 		if (world0.isRemote
 				|| event.getEntityLiving().getHealth() > 0) return;
 		ItemStack weapon = getWeapon(event.getSource());
@@ -93,7 +94,7 @@ public class Global extends AbstractTrait {
 					ItemStack stk = enti.getEntityItem();
 					for (int j=0; j<ih.getSlots(); ++j) {
 						ItemStack res = ih.insertItem(j, stk, false);
-						if (res != null && res.stackSize > 0) {
+						if (!ItemStackTools.isEmpty(res)) {
 							enti.setEntityItemStack(res);
 							stk = res;
 						} else {
@@ -125,7 +126,7 @@ public class Global extends AbstractTrait {
 		global.setByte("facing", (byte)event.getFace().ordinal());
 		nbt.setTag("global", global);
 		event.getItemStack().setTagCompound(nbt);
-		event.getEntityPlayer().addChatMessage(new TextComponentTranslation(
+		ChatTools.addChatMessage(event.getEntityPlayer(), new TextComponentTranslation(
 				"msg.plustic.globalmodifier.set",
 						coord.xCoord,
 						coord.yCoord,

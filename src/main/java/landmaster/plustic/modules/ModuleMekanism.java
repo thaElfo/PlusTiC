@@ -53,7 +53,7 @@ public class ModuleMekanism {
 			// ugly workaround for molten tin not registering
 			if (OreDictionary.getOres("ingotTin").size() == 0
 					|| TinkerRegistry.getMelting(OreDictionary.getOres("ingotTin").get(0)) == null) {
-				MaterialIntegration tinI = TinkerRegistry.integrate(null, TinkerFluids.tin, "Tin");
+				MaterialIntegration tinI = new MaterialIntegration(null, TinkerFluids.tin, "Tin");
 				tinI.integrate();
 				tinI.integrateRecipes();
 				PlusTiC.materialIntegrations.put("tin", tinI);

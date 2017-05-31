@@ -23,14 +23,14 @@ public class BloodyMary extends AbstractTrait {
 	@Override
 	public void afterHit(ItemStack tool, EntityLivingBase player, EntityLivingBase target, float damageDealt, boolean wasCritical, boolean wasHit) {
 		if (wasHit) {
-			spillBlood(target.worldObj,target.posX,target.posY,target.posZ,0.23f);
+			spillBlood(target.getEntityWorld(),target.posX,target.posY,target.posZ,0.23f);
 		}
 	}
 	
 	protected void spillBlood(World world, double x, double y, double z, float chance) {
 		if (!world.isRemote && random.nextFloat() < chance) {
 			EntityItem entity = new EntityItem(world, x, y, z, TinkerCommons.matSlimeBallBlood.copy());
-			world.spawnEntityInWorld(entity);
+			world.spawnEntity(entity);
 		}
 	}
 }

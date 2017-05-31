@@ -2,6 +2,7 @@ package landmaster.plustic.net;
 
 import io.netty.buffer.*;
 import landmaster.plustic.traits.*;
+import mcjty.lib.tools.ChatTools;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.init.*;
@@ -15,9 +16,9 @@ import slimeknights.tconstruct.library.utils.*;
 
 public class PacketReleaseEntity implements IMessage {
 	public static IMessage onMessage(PacketReleaseEntity message, MessageContext ctx) {
-		IThreadListener mainThread = (WorldServer)ctx.getServerHandler().playerEntity.getEntityWorld();
+		IThreadListener mainThread = (WorldServer)ctx.getServerHandler().player.getEntityWorld();
 		mainThread.addScheduledTask(() -> {
-			EntityPlayer ep = ctx.getServerHandler().playerEntity;
+			EntityPlayer ep = ctx.getServerHandler().player;
 			Vec3d eye = ep.getPositionVector().addVector(0, ep.getEyeHeight(), 0);
 			Vec3d look = ep.getLookVec().scale(5);
 			RayTraceResult rtr = ep.getEntityWorld().rayTraceBlocks(eye, eye.add(look));
@@ -39,14 +40,14 @@ public class PacketReleaseEntity implements IMessage {
 					rtr.hitVec.yCoord+(bb.maxY-bb.minY)*0.5*offsetY,
 					rtr.hitVec.zCoord+(bb.maxZ-bb.minZ)*0.5*offsetZ,
 					ep.getRNG().nextFloat()*360, 0);
-			if (!ep.getEntityWorld().spawnEntityInWorld(ent)) return;
+			if (!ep.getEntityWorld().spawnEntity(ent)) return;
 			if (ent instanceof EntityLiving) ((EntityLiving)ent).playLivingSound();
 			String id = nbt.getCompoundTag("portlyGentleman").getString("id");
 			nbt.removeTag("portlyGentleman");
 			ep.getHeldItemMainhand().setTagCompound(nbt);
 			ep.playSound(SoundEvents.ENTITY_ENDERMEN_TELEPORT, 1.0f, 1.0f);
 			ep.swingArm(EnumHand.MAIN_HAND);
-			ep.addChatMessage(new TextComponentTranslation(
+			ChatTools.addChatMessage(ep, new TextComponentTranslation(
 					"msg.plustic.portlymodifier.unset", id));
 		});
 		return null;

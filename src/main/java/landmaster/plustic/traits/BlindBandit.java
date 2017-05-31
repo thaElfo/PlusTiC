@@ -25,11 +25,11 @@ public class BlindBandit extends AbstractTrait {
 	public void afterHit(ItemStack tool, EntityLivingBase player, EntityLivingBase target, float damageDealt, boolean wasCritical, boolean wasHit) {
 		if (wasHit && target.isEntityAlive() && target instanceof IMob && random.nextFloat() < 0.38f
 				&& Toggle.getToggleState(tool, identifier)) {
-			EntityBlindBandit bandit = new EntityBlindBandit(player.worldObj, player, target);
+			EntityBlindBandit bandit = new EntityBlindBandit(player.getEntityWorld(), player, target);
 			bandit.setPosition(player.posX,
 					player.posY,
 					player.posZ);
-			player.worldObj.spawnEntityInWorld(bandit);
+			player.getEntityWorld().spawnEntity(bandit);
 		}
 	}
 	
@@ -47,11 +47,11 @@ public class BlindBandit extends AbstractTrait {
 			return;
 		if (random.nextFloat() < 0.38f) {
 			EntityLivingBase target = (EntityLivingBase)event.getSource().getEntity();
-			EntityBlindBandit bandit = new EntityBlindBandit(event.getEntity().worldObj, event.getEntity(), target);
+			EntityBlindBandit bandit = new EntityBlindBandit(event.getEntity().getEntityWorld(), event.getEntity(), target);
 			bandit.setPosition(event.getEntity().posX,
 					event.getEntity().posY,
 					event.getEntity().posZ);
-			event.getEntity().worldObj.spawnEntityInWorld(bandit);
+			event.getEntity().getEntityWorld().spawnEntity(bandit);
 		}
 	}
 }

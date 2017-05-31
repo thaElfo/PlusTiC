@@ -4,6 +4,7 @@ import io.netty.buffer.*;
 import landmaster.plustic.api.*;
 import landmaster.plustic.traits.*;
 import landmaster.plustic.util.*;
+import mcjty.lib.tools.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.init.*;
 import net.minecraft.nbt.*;
@@ -16,9 +17,9 @@ import slimeknights.tconstruct.library.utils.*;
 public class PacketBrownAbracadabra implements IMessage {
 	
 	public static IMessage onMessage(PacketBrownAbracadabra message, MessageContext ctx) {
-		IThreadListener mainThread = (WorldServer)ctx.getServerHandler().playerEntity.getEntityWorld();
+		IThreadListener mainThread = (WorldServer)ctx.getServerHandler().player.getEntityWorld();
 		mainThread.addScheduledTask(() -> {
-			EntityPlayerMP ep = ctx.getServerHandler().playerEntity;
+			EntityPlayerMP ep = ctx.getServerHandler().player;
 			if (ep.getEntityWorld().isRemote)
 				return;
 			NBTTagCompound nbt = TagUtil.getTagSafe(ep.getHeldItemMainhand());
@@ -27,7 +28,7 @@ public class PacketBrownAbracadabra implements IMessage {
 					&& Utils.canTeleportTo(ep, coord)) {
 				ep.playSound(SoundEvents.ENTITY_ENDERMEN_TELEPORT, 1.0f, 1.0f);
 				Utils.teleportPlayerTo(ep, coord);
-				ep.addChatMessage(new TextComponentTranslation("msg.plustic.brownmagic.use"));
+				ChatTools.addChatMessage(ep, new TextComponentTranslation("msg.plustic.brownmagic.use"));
 			}
 		});
 		return null;

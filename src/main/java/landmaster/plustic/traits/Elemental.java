@@ -39,7 +39,7 @@ public class Elemental extends AbstractTrait {
 					world.destroyBlock(posUp, false);
 					if (!player.capabilities.isCreativeMode) {
 						EntityItem ie = new EntityItem(world, posUp.getX(), posUp.getY(), posUp.getZ(), new ItemStack(Item.getItemFromBlock(state.getBlock())));
-						world.spawnEntityInWorld(ie);
+						world.spawnEntity(ie);
 					}
 				} else {
 					world.destroyBlock(posUp, false);

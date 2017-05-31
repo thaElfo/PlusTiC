@@ -3,12 +3,13 @@ package landmaster.plustic.traits;
 import baubles.api.*;
 import baubles.api.cap.*;
 import landmaster.plustic.api.*;
+import mcjty.lib.tools.*;
 
-import java.util.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.world.*;
+import net.minecraftforge.items.*;
 import slimeknights.tconstruct.library.traits.*;
 import slimeknights.tconstruct.library.utils.*;
 import vazkii.botania.api.mana.*;
@@ -27,57 +28,43 @@ public class Mana extends AbstractTrait {
 		if (!world.isRemote
 				&& entity instanceof EntityPlayer
 				&& ToolHelper.getCurrentDurability(tool) < ToolHelper.getMaxDurability(tool)
-				&& Toggle.getToggleState(tool, identifier)) {
-			EntityPlayer ep = (EntityPlayer)entity;
-			List<ItemStack[]> ivs = Arrays.asList(ep.inventory.mainInventory,ep.inventory.armorInventory,ep.inventory.offHandInventory);
-			for (ItemStack[] iv: ivs) {
-				for (int i=0; i<iv.length; ++i) {
-					if (ManaItemHandler.requestManaExactForTool(iv[i], ep, MANA_DRAW, true)) {
-						ep.inventory.markDirty();
-						ToolHelper.healTool(tool, 1, ep);
-						return;
-					}
-				}
-			}
-			IBaublesItemHandler ib = BaublesApi.getBaublesHandler(ep);
-			for (int i=0; i<ib.getSlots(); ++i) {
-				ItemStack is = ib.getStackInSlot(i);
-				is = ItemStack.copyItemStack(is);
-				if (ManaItemHandler.requestManaExactForTool(is, ep, MANA_DRAW, true)) {
-					ToolHelper.healTool(tool, 1, ep);
-					ib.setStackInSlot(i, is);
-					return;
-				}
-			}
+				&& Toggle.getToggleState(tool, identifier)
+				&& drawMana((EntityPlayer)entity)) {
+			ToolHelper.healTool(tool, MANA_DRAW, (EntityPlayer)entity);
 		}
 	}
 	
 	@Override
 	public int onToolDamage(ItemStack tool, int damage, int newDamage, EntityLivingBase entity) {
-		manadraw:
-		if (entity instanceof EntityPlayer && newDamage > 0 && Toggle.getToggleState(tool, identifier)) {
-			EntityPlayer ep = (EntityPlayer)entity;
-			List<ItemStack[]> ivs = Arrays.asList(ep.inventory.mainInventory,ep.inventory.armorInventory,ep.inventory.offHandInventory);
-			for (ItemStack[] iv: ivs) {
-				for (int i=0; i<iv.length; ++i) {
-					if (ManaItemHandler.requestManaExactForTool(iv[i], ep, MANA_DRAW, true)) {
-						ep.inventory.markDirty();
-						--newDamage;
-						break manadraw;
-					}
-				}
-			}
-			IBaublesItemHandler ib = BaublesApi.getBaublesHandler(ep);
-			for (int i=0; i<ib.getSlots(); ++i) {
-				ItemStack is = ib.getStackInSlot(i);
-				is = ItemStack.copyItemStack(is);
-				if (ManaItemHandler.requestManaExactForTool(is, ep, MANA_DRAW, true)) {
-					ib.setStackInSlot(i, is);
-					--newDamage;
-					break manadraw;
-				}
-			}
+		if (entity instanceof EntityPlayer
+				&& Toggle.getToggleState(tool, identifier)
+				&& drawMana((EntityPlayer)entity)) {
+			--newDamage;
 		}
 		return super.onToolDamage(tool, damage, newDamage, entity);
 	}
+	
+	private static boolean drawMana(EntityPlayer ent) {
+		IItemHandler handler = ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+		if (handler instanceof IItemHandlerModifiable) {
+			for (int i=0; i<handler.getSlots(); ++i) {
+				ItemStack is = ItemStackTools.safeCopy(handler.getStackInSlot(i));
+				if (ManaItemHandler.requestManaExactForTool(is, ent, MANA_DRAW, true)) {
+					((IItemHandlerModifiable) handler).setStackInSlot(i, is);
+					return true;
+				}
+			}
+		}
+		
+		IBaublesItemHandler ib = BaublesApi.getBaublesHandler(ent);
+		for (int i=0; i<ib.getSlots(); ++i) {
+			ItemStack is = ItemStackTools.safeCopy(ib.getStackInSlot(i));
+			if (ManaItemHandler.requestManaExactForTool(is, ent, MANA_DRAW, true)) {
+				ib.setStackInSlot(i, is);
+				return true;
+			}
+		}
+		
+		return false;
+ 	}
 }

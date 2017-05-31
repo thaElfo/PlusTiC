@@ -2,6 +2,7 @@ package landmaster.plustic.traits;
 
 import landmaster.plustic.api.*;
 import landmaster.plustic.config.*;
+import mcjty.lib.tools.*;
 import net.minecraft.entity.*;
 import net.minecraft.item.*;
 import net.minecraft.world.*;
@@ -26,11 +27,11 @@ public class Trash extends AbstractTrait {
 			IItemHandler handler = entity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 			if (handler != null) {
 				ItemStack thing = Config.fetchThing(random);
-				if (thing != null && thing.stackSize > 0) {
+				if (!ItemStackTools.isEmpty(thing)) {
 					thing = thing.copy();
 					for (int i=0; i<handler.getSlots(); ++i) {
 						thing = handler.insertItem(i, thing, false);
-						if (thing == null) {
+						if (ItemStackTools.isEmpty(thing)) {
 							EntityLivingBase entityLiving = entity instanceof EntityLivingBase ?
 									(EntityLivingBase)entity : FakePlayerFactory.getMinecraft((WorldServer)world);
 							ToolHelper.damageTool(tool, 1, entityLiving);

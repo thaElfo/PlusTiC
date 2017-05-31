@@ -2,6 +2,7 @@ package landmaster.plustic.traits;
 
 import landmaster.plustic.api.*;
 import landmaster.plustic.util.*;
+import mcjty.lib.tools.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.init.*;
 import net.minecraft.item.*;
@@ -42,14 +43,14 @@ public class NickOfTime extends AbstractTrait {
 			IItemHandler ih = event.getEntity().getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 			for (int i=0; i<ih.getSlots(); ++i) {
 				ItemStack is = ih.extractItem(i, ENDER_COST, true);
-				if (is != null && is.getItem() == Items.ENDER_PEARL && is.stackSize >= ENDER_COST) {
+				if (is != null && is.getItem() == Items.ENDER_PEARL && ItemStackTools.getStackSize(is) >= ENDER_COST) {
 					Utils.teleportPlayerTo((EntityPlayerMP)event.getEntity(), coord);
 					ih.extractItem(i, ENDER_COST, false);
 					event.setCanceled(true);
 					event.getEntityLiving().clearActivePotions();
 					event.getEntityLiving().extinguish();
 					event.getEntityLiving().addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 160));
-					event.getEntity().addChatMessage(new TextComponentTranslation(
+					ChatTools.addChatMessage(event.getEntity(), new TextComponentTranslation(
 							"msg.plustic.nickmodifier.use"));
 					return;
 				}

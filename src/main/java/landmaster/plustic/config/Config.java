@@ -8,6 +8,7 @@ import gnu.trove.*;
 import gnu.trove.list.*;
 import gnu.trove.list.array.*;
 import landmaster.plustic.traits.*;
+import mcjty.lib.tools.*;
 import net.minecraft.item.*;
 import net.minecraft.util.*;
 import net.minecraftforge.common.config.*;
@@ -63,7 +64,7 @@ public class Config extends Configuration {
 			trashThingsSum = trashThings.stream().mapToInt(t -> t.weight).sum();
 		}
 		int rval = random.nextInt(trashThingsSum);
-		ItemStack thing = null;
+		ItemStack thing = ItemStackTools.getEmptyStack();
 		for (TrashThing entry: trashThings) {
 			rval -= entry.weight;
 			thing = entry.stack;
@@ -178,7 +179,8 @@ public class Config extends Configuration {
 	}
 	
 	public static boolean isInEndlectricBlacklist(ItemStack is) {
-		if (is != null && endlectricBlacklist.containsKey(is.getItem())) {
+		if (is == null) return true;
+		if (endlectricBlacklist.containsKey(is.getItem())) {
 			List<ItemStack> lst = endlectricBlacklist.get(is.getItem());
 			for (ItemStack is1: lst) {
 				if (is1 == null || is.getMetadata() == is1.getMetadata()) return true;

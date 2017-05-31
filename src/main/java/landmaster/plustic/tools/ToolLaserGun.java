@@ -47,7 +47,7 @@ public class ToolLaserGun extends TinkerToolCore implements cofh.api.energy.IEne
 	public static final String ATTACK_DURATION_TAG = "AttackDuration";
 	
 	private int maxAttackDuration(ItemStack is) {
-		return (int)(20 / this.attackSpeed());
+		return (int)(20 / ToolHelper.getActualAttackSpeed(is));
 	}
 	
 	private int energyPerAttack(ItemStack is) {
@@ -137,7 +137,7 @@ public class ToolLaserGun extends TinkerToolCore implements cofh.api.energy.IEne
             
             buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_LMAP_COLOR);
             
-            ClientUtils.drawBeam(vec0, vec1, vec, 0.2f);
+            ClientUtils.drawBeam(vec0, vec1, vec, 0.13f);
             
             tessellator.draw();
 			

@@ -26,7 +26,7 @@ import net.minecraft.util.math.*;
 import net.minecraft.util.text.*;
 import net.minecraft.world.*;
 import net.minecraftforge.client.event.*;
-import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.*;
 import net.minecraftforge.common.capabilities.*;
 import net.minecraftforge.energy.*;
 import net.minecraftforge.fml.common.eventhandler.*;
@@ -40,7 +40,7 @@ import slimeknights.tconstruct.tools.*;
 public class ToolLaserGun extends TinkerToolCore implements cofh.api.energy.IEnergyContainerItem {
 	public static final float DURABILITY_MODIFIER = 1.5f;
 	
-	private float range(ItemStack is) {
+	private static float range(ItemStack is) {
 		return (new LaserNBT(TagUtil.getToolTag(is))).range;
 	}
 	
@@ -54,7 +54,7 @@ public class ToolLaserGun extends TinkerToolCore implements cofh.api.energy.IEne
 		return 100;
 	}
 	
-	private int getFullEnergy(ItemStack is) {
+	private static int getFullEnergy(ItemStack is) {
 		return (new ToolEnergyNBT(TagUtil.getToolTag(is))).energy;
 	}
 	
@@ -84,15 +84,25 @@ public class ToolLaserGun extends TinkerToolCore implements cofh.api.energy.IEne
 	
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
-	public void renderBeam(RenderWorldLastEvent event) {
-		double maxRange = LaserMediumMaterialStats.getMaxRange() + World.MAX_ENTITY_RADIUS;
+	public void renderBeam(RenderWorldLastEvent event) { // for this player
 		Optional.ofNullable(Minecraft.getMinecraft().thePlayer)
-		.map(player -> Minecraft.getMinecraft().theWorld.getEntitiesWithinAABB(
-				EntityLivingBase.class, Utils.AABBfromVecs(
-						player.getPositionVector().subtract(maxRange, maxRange, maxRange),
-						player.getPositionVector().addVector(maxRange, maxRange, maxRange))))
-		.map(List::stream)
-		.ifPresent(stream -> stream.forEach(this::doRenderBeam));
+		.ifPresent(this::doRenderBeam);
+	}
+	
+	@SideOnly(Side.CLIENT)
+	@SubscribeEvent
+	public void renderBeam(RenderPlayerEvent event) { // for other players
+		if (!event.getEntityPlayer().equals(Minecraft.getMinecraft().thePlayer)) { // exclude this player
+			this.doRenderBeam(event.getEntityPlayer());
+		}
+	}
+	
+	@SideOnly(Side.CLIENT)
+	@SubscribeEvent
+	public void renderBeam(RenderLivingEvent<?> event) { // for other entities
+		if (!(event.getEntity() instanceof EntityPlayer)) { // exclude players
+			this.doRenderBeam(event.getEntity());
+		}
 	}
 	
 	@SideOnly(Side.CLIENT)
@@ -178,7 +188,7 @@ public class ToolLaserGun extends TinkerToolCore implements cofh.api.energy.IEne
 		
 	    info.addDurability(!detailed);
 	    // for energy stored
-	    info.add(String.format(TextFormatting.AQUA+"%s RF", this.getEnergyStored(stack)));
+	    info.add(String.format(TextFormatting.AQUA+"%s RF / %s RF", this.getEnergyStored(stack), this.getMaxEnergyStored(stack)));
 	    
 	    info.addAttack();
 	    
@@ -199,22 +209,25 @@ public class ToolLaserGun extends TinkerToolCore implements cofh.api.energy.IEne
 	 */
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand) {
-		return Optional.ofNullable(EntityUtil.raytraceEntityPlayerLook(playerIn, range(itemStackIn)))
+		NBTTagCompound nbt = TagUtil.getTagSafe(itemStackIn);
+		
+		ActionResult<ItemStack> res = Optional.ofNullable(EntityUtil.raytraceEntityPlayerLook(playerIn, range(itemStackIn)))
 		.map(rtr -> rtr.entityHit)
 		.map(ent -> {
 			int energyTaken = this.energyPerAttack(itemStackIn);
-			NBTTagCompound nbt = TagUtil.getTagSafe(itemStackIn);
 			if (this.extractEnergy(itemStackIn, energyTaken, true) >= energyTaken
 					&& nbt.getInteger(ATTACK_DURATION_TAG) <= 0) { // able to attack?
-				if (ToolHelper.attackEntity(itemStackIn, this, playerIn, ent)) { // try to attack
-					this.extractEnergy(itemStackIn, energyTaken, false); // if successful, drain energy
+				if (ToolHelper.attackEntity(itemStackIn, this, playerIn, ent)) { // try attacking
+					this.extractEnergy(itemStackIn, energyTaken, false); // if success, use energy
 					nbt.setInteger(ATTACK_DURATION_TAG, this.maxAttackDuration(itemStackIn));
 					itemStackIn.setTagCompound(nbt);
-					return new ActionResult<>(EnumActionResult.SUCCESS, itemStackIn);
 				}
+				return new ActionResult<>(EnumActionResult.SUCCESS, itemStackIn);
 			}
 			return new ActionResult<>(EnumActionResult.FAIL, itemStackIn);
 		}).orElse(new ActionResult<>(EnumActionResult.PASS, itemStackIn));
+		
+		return res;
 	}
 
 	@Override
@@ -223,7 +236,7 @@ public class ToolLaserGun extends TinkerToolCore implements cofh.api.energy.IEne
 			container.setTagCompound(new NBTTagCompound());
 		}
 		int energy = container.getTagCompound().getInteger("Energy");
-		int energyReceived = Math.min(this.getFullEnergy(container) - energy, Math.min(this.getFullEnergy(container), maxReceive));
+		int energyReceived = Math.min(getFullEnergy(container) - energy, Math.min(getFullEnergy(container), maxReceive));
 		
 		if (!simulate) {
 			energy += energyReceived;
@@ -238,7 +251,7 @@ public class ToolLaserGun extends TinkerToolCore implements cofh.api.energy.IEne
 			return 0;
 		}
 		int energy = container.getTagCompound().getInteger("Energy");
-		int energyExtracted = Math.min(energy, Math.min(this.getFullEnergy(container), maxExtract));
+		int energyExtracted = Math.min(energy, Math.min(getFullEnergy(container), maxExtract));
 
 		if (!simulate) {
 			energy -= energyExtracted;
@@ -257,7 +270,7 @@ public class ToolLaserGun extends TinkerToolCore implements cofh.api.energy.IEne
 
 	@Override
 	public int getMaxEnergyStored(ItemStack container) {
-		return this.getFullEnergy(container);
+		return getFullEnergy(container);
 	}
 	
 	private class Energy implements IEnergyStorage {

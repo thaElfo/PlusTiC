@@ -12,7 +12,6 @@ import landmaster.plustic.tools.nbt.*;
 import landmaster.plustic.tools.stats.*;
 import landmaster.plustic.util.*;
 import net.minecraft.client.*;
-import net.minecraft.client.entity.*;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.vertex.*;
@@ -29,6 +28,7 @@ import net.minecraftforge.client.event.*;
 import net.minecraftforge.common.*;
 import net.minecraftforge.common.capabilities.*;
 import net.minecraftforge.energy.*;
+import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.eventhandler.*;
 import net.minecraftforge.fml.relauncher.*;
 import slimeknights.tconstruct.library.materials.*;
@@ -77,74 +77,86 @@ public class ToolLaserGun extends TinkerToolCore implements cofh.api.energy.IEne
 		
 		this.addCategory(Category.WEAPON);
 		
-		MinecraftForge.EVENT_BUS.register(this);
+		proxy.initEvents();
 		
 		this.setUnlocalizedName("laser_gun").setRegistryName("laser_gun");
 	}
 	
-	@SideOnly(Side.CLIENT)
-	@SubscribeEvent
-	public void renderBeam(RenderWorldLastEvent event) { // for this player
-		Optional.ofNullable(Minecraft.getMinecraft().player)
-		.ifPresent(this::doRenderBeam);
+	@SidedProxy(serverSide = "landmaster.plustic.tools.ToolLaserGun$Proxy", clientSide = "landmaster.plustic.tools.ToolLaserGun$ProxyClient")
+	public static Proxy proxy;
+	
+	public static class Proxy {
+		public void initEvents() {}
 	}
 	
-	@SideOnly(Side.CLIENT)
-	@SubscribeEvent
-	public void renderBeam(RenderPlayerEvent event) { // for other players
-		if (!event.getEntityPlayer().equals(Minecraft.getMinecraft().player)) { // exclude this player
-			this.doRenderBeam(event.getEntityPlayer());
+	public static class ProxyClient extends Proxy {
+		@Override
+		public void initEvents() { MinecraftForge.EVENT_BUS.register(ProxyClient.class); }
+		
+		@SideOnly(Side.CLIENT)
+		@SubscribeEvent
+		public static void renderBeam(RenderWorldLastEvent event) { // for this player
+			Optional.ofNullable(Minecraft.getMinecraft().player)
+			.ifPresent(ProxyClient::doRenderBeam);
 		}
-	}
-	
-	@SideOnly(Side.CLIENT)
-	@SubscribeEvent
-	public void renderBeam(RenderLivingEvent<?> event) { // for other entities
-		if (!(event.getEntity() instanceof EntityPlayer)) { // exclude players
-			this.doRenderBeam(event.getEntity());
+		
+		@SideOnly(Side.CLIENT)
+		@SubscribeEvent
+		public static void renderBeam(RenderPlayerEvent event) { // for other players
+			if (!event.getEntityPlayer().equals(Minecraft.getMinecraft().player)) { // exclude this player
+				doRenderBeam(event.getEntityPlayer());
+			}
 		}
-	}
-	
-	@SideOnly(Side.CLIENT)
-	private void doRenderBeam(EntityLivingBase shooter) {
-		getActiveLaserGun(shooter)
-		.ifPresent(stack -> {
-			GlStateManager.depthMask(false);
-            GlStateManager.enableBlend();
-			GlStateManager.blendFunc(GL11.GL_ONE, GL11.GL_ONE);
-			
-			GlStateManager.pushMatrix();
-			
-			EntityPlayerSP player = Minecraft.getMinecraft().player;
-			
-			float partialTicks = Minecraft.getMinecraft().getRenderPartialTicks();
-			double doubleX = player.lastTickPosX + (player.posX - player.lastTickPosX) * partialTicks;
-            double doubleY = player.lastTickPosY + (player.posY - player.lastTickPosY) * partialTicks;
-            double doubleZ = player.lastTickPosZ + (player.posZ - player.lastTickPosZ) * partialTicks;
-            
-            Vec3d vec = new Vec3d(doubleX, doubleY+player.getEyeHeight(), doubleZ);
-            Vec3d vec0 = shooter.getPositionVector().addVector(0, shooter.getEyeHeight()+0.2, 0);
-            Vec3d vec1 = Optional.ofNullable(EntityUtil.raytraceEntityPlayerLook(player, range(stack)))
-            		.map(rtr -> rtr.hitVec)
-            		.orElse(vec.add(player.getLookVec().scale(range(stack))));
-            
-            GlStateManager.translate(-doubleX, -doubleY, -doubleZ);
-			
-			Tessellator tessellator = Tessellator.getInstance();
-            VertexBuffer buffer = tessellator.getBuffer();
-            
-            Minecraft.getMinecraft().renderEngine.bindTexture(LASER_LOC);
-            
-            buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_LMAP_COLOR);
-            
-            ClientUtils.drawBeam(vec0, vec1, vec, 0.13f);
-            
-            tessellator.draw();
-			
-			GlStateManager.popMatrix();
-			
-			GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-		});
+		
+		@SideOnly(Side.CLIENT)
+		@SubscribeEvent
+		public static void renderBeam(RenderLivingEvent<?> event) { // for other entities
+			if (!(event.getEntity() instanceof EntityPlayer)) { // exclude players
+				doRenderBeam(event.getEntity());
+			}
+		}
+		
+		@SideOnly(Side.CLIENT)
+		public static void doRenderBeam(EntityLivingBase shooter) {
+			getActiveLaserGun(shooter)
+			.ifPresent(stack -> {
+				GlStateManager.depthMask(false);
+	            GlStateManager.enableBlend();
+				GlStateManager.blendFunc(GL11.GL_ONE, GL11.GL_ONE);
+				
+				GlStateManager.pushMatrix();
+				
+				EntityPlayer player = Minecraft.getMinecraft().player;
+				
+				float partialTicks = Minecraft.getMinecraft().getRenderPartialTicks();
+				double doubleX = player.lastTickPosX + (player.posX - player.lastTickPosX) * partialTicks;
+	            double doubleY = player.lastTickPosY + (player.posY - player.lastTickPosY) * partialTicks;
+	            double doubleZ = player.lastTickPosZ + (player.posZ - player.lastTickPosZ) * partialTicks;
+	            
+	            Vec3d vec = new Vec3d(doubleX, doubleY+player.getEyeHeight(), doubleZ);
+	            Vec3d vec0 = shooter.getPositionVector().addVector(0, shooter.getEyeHeight()+0.2, 0);
+	            Vec3d vec1 = Optional.ofNullable(EntityUtil.raytraceEntityPlayerLook(player, range(stack)))
+	            		.map(rtr -> rtr.hitVec)
+	            		.orElse(vec.add(player.getLookVec().scale(range(stack))));
+	            
+	            GlStateManager.translate(-doubleX, -doubleY, -doubleZ);
+				
+				Tessellator tessellator = Tessellator.getInstance();
+	            VertexBuffer buffer = tessellator.getBuffer();
+	            
+	            Minecraft.getMinecraft().renderEngine.bindTexture(LASER_LOC);
+	            
+	            buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_LMAP_COLOR);
+	            
+	            ClientUtils.drawBeam(vec0, vec1, vec, 0.13f);
+	            
+	            tessellator.draw();
+				
+				GlStateManager.popMatrix();
+				
+				GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+			});
+		}
 	}
 	
 	@Override

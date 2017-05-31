@@ -23,11 +23,11 @@ import slimeknights.tconstruct.library.*;
 import slimeknights.tconstruct.library.materials.*;
 import slimeknights.tconstruct.shared.*;
 
-@Mod(modid = PlusTiC.MODID, name = PlusTiC.NAME, version = PlusTiC.VERSION, dependencies = PlusTiC.DEPENDS)
+@Mod(modid = PlusTiC.MODID, name = PlusTiC.NAME, version = PlusTiC.VERSION, dependencies = PlusTiC.DEPENDS, useMetadata = true, acceptedMinecraftVersions = "[1.9,1.12)")
 public class PlusTiC {
 	public static final String MODID = "plustic";
 	public static final String NAME = "PlusTiC";
-	public static final String VERSION = "4.5.0.0";
+	public static final String VERSION = "5.0.0.0";
 	public static final String DEPENDS = "required-after:mantle;required-after:tconstruct@[1.10.2-2.6.5,);"
 			+ "required-after:compatlayer@[0.2.8,);"
 			+ "after:Mekanism;after:BiomesOPlenty;after:biomesoplenty;"

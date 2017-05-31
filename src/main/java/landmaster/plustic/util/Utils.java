@@ -91,7 +91,7 @@ public class Utils {
 		mat.setRepresentativeItem(is);
 	}
 	public static void setDispItem(Material mat, String ore) {
-		List<ItemStack> ores = OreDictionary.getOres(ore);
+		List<ItemStack> ores = ItemStackTools.getOres(ore);
 		if (mat == null || ores.size() < 1) return;
 		mat.setRepresentativeItem(ores.get(0));
 	}

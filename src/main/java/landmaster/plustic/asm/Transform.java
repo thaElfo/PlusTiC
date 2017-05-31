@@ -12,10 +12,8 @@ import net.minecraftforge.fml.common.asm.transformers.deobf.*;
 /**
  * <strong>I SWEAR … THOSE ********* WHO PUT ******* IMMUTABLE LISTS AS BLOCK DROPS!!
  * ESPECIALLY YOU, EXTRA UTILITIES!!</strong>
- * @deprecated This transformer, it appears, will not be needed in 1.11.2.
  * @author Landmaster
  */
-@Deprecated
 public class Transform implements IClassTransformer {
 	private static String mapMethod(String owner, MethodNode node, boolean obf) {
 		return mapMethod(owner, node.name, node.desc, obf);

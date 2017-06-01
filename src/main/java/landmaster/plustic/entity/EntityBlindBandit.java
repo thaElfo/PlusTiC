@@ -17,7 +17,6 @@ import net.minecraft.network.datasync.*;
 import net.minecraft.potion.*;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
-import net.minecraft.util.text.translation.*;
 import net.minecraft.world.*;
 import net.minecraftforge.fml.relauncher.*;
 
@@ -39,12 +38,6 @@ public class EntityBlindBandit extends EntityCreature {
 		this(worldIn);
 		summonerId = summoner.getPersistentID();
 		setAttackTarget(target);
-	}
-	
-	@SuppressWarnings("deprecation")
-	@Override
-	public String getName() {
-		return this.hasCustomName() ? this.getCustomNameTag() : I18n.translateToLocal("entity.plustic.blindbandit.name");
 	}
 	
 	@Override

@@ -14,12 +14,12 @@ item.battery_cell.name=Battery Cell
 stat.laser_medium.name=Laser Medium
 stat.laser_medium.power.name=Laser Power: %s
 stat.laser_medium.power.desc=How powerful the laser medium is.
+stat.laser_medium.range.name=Range: %s
+stat.laser_medium.range.desc=How far the laser extends.
 
 stat.battery_cell.name=Battery Cell
 stat.battery_cell.energy.name=Energy Capacity: §6%s RF
 stat.battery_cell.energy.desc=How much energy the tool can store.
-stat.battery_cell.range.name=Range: %s
-stat.battery_cell.range.desc=How far the laser extends.
 
 # TINKER MATERIALS
 
@@ -218,7 +218,8 @@ key.plustic_brown_magic.desc=Activate Brown Magic
 
 # ENTITIES
 
-entity.plustic.blindbandit.name=Blind Bandit
+entity.plustic.BlindBandit.name=Blind Bandit
+entity.BlindBandit.name=Blind Bandit
 
 # GUI
 

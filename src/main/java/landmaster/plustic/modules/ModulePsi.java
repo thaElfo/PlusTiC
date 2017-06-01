@@ -5,6 +5,7 @@ import static slimeknights.tconstruct.library.utils.HarvestLevels.*;
 import landmaster.plustic.*;
 import landmaster.plustic.config.*;
 import landmaster.plustic.fluids.*;
+import landmaster.plustic.tools.stats.*;
 import landmaster.plustic.traits.*;
 import landmaster.plustic.util.*;
 import net.minecraftforge.fml.common.*;
@@ -48,7 +49,8 @@ public class ModulePsi {
 					new HeadMaterialStats(620, 7f, 5, OBSIDIAN),
 					new HandleMaterialStats(1.3f, -10),
 					new ExtraMaterialStats(30),
-					new BowMaterialStats(1, 1.6f, 4));
+					new BowMaterialStats(1, 1.6f, 4),
+					new LaserMediumMaterialStats(5.4f, 23));
 			
 			PlusTiC.materials.put("psiGem", psigem);
 		}

@@ -38,8 +38,6 @@ import slimeknights.tconstruct.library.utils.*;
 import slimeknights.tconstruct.tools.*;
 
 public class ToolLaserGun extends TinkerToolCore implements cofh.api.energy.IEnergyContainerItem {
-	public static final float DURABILITY_MODIFIER = 1.5f;
-	
 	private static float range(ItemStack is) {
 		return (new LaserNBT(TagUtil.getToolTag(is))).range;
 	}
@@ -164,7 +162,10 @@ public class ToolLaserGun extends TinkerToolCore implements cofh.api.energy.IEne
 		super.onUpdate(stack, worldIn, entityIn, itemSlot, isSelected);
 		if (!worldIn.isRemote) {
 			NBTTagCompound nbt = TagUtil.getTagSafe(stack);
-			nbt.setInteger(ATTACK_DURATION_TAG, MathHelper.clamp(nbt.getInteger(ATTACK_DURATION_TAG)-1, 0, Integer.MAX_VALUE));
+			int atkDur = nbt.getInteger(ATTACK_DURATION_TAG);
+			--atkDur;
+			if (atkDur < 0) atkDur = 0;
+			nbt.setInteger(ATTACK_DURATION_TAG, atkDur);
 			stack.setTagCompound(nbt);
 		}
 	}

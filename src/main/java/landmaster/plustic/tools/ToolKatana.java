@@ -84,7 +84,7 @@ public class ToolKatana extends SwordCore {
 	// for 1.10.2
 	@Nonnull
 	public ActionResult<ItemStack> func_77659_a(@Nonnull ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand) {
-		if (hand == EnumHand.MAIN_HAND && playerIn.getHeldItemOffhand() != null && !(playerIn.getHeldItemOffhand().getItem() instanceof Shuriken)) {
+		if (!worldIn.isRemote && hand == EnumHand.MAIN_HAND && playerIn.getHeldItemOffhand() != null && !(playerIn.getHeldItemOffhand().getItem() instanceof Shuriken)) {
 			return ActionResult.newResult(EnumActionResult.SUCCESS, itemStackIn);
 		}
 		return ActionResult.newResult(EnumActionResult.PASS, itemStackIn);

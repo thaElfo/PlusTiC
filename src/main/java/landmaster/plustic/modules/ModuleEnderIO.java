@@ -6,6 +6,7 @@ import static slimeknights.tconstruct.tools.TinkerTraits.*;
 
 import landmaster.plustic.*;
 import landmaster.plustic.config.*;
+import landmaster.plustic.tools.stats.*;
 import landmaster.plustic.traits.*;
 import landmaster.plustic.util.*;
 import net.minecraft.init.*;
@@ -45,7 +46,7 @@ public class ModuleEnderIO {
 			
 			TinkerRegistry.addMaterialStats(darkSteel, new HeadMaterialStats(666, 7, 4, OBSIDIAN),
 					new HandleMaterialStats(1.05f, 40), new ExtraMaterialStats(40),
-					new BowMaterialStats(0.38f, 2.05f, 10));
+					new BowMaterialStats(0.38f, 2.05f, 10), new BatteryCellMaterialStats(75000));
 			PlusTiC.materials.put("darkSteel", darkSteel);
 		}
 	}

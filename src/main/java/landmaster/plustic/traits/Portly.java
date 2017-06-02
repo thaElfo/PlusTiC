@@ -1,6 +1,7 @@
 package landmaster.plustic.traits;
 
 import landmaster.plustic.*;
+import landmaster.plustic.api.Sounds;
 import landmaster.plustic.net.*;
 import mcjty.lib.tools.ChatTools;
 import net.minecraft.client.resources.*;
@@ -40,7 +41,6 @@ public class Portly extends AbstractTrait {
 	public void captureEntity(PlayerInteractEvent.EntityInteractSpecific event) {
 		NBTTagCompound nbt = TagUtil.getTagSafe(event.getItemStack());
 		if (event.getWorld().isRemote
-				|| event.isCanceled()
 				|| !event.getEntityPlayer().isSneaking()
 				|| event.getItemStack() == null
 				|| !TinkerUtil.hasTrait(nbt, getIdentifier())
@@ -55,7 +55,7 @@ public class Portly extends AbstractTrait {
 			event.getWorld().removeEntity(event.getTarget());
 		}
 		ToolHelper.damageTool(event.getItemStack(), durabilityCost(event.getTarget()), event.getEntityLiving());
-		event.getEntityPlayer().playSound(SoundEvents.ENTITY_ENDERMEN_TELEPORT, 1.0f, 1.0f);
+		Sounds.playSoundToAll(event.getEntityPlayer(), SoundEvents.ENTITY_ENDERMEN_TELEPORT, 1.0f, 1.0f);
 		event.getEntityPlayer().swingArm(event.getHand());
 		ChatTools.addChatMessage(event.getEntityPlayer(), new TextComponentTranslation(
 				"msg.plustic.portlymodifier.set", nbt.getCompoundTag("portlyGentleman").getString("id")));
@@ -64,8 +64,7 @@ public class Portly extends AbstractTrait {
 	@SubscribeEvent
 	public void tooltip(ItemTooltipEvent event) {
 		NBTTagCompound nbt = TagUtil.getTagSafe(event.getItemStack());
-		if (event.isCanceled()
-				|| event.getItemStack() == null
+		if (event.getItemStack() == null
 				|| !TinkerUtil.hasTrait(nbt, getIdentifier())) return;
 		if (nbt.hasKey("portlyGentleman", 10)) {
 			event.getToolTip().add(I18n.format("tooltip.plustic.portlymodifier.info",

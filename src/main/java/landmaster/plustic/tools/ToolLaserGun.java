@@ -7,6 +7,8 @@ import javax.annotation.*;
 import org.lwjgl.opengl.*;
 
 import landmaster.plustic.*;
+import landmaster.plustic.api.*;
+import landmaster.plustic.api.event.*;
 import landmaster.plustic.modules.*;
 import landmaster.plustic.tools.nbt.*;
 import landmaster.plustic.tools.stats.*;
@@ -30,7 +32,6 @@ import net.minecraftforge.common.capabilities.*;
 import net.minecraftforge.energy.*;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.eventhandler.*;
-import net.minecraftforge.fml.relauncher.*;
 import slimeknights.tconstruct.library.materials.*;
 import slimeknights.tconstruct.library.tinkering.*;
 import slimeknights.tconstruct.library.tools.*;
@@ -80,6 +81,7 @@ public class ToolLaserGun extends TinkerToolCore implements cofh.api.energy.IEne
 		this.setUnlocalizedName("laser_gun").setRegistryName("laser_gun");
 	}
 	
+	// to avoid errors with certain methods
 	@SidedProxy(serverSide = "landmaster.plustic.tools.ToolLaserGun$Proxy", clientSide = "landmaster.plustic.tools.ToolLaserGun$ProxyClient")
 	public static Proxy proxy;
 	
@@ -91,30 +93,26 @@ public class ToolLaserGun extends TinkerToolCore implements cofh.api.energy.IEne
 		@Override
 		public void initEvents() { MinecraftForge.EVENT_BUS.register(ProxyClient.class); }
 		
-		@SideOnly(Side.CLIENT)
 		@SubscribeEvent
 		public static void renderBeam(RenderWorldLastEvent event) { // for this player
 			Optional.ofNullable(Minecraft.getMinecraft().player)
 			.ifPresent(ProxyClient::doRenderBeam);
 		}
 		
-		@SideOnly(Side.CLIENT)
 		@SubscribeEvent
-		public static void renderBeam(RenderPlayerEvent event) { // for other players
+		public static void renderBeam(RenderPlayerEvent.Pre event) { // for other players
 			if (!event.getEntityPlayer().equals(Minecraft.getMinecraft().player)) { // exclude this player
 				doRenderBeam(event.getEntityPlayer());
 			}
 		}
 		
-		@SideOnly(Side.CLIENT)
 		@SubscribeEvent
-		public static void renderBeam(RenderLivingEvent<?> event) { // for other entities
+		public static void renderBeam(RenderLivingEvent.Pre<?> event) { // for other entities
 			if (!(event.getEntity() instanceof EntityPlayer)) { // exclude players
 				doRenderBeam(event.getEntity());
 			}
 		}
 		
-		@SideOnly(Side.CLIENT)
 		public static void doRenderBeam(EntityLivingBase shooter) {
 			getActiveLaserGun(shooter)
 			.ifPresent(stack -> {
@@ -232,27 +230,33 @@ public class ToolLaserGun extends TinkerToolCore implements cofh.api.energy.IEne
 	
 	// for 1.10.2
 	public ActionResult<ItemStack> func_77659_a(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand) {
+		if (worldIn.isRemote) return new ActionResult<>(EnumActionResult.PASS, itemStackIn);
+		
 		NBTTagCompound nbt = TagUtil.getTagSafe(itemStackIn);
 		
 		ActionResult<ItemStack> res = Optional.ofNullable(EntityUtil.raytraceEntityPlayerLook(playerIn, range(itemStackIn)))
 		.map(rtr -> rtr.entityHit)
 		.map(ent -> {
-			int energyTaken = this.energyPerAttack(itemStackIn);
+			PTEnergyDrain eevent = new PTEnergyDrain(itemStackIn, playerIn, this.energyPerAttack(itemStackIn)); // event
+			MinecraftForge.EVENT_BUS.post(eevent);
+			int energyTaken = eevent.energyDrained; // grab event result
+			
 			if (this.extractEnergy(itemStackIn, energyTaken, true) >= energyTaken
 					&& nbt.getInteger(ATTACK_DURATION_TAG) <= 0) { // able to attack?
 				if (ToolHelper.attackEntity(itemStackIn, this, playerIn, ent)) { // try attacking
 					this.extractEnergy(itemStackIn, energyTaken, false); // if success, use energy
 					nbt.setInteger(ATTACK_DURATION_TAG, this.maxAttackDuration(itemStackIn));
 					itemStackIn.setTagCompound(nbt);
+					Sounds.playSoundToAll(playerIn, Sounds.LASER_BEAM, 1.0f, 1.0f);
+					return new ActionResult<>(EnumActionResult.SUCCESS, itemStackIn);
 				}
-				return new ActionResult<>(EnumActionResult.SUCCESS, itemStackIn);
 			}
 			return new ActionResult<>(EnumActionResult.FAIL, itemStackIn);
-		}).orElse(new ActionResult<>(EnumActionResult.PASS, itemStackIn));
+		}).orElse(new ActionResult<>(EnumActionResult.FAIL, itemStackIn));
 		
 		return res;
 	}
-
+	
 	@Override
 	public int receiveEnergy(ItemStack container, int maxReceive, boolean simulate) {
 		if (!container.hasTagCompound()) {
@@ -267,7 +271,7 @@ public class ToolLaserGun extends TinkerToolCore implements cofh.api.energy.IEne
 		}
 		return energyReceived;
 	}
-
+	
 	@Override
 	public int extractEnergy(ItemStack container, int maxExtract, boolean simulate) {
 		if (container.getTagCompound() == null || !container.getTagCompound().hasKey("Energy")) {
@@ -282,7 +286,7 @@ public class ToolLaserGun extends TinkerToolCore implements cofh.api.energy.IEne
 		}
 		return energyExtracted;
 	}
-
+	
 	@Override
 	public int getEnergyStored(ItemStack container) {
 		if (container.getTagCompound() == null || !container.getTagCompound().hasKey("Energy")) {
@@ -290,7 +294,7 @@ public class ToolLaserGun extends TinkerToolCore implements cofh.api.energy.IEne
 		}
 		return container.getTagCompound().getInteger("Energy");
 	}
-
+	
 	@Override
 	public int getMaxEnergyStored(ItemStack container) {
 		return getFullEnergy(container);

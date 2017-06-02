@@ -1,8 +1,9 @@
 package landmaster.plustic.net;
 
 import io.netty.buffer.*;
+import landmaster.plustic.api.*;
 import landmaster.plustic.traits.*;
-import mcjty.lib.tools.ChatTools;
+import mcjty.lib.tools.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.init.*;
@@ -45,7 +46,7 @@ public class PacketReleaseEntity implements IMessage {
 			String id = nbt.getCompoundTag("portlyGentleman").getString("id");
 			nbt.removeTag("portlyGentleman");
 			ep.getHeldItemMainhand().setTagCompound(nbt);
-			ep.playSound(SoundEvents.ENTITY_ENDERMEN_TELEPORT, 1.0f, 1.0f);
+			Sounds.playSoundToAll(ep, SoundEvents.ENTITY_ENDERMEN_TELEPORT, 1.0f, 1.0f);
 			ep.swingArm(EnumHand.MAIN_HAND);
 			ChatTools.addChatMessage(ep, new TextComponentTranslation(
 					"msg.plustic.portlymodifier.unset", id));

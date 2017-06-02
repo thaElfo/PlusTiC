@@ -26,7 +26,7 @@ public class PacketBrownAbracadabra implements IMessage {
 			Coord4D coord = Coord4D.fromNBT(nbt.getCompoundTag(Portal.PORTAL_NBT));
 			if (TinkerUtil.hasTrait(nbt, BrownMagic.brownmagic.identifier)
 					&& Utils.canTeleportTo(ep, coord)) {
-				ep.playSound(SoundEvents.ENTITY_ENDERMEN_TELEPORT, 1.0f, 1.0f);
+				Sounds.playSoundToAll(ep, SoundEvents.ENTITY_ENDERMEN_TELEPORT, 1.0f, 1.0f);
 				Utils.teleportPlayerTo(ep, coord);
 				ChatTools.addChatMessage(ep, new TextComponentTranslation("msg.plustic.brownmagic.use"));
 			}

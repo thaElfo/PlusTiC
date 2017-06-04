@@ -20,7 +20,7 @@ import slimeknights.tconstruct.shared.*;
 public class ModuleMekanism {
 
 	public static void init() {
-		if (Config.mekanism && Loader.isModLoaded("Mekanism")) {
+		if (Config.mekanism && (Loader.isModLoaded("Mekanism") || Loader.isModLoaded("mekanism"))) {
 			// ugly workaround for dusts not melting
 			Item tinDust = new Item().setUnlocalizedName("tindust").setRegistryName("tindust");
 			tinDust.setCreativeTab(TinkerRegistry.tabGeneral);

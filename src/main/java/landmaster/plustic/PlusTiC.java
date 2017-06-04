@@ -31,7 +31,7 @@ public class PlusTiC {
 	public static final String DEPENDS = "required-after:mantle;"
 			+ "required-after:tconstruct@[1.10.2-2.6.5,);"
 			+ "required-after:compatlayer@[0.2.8,);"
-			+ "after:Mekanism;after:BiomesOPlenty;after:biomesoplenty;"
+			+ "after:Mekanism;after:mekanism;after:BiomesOPlenty;after:biomesoplenty;"
 			+ "after:Botania;after:botania;after:advancedRocketry;"
 			+ "after:armorplus;after:EnderIO;after:enderio;after:projectred-exploration;"
 			+ "after:thermalfoundation;after:substratum;after:draconicevolution;"

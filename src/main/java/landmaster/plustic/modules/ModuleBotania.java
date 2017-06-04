@@ -19,7 +19,7 @@ import slimeknights.tconstruct.shared.*;
 public class ModuleBotania {
 
 	public static void init() {
-		if (Config.botania && Loader.isModLoaded("Botania")) {
+		if (Config.botania && (Loader.isModLoaded("Botania") || Loader.isModLoaded("botania"))) {
 			Material terrasteel = new Material("terrasteel", TextFormatting.GREEN);
 			terrasteel.addTrait(Mana.mana);
 			terrasteel.addTrait(Terrafirma.terrafirma.get(0));

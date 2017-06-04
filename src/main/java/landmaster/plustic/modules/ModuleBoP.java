@@ -18,7 +18,7 @@ import slimeknights.tconstruct.library.materials.*;
 public class ModuleBoP {
 
 	public static void init() {
-		if ((Config.bop && Loader.isModLoaded("BiomesOPlenty"))
+		if ((Config.bop && (Loader.isModLoaded("BiomesOPlenty") || Loader.isModLoaded("biomesoplenty")))
 				|| (Config.projectRed && Loader.isModLoaded("projectred-exploration"))) {
 			Material sapphire = new Material("sapphire", TextFormatting.BLUE);
 			sapphire.addTrait(aquadynamic);

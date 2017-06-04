@@ -3,7 +3,8 @@ Minecraft mod for adding new tools to and integrating various mods with Tinkers 
 
 CurseForge page: https://minecraft.curseforge.com/projects/plustic
 ## New tool(s)
-- Katana
+- Katana. A fast two-handed weapon that deals increasing damage the more mobs you kill.
+- Laser Gun. A ranged weapon that requires durability and energy (Forge, Tesla, RF).
 ## Supported mods
 - LandCore (by this mod's author)
 - LandCraft (also by this mod's author)

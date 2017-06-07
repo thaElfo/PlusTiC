@@ -19,7 +19,7 @@ public class MorganLeFay extends AbstractTrait {
 			target.lastDamage = 0;
 			target.attackEntityFrom(new EntityDamageSource("morganlefay", player)
 					.setDamageBypassesArmor().setDamageIsAbsolute().setMagicDamage(),
-					(float)(random.nextGaussian()*5));
+					(float)(2.5+random.nextGaussian()*2.5));
 		}
 	}
 }

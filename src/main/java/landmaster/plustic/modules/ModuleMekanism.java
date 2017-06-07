@@ -6,6 +6,7 @@ import static slimeknights.tconstruct.tools.TinkerTraits.*;
 import landmaster.plustic.*;
 import landmaster.plustic.config.*;
 import landmaster.plustic.fluids.*;
+import landmaster.plustic.tools.stats.*;
 import landmaster.plustic.util.*;
 import mcjty.lib.tools.*;
 import net.minecraft.item.*;
@@ -72,10 +73,12 @@ public class ModuleMekanism {
 			Utils.initFluidMetal(osmiumFluid);
 			osmium.setFluid(osmiumFluid);
 			
-			TinkerRegistry.addMaterialStats(osmium, new HeadMaterialStats(500, 6, 5.8f, DIAMOND));
-			TinkerRegistry.addMaterialStats(osmium, new HandleMaterialStats(1.2f, 45));
-			TinkerRegistry.addMaterialStats(osmium, new ExtraMaterialStats(40));
-			TinkerRegistry.addMaterialStats(osmium, new BowMaterialStats(0.65f, 1.3f, 5.7f));
+			TinkerRegistry.addMaterialStats(osmium,
+					new HeadMaterialStats(500, 6, 5.8f, DIAMOND),
+					new HandleMaterialStats(1.2f, 45),
+					new ExtraMaterialStats(40),
+					new BowMaterialStats(0.65f, 1.3f, 5.7f),
+					new BatteryCellMaterialStats(80000));
 			
 			PlusTiC.materials.put("osmium", osmium);
 			
@@ -91,10 +94,12 @@ public class ModuleMekanism {
 			Utils.initFluidMetal(refinedObsidianFluid);
 			refinedObsidian.setFluid(refinedObsidianFluid);
 			
-			TinkerRegistry.addMaterialStats(refinedObsidian, new HeadMaterialStats(2500, 7, 11, COBALT));
-			TinkerRegistry.addMaterialStats(refinedObsidian, new HandleMaterialStats(1.5f, -100));
-			TinkerRegistry.addMaterialStats(refinedObsidian, new ExtraMaterialStats(160));
-			TinkerRegistry.addMaterialStats(refinedObsidian, PlusTiC.justWhy);
+			TinkerRegistry.addMaterialStats(refinedObsidian,
+					new HeadMaterialStats(2500, 7, 11, COBALT),
+					new HandleMaterialStats(1.5f, -100),
+					new ExtraMaterialStats(160),
+					PlusTiC.justWhy,
+					new LaserMediumMaterialStats(6.0f, 45));
 			
 			PlusTiC.materials.put("refinedObsidian", refinedObsidian);
 		}

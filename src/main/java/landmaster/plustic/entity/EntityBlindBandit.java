@@ -86,7 +86,7 @@ public class EntityBlindBandit extends EntityCreature {
 	}
 	
 	@Override
-	public boolean canAttackClass(Class <? extends EntityLivingBase > cls) {
+	public boolean canAttackClass(Class<? extends EntityLivingBase> cls) {
 		return true;
 	}
 	
@@ -179,7 +179,7 @@ public class EntityBlindBandit extends EntityCreature {
         
         this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(35.0D);
         this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.5D);
-        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(4D);
+        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(5.5D);
         this.getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(19.0D);
         this.getEntityAttribute(SharedMonsterAttributes.ARMOR_TOUGHNESS).setBaseValue(8.0D);
     }
@@ -196,7 +196,7 @@ public class EntityBlindBandit extends EntityCreature {
     }
 	
 	private void applyEntityAI() {
-        this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, true, new Class[0]));
+        this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, true));
         this.targetTasks.addTask(2, new EntityAINearestAttackableTarget<>(this, EntityLiving.class, 10,
         		true, false, ent -> ent instanceof IMob));
     }

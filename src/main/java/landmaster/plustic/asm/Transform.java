@@ -55,10 +55,10 @@ public class Transform implements IClassTransformer {
 				LabelNode label = new LabelNode();
 				insns.add(new JumpInsnNode(Opcodes.IFNE, label));
 				
-				insns.add(new VarInsnNode(Opcodes.ASTORE, 6));
 				insns.add(new TypeInsnNode(Opcodes.NEW, "java/util/ArrayList"));
-				insns.add(new InsnNode(Opcodes.DUP));
-				insns.add(new VarInsnNode(Opcodes.ALOAD, 6));
+				insns.add(new InsnNode(Opcodes.DUP_X1));
+				insns.add(new InsnNode(Opcodes.DUP_X1));
+				insns.add(new InsnNode(Opcodes.POP));
 				insns.add(new MethodInsnNode(Opcodes.INVOKESPECIAL, "java/util/ArrayList", "<init>", "(Ljava/util/Collection;)V", false));
 				
 				insns.add(new FrameNode(Opcodes.F_SAME1, 0, null, 1, new Object[] {"java/util/ArrayList"}));

@@ -2,13 +2,13 @@ package landmaster.plustic.fluids;
 
 import net.minecraft.item.*;
 import net.minecraft.util.*;
-import landmaster.plustic.*;
+import landmaster.plustic.api.*;
 import slimeknights.tconstruct.library.fluid.*;
 
 public class FluidMolten extends FluidColored {
 	
-    public static ResourceLocation ICON_MetalStill = new ResourceLocation(PlusTiC.MODID, "blocks/fluids/molten_metal");
-    public static ResourceLocation ICON_MetalFlowing = new ResourceLocation(PlusTiC.MODID, "blocks/fluids/molten_metal_flow");
+    public static ResourceLocation ICON_MetalStill = new ResourceLocation(ModInfo.MODID, "blocks/fluids/molten_metal");
+    public static ResourceLocation ICON_MetalFlowing = new ResourceLocation(ModInfo.MODID, "blocks/fluids/molten_metal_flow");
     
     public FluidMolten(String fluidName, int color) {
         this(fluidName, color, ICON_MetalStill, ICON_MetalFlowing);

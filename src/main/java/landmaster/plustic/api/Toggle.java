@@ -42,7 +42,7 @@ public class Toggle {
 	public static class Gui extends GuiScreen {
 		public static final int OPTIONS_PER_PAGE = 6;
 		
-		private final ResourceLocation background = new ResourceLocation(PlusTiC.MODID, "textures/gui/toggle.png");
+		private final ResourceLocation background = new ResourceLocation(ModInfo.MODID, "textures/gui/toggle.png");
 		
 		private int page;
 		private EntityPlayer player;

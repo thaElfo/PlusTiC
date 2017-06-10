@@ -6,9 +6,10 @@ import net.minecraftforge.event.*;
 import net.minecraftforge.fml.common.*;
 import net.minecraftforge.fml.common.eventhandler.*;
 
-@Mod.EventBusSubscriber
+@Mod.EventBusSubscriber(modid = ModInfo.MODID)
 public class Sounds {
-	public static final SoundEvent LASER_BEAM = new SoundEvent(new ResourceLocation("plustic:laser_beam")).setRegistryName("laser_beam");
+	public static final SoundEvent LASER_BEAM = new SoundEvent(new ResourceLocation(ModInfo.MODID, "laser_beam"))
+			.setRegistryName("laser_beam");
 	
 	@SubscribeEvent
 	public static void registerSounds(RegistryEvent.Register<SoundEvent> event) {

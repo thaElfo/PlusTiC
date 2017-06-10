@@ -1,6 +1,7 @@
 package landmaster.plustic.proxy;
 
 import landmaster.plustic.*;
+import landmaster.plustic.api.ModInfo;
 import landmaster.plustic.entity.*;
 import mcjty.lib.tools.*;
 import net.minecraft.item.*;
@@ -37,7 +38,7 @@ public class CommonProxy {
 	}
 	
 	public void initEntities() {
-		EntityTools.registerModEntity(new ResourceLocation(PlusTiC.MODID, "blindbandit"), EntityBlindBandit.class, "BlindBandit", 1, PlusTiC.INSTANCE, 64, 3, true, 0xFF00FF, 0xFF0000);
+		EntityTools.registerModEntity(new ResourceLocation(ModInfo.MODID, "blindbandit"), EntityBlindBandit.class, "BlindBandit", 1, PlusTiC.INSTANCE, 64, 3, true, 0xFF00FF, 0xFF0000);
 	}
 	
 	public void initToolGuis() {

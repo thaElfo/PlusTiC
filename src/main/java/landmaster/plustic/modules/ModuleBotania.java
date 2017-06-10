@@ -27,7 +27,7 @@ public class ModuleBotania {
 			terrasteel.addTrait(Terrafirma.terrafirma.get(1), HEAD);
 			terrasteel.addItem("ingotTerrasteel", 1, Material.VALUE_Ingot);
 			terrasteel.setCraftable(false).setCastable(true);
-			Utils.setDispItem(terrasteel, "botania", "manaResource", 4);
+			Utils.setDispItem(terrasteel, "ingotTerrasteel");
 			PlusTiC.proxy.setRenderInfo(terrasteel, 0x00FF00);
 			
 			FluidMolten terrasteelFluid = Utils.fluidMetal("terrasteel", 0x00FF00);
@@ -48,7 +48,7 @@ public class ModuleBotania {
 			elementium.addTrait(Elemental.elemental, HEAD);
 			elementium.addItem("ingotElvenElementium", 1, Material.VALUE_Ingot);
 			elementium.setCraftable(false).setCastable(true);
-			Utils.setDispItem(elementium, "botania", "manaResource", 7);
+			Utils.setDispItem(elementium, "ingotElvenElementium");
 			PlusTiC.proxy.setRenderInfo(elementium, 0xF66AFD);
 			
 			FluidMolten elementiumFluid = Utils.fluidMetal("elementium", 0xF66AFD);
@@ -66,7 +66,7 @@ public class ModuleBotania {
 			manasteel.addTrait(Mana.mana);
 			manasteel.addItem("ingotManasteel", 1, Material.VALUE_Ingot);
 			manasteel.setCraftable(false).setCastable(true);
-			Utils.setDispItem(manasteel, "botania", "manaResource");
+			Utils.setDispItem(manasteel, "ingotManasteel");
 			PlusTiC.proxy.setRenderInfo(manasteel, 0x54E5FF);
 			
 			FluidMolten manasteelFluid = Utils.fluidMetal("manasteel", 0x54E5FF);

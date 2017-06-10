@@ -7,6 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import cofh.api.energy.*;
 import landmaster.plustic.*;
+import landmaster.plustic.api.ModInfo;
 import landmaster.plustic.block.*;
 import landmaster.plustic.fluids.*;
 import mcjty.lib.tools.ItemStackTools;
@@ -62,14 +63,14 @@ public class Utils {
 	}
 	
 	public static <T extends Fluid> T registerFluid(T fluid) {
-		fluid.setUnlocalizedName(PlusTiC.MODID+"."+fluid.getName().toLowerCase(Locale.US));
+		fluid.setUnlocalizedName(ModInfo.MODID+"."+fluid.getName().toLowerCase(Locale.US));
 		FluidRegistry.registerFluid(fluid);
 		return fluid;
 	}
 	
 	public static <T extends Block> T registerBlock(T block, String name) {
-		block.setUnlocalizedName(PlusTiC.MODID+"."+name);
-		block.setRegistryName(PlusTiC.MODID+"."+name);
+		block.setUnlocalizedName(ModInfo.MODID+"."+name);
+		block.setRegistryName(ModInfo.MODID+"."+name);
 		Item ib = new ItemBlock(block).setRegistryName(block.getRegistryName());
 		GameRegistry.register(block);
 		GameRegistry.register(ib);

@@ -3,6 +3,7 @@ package landmaster.plustic.modules;
 import java.util.*;
 
 import landmaster.plustic.*;
+import landmaster.plustic.api.ModInfo;
 import landmaster.plustic.config.*;
 import landmaster.plustic.tools.*;
 import landmaster.plustic.tools.stats.*;
@@ -75,7 +76,7 @@ public class ModuleTools {
 		// for added PlusTiC tools
 		for (IModifier modifier: TinkerRegistry.getAllModifiers()) {
 			PlusTiC.proxy.registerModifierModel(modifier,
-					new ResourceLocation(PlusTiC.MODID, "models/item/modifiers/"+modifier.getIdentifier()));
+					new ResourceLocation(ModInfo.MODID, "models/item/modifiers/"+modifier.getIdentifier()));
 		}
 	}
 	

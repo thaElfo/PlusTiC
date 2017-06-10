@@ -7,6 +7,7 @@ import org.apache.logging.log4j.*;
 
 import gnu.trove.map.hash.*;
 import landmaster.plustic.proxy.*;
+import landmaster.plustic.api.*;
 import landmaster.plustic.config.*;
 import landmaster.plustic.modules.*;
 import landmaster.plustic.net.*;
@@ -23,32 +24,18 @@ import slimeknights.tconstruct.library.*;
 import slimeknights.tconstruct.library.materials.*;
 import slimeknights.tconstruct.shared.*;
 
-@Mod(modid = PlusTiC.MODID, name = PlusTiC.NAME, version = PlusTiC.VERSION, dependencies = PlusTiC.DEPENDS, useMetadata = true, acceptedMinecraftVersions = "[1.9,1.12)")
+@Mod(modid = ModInfo.MODID, name = ModInfo.NAME, version = ModInfo.VERSION, dependencies = ModInfo.DEPENDS, useMetadata = true, acceptedMinecraftVersions = "[1.9,1.12)")
 public class PlusTiC {
-	public static final String MODID = "plustic";
-	public static final String NAME = "PlusTiC";
-	public static final String VERSION = "5.0.1.1";
-	public static final String DEPENDS = "required-after:mantle;"
-			+ "required-after:tconstruct@[1.10.2-2.6.5,);"
-			+ "required-after:compatlayer@[0.2.8,);"
-			+ "after:Mekanism;after:mekanism;after:BiomesOPlenty;after:biomesoplenty;"
-			+ "after:Botania;after:botania;after:advancedRocketry;"
-			+ "after:armorplus;after:EnderIO;after:enderio;after:projectred-exploration;"
-			+ "after:thermalfoundation;after:substratum;after:draconicevolution;"
-			+ "after:landcore;after:tesla;after:baubles;after:actuallyadditions;"
-			+ "after:natura;after:Psi;after:psi;after:avaritia;after:landcore;after:landcraft;"
-			+ "after:galacticraftcore;after:galacticraftplanets";
-	
 	public static Config config;
 	
-	@Mod.Instance(PlusTiC.MODID)
+	@Instance(ModInfo.MODID)
 	public static PlusTiC INSTANCE;
 	
 	@SidedProxy(serverSide = "landmaster.plustic.proxy.CommonProxy", clientSide = "landmaster.plustic.proxy.ClientProxy")
 	public static CommonProxy proxy;
 	
 	public static final Logger log = LogManager.getLogger(
-			MODID.toUpperCase(Locale.US/* to avoid problems with Turkish */));
+			ModInfo.MODID.toUpperCase(Locale.US/* to avoid problems with Turkish */));
 	
 	public static final Map<String, Material> materials = new THashMap<>();
 	public static final Map<String, MaterialIntegration> materialIntegrations = new THashMap<>();
@@ -98,7 +85,7 @@ public class PlusTiC {
 		Utils.setDispItem(materials.get("guardianscale"), "armorplus", "guardian_scale");
 		
 		// YOU TOO, ACTUALLY ADDITIONS!
-		Utils.setDispItem(materials.get("blackquartz"), "actuallyadditions", "itemMisc", 5);
+		Utils.setDispItem(materials.get("blackquartz"), "gemQuartzBlack");
 		
 		// SAME HERE, AVARITIA!
 		Utils.setDispItem(materials.get("infinity"), "ingotInfinity");
@@ -111,24 +98,24 @@ public class PlusTiC {
 	}
 	
 	private static void initRecipes() {
-		Item bronzeNugget = Item.REGISTRY.getObject(new ResourceLocation(MODID, "bronzenugget"));
-		Item bronzeIngot = Item.REGISTRY.getObject(new ResourceLocation(MODID, "bronzeingot"));
+		Item bronzeNugget = Item.REGISTRY.getObject(new ResourceLocation(ModInfo.MODID, "bronzenugget"));
+		Item bronzeIngot = Item.REGISTRY.getObject(new ResourceLocation(ModInfo.MODID, "bronzeingot"));
 		
-		Block osmiridiumBlock = Block.REGISTRY.getObject(new ResourceLocation(MODID, "osmiridiumblock"));
-		Item osmiridiumIngot = Item.REGISTRY.getObject(new ResourceLocation(MODID, "osmiridiumingot"));
-		Item osmiridiumNugget = Item.REGISTRY.getObject(new ResourceLocation(MODID, "osmiridiumnugget"));
+		Block osmiridiumBlock = Block.REGISTRY.getObject(new ResourceLocation(ModInfo.MODID, "osmiridiumblock"));
+		Item osmiridiumIngot = Item.REGISTRY.getObject(new ResourceLocation(ModInfo.MODID, "osmiridiumingot"));
+		Item osmiridiumNugget = Item.REGISTRY.getObject(new ResourceLocation(ModInfo.MODID, "osmiridiumnugget"));
 		
-		Block alumiteBlock = Block.REGISTRY.getObject(new ResourceLocation(MODID, "alumiteblock"));
-		Item alumiteIngot = Item.REGISTRY.getObject(new ResourceLocation(MODID, "alumiteingot"));
-		Item alumiteNugget = Item.REGISTRY.getObject(new ResourceLocation(MODID, "alumitenugget"));
+		Block alumiteBlock = Block.REGISTRY.getObject(new ResourceLocation(ModInfo.MODID, "alumiteblock"));
+		Item alumiteIngot = Item.REGISTRY.getObject(new ResourceLocation(ModInfo.MODID, "alumiteingot"));
+		Item alumiteNugget = Item.REGISTRY.getObject(new ResourceLocation(ModInfo.MODID, "alumitenugget"));
 		
-		Block mirionBlock = Block.REGISTRY.getObject(new ResourceLocation(MODID, "mirionblock"));
-		Item mirionIngot = Item.REGISTRY.getObject(new ResourceLocation(MODID, "mirioningot"));
-		Item mirionNugget = Item.REGISTRY.getObject(new ResourceLocation(MODID, "mirionnugget"));
+		Block mirionBlock = Block.REGISTRY.getObject(new ResourceLocation(ModInfo.MODID, "mirionblock"));
+		Item mirionIngot = Item.REGISTRY.getObject(new ResourceLocation(ModInfo.MODID, "mirioningot"));
+		Item mirionNugget = Item.REGISTRY.getObject(new ResourceLocation(ModInfo.MODID, "mirionnugget"));
 		
-		Block invarBlock = Block.REGISTRY.getObject(new ResourceLocation(MODID, "invarblock"));
-		Item invarIngot = Item.REGISTRY.getObject(new ResourceLocation(MODID, "invaringot"));
-		Item invarNugget = Item.REGISTRY.getObject(new ResourceLocation(MODID, "invarnugget"));
+		Block invarBlock = Block.REGISTRY.getObject(new ResourceLocation(ModInfo.MODID, "invarblock"));
+		Item invarIngot = Item.REGISTRY.getObject(new ResourceLocation(ModInfo.MODID, "invaringot"));
+		Item invarNugget = Item.REGISTRY.getObject(new ResourceLocation(ModInfo.MODID, "invarnugget"));
 		
 		if (bronzeNugget != null) {
 			GameRegistry.addRecipe(

@@ -6,7 +6,6 @@ import javax.annotation.*;
 
 import org.lwjgl.opengl.*;
 
-import landmaster.plustic.*;
 import landmaster.plustic.api.*;
 import landmaster.plustic.api.event.*;
 import landmaster.plustic.modules.*;
@@ -66,7 +65,7 @@ public class ToolLaserGun extends TinkerToolCore implements cofh.api.energy.IEne
 		.findFirst();
 	}
 	
-	public static final ResourceLocation LASER_LOC = new ResourceLocation(PlusTiC.MODID, "textures/effects/laserbeam.png");
+	public static final ResourceLocation LASER_LOC = new ResourceLocation(ModInfo.MODID, "textures/effects/laserbeam.png");
 	
 	public ToolLaserGun() {
 		super(PartMaterialType.handle(TinkerTools.toughToolRod),

@@ -2,11 +2,11 @@ package landmaster.plustic.asm;
 
 import java.util.*;
 
-import landmaster.plustic.*;
+import landmaster.plustic.api.*;
 import net.minecraftforge.fml.relauncher.*;
 
-@IFMLLoadingPlugin.Name(PlusTiC.NAME)
-@IFMLLoadingPlugin.MCVersion(value = "1.10.2")
+@IFMLLoadingPlugin.Name(ModInfo.NAME)
+@IFMLLoadingPlugin.MCVersion(value = "1.10.2") // no need in 1.11.2
 @IFMLLoadingPlugin.TransformerExclusions({"landmaster.plustic.asm"})
 @IFMLLoadingPlugin.SortingIndex(1)
 public class LoadingPlugin implements IFMLLoadingPlugin {

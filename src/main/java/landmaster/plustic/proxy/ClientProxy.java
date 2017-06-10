@@ -3,7 +3,7 @@ package landmaster.plustic.proxy;
 import java.util.*;
 
 import javax.annotation.*;
-import landmaster.plustic.*;
+import landmaster.plustic.api.*;
 import landmaster.plustic.entity.*;
 import landmaster.plustic.entity.render.*;
 import landmaster.plustic.modules.*;
@@ -34,7 +34,7 @@ public class ClientProxy extends CommonProxy {
 	
 	@Override
 	public void registerItemRenderer(Item item, int meta, String id) {
-	    ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(PlusTiC.MODID + ":" + id, "inventory"));
+	    ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(ModInfo.MODID + ":" + id, "inventory"));
 	}
 	
 	@Override
@@ -125,7 +125,7 @@ public class ClientProxy extends CommonProxy {
 		
 		public FluidStateMapper(Fluid fluid) {
 			this.fluid = fluid;
-			this.location = new ModelResourceLocation(new ResourceLocation(PlusTiC.MODID, "fluid_block"),
+			this.location = new ModelResourceLocation(new ResourceLocation(ModInfo.MODID, "fluid_block"),
 					fluid.getName());
 		}
 		

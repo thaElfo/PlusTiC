@@ -4,11 +4,11 @@ import static slimeknights.tconstruct.library.materials.MaterialTypes.*;
 import static slimeknights.tconstruct.library.utils.HarvestLevels.*;
 import static slimeknights.tconstruct.tools.TinkerTraits.*;
 
+import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import landmaster.plustic.*;
 import landmaster.plustic.config.*;
 import landmaster.plustic.traits.*;
 import net.minecraft.item.*;
-import net.minecraft.util.*;
 import net.minecraft.util.text.*;
 import net.minecraftforge.fml.common.*;
 import slimeknights.tconstruct.library.*;
@@ -34,9 +34,7 @@ public class ModuleActAdd {
 			Void.addTrait(Unnamed.unnamed, HEAD);
 			Void.addTrait(crude, HEAD);
 			Void.addTrait(crude);
-			ItemStack voidStack = new ItemStack(Item.REGISTRY.getObject(
-					new ResourceLocation("ActuallyAdditions:itemCrystal")),
-					1, 3);
+			ItemStack voidStack = new ItemStack(InitItems.itemCrystal, 1, 3);
 			Void.addItem(voidStack, 1, Material.VALUE_Ingot);
 			Void.setRepresentativeItem(voidStack);
 			Void.setCraftable(true);

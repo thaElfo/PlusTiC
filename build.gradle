@@ -11,18 +11,24 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 //Only edit below this line, the above code adds and enables the nessasary things for Forge to be setup.
 
 
-version = "5.0.1.2"
+version = "5.0.1.3"
 group= "landmaster.plustic" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "plustic"
 
 repositories {
     maven {
-        name 'DVS1 Maven FS'
         url 'http://dvs1.progwml6.com/files/maven'
     }
 	maven { // McJtyLib
         url "http://maven.k-4u.nl"
     }
+    maven {
+    	url "http://chickenbones.net/maven/"
+    }
+	maven {
+		// OpenComputers
+		url = "http://maven.cil.li/"
+	}
 }
 
 sourceCompatibility = targetCompatibility = "1.8" // Need this here so eclipse task generates correctly.

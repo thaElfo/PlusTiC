@@ -2,17 +2,41 @@ package landmaster.plustic.modules;
 
 import static slimeknights.tconstruct.library.materials.MaterialTypes.*;
 
-import com.brandon3055.draconicevolution.*;
+import java.util.*;
 
 import landmaster.plustic.*;
 import landmaster.plustic.config.*;
 import landmaster.plustic.traits.*;
+import net.minecraft.item.*;
+import net.minecraft.util.*;
 import net.minecraft.util.text.*;
 import net.minecraftforge.fml.common.*;
 import slimeknights.tconstruct.library.*;
 import slimeknights.tconstruct.library.materials.*;
 
 public class ModuleDraconicEvolution {
+	
+	public static final Item wyvern_core;
+	
+	static {
+		wyvern_core = Arrays.asList(
+				new ResourceLocation("draconicevolution:wyvernCore"),
+				new ResourceLocation("draconicevolution:wyvern_core"))
+				.stream().map(Item.REGISTRY::getObject)
+				.filter(item -> item != null)
+				.findAny().orElse(null);
+	}
+	
+	public static final Item awakened_core;
+	
+	static {
+		awakened_core = Arrays.asList(
+				new ResourceLocation("draconicevolution:awakenedCore"),
+				new ResourceLocation("draconicevolution:awakened_core"))
+				.stream().map(Item.REGISTRY::getObject)
+				.filter(item -> item != null)
+				.findAny().orElse(null);
+	}
 
 	public static void init() {
 		if (Config.draconicEvolution && Loader.isModLoaded("draconicevolution")) {
@@ -20,9 +44,9 @@ public class ModuleDraconicEvolution {
 			wyvern.addTrait(BrownMagic.brownmagic, HEAD);
 			wyvern.addTrait(BlindBandit.blindbandit, HEAD);
 			wyvern.addTrait(Portly.portly);
-			wyvern.addItem(DEFeatures.wyvernCore, 1, Material.VALUE_Ingot);
+			wyvern.addItem(wyvern_core, 1, Material.VALUE_Ingot);
 			wyvern.setCraftable(true);
-			wyvern.setRepresentativeItem(DEFeatures.wyvernCore);
+			wyvern.setRepresentativeItem(wyvern_core);
 			PlusTiC.proxy.setRenderInfo(wyvern, 0x7F00FF);
 			TinkerRegistry.addMaterialStats(wyvern, new HeadMaterialStats(2000, 8, 15, 8));
 			TinkerRegistry.addMaterialStats(wyvern, new HandleMaterialStats(1.6f, 130));
@@ -36,9 +60,9 @@ public class ModuleDraconicEvolution {
 			awakened.addTrait(BlindBandit.blindbandit);
 			awakened.addTrait(Apocalypse.apocalypse);
 			awakened.addTrait(Global.global);
-			awakened.addItem(DEFeatures.awakenedCore, 1, Material.VALUE_Ingot);
+			awakened.addItem(awakened_core, 1, Material.VALUE_Ingot);
 			awakened.setCraftable(true);
-			awakened.setRepresentativeItem(DEFeatures.awakenedCore);
+			awakened.setRepresentativeItem(awakened_core);
 			PlusTiC.proxy.setRenderInfo(awakened, 0xFFB200);
 			TinkerRegistry.addMaterialStats(awakened, new HeadMaterialStats(5000, 9, 35, 10));
 			TinkerRegistry.addMaterialStats(awakened, new HandleMaterialStats(1.8f, 500));

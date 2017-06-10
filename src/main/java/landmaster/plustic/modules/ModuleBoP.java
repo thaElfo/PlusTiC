@@ -18,7 +18,9 @@ import slimeknights.tconstruct.library.materials.*;
 public class ModuleBoP {
 
 	public static void init() {
-		if ((Config.bop && (Loader.isModLoaded("BiomesOPlenty") || Loader.isModLoaded("biomesoplenty")))
+		final boolean isBoPLoaded = Loader.isModLoaded("BiomesOPlenty") || Loader.isModLoaded("biomesoplenty");
+		
+		if ((Config.bop && isBoPLoaded)
 				|| (Config.projectRed && Loader.isModLoaded("projectred-exploration"))) {
 			Material sapphire = new Material("sapphire", TextFormatting.BLUE);
 			sapphire.addTrait(aquadynamic);
@@ -57,7 +59,7 @@ public class ModuleBoP {
 			TinkerRegistry.addMaterialStats(peridot, new BowMaterialStats(1.4f, 1.4f, 4));
 			PlusTiC.materials.put("peridot", peridot);
 		}
-		if (Config.bop && Loader.isModLoaded("BiomesOPlenty")) {
+		if (Config.bop && isBoPLoaded) {
 			Material malachite = new Material("malachite_gem", TextFormatting.DARK_GREEN);
 			malachite.addTrait(NaturesWrath.natureswrath);
 			malachite.addItem("gemMalachite", 1, Material.VALUE_Ingot);

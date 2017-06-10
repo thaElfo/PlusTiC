@@ -1,16 +1,20 @@
 package landmaster.plustic.util;
 
+import java.lang.invoke.*;
+import java.lang.reflect.*;
 import java.util.*;
 
 import org.apache.commons.lang3.*;
 import org.apache.commons.lang3.StringUtils;
 
+import com.google.common.base.*;
+
 import cofh.api.energy.*;
 import landmaster.plustic.*;
-import landmaster.plustic.api.ModInfo;
+import landmaster.plustic.api.*;
 import landmaster.plustic.block.*;
 import landmaster.plustic.fluids.*;
-import mcjty.lib.tools.ItemStackTools;
+import mcjty.lib.tools.*;
 import net.darkhax.tesla.capability.*;
 import net.minecraft.block.*;
 import net.minecraft.entity.player.*;
@@ -28,9 +32,30 @@ import net.minecraftforge.oredict.*;
 import slimeknights.tconstruct.smeltery.block.*;
 import slimeknights.tconstruct.library.*;
 import slimeknights.tconstruct.library.materials.*;
-import slimeknights.tconstruct.library.modifiers.*;
+import slimeknights.tconstruct.library.modifiers.Modifier;
 
 public class Utils {
+	private static final Map<String, Material> tinkerMaterials;
+	
+	static {
+		try {
+			Field temp = TinkerRegistry.class.getDeclaredField("materials");
+			temp.setAccessible(true);
+			tinkerMaterials = (Map<String, Material>)MethodHandles.lookup().unreflectGetter(temp).invokeExact();
+		} catch (Throwable e) {
+			throw Throwables.propagate(e);
+		}
+	}
+	
+	/**
+	 * Pushes a material into a lower priority.
+	 * @param displace the identifier of the material to be pushed
+	 */
+	public static void displace(String displace) {
+		Material displaced = tinkerMaterials.remove(displace);
+		tinkerMaterials.put(displace, displaced);
+	}
+	
 	public static boolean matchesOre(ItemStack is, String od) {
 		return OreDictionary.doesOreNameExist(od) && !ItemStackTools.isEmpty(is) && ArrayUtils.contains(OreDictionary.getOreIDs(is), OreDictionary.getOreID(od));
 	}

@@ -23,6 +23,7 @@ import net.minecraftforge.fml.common.Mod.*;
 import slimeknights.tconstruct.library.*;
 import slimeknights.tconstruct.library.materials.*;
 import slimeknights.tconstruct.shared.*;
+import slimeknights.tconstruct.tools.TinkerMaterials;
 
 @Mod(modid = ModInfo.MODID, name = ModInfo.NAME, version = ModInfo.VERSION, dependencies = ModInfo.DEPENDS, useMetadata = true, acceptedMinecraftVersions = "[1.9,1.12)")
 public class PlusTiC {
@@ -168,5 +169,7 @@ public class PlusTiC {
 			mi.integrate(); mi.integrateRecipes();
 			materialIntegrations.put(k, mi);
 		});
+		
+		Utils.displace(TinkerMaterials.wood.getIdentifier()); // so that natura woods are prioritized
 	}
 }

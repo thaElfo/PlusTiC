@@ -12,7 +12,6 @@ import net.minecraft.util.text.*;
 import net.minecraftforge.fml.common.*;
 import slimeknights.tconstruct.library.*;
 import slimeknights.tconstruct.library.materials.*;
-
 public class ModuleNatura {
 
 	public static void init() {

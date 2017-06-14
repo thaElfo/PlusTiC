@@ -23,10 +23,6 @@ public class Transform implements IClassTransformer {
 		return obf ? FMLDeobfuscatingRemapper.INSTANCE.mapMethodName(owner, name, desc) : name;
 	}
 	
-	private static String mapClass(String name, boolean obf) {
-		return obf ? FMLDeobfuscatingRemapper.INSTANCE.map(name) : name;
-	}
-	
 	@Override
 	public byte[] transform(String name, String transformedName, byte[] bytes) {
 		if (transformedName.equals("net.minecraft.block.Block")) {
@@ -43,10 +39,9 @@ public class Transform implements IClassTransformer {
 				
 				AbstractInsnNode insnPos = Iterables.find(methodNode.instructions::iterator,
 						insn -> insn.getOpcode() == Opcodes.INVOKEVIRTUAL
-						&& mapMethod(mapClass("net/minecraft/block/Block", isObfuscated),
-								"getDrops",
-								"(Lnet/minecraft/world/IBlockAccess;Lnet/minecraft/util/math/BlockPos;Lnet.minecrat.block.state.IBlockState;I)Ljava/util/List;",
-								isObfuscated).equals(((MethodInsnNode)insn).name));
+						&& "getDrops".equals(((MethodInsnNode)insn).name));
+				
+				FMLLog.info("Found method getDrops in dropBlockAsItemWithChance, inserting patch");
 				
 				InsnList insns = new InsnList();
 				insns.add(new InsnNode(Opcodes.DUP));

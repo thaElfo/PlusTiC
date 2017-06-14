@@ -78,7 +78,7 @@ public class ModuleLandCore {
 						new HeadMaterialStats(1500, 8.7f, 5.5f, OBSIDIAN),
 						new HandleMaterialStats(1.5f, -100),
 						new ExtraMaterialStats(380),
-						new BowMaterialStats(1.0f, 1.6f, 5),
+						new BowMaterialStats(1.2f, 1.6f, 7),
 						new LaserMediumMaterialStats(7.0f, 30));
 			}
 			

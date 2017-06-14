@@ -3,6 +3,7 @@ package landmaster.plustic.modules;
 import landmaster.plustic.*;
 import landmaster.plustic.config.*;
 import landmaster.plustic.fluids.*;
+import landmaster.plustic.tools.stats.*;
 import landmaster.plustic.traits.*;
 import landmaster.plustic.util.*;
 import net.minecraft.item.EnumRarity;
@@ -32,7 +33,8 @@ public class ModuleAvaritia {
 					new HeadMaterialStats(7000, 8.5f, 40, 10),
 					new HandleMaterialStats(2.0f, 0),
 					new ExtraMaterialStats(1400),
-					new BowMaterialStats(2.0f, 2.8f, 16));
+					new BowMaterialStats(2.0f, 2.8f, 16),
+					new LaserMediumMaterialStats(65, 100));
 			
 			PlusTiC.materials.put("infinity", infinity);
 		}

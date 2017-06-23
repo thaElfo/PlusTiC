@@ -17,6 +17,7 @@ import landmaster.plustic.fluids.*;
 import mcjty.lib.tools.*;
 import net.darkhax.tesla.capability.*;
 import net.minecraft.block.*;
+import net.minecraft.block.state.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.network.play.server.*;
@@ -168,11 +169,35 @@ public class Utils {
 			player.connection.setPlayerLocation(coord.xCoord+0.5, coord.yCoord+1, coord.zCoord+0.5, player.rotationYaw, player.rotationPitch);
 		}
 	}
+	
+private static final MethodHandle getCollisionBoundingBoxM;
+	
+	static {
+		try {
+			MethodHandle temp;
+			try {
+				temp = MethodHandles.lookup().findVirtual(IBlockState.class, "func_185890_d", MethodType.methodType(AxisAlignedBB.class, IBlockAccess.class, BlockPos.class));
+			} catch (NoSuchMethodException e) {
+				temp = MethodHandles.lookup().findVirtual(IBlockState.class, "func_185890_d", MethodType.methodType(AxisAlignedBB.class, World.class, BlockPos.class));
+			}
+			getCollisionBoundingBoxM = temp;
+		} catch (Throwable e) {
+			throw Throwables.propagate(e);
+		}
+	}
+	
+	public static AxisAlignedBB getCollisionBoundingBox(IBlockState state, World world, BlockPos pos) {
+		try {
+			return (AxisAlignedBB)getCollisionBoundingBoxM.invoke(state, world, pos);
+		} catch (Throwable e) {
+			throw Throwables.propagate(e);
+		}
+	}
 
 	public static boolean canTeleportTo(EntityPlayer player, Coord4D dest) {
 		if (dest == null) return false;
 		for (int i=1; i<=2; ++i) {
-			if (dest.add(0, i, 0).blockState().getCollisionBoundingBox(dest.world(), dest.pos()) != null) {
+			if (getCollisionBoundingBox(dest.add(0, i, 0).blockState(), dest.world(), dest.pos()) != null) {
 				return false;
 			}
 		}

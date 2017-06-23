@@ -35,7 +35,7 @@ public class ModuleEnderIO {
 			darkSteel.addTrait(coldblooded);
 			darkSteel.addItem("ingotDarkSteel", 1, Material.VALUE_Ingot);
 			darkSteel.setCraftable(false).setCastable(true);
-			Utils.setDispItem(darkSteel, "enderio", "itemAlloy", 6);
+			Utils.setDispItem(darkSteel, "ingotDarkSteel");
 			PlusTiC.proxy.setRenderInfo(darkSteel, 0x333333);
 			
 			Fluid darkSteelFluid = FluidRegistry.getFluid("darksteel");

@@ -1,3 +1,4 @@
+- **VERSIONS 5.0.0.0 AND UP SUPPORT *BOTH 1.11.2 and 1.10.2!* DO NOT OPEN ISSUES CONCERNING OUTDATED VERSIONS OF PLUSTIC!**
 - **FOR THE LAST TIME, DO NOT OPEN ANY MORE ISSUES CONCERNING A MATERIAL REGISTRY CONFLICT WITH NATURAL PLEDGE!** This is easily fixed by changing the config in either PlusTiC or Natural Pledge to disable either mod's integration, which resolves this.
 - **IMPORTANT**: *BEFORE POSTING AN ISSUE CONCERNING A MATERIAL REGISTRY CONFLICT WITH MOAR TINKERS:* ***TURN OFF CONFIGS FOR CONFLICTING MATERIALS!***
 - Before opening any issue concerning _unlinking_ Global Traveler, open the toggle GUI (defualt press "I") and disable Global Traveler first.

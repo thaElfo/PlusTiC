@@ -1,5 +1,6 @@
 package landmaster.plustic.modules;
 
+import static slimeknights.tconstruct.library.materials.MaterialTypes.HEAD;
 import static slimeknights.tconstruct.library.utils.HarvestLevels.*;
 import static slimeknights.tconstruct.tools.TinkerTraits.*;
 
@@ -7,10 +8,13 @@ import landmaster.plustic.*;
 import landmaster.plustic.config.*;
 import landmaster.plustic.fluids.*;
 import landmaster.plustic.tools.stats.*;
+import landmaster.plustic.traits.Anticorrosion;
+import landmaster.plustic.traits.DevilsStrength;
 import landmaster.plustic.util.*;
 import mcjty.lib.tools.*;
 import net.minecraft.item.*;
 import net.minecraft.util.text.*;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.common.*;
 import net.minecraftforge.fml.common.registry.*;
 import net.minecraftforge.oredict.*;
@@ -28,11 +32,13 @@ public class ModuleMekanism {
 			GameRegistry.register(tinDust);
 			OreDictionary.registerOre("dustTin", tinDust);
 			PlusTiC.proxy.registerItemRenderer(tinDust, 0, "tindust");
+			
 			Item osmiumDust = new Item().setUnlocalizedName("osmiumdust").setRegistryName("osmiumdust");
 			osmiumDust.setCreativeTab(TinkerRegistry.tabGeneral);
 			GameRegistry.register(osmiumDust);
 			OreDictionary.registerOre("dustOsmium", osmiumDust);
 			PlusTiC.proxy.registerItemRenderer(osmiumDust, 0, "osmiumdust");
+			
 			Item steelDust = new Item().setUnlocalizedName("steeldust").setRegistryName("steeldust");
 			steelDust.setCreativeTab(TinkerRegistry.tabGeneral);
 			GameRegistry.register(steelDust);
@@ -45,6 +51,7 @@ public class ModuleMekanism {
 			GameRegistry.register(bronzeNugget);
 			OreDictionary.registerOre("nuggetBronze", bronzeNugget);
 			PlusTiC.proxy.registerItemRenderer(bronzeNugget, 0, "bronzenugget");
+			
 			Item bronzeIngot = new Item().setUnlocalizedName("bronzeingot").setRegistryName("bronzeingot");
 			bronzeIngot.setCreativeTab(TinkerRegistry.tabGeneral);
 			GameRegistry.register(bronzeIngot);
@@ -102,6 +109,33 @@ public class ModuleMekanism {
 					new LaserMediumMaterialStats(6.0f, 45));
 			
 			PlusTiC.materials.put("refinedObsidian", refinedObsidian);
+			
+			if (PlusTiC.materials.containsKey("iridium")) {
+				// osmiridium
+				Utils.ItemMatGroup osmiridiumGroup = Utils.registerMatGroup("osmiridium");
+				
+				Material osmiridium = new Material("osmiridium", TextFormatting.LIGHT_PURPLE);
+				osmiridium.addTrait(DevilsStrength.devilsstrength);
+				osmiridium.addTrait(Anticorrosion.anticorrosion, HEAD);
+				osmiridium.addItem("ingotOsmiridium", 1, Material.VALUE_Ingot);
+				osmiridium.setCraftable(false).setCastable(true);
+				osmiridium.setRepresentativeItem(osmiridiumGroup.ingot);
+				PlusTiC.proxy.setRenderInfo(osmiridium, 0x666DFF);
+				
+				FluidMolten osmiridiumFluid = Utils.fluidMetal("osmiridium", 0x666DFF);
+				osmiridiumFluid.setTemperature(840);
+				Utils.initFluidMetal(osmiridiumFluid);
+				osmiridium.setFluid(osmiridiumFluid);
+				TinkerRegistry.registerAlloy(new FluidStack(osmiridiumFluid, 2),
+						new FluidStack(PlusTiC.materials.get("osmium").getFluid(), 1), new FluidStack(PlusTiC.materials.get("iridium").getFluid(), 1));
+				
+				TinkerRegistry.addMaterialStats(osmiridium, new HeadMaterialStats(1300, 6.8f, 8, COBALT));
+				TinkerRegistry.addMaterialStats(osmiridium, new HandleMaterialStats(1.5f, 30));
+				TinkerRegistry.addMaterialStats(osmiridium, new ExtraMaterialStats(80));
+				TinkerRegistry.addMaterialStats(osmiridium, new BowMaterialStats(0.38f, 2.05f, 10));
+				
+				PlusTiC.materials.put("osmiridium", osmiridium);
+			}
 		}
 	}
 	

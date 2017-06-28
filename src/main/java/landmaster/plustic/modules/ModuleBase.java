@@ -10,6 +10,7 @@ import landmaster.plustic.fluids.*;
 import landmaster.plustic.tools.stats.*;
 import landmaster.plustic.traits.*;
 import landmaster.plustic.util.*;
+import mcjty.lib.tools.*;
 import net.minecraft.init.*;
 import net.minecraft.util.text.*;
 import net.minecraftforge.fluids.*;
@@ -117,6 +118,28 @@ public class ModuleBase {
 						new FletchingMaterialStats(1, 1.15f));
 				
 				PlusTiC.materials.put("invar", invar);
+			}
+			
+			if (!ItemStackTools.getOres("ingotIridium").isEmpty()) {
+				Material iridium = new Material("iridium", TextFormatting.GRAY);
+				iridium.addTrait(dense);
+				iridium.addTrait(alien, HEAD);
+				iridium.addItem("ingotIridium", 1, Material.VALUE_Ingot);
+				iridium.setCraftable(false).setCastable(true);
+				Utils.setDispItem(iridium, "ingotIridium");
+				PlusTiC.proxy.setRenderInfo(iridium, 0xE5E5E5);
+				
+				FluidMolten iridiumFluid = Utils.fluidMetal("iridium", 0xE5E5E5);
+				iridiumFluid.setTemperature(810);
+				Utils.initFluidMetal(iridiumFluid);
+				iridium.setFluid(iridiumFluid);
+				
+				TinkerRegistry.addMaterialStats(iridium, new HeadMaterialStats(520, 6, 5.8f, DIAMOND));
+				TinkerRegistry.addMaterialStats(iridium, new HandleMaterialStats(1.15f, -20));
+				TinkerRegistry.addMaterialStats(iridium, new ExtraMaterialStats(60));
+				TinkerRegistry.addMaterialStats(iridium, PlusTiC.justWhy);
+				
+				PlusTiC.materials.put("iridium", iridium);
 			}
 		}
 	}

@@ -50,6 +50,7 @@ public class PlusTiC {
 		proxy.initEntities();
 		
 		ModuleBase.init();
+		
 		ModuleBoP.init();
 		ModuleMekanism.init();
 		ModuleBotania.init();
@@ -64,6 +65,7 @@ public class PlusTiC {
 		ModuleAvaritia.init();
 		ModuleLandCraft.init();
 		ModuleLandCore.init();
+		ModuleMFR.init();
 		
 		ModuleTools.init();
 		

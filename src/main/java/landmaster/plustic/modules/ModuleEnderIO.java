@@ -4,6 +4,8 @@ import static slimeknights.tconstruct.library.materials.MaterialTypes.*;
 import static slimeknights.tconstruct.library.utils.HarvestLevels.*;
 import static slimeknights.tconstruct.tools.TinkerTraits.*;
 
+import java.util.*;
+
 import landmaster.plustic.*;
 import landmaster.plustic.config.*;
 import landmaster.plustic.tools.stats.*;
@@ -38,7 +40,10 @@ public class ModuleEnderIO {
 			Utils.setDispItem(darkSteel, "ingotDarkSteel");
 			PlusTiC.proxy.setRenderInfo(darkSteel, 0x333333);
 			
-			Fluid darkSteelFluid = FluidRegistry.getFluid("darksteel");
+			Fluid darkSteelFluid = Arrays.asList("darksteel", "dark_steel").stream()
+					.map(FluidRegistry::getFluid)
+					.filter(fluid -> fluid != null)
+					.findAny().orElse(null);
 			darkSteel.setFluid(darkSteelFluid);
 			
 			TinkerRegistry.registerAlloy(new FluidStack(darkSteelFluid, 36), new FluidStack(TinkerFluids.obsidian, 72),

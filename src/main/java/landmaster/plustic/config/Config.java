@@ -32,6 +32,7 @@ public class Config extends Configuration {
 	public static boolean avaritia;
 	public static boolean landCraft;
 	public static boolean landCore;
+	public static boolean mfr;
 	
 	public static boolean pyrotheumSmelt;
 	
@@ -101,6 +102,7 @@ public class Config extends Configuration {
 		avaritia = getBoolean("Enable Avaritia support", "modules", true, "Integrate with Avaritia");
 		landCraft = getBoolean("Enable Land Craft support", "modules", true, "Integrate with Land Craft");
 		landCore = getBoolean("Enable LandCore support", "modules", true, "Integrate with LandCore");
+		mfr = getBoolean("Enable MFR support", "modules", true, "Integrate with Minefactory Reloaded");
 		
 		// TOOLS
 		katana = getBoolean("Enable Katana", "tools", true, "Enable Katana");

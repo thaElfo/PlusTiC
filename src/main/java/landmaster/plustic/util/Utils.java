@@ -170,7 +170,7 @@ public class Utils {
 		}
 	}
 	
-private static final MethodHandle getCollisionBoundingBoxM;
+	private static final MethodHandle getCollisionBoundingBoxM;
 	
 	static {
 		try {

@@ -33,8 +33,11 @@ public class Config extends Configuration {
 	public static boolean landCraft;
 	public static boolean landCore;
 	public static boolean mfr;
+	public static boolean galacticraft;
 	
 	public static boolean pyrotheumSmelt;
+	
+	public static boolean alloyDarkSteel;
 	
 	public static boolean katana;
 	public static boolean laserGun;
@@ -90,6 +93,9 @@ public class Config extends Configuration {
 		advancedRocketry = getBoolean("Enable Advanced Rocketry integration", "modules", true, "Integrate with Advanced Rocketry (actually LibVulpes)");
 		armorPlus = getBoolean("Enable ArmorPlus integration", "modules", true, "Integrate with ArmorPlus");
 		enderIO = getBoolean("Enable EnderIO integration", "modules", true, "Integrate with EnderIO");
+		{
+			alloyDarkSteel = getBoolean("Alloy Dark Steel in smeltery", "tweaks", true, "Allow Dark Steel alloying in the TiC smeltery");
+		}
 		thermalFoundation = getBoolean("Enable Thermal Foundation integration", "modules", true, "Integrate with Thermal Foundation");
 		{
 			pyrotheumSmelt = getBoolean("Use Pyrotheum as smeltery fuel", "tweaks", true, "Use Pyrotheum as TiC smeltery fuel (only if Thermal Foundation is loaded)");
@@ -103,6 +109,7 @@ public class Config extends Configuration {
 		landCraft = getBoolean("Enable Land Craft support", "modules", true, "Integrate with Land Craft");
 		landCore = getBoolean("Enable LandCore support", "modules", true, "Integrate with LandCore");
 		mfr = getBoolean("Enable MFR support", "modules", true, "Integrate with Minefactory Reloaded");
+		galacticraft = getBoolean("Enable Galacticraft support", "modules", true, "Integrate with Galacticraft");
 		
 		// TOOLS
 		katana = getBoolean("Enable Katana", "tools", true, "Enable Katana");

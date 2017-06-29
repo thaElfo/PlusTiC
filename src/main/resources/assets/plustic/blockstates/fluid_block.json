@@ -87,6 +87,9 @@
         }],
         "landium": [{
         	"custom": { "fluid": "landium" }
+        }],
+        "desh": [{
+        	"custom": { "fluid": "desh" }
         }]
     }
 }

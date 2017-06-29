@@ -1,6 +1,6 @@
 package landmaster.plustic.modules;
 
-import static slimeknights.tconstruct.library.materials.MaterialTypes.HEAD;
+import static slimeknights.tconstruct.library.materials.MaterialTypes.*;
 import static slimeknights.tconstruct.library.utils.HarvestLevels.*;
 import static slimeknights.tconstruct.tools.TinkerTraits.*;
 

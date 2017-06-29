@@ -66,6 +66,7 @@ public class PlusTiC {
 		ModuleLandCraft.init();
 		ModuleLandCore.init();
 		ModuleMFR.init();
+		ModuleGalacticraft.init();
 		
 		ModuleTools.init();
 		
@@ -80,8 +81,10 @@ public class PlusTiC {
 		proxy.registerKeyBindings();
 		PacketHandler.init();
 		
-		// CURSE YOU, MEKANISM AND ARMORPLUS! YOU REGISTERED THE OREDICTS IN
+		// CURSE YOU, MEKANISM† AND ARMORPLUS! YOU REGISTERED THE OREDICTS IN
 		// INIT INSTEAD OF PREINIT!
+		//
+		// †fixed in later versions
 		Utils.setDispItem(materials.get("refinedObsidian"), "mekanism", "Ingot");
 		Utils.setDispItem(materials.get("osmium"), "mekanism", "Ingot", 1);
 		Utils.setDispItem(materials.get("witherbone"), "armorplus", "wither_bone");
@@ -98,6 +101,15 @@ public class PlusTiC {
 		Utils.setDispItem(materials.get("peridot"), "gemPeridot");
 		
 		initRecipes();
+	}
+	
+	@EventHandler
+	public void postInit(FMLPostInitializationEvent event) {
+		// AND I THOUGHT THAT ARMORPLUS WAS THE ASININE ONE IN REGISTERING OREDICTS
+		// LATE! IT TURNS OUT THAT GALACTICRAFT HAS REACHED A NEW LEVEL OF *LUNA*CY
+		// (PUN INTENDED)—THEY REGISTER THEIR ORES ALL THE WAY IN POSTINIT! TRULY,
+		// THEY ARE ******* **OUT OF THIS WORLD!**
+		Utils.setDispItem(materials.get("desh"), "ingotDesh");
 	}
 	
 	private static void initRecipes() {

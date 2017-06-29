@@ -50,6 +50,7 @@ fluid.plustic.friscion.name=Molten Friscion
 fluid.plustic.thorium.name=Molten Thorium
 fluid.plustic.tungsten.name=Molten Tungsten
 fluid.plustic.landium.name=Molten Landium
+fluid.plustic.desh.name=Molten Desh
 
 material.sapphire.name=Sapphire
 material.ruby.name=Ruby
@@ -99,6 +100,7 @@ material.tungsten.name=Tungsten
 material.landium.name=Landium
 material.pink_slime.name=Pink Slime
 material.pink_slime.prefix=Slime %s
+material.desh.name=Desh
 
 modifier.bloodymary.name=Bloody Mary
 modifier.bloodymary.desc=§oBrought to you by the legendary Queen of England...§r\nDeals bonus damage depending on the amount of health already lost by the target. Also, a chance to drop a Coagulated Blood for each hit.

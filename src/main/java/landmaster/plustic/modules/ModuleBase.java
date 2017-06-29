@@ -120,7 +120,8 @@ public class ModuleBase {
 				PlusTiC.materials.put("invar", invar);
 			}
 			
-			if (!ItemStackTools.getOres("ingotIridium").isEmpty()) {
+			if (!ItemStackTools.getOres("ingotIridium").isEmpty()
+					&& TinkerRegistry.getMaterial("iridium") == Material.UNKNOWN) {
 				Material iridium = new Material("iridium", TextFormatting.GRAY);
 				iridium.addTrait(dense);
 				iridium.addTrait(alien, HEAD);

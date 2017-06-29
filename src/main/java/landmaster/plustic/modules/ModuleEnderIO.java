@@ -46,8 +46,13 @@ public class ModuleEnderIO {
 					.findAny().orElse(null);
 			darkSteel.setFluid(darkSteelFluid);
 			
-			TinkerRegistry.registerAlloy(new FluidStack(darkSteelFluid, 36), new FluidStack(TinkerFluids.obsidian, 72),
-					new FluidStack(TinkerFluids.iron, 36), new FluidStack(coalFluid, 25));
+			if (Config.alloyDarkSteel) {
+				TinkerRegistry.registerAlloy(
+						new FluidStack(darkSteelFluid, 36),
+						new FluidStack(TinkerFluids.obsidian, 72),
+						new FluidStack(TinkerFluids.iron, 36),
+						new FluidStack(coalFluid, 25));
+			}
 			
 			TinkerRegistry.addMaterialStats(darkSteel, new HeadMaterialStats(666, 7, 4, OBSIDIAN),
 					new HandleMaterialStats(1.05f, 40), new ExtraMaterialStats(40),

@@ -22,6 +22,7 @@ CurseForge page: https://minecraft.curseforge.com/projects/plustic
 - Psi by Vazkii
 - Avaritia by brandon3055
 - MineFactory Reloaded by skyboy026
+- Galacticraft by micdoodle8
 ## Using the source and building
 After cloning this repository, run the commands (with working directory in the folder with the repository)
 ```

@@ -34,6 +34,7 @@ public class Config extends Configuration {
 	public static boolean landCore;
 	public static boolean mfr;
 	public static boolean galacticraft;
+	public static boolean survivalist;
 	
 	public static boolean forceOutNaturalPledgeMaterials;
 	
@@ -93,7 +94,10 @@ public class Config extends Configuration {
 		mekanism = getBoolean("Enable Mekanism integration", "modules", true, "Integrate with Mekanism");
 		botania = getBoolean("Enable Botania integration", "modules", true, "Integrate with Botania");
 		{
-			forceOutNaturalPledgeMaterials = getBoolean("Force out Natural Pledge TiC materials", "tweaks", true, "Replace Natural Pledge Botania TiC materials with PlusTiC ones");
+			forceOutNaturalPledgeMaterials = getBoolean("Force out Natural Pledge TiC materials", "tweaks", true,
+					"If Natural Pledge is loaded:\n"
+					+ "If true: replace Natural Pledge Botania TiC materials with PlusTiC ones;\n"
+					+ "Otherwise: do *not* load the Botania module for PlusTiC, overriding other settings.");
 		}
 		advancedRocketry = getBoolean("Enable Advanced Rocketry integration", "modules", true, "Integrate with Advanced Rocketry (actually LibVulpes)");
 		armorPlus = getBoolean("Enable ArmorPlus integration", "modules", true, "Integrate with ArmorPlus");
@@ -115,6 +119,7 @@ public class Config extends Configuration {
 		landCore = getBoolean("Enable LandCore support", "modules", true, "Integrate with LandCore");
 		mfr = getBoolean("Enable MFR support", "modules", true, "Integrate with Minefactory Reloaded");
 		galacticraft = getBoolean("Enable Galacticraft support", "modules", true, "Integrate with Galacticraft");
+		survivalist = getBoolean("Enable Survivalist support", "modules", true, "Integrate with Survivalist");
 		
 		// TOOLS
 		katana = getBoolean("Enable Katana", "tools", true, "Enable Katana");

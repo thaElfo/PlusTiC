@@ -3,6 +3,7 @@ package landmaster.plustic.util;
 import java.lang.invoke.*;
 import java.lang.reflect.*;
 import java.util.*;
+import java.util.Optional;
 
 import org.apache.commons.lang3.*;
 import org.apache.commons.lang3.StringUtils;
@@ -46,6 +47,30 @@ public class Utils {
 		} catch (Throwable e) {
 			throw Throwables.propagate(e);
 		}
+	}
+	
+	private static final Map<String, ModContainer> tinkerMaterialRegisteredByMod;
+	
+	static {
+		try {
+			Field temp = TinkerRegistry.class.getDeclaredField("materialRegisteredByMod");
+			temp.setAccessible(true);
+			tinkerMaterialRegisteredByMod = (Map<String, ModContainer>)MethodHandles.lookup().unreflectGetter(temp).invokeExact();
+		} catch (Throwable e) {
+			throw Throwables.propagate(e);
+		}
+	}
+	
+	public static void forceOut(String material) {
+		if (tinkerMaterials.remove(material) != null) {
+			PlusTiC.log.info(String.format("Forcing out material %s", material));
+		}
+	}
+	
+	public static void forceOutModsMaterial(String material, String...anyOfTheseModids) {
+		Optional.ofNullable(tinkerMaterialRegisteredByMod.get(material))
+		.filter(cont -> ArrayUtils.contains(anyOfTheseModids, cont.getModId()))
+		.ifPresent(cont -> forceOut(material));
 	}
 	
 	/**

@@ -41,6 +41,7 @@ public class ModuleBotania {
 			TinkerRegistry.addMaterialStats(terrasteel, new BowMaterialStats(0.55f, 2f, 11f));
 			
 			PlusTiC.materials.put("terrasteel", terrasteel);
+			PlusTiC.deferredMaterials.add("terrasteel");
 			
 			Material elementium = new Material("elementium", TextFormatting.LIGHT_PURPLE);
 			elementium.addTrait(Mana.mana);
@@ -61,6 +62,7 @@ public class ModuleBotania {
 			TinkerRegistry.addMaterialStats(elementium, new BowMaterialStats(0.8f, 1.5f, 7.5f));
 			
 			PlusTiC.materials.put("elvenElementium", elementium);
+			PlusTiC.deferredMaterials.add("elvenElementium");
 			
 			Material manasteel = new Material("manasteel", TextFormatting.BLUE);
 			manasteel.addTrait(Mana.mana);
@@ -79,6 +81,7 @@ public class ModuleBotania {
 			TinkerRegistry.addMaterialStats(manasteel, new BowMaterialStats(1, 1.1f, 1));
 			
 			PlusTiC.materials.put("manasteel", manasteel);
+			PlusTiC.deferredMaterials.add("manasteel");
 			
 			Material livingwood = new Material("livingwood_plustic", TextFormatting.DARK_GREEN);
 			livingwood.addTrait(Botanical.botanical.get(1), HEAD);
@@ -93,6 +96,7 @@ public class ModuleBotania {
 					new HandleMaterialStats(1.15f, 20), new ExtraMaterialStats(20),
 					new BowMaterialStats(1.1f, 1.1f, 1.8f), new ArrowShaftMaterialStats(1f, 6));
 			PlusTiC.materials.put("livingwood", livingwood);
+			PlusTiC.deferredMaterials.add("livingwood");
 			
 			// MIRION ALLOY
 			Utils.ItemMatGroup mirionGroup = Utils.registerMatGroup("mirion");

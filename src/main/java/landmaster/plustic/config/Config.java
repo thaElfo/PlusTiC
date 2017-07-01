@@ -35,6 +35,8 @@ public class Config extends Configuration {
 	public static boolean mfr;
 	public static boolean galacticraft;
 	
+	public static boolean forceOutNaturalPledgeMaterials;
+	
 	public static boolean pyrotheumSmelt;
 	
 	public static boolean alloyDarkSteel;
@@ -90,6 +92,9 @@ public class Config extends Configuration {
 		projectRed = getBoolean("Enable Project Red integration", "modules", true, "Integrate with Project Red-Exploration");
 		mekanism = getBoolean("Enable Mekanism integration", "modules", true, "Integrate with Mekanism");
 		botania = getBoolean("Enable Botania integration", "modules", true, "Integrate with Botania");
+		{
+			forceOutNaturalPledgeMaterials = getBoolean("Force out Natural Pledge TiC materials", "tweaks", true, "Replace Natural Pledge Botania TiC materials with PlusTiC ones");
+		}
 		advancedRocketry = getBoolean("Enable Advanced Rocketry integration", "modules", true, "Integrate with Advanced Rocketry (actually LibVulpes)");
 		armorPlus = getBoolean("Enable ArmorPlus integration", "modules", true, "Integrate with ArmorPlus");
 		enderIO = getBoolean("Enable EnderIO integration", "modules", true, "Integrate with EnderIO");

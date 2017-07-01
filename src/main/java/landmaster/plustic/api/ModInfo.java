@@ -14,6 +14,7 @@ public class ModInfo {
 	+ "after:thermalfoundation;after:substratum;after:draconicevolution;"
 	+ "after:landcore;after:tesla;after:baubles;after:actuallyadditions;"
 	+ "after:natura;after:Psi;after:psi;after:avaritia;after:landcore;after:landcraft;"
-	+ "after:galacticraftcore;after:galacticraftplanets;after:minefactoryreloaded;";
+	+ "after:galacticraftcore;after:galacticraftplanets;after:minefactoryreloaded;"
+	+ "after:botanicaladdons;";
 	
 }

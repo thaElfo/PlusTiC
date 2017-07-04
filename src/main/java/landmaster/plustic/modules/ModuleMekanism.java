@@ -68,26 +68,28 @@ public class ModuleMekanism {
 				PlusTiC.materialIntegrations.put("tin", tinI);
 			}
 			
-			Material osmium = new Material("osmium", TextFormatting.BLUE);
-			osmium.addTrait(dense);
-			osmium.addTrait(established);
-			osmium.addItem("ingotOsmium", 1, Material.VALUE_Ingot);
-			osmium.setCraftable(false).setCastable(true);
-			PlusTiC.proxy.setRenderInfo(osmium, 0xBFD0FF);
-			
-			FluidMolten osmiumFluid = Utils.fluidMetal("osmium", 0xBFD0FF);
-			osmiumFluid.setTemperature(820);
-			Utils.initFluidMetal(osmiumFluid);
-			osmium.setFluid(osmiumFluid);
-			
-			TinkerRegistry.addMaterialStats(osmium,
-					new HeadMaterialStats(500, 6, 5.8f, DIAMOND),
-					new HandleMaterialStats(1.2f, 45),
-					new ExtraMaterialStats(40),
-					new BowMaterialStats(0.65f, 1.3f, 5.7f),
-					new BatteryCellMaterialStats(80000));
-			
-			PlusTiC.materials.put("osmium", osmium);
+			if (TinkerRegistry.getMaterial("osmium") == Material.UNKNOWN) {
+				Material osmium = new Material("osmium", TextFormatting.BLUE);
+				osmium.addTrait(dense);
+				osmium.addTrait(established);
+				osmium.addItem("ingotOsmium", 1, Material.VALUE_Ingot);
+				osmium.setCraftable(false).setCastable(true);
+				PlusTiC.proxy.setRenderInfo(osmium, 0xBFD0FF);
+				
+				FluidMolten osmiumFluid = Utils.fluidMetal("osmium", 0xBFD0FF);
+				osmiumFluid.setTemperature(820);
+				Utils.initFluidMetal(osmiumFluid);
+				osmium.setFluid(osmiumFluid);
+				
+				TinkerRegistry.addMaterialStats(osmium,
+						new HeadMaterialStats(500, 6, 5.8f, DIAMOND),
+						new HandleMaterialStats(1.2f, 45),
+						new ExtraMaterialStats(40),
+						new BowMaterialStats(0.65f, 1.3f, 5.7f),
+						new BatteryCellMaterialStats(80000));
+				
+				PlusTiC.materials.put("osmium", osmium);
+			}
 			
 			Material refinedObsidian = new Material("refinedObsidian", TextFormatting.LIGHT_PURPLE);
 			refinedObsidian.addTrait(dense);

@@ -15,6 +15,6 @@ public class ModInfo {
 	+ "after:landcore;after:tesla;after:baubles;after:actuallyadditions;"
 	+ "after:natura;after:Psi;after:psi;after:avaritia;after:landcore;after:landcraft;"
 	+ "after:galacticraftcore;after:galacticraftplanets;after:minefactoryreloaded;"
-	+ "after:botanicaladdons;after:survivalist";
+	+ "after:botanicaladdons;after:survivalist;after:modernmetals";
 	
 }

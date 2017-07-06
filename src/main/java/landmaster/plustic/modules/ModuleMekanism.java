@@ -4,18 +4,19 @@ import static slimeknights.tconstruct.library.materials.MaterialTypes.*;
 import static slimeknights.tconstruct.library.utils.HarvestLevels.*;
 import static slimeknights.tconstruct.tools.TinkerTraits.*;
 
+import java.util.*;
+
 import landmaster.plustic.*;
 import landmaster.plustic.config.*;
 import landmaster.plustic.fluids.*;
 import landmaster.plustic.tools.stats.*;
-import landmaster.plustic.traits.Anticorrosion;
-import landmaster.plustic.traits.DevilsStrength;
+import landmaster.plustic.traits.*;
 import landmaster.plustic.util.*;
 import mcjty.lib.tools.*;
 import net.minecraft.item.*;
 import net.minecraft.util.text.*;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fml.common.*;
+import net.minecraftforge.fluids.*;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.registry.*;
 import net.minecraftforge.oredict.*;
 import slimeknights.tconstruct.library.*;
@@ -68,8 +69,9 @@ public class ModuleMekanism {
 				PlusTiC.materialIntegrations.put("tin", tinI);
 			}
 			
+			Material osmium;
 			if (TinkerRegistry.getMaterial("osmium") == Material.UNKNOWN) {
-				Material osmium = new Material("osmium", TextFormatting.BLUE);
+				osmium = new Material("osmium", TextFormatting.BLUE);
 				osmium.addTrait(dense);
 				osmium.addTrait(established);
 				osmium.addItem("ingotOsmium", 1, Material.VALUE_Ingot);
@@ -89,6 +91,8 @@ public class ModuleMekanism {
 						new BatteryCellMaterialStats(80000));
 				
 				PlusTiC.materials.put("osmium", osmium);
+			} else {
+				osmium = TinkerRegistry.getMaterial("osmium");
 			}
 			
 			Material refinedObsidian = new Material("refinedObsidian", TextFormatting.LIGHT_PURPLE);
@@ -108,11 +112,35 @@ public class ModuleMekanism {
 					new HandleMaterialStats(1.5f, -100),
 					new ExtraMaterialStats(160),
 					PlusTiC.justWhy,
-					new LaserMediumMaterialStats(6.0f, 45));
+					new LaserMediumMaterialStats(6.0f, 55));
 			
 			PlusTiC.materials.put("refinedObsidian", refinedObsidian);
 			
-			if (PlusTiC.materials.containsKey("iridium")) {
+			Material refinedGlowstone = new Material("refinedGlowstone", TextFormatting.YELLOW);
+			refinedGlowstone.addTrait(Sassy.sassy);
+			refinedGlowstone.addTrait(Illuminati.illuminati);
+			refinedGlowstone.addItem("ingotRefinedGlowstone", 1, Material.VALUE_Ingot);
+			refinedGlowstone.setCraftable(false).setCastable(true);
+			PlusTiC.proxy.setRenderInfo(refinedGlowstone, 0xFFFF00);
+			
+			FluidMolten refinedGlowstoneFluid = Utils.fluidMetal("refinedGlowstone", 0xFFFF00);
+			refinedGlowstoneFluid.setTemperature(1111);
+			Utils.initFluidMetal(refinedGlowstoneFluid);
+			refinedGlowstone.setFluid(refinedGlowstoneFluid);
+			
+			TinkerRegistry.addMaterialStats(refinedGlowstone,
+					new HeadMaterialStats(450, 9, 10, COBALT),
+					new HandleMaterialStats(0.9f, 0),
+					new ExtraMaterialStats(100),
+					PlusTiC.justWhy,
+					new LaserMediumMaterialStats(10.0f, 40));
+			
+			PlusTiC.materials.put("refinedGlowstone", refinedGlowstone);
+			
+			Material iridium = Optional.ofNullable(PlusTiC.materials.get("iridium"))
+					.orElse(TinkerRegistry.getMaterial("iridium"));
+			
+			if (iridium.hasFluid()) {
 				// osmiridium
 				Utils.ItemMatGroup osmiridiumGroup = Utils.registerMatGroup("osmiridium");
 				
@@ -129,7 +157,7 @@ public class ModuleMekanism {
 				Utils.initFluidMetal(osmiridiumFluid);
 				osmiridium.setFluid(osmiridiumFluid);
 				TinkerRegistry.registerAlloy(new FluidStack(osmiridiumFluid, 2),
-						new FluidStack(PlusTiC.materials.get("osmium").getFluid(), 1), new FluidStack(PlusTiC.materials.get("iridium").getFluid(), 1));
+						new FluidStack(osmium.getFluid(), 1), new FluidStack(iridium.getFluid(), 1));
 				
 				TinkerRegistry.addMaterialStats(osmiridium, new HeadMaterialStats(1300, 6.8f, 8, COBALT));
 				TinkerRegistry.addMaterialStats(osmiridium, new HandleMaterialStats(1.5f, 30));

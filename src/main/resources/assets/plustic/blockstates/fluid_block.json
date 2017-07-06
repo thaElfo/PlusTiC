@@ -90,6 +90,9 @@
         }],
         "desh": [{
         	"custom": { "fluid": "desh" }
+        }],
+        "refinedglowstone": [{
+        	"custom": { "fluid": "glowstone" }
         }]
     }
 }

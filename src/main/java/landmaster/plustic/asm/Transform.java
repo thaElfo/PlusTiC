@@ -10,8 +10,8 @@ import net.minecraftforge.fml.common.*;
 import net.minecraftforge.fml.common.asm.transformers.deobf.*;
 
 /**
- * <strong>I SWEAR … THOSE ********* WHO PUT ******* IMMUTABLE LISTS AS BLOCK DROPS!!
- * ESPECIALLY YOU, EXTRA UTILITIES!!</strong>
+ * Until another transform is needed, this is needed for 1.10 only.
+ * Blame Extra Utilities for the transform.
  * @author Landmaster
  */
 public class Transform implements IClassTransformer {

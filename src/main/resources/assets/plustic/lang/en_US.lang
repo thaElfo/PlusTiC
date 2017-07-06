@@ -51,6 +51,7 @@ fluid.plustic.thorium.name=Molten Thorium
 fluid.plustic.tungsten.name=Molten Tungsten
 fluid.plustic.landium.name=Molten Landium
 fluid.plustic.desh.name=Molten Desh
+fluid.plustic.refinedglowstone.name=Refined Glowstone
 
 material.sapphire.name=Sapphire
 material.ruby.name=Ruby
@@ -101,6 +102,7 @@ material.landium.name=Landium
 material.pink_slime.name=Pink Slime
 material.pink_slime.prefix=Slime %s
 material.desh.name=Desh
+material.refinedglowstone.name=Refined Glowstone
 
 modifier.bloodymary.name=Bloody Mary
 modifier.bloodymary.desc=§oBrought to you by the legendary Queen of England...§r\nDeals bonus damage depending on the amount of health already lost by the target. Also, a chance to drop a Coagulated Blood for each hit.
@@ -167,6 +169,8 @@ modifier.morganlefay.name=Morgan Le Fay
 modifier.morganlefay.desc=§oLancelot...§r\nBonus magic damage (ranging from 0.0 to 5.0; Gaussian distributed) is afflicted (it is absolute).
 modifier.trash.name=Traaaaaassshhh!
 modifier.trash.desc=§oTraaaaaassshhh!§r\nRandom stuff is slowly generated when the tool is selected, but the tool is damaged slowly in this way.
+modifier.sassy.name=Sassy
+modifier.sassy.desc=§oThe sass...§r\nCrit on players and bosses.
 
 # MISCELLANEOUS
 

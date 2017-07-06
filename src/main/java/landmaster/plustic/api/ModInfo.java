@@ -4,7 +4,7 @@ public class ModInfo {
 
 	public static final String MODID = "plustic";
 	public static final String NAME = "PlusTiC";
-	public static final String VERSION = "5.1.2.0";
+	public static final String VERSION = "5.1.3.0";
 	public static final String DEPENDS = "required-after:mantle;"
 	+ "required-after:tconstruct@[1.10.2-2.6.5,);"
 	+ "required-after:compatlayer@[0.2.8,);"
@@ -15,6 +15,6 @@ public class ModInfo {
 	+ "after:landcore;after:tesla;after:baubles;after:actuallyadditions;"
 	+ "after:natura;after:Psi;after:psi;after:avaritia;after:landcore;after:landcraft;"
 	+ "after:galacticraftcore;after:galacticraftplanets;after:minefactoryreloaded;"
-	+ "after:botanicaladdons;after:survivalist;after:modernmetals";
+	+ "after:botanicaladdons;after:survivalist;after:modernmetals;after:basemetals";
 	
 }

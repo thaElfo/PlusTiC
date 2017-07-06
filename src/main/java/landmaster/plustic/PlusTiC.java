@@ -1,6 +1,7 @@
 package landmaster.plustic;
 
 import java.util.*;
+import java.util.Optional;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.*;
@@ -16,6 +17,7 @@ import landmaster.plustic.util.*;
 import net.minecraft.block.*;
 import net.minecraft.item.*;
 import net.minecraft.util.*;
+import net.minecraftforge.fluids.*;
 import net.minecraftforge.fml.common.*;
 import net.minecraftforge.fml.common.event.*;
 import net.minecraftforge.fml.common.registry.*;
@@ -44,6 +46,25 @@ public class PlusTiC {
 	public static final Collection<String> deferredMaterials = new THashSet<>();
 	
 	public static final BowMaterialStats justWhy = new BowMaterialStats(0.2f, 0.4f, -1f);
+	
+	@EventHandler
+	public void missingMappings(FMLMissingMappingsEvent event) {
+		event.get().forEach(mapping -> {
+			for (String name: new String[] { "osmium", "titanium", "iridium" }) {
+				if (mapping.resourceLocation.equals(new ResourceLocation(ModInfo.MODID, ModInfo.MODID+".molten_"+name))) {
+					Optional.ofNullable(FluidRegistry.getFluid(name))
+					.map(fluid -> fluid.getBlock())
+					.ifPresent(block -> {
+						if (mapping.type == GameRegistry.Type.BLOCK) {
+							mapping.remap(block);
+						} else if (mapping.type == GameRegistry.Type.ITEM) {
+							mapping.remap(Item.getItemFromBlock(block));
+						}
+					});
+				}
+			}
+		});
+	}
 	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
@@ -84,19 +105,18 @@ public class PlusTiC {
 		proxy.registerKeyBindings();
 		PacketHandler.init();
 		
-		// CURSE YOU, MEKANISM† AND ARMORPLUS! YOU REGISTERED THE OREDICTS IN
-		// INIT INSTEAD OF PREINIT!
-		//
-		// †fixed in later versions
-		Utils.setDispItem(materials.get("refinedObsidian"), "mekanism", "Ingot");
-		Utils.setDispItem(materials.get("osmium"), "mekanism", "Ingot", 1);
+		// This is here for historical reasons, as Mekanism has fixed their thing.
+		Utils.setDispItem(materials.get("refinedObsidian"), "ingotRefinedObsidian");
+		Utils.setDispItem(materials.get("osmium"), "ingotOsmium");
+		
+		// NOT REGISTERING YOUR OREDICTS IN PREINIT, ARMORPLUS?
 		Utils.setDispItem(materials.get("witherbone"), "armorplus", "wither_bone");
 		Utils.setDispItem(materials.get("guardianscale"), "armorplus", "guardian_scale");
 		
-		// YOU TOO, ACTUALLY ADDITIONS!
+		// YOU TOO, ACTUALLY ADDITIONS?
 		Utils.setDispItem(materials.get("blackquartz"), "gemQuartzBlack");
 		
-		// SAME HERE, AVARITIA!
+		// SAME HERE, AVARITIA?
 		Utils.setDispItem(materials.get("infinity"), "ingotInfinity");
 		
 		Utils.setDispItem(materials.get("sapphire"), "gemSapphire");
@@ -120,10 +140,7 @@ public class PlusTiC {
 	
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
-		// AND I THOUGHT THAT ARMORPLUS WAS THE ASININE ONE IN REGISTERING OREDICTS
-		// LATE! IT TURNS OUT THAT GALACTICRAFT HAS REACHED A NEW LEVEL OF *LUNA*CY
-		// (PUN INTENDED)—THEY REGISTER THEIR ORES ALL THE WAY IN POSTINIT! TRULY,
-		// THEY ARE ******* **OUT OF THIS WORLD!**
+		// Seriously? Registering oredicts *this* late? -_-
 		Utils.setDispItem(materials.get("desh"), "ingotDesh");
 	}
 	

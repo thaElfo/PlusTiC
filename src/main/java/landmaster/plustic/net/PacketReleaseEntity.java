@@ -29,9 +29,11 @@ public class PacketReleaseEntity implements IMessage {
 					|| ep.getHeldItemMainhand() == null
 					|| !TinkerUtil.hasTrait(nbt, Portly.portly.getIdentifier())
 					|| !nbt.hasKey("portlyGentleman", 10)) return;
+			
 			Entity ent = EntityList.createEntityFromNBT(
 					nbt.getCompoundTag("portlyGentleman"), ep.getEntityWorld());
 			if (ent == null) return;
+			
 			int offsetX = rtr.sideHit.getFrontOffsetX();
 			int offsetY = rtr.sideHit == EnumFacing.DOWN ? -1 : 0;
 			int offsetZ = rtr.sideHit.getFrontOffsetZ();
@@ -41,6 +43,7 @@ public class PacketReleaseEntity implements IMessage {
 					rtr.hitVec.yCoord+(bb.maxY-bb.minY)*0.5*offsetY,
 					rtr.hitVec.zCoord+(bb.maxZ-bb.minZ)*0.5*offsetZ,
 					ep.getRNG().nextFloat()*360, 0);
+			
 			if (!ep.getEntityWorld().spawnEntity(ent)) return;
 			if (ent instanceof EntityLiving) ((EntityLiving)ent).playLivingSound();
 			String id = nbt.getCompoundTag("portlyGentleman").getString("id");

@@ -91,6 +91,7 @@ public class PlusTiC {
 		ModuleMFR.init();
 		ModuleGalacticraft.init();
 		ModuleSurvivalist.init();
+		ModuleProjectE.init();
 		
 		ModuleTools.init();
 		

@@ -3,11 +3,11 @@ package landmaster.plustic.entity.ai;
 import landmaster.plustic.entity.*;
 import net.minecraft.entity.ai.*;
 
-public class AIBlindBanditAttack extends EntityAIAttackMelee {
+public class EntityAIBlindBanditAttack extends EntityAIAttackMelee {
 	private int raiseArmTicks;
     private EntityBlindBandit bandit;
 
-    public AIBlindBanditAttack(EntityBlindBandit banditIn, double speedIn, boolean longMemoryIn) {
+    public EntityAIBlindBanditAttack(EntityBlindBandit banditIn, double speedIn, boolean longMemoryIn) {
         super(banditIn, speedIn, longMemoryIn);
         this.bandit = banditIn;
     }

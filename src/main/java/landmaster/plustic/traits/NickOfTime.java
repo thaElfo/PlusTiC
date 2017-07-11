@@ -28,6 +28,12 @@ public class NickOfTime extends AbstractTrait {
 		Portal.portalable.add(identifier);
 	}
 	
+	@Override
+	public String getLocalizedDesc() {
+		// add the ender pearl cost to the description
+		return String.format(super.getLocalizedDesc(), ENDER_COST);
+	}
+	
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void timing(LivingHurtEvent event) {
 		NBTTagCompound nbt = TagUtil.getTagSafe(event.getEntityLiving().getHeldItemMainhand());

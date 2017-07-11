@@ -103,6 +103,8 @@ material.pink_slime.name=Pink Slime
 material.pink_slime.prefix=Slime %s
 material.desh.name=Desh
 material.refinedglowstone.name=Refined Glowstone
+material.darkmatter.name=Dark Matter
+material.redmatter.name=Red Matter
 
 modifier.bloodymary.name=Bloody Mary
 modifier.bloodymary.desc=§oBrought to you by the legendary Queen of England...§r\nDeals bonus damage depending on the amount of health already lost by the target. Also, a chance to drop a Coagulated Blood for each hit.
@@ -140,7 +142,7 @@ modifier.portly.desc=§oTesting nuclear bombs off the Korean coast, oh yeah!§r\
 modifier.endlectric.name=Endlectric
 modifier.endlectric.desc=§oCHARGE!§r\nDraws energy from items in the player's inventory to do bonus damage.
 modifier.nickoftime.name=Nick of Time
-modifier.nickoftime.desc=§oPhew!§r\nPress the "set portal" key (default "N") to set a virtual portal on the block you are pointing at. If you are on the brink of death, you have 8 ender pearls to spare, and the portal has enough space above, then the pearls are consumed, you are teleported to the virtual portal, and you are spared. (The tool must be in your hand.)
+modifier.nickoftime.desc=§oPhew!§r\nPress the "set portal" key (default "N") to set a virtual portal on the block you are pointing at. If you are on the brink of death, you have %d ender pearls to spare, and the portal has enough space above, then the pearls are consumed, you are teleported to the virtual portal, and you are spared. (The tool must be in your hand.)
 modifier.blindbandit.name=Blind Bandit
 modifier.blindbandit.desc=§oPulling a ... someone.§r\nA mob called the "Blind Bandit" will sometimes be summoned for a limited time after you attack or are attacked. She will attack hostile mobs, and will also attack those who dare attack her (except you), piercing armor on mobs.
 modifier.brownmagic.name=Brown Magic
@@ -171,6 +173,10 @@ modifier.trash.name=Traaaaaassshhh!
 modifier.trash.desc=§oTraaaaaassshhh!§r\nRandom stuff is slowly generated when the tool is selected, but the tool is damaged slowly in this way.
 modifier.sassy.name=Sassy
 modifier.sassy.desc=§oThe sass...§r\nCrit on players and bosses.
+modifier.ignoble.name=Ignoble
+modifier.ignoble.desc=§oTo a new low§r\nAs one takes damage, one starts to harbor feelings of ignoble jealousy as the offender is killed. When this trait is enabled, those feelings are vented when attacking while sneaking.
+modifier.dprk.name=Democratic People's Republic of Korea
+modifier.dprk.desc=§oWhen your missiles explode right after launch§r\nWhen attacking or defending, Supreme Leaders will spawn, exploding on opponents in the same manner as a creeper.
 
 # MISCELLANEOUS
 
@@ -207,6 +213,7 @@ msg.plustic.hailhydra.use=If a §mHydra§r §nKelly§r head is cut off, two more
 
 tooltip.plustic.globalmodifier.info=Linked inventory at [x=%d, y=%d, z=%d] and dimension %d
 tooltip.plustic.portlymodifier.info=Entity: %s
+tooltip.plustic.ignoblemodifier.info=Ignobility: §1%f
 tooltip.plustic.portal.info=Teleportation point: [x=%d, y=%d, z=%d]; dimension %d
 tooltip.plustic.toggle.info=Click to toggle
 tooltip.plustic.toggle.state.true=%s currently §aenabled
@@ -228,6 +235,8 @@ key.plustic_brown_magic.desc=Activate Brown Magic
 
 entity.plustic.BlindBandit.name=Blind Bandit
 entity.BlindBandit.name=Blind Bandit
+entity.plustic.SupremeLeader.name=Supreme Leader
+entity.SupremeLeader.name=Supreme Leader
 
 # GUI
 

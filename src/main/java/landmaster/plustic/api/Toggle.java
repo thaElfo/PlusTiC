@@ -20,6 +20,7 @@ import net.minecraftforge.event.entity.player.*;
 import net.minecraftforge.fml.common.eventhandler.*;
 import net.minecraftforge.fml.common.gameevent.*;
 import net.minecraftforge.fml.relauncher.*;
+import slimeknights.tconstruct.library.TinkerRegistry;
 import slimeknights.tconstruct.library.tools.*;
 import slimeknights.tconstruct.library.utils.*;
 
@@ -96,13 +97,13 @@ public class Toggle {
 			for (int i=page*OPTIONS_PER_PAGE; i<Math.min((page+1)*OPTIONS_PER_PAGE, identifiers.size()); ++i) {
 				String identifier = identifiers.get(i);
 				boolean enabled = enableds.get(i);
-				fontRenderer.drawString(I18n.format("modifier."+identifier+".name"), guiLeft+10, guiTop+18*(i+1)+3, 0xFFFFFF);
+				fontRenderer.drawString(TinkerRegistry.getModifier(identifier).getLocalizedName(), guiLeft+10, guiTop+18*(i+1)+3, 0xFFFFFF);
 				mc.renderEngine.bindTexture(background);
 				drawTexturedModalRect(guiLeft+96, guiTop+18*(i+1)+1,176+(enabled ? 0 : 12), 0, 12, 12);
 				if (isPointInRegion(7, 18*(i+1), 114, 16, mouseX, mouseY)) {
 					drawHoveringText(Arrays.asList(I18n.format("tooltip.plustic.toggle.info"),
 							I18n.format("tooltip.plustic.toggle.state."+enabled,
-									I18n.format("modifier."+identifier+".name"))
+									TinkerRegistry.getModifier(identifier).getLocalizedName())
 							), mouseX, mouseY);
 				}
 			}
@@ -161,7 +162,7 @@ public class Toggle {
 			if (toggleable.contains(identifier)) {
 				boolean enabled = !toggle.hasKey(identifier);
 				event.getToolTip().add(I18n.format("tooltip.plustic.toggle.state."+enabled,
-									I18n.format("modifier."+identifier+".name")));
+									TinkerRegistry.getModifier(identifier).getLocalizedName()));
 			}
 		}
 	}

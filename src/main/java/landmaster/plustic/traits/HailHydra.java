@@ -67,14 +67,14 @@ public class HailHydra extends AbstractTrait {
 		}
 	}
 	
-	private @javax.annotation.Nonnull Optional<Entity> getAttacker(DamageSource source) {
+	private static @javax.annotation.Nonnull Optional<Entity> getAttacker(DamageSource source) {
 		if (source instanceof EntityDamageSource) {
 			return Optional.ofNullable(((EntityDamageSource)source).getEntity());
 		}
 		return Optional.empty();
 	}
 	
-	private void entExplode(World world, Entity entity, Collection<Entity> extraTargets, float power) {
+	private static void entExplode(World world, Entity entity, Collection<Entity> extraTargets, float power) {
 		List<Entity> ents = world.getEntitiesWithinAABB(EntityLiving.class, Utils.AABBfromVecs(
 				entity.getPositionVector().subtract(9, 9, 9),
 				entity.getPositionVector().addVector(9, 9, 9)),

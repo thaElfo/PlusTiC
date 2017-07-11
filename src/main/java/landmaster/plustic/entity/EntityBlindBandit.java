@@ -65,8 +65,8 @@ public class EntityBlindBandit extends EntityCreature {
 	}
 	
 	@Override
-	public void readFromNBT(NBTTagCompound compound) {
-		super.readFromNBT(compound);
+	public void readEntityFromNBT(NBTTagCompound compound) {
+		super.readEntityFromNBT(compound);
 		if (compound.hasKey("DeathCountdown", 99)) {
 			countdown = compound.getInteger("DeathCountdown");
 		}
@@ -76,18 +76,17 @@ public class EntityBlindBandit extends EntityCreature {
 	}
 	
 	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-		compound = super.writeToNBT(compound);
+	public void writeEntityToNBT(NBTTagCompound compound) {
+		super.writeEntityToNBT(compound);
 		compound.setInteger("DeathCountdown", countdown);
 		if (summonerId != null) {
 			compound.setUniqueId("SummonerId", summonerId);
 		}
-		return compound;
 	}
 	
 	@Override
 	public boolean canAttackClass(Class<? extends EntityLivingBase> cls) {
-		return true;
+		return true; // can attack ghasts
 	}
 	
 	@Override
@@ -177,7 +176,7 @@ public class EntityBlindBandit extends EntityCreature {
         
         this.getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
         
-        this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(35.0D);
+        this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(48.0D);
         this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.5D);
         this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(5.5D);
         this.getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(19.0D);
@@ -187,7 +186,7 @@ public class EntityBlindBandit extends EntityCreature {
 	@Override
     protected void initEntityAI() {
         this.tasks.addTask(0, new EntityAISwimming(this));
-        this.tasks.addTask(2, new AIBlindBanditAttack(this, 1.0D, true));
+        this.tasks.addTask(2, new EntityAIBlindBanditAttack(this, 1.0D, true));
         this.tasks.addTask(5, new EntityAIMoveTowardsRestriction(this, 1.0D));
         this.tasks.addTask(7, new EntityAIWander(this, 1.0D));
         this.tasks.addTask(8, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));

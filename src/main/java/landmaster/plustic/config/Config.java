@@ -15,6 +15,7 @@ import net.minecraftforge.common.config.*;
 import net.minecraftforge.fml.common.event.*;
 
 public class Config extends Configuration {
+	// MODULES
 	public static boolean base;
 	public static boolean bop;
 	public static boolean projectRed;
@@ -35,7 +36,9 @@ public class Config extends Configuration {
 	public static boolean mfr;
 	public static boolean galacticraft;
 	public static boolean survivalist;
+	public static boolean projectE;
 	
+	// alas…
 	public static boolean forceOutNaturalPledgeMaterials;
 	
 	public static boolean pyrotheumSmelt;
@@ -120,6 +123,7 @@ public class Config extends Configuration {
 		mfr = getBoolean("Enable MFR support", "modules", true, "Integrate with Minefactory Reloaded");
 		galacticraft = getBoolean("Enable Galacticraft support", "modules", true, "Integrate with Galacticraft");
 		survivalist = getBoolean("Enable Survivalist support", "modules", true, "Integrate with Survivalist");
+		projectE = getBoolean("Enable ProjectE support", "modules", true, "Integrate with ProjectE");
 		
 		// TOOLS
 		katana = getBoolean("Enable Katana", "tools", true, "Enable Katana");

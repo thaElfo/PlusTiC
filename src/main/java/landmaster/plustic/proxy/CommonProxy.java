@@ -38,6 +38,7 @@ public class CommonProxy {
 	}
 	
 	public void initEntities() {
+		EntityTools.registerModEntity(new ResourceLocation(ModInfo.MODID, "supremeleader"), EntitySupremeLeader.class, "SupremeLeader", 0, PlusTiC.INSTANCE, 96, 2, true, 0xFF0000, 0x0000FF);
 		EntityTools.registerModEntity(new ResourceLocation(ModInfo.MODID, "blindbandit"), EntityBlindBandit.class, "BlindBandit", 1, PlusTiC.INSTANCE, 64, 3, true, 0xFF00FF, 0xFF0000);
 	}
 	

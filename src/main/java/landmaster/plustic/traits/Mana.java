@@ -3,7 +3,6 @@ package landmaster.plustic.traits;
 import baubles.api.*;
 import baubles.api.cap.*;
 import landmaster.plustic.api.*;
-import mcjty.lib.tools.*;
 
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
@@ -30,13 +29,14 @@ public class Mana extends AbstractTrait {
 				&& ToolHelper.getCurrentDurability(tool) < ToolHelper.getMaxDurability(tool)
 				&& Toggle.getToggleState(tool, identifier)
 				&& drawMana((EntityPlayer)entity)) {
-			ToolHelper.healTool(tool, MANA_DRAW, (EntityPlayer)entity);
+			ToolHelper.healTool(tool, 1, (EntityPlayer)entity);
 		}
 	}
 	
 	@Override
 	public int onToolDamage(ItemStack tool, int damage, int newDamage, EntityLivingBase entity) {
-		if (entity instanceof EntityPlayer
+		if (!entity.getEntityWorld().isRemote
+				&& entity instanceof EntityPlayer
 				&& Toggle.getToggleState(tool, identifier)
 				&& drawMana((EntityPlayer)entity)) {
 			--newDamage;
@@ -46,21 +46,15 @@ public class Mana extends AbstractTrait {
 	
 	private static boolean drawMana(EntityPlayer ent) {
 		IItemHandler handler = ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-		if (handler instanceof IItemHandlerModifiable) {
-			for (int i=0; i<handler.getSlots(); ++i) {
-				ItemStack is = ItemStackTools.safeCopy(handler.getStackInSlot(i));
-				if (ManaItemHandler.requestManaExactForTool(is, ent, MANA_DRAW, true)) {
-					((IItemHandlerModifiable) handler).setStackInSlot(i, is);
-					return true;
-				}
+		for (int i=0; i<handler.getSlots(); ++i) {
+			if (ManaItemHandler.requestManaExactForTool(handler.getStackInSlot(i), ent, MANA_DRAW, true)) {
+				return true;
 			}
 		}
 		
 		IBaublesItemHandler ib = BaublesApi.getBaublesHandler(ent);
 		for (int i=0; i<ib.getSlots(); ++i) {
-			ItemStack is = ItemStackTools.safeCopy(ib.getStackInSlot(i));
-			if (ManaItemHandler.requestManaExactForTool(is, ent, MANA_DRAW, true)) {
-				ib.setStackInSlot(i, is);
+			if (ManaItemHandler.requestManaExactForTool(ib.getStackInSlot(i), ent, MANA_DRAW, true)) {
 				return true;
 			}
 		}

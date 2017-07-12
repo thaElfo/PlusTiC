@@ -26,6 +26,7 @@ Starting in 5.1.2.0, PlusTiC forces out and *overrides* Natural Pledge TiC mater
 - MineFactory Reloaded by skyboy026
 - Galacticraft by micdoodle8
 - Survivalist by gigaherz
+- ProjectE by sinkillerj
 ## Using the source and building
 After cloning this repository, run the commands (with working directory in the folder with the repository)
 ```

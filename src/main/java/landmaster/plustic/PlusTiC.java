@@ -128,7 +128,7 @@ public class PlusTiC {
 		
 		{
 			// TODO add more materials to force out when needed
-			if (Config.forceOutNaturalPledgeMaterials) {
+			if (Config.botania && Config.forceOutNaturalPledgeMaterials) {
 				Utils.forceOutModsMaterial("terrasteel", "botanicaladdons");
 				Utils.forceOutModsMaterial("elementium", "botanicaladdons");
 				Utils.forceOutModsMaterial("manasteel", "botanicaladdons");

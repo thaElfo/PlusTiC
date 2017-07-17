@@ -74,7 +74,8 @@ public class ModuleTools {
 		}
 		
 		// for added PlusTiC tools
-		for (IModifier modifier: TinkerRegistry.getAllModifiers()) {
+		// TODO add more modifier jsons
+		for (IModifier modifier: new IModifier[] { TinkerModifiers.modBeheading, TinkerModifiers.modDiamond, TinkerModifiers.modEmerald }) {
 			PlusTiC.proxy.registerModifierModel(modifier,
 					new ResourceLocation(ModInfo.MODID, "models/item/modifiers/"+modifier.getIdentifier()));
 		}

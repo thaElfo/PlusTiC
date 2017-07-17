@@ -72,6 +72,8 @@ public class PlusTiC {
 		
 		proxy.initEntities();
 		
+		// TODO add more modules when needed
+		
 		ModuleBase.init();
 		
 		ModuleBoP.init();
@@ -92,6 +94,7 @@ public class PlusTiC {
 		ModuleGalacticraft.init();
 		ModuleSurvivalist.init();
 		ModuleProjectE.init();
+		ModuleGemsPlus.init();
 		
 		ModuleTools.init();
 		
@@ -106,9 +109,12 @@ public class PlusTiC {
 		proxy.registerKeyBindings();
 		PacketHandler.init();
 		
+		Utils.setDispItem(materials.get("phoenixite"), "gemPhoenixite");
+		
 		// This is here for historical reasons, as Mekanism has fixed their thing.
 		Utils.setDispItem(materials.get("refinedObsidian"), "ingotRefinedObsidian");
 		Utils.setDispItem(materials.get("osmium"), "ingotOsmium");
+		Utils.setDispItem(materials.get("refinedGlowstone"), "ingotRefinedGlowstone");
 		
 		// NOT REGISTERING YOUR OREDICTS IN PREINIT, ARMORPLUS?
 		Utils.setDispItem(materials.get("witherbone"), "armorplus", "wither_bone");

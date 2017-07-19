@@ -41,7 +41,7 @@ public class OreRegisterPromise extends CompletableFuture<ItemStack> {
 	 */
 	@SubscribeEvent(priority = EventPriority.LOW)
 	public static void onOreRegister(OreDictionary.OreRegisterEvent event) {
-		promises.get(event.getName())
+		new ArrayList<>(promises.get(event.getName())) // Have to wrap in an ArrayList to prevent comodification.
 		.forEach(promise -> promise.complete(event.getOre()));
 	}
 }

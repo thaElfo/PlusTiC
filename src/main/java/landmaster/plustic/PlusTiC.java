@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.*;
 
+import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import gnu.trove.map.hash.*;
 import landmaster.plustic.proxy.*;
 import landmaster.plustic.api.*;
@@ -28,7 +29,7 @@ import slimeknights.tconstruct.shared.*;
 import slimeknights.tconstruct.tools.*;
 
 @Mod.EventBusSubscriber
-@Mod(modid = ModInfo.MODID, name = ModInfo.NAME, version = ModInfo.VERSION, dependencies = ModInfo.DEPENDS, useMetadata = true, acceptedMinecraftVersions = "[1.9,1.12)")
+@Mod(modid = ModInfo.MODID, name = ModInfo.NAME, version = ModInfo.VERSION, dependencies = ModInfo.DEPENDS, useMetadata = true, acceptedMinecraftVersions = "[1.12, 1.13)")
 public class PlusTiC {
 	public static Config config;
 	
@@ -115,6 +116,13 @@ public class PlusTiC {
 		proxy.initToolGuis();
 		proxy.registerKeyBindings();
 		PacketHandler.init();
+		
+		final Material Void = materials.get("Void");
+		if (Void != null) {
+			ItemStack voidStack = new ItemStack(InitItems.itemCrystal, 1, 3);
+			Void.addItem(voidStack, 1, Material.VALUE_Ingot);
+			Void.setRepresentativeItem(voidStack);
+		}
 		
 		Utils.setDispItem(materials.get("phoenixite"), "gemPhoenixite");
 		

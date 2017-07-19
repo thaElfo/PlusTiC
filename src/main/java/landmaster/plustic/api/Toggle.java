@@ -5,6 +5,7 @@ import java.util.*;
 
 import org.lwjgl.opengl.*;
 
+import it.unimi.dsi.fastutil.booleans.*;
 import landmaster.plustic.*;
 import landmaster.plustic.net.*;
 import net.minecraft.client.*;
@@ -48,7 +49,7 @@ public class Toggle {
 		private int page;
 		private EntityPlayer player;
 		private List<String> identifiers;
-		private List<Boolean> enableds;
+		private BooleanList enableds;
 		
 		private int xSize = 176;
 		private int ySize = 128;
@@ -58,7 +59,7 @@ public class Toggle {
 			this.player = player;
 			page = 0;
 			identifiers = new ArrayList<>();
-			enableds = new ArrayList<>();
+			enableds = new BooleanArrayList();
 			NBTTagCompound nbt = TagUtil.getTagSafe(this.player.getHeldItemMainhand());
 			NBTTagList traits = TagUtil.getTraitsTagList(nbt);
 			String identifier;

@@ -15,7 +15,6 @@ import net.minecraft.util.text.*;
 import net.minecraftforge.fluids.*;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.LoaderState;
-import slimeknights.tconstruct.*;
 import slimeknights.tconstruct.library.*;
 import slimeknights.tconstruct.library.materials.*;
 import slimeknights.tconstruct.shared.*;
@@ -50,37 +49,34 @@ public class ModuleBase {
 			new OreRegisterPromise("ingotAluminum").acceptEither(new OreRegisterPromise("ingotAluminium"), stack -> {
 				if (Loader.instance().hasReachedState(LoaderState.INITIALIZATION)) return;
 				
-				if (TinkerIntegration.isIntegrated(TinkerFluids.aluminum)) {
-					// alumite is back! (with some changes)
-					Utils.ItemMatGroup alumiteGroup = Utils.registerMatGroup("alumite");
-					
-					Material alumite = new Material("alumite", TextFormatting.RED);
-					alumite.addTrait(Global.global);
-					alumite.addItem("ingotAlumite", 1, Material.VALUE_Ingot);
-					alumite.setCraftable(false).setCastable(true);
-					alumite.setRepresentativeItem(alumiteGroup.ingot);
-					PlusTiC.proxy.setRenderInfo(alumite, 0xFFE0F1);
-					
-					FluidMolten alumiteFluid = Utils.fluidMetal("alumite", 0xFFE0F1);
-					alumiteFluid.setTemperature(890);
-					Utils.initFluidMetal(alumiteFluid);
-					alumite.setFluid(alumiteFluid);
-					TinkerRegistry.registerAlloy(new FluidStack(alumiteFluid, 3), new FluidStack(TinkerFluids.aluminum, 5),
-							new FluidStack(TinkerFluids.iron, 2), new FluidStack(TinkerFluids.obsidian, 2));
-					
-					TinkerRegistry.addMaterialStats(alumite, new HeadMaterialStats(700, 6.8f, 5.5f, COBALT),
-							new HandleMaterialStats(1.10f, 70), new ExtraMaterialStats(80),
-							new BowMaterialStats(0.65f, 1.6f, 7f));
-					
-					PlusTiC.materials.put("alumite", alumite);
-				}
+				// alumite is back! (with some changes)
+				Utils.ItemMatGroup alumiteGroup = Utils.registerMatGroup("alumite");
+				
+				Material alumite = new Material("alumite", TextFormatting.RED);
+				alumite.addTrait(Global.global);
+				alumite.addItem("ingotAlumite", 1, Material.VALUE_Ingot);
+				alumite.setCraftable(false).setCastable(true);
+				alumite.setRepresentativeItem(alumiteGroup.ingot);
+				PlusTiC.proxy.setRenderInfo(alumite, 0xFFE0F1);
+				
+				FluidMolten alumiteFluid = Utils.fluidMetal("alumite", 0xFFE0F1);
+				alumiteFluid.setTemperature(890);
+				Utils.initFluidMetal(alumiteFluid);
+				alumite.setFluid(alumiteFluid);
+				TinkerRegistry.registerAlloy(new FluidStack(alumiteFluid, 3), new FluidStack(TinkerFluids.aluminum, 5),
+						new FluidStack(TinkerFluids.iron, 2), new FluidStack(TinkerFluids.obsidian, 2));
+				
+				TinkerRegistry.addMaterialStats(alumite, new HeadMaterialStats(700, 6.8f, 5.5f, COBALT),
+						new HandleMaterialStats(1.10f, 70), new ExtraMaterialStats(80),
+						new BowMaterialStats(0.65f, 1.6f, 7f));
+				
+				PlusTiC.materials.put("alumite", alumite);
 			});
 			
 			new OreRegisterPromise("ingotNickel").thenAccept(stack -> {
 				if (Loader.instance().hasReachedState(LoaderState.INITIALIZATION)) return;
 				
-				if (TinkerIntegration.isIntegrated(TinkerFluids.nickel)
-						&& TinkerRegistry.getMaterial("nickel") == Material.UNKNOWN) {
+				if (TinkerRegistry.getMaterial("nickel") == Material.UNKNOWN) {
 					Material nickel = new Material("nickel", TextFormatting.YELLOW);
 					nickel.addTrait(NickOfTime.nickOfTime, HEAD);
 					nickel.addTrait(magnetic);
@@ -98,8 +94,7 @@ public class ModuleBase {
 					PlusTiC.materials.put("nickel", nickel);
 				}
 				
-				if (TinkerIntegration.isIntegrated(TinkerFluids.nickel)
-						&& TinkerRegistry.getMaterial("invar") == Material.UNKNOWN) {
+				if (TinkerRegistry.getMaterial("invar") == Material.UNKNOWN) {
 					Utils.ItemMatGroup invarGroup = Utils.registerMatGroup("invar");
 					
 					Material invar = new Material("invar", 0xD6D6D6);

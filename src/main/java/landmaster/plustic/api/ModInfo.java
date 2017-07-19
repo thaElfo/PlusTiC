@@ -8,7 +8,7 @@ public class ModInfo {
 	
 	// TODO add dependencies when needed
 	public static final String DEPENDS = "required-after:mantle;"
-	+ "required-after:tconstruct@[1.12-2.7.1.7,);"
+	+ "required-after:tconstruct@[1.12-2.7.1.7,);required-after:forge@[14.21.1.2387,);"
 	+ "after:mekanism;after:biomesoplenty;"
 	+ "after:botania;after:libvulpes;after:redstoneflux;"
 	+ "after:armorplus;after:enderio;after:projectred-exploration;"

@@ -2,7 +2,6 @@ package landmaster.plustic.traits;
 
 import org.apache.commons.lang3.*;
 
-import mcjty.lib.tools.*;
 import net.minecraftforge.oredict.*;
 
 public class GetLucky extends DeathSaveTrait {
@@ -10,7 +9,7 @@ public class GetLucky extends DeathSaveTrait {
 	
 	public GetLucky() {
 		super("getlucky", 0xFF4511, 8,
-				stack -> !ItemStackTools.isEmpty(stack)
+				stack -> !stack.isEmpty()
 				&& ArrayUtils.contains(OreDictionary.getOreIDs(stack), OreDictionary.getOreID("gemPhoenixite")),
 				"msg.plustic.getlucky.use");
 	}

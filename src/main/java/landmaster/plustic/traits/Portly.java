@@ -1,9 +1,8 @@
 package landmaster.plustic.traits;
 
 import landmaster.plustic.*;
-import landmaster.plustic.api.Sounds;
+import landmaster.plustic.api.*;
 import landmaster.plustic.net.*;
-import mcjty.lib.tools.ChatTools;
 import net.minecraft.client.resources.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
@@ -57,7 +56,7 @@ public class Portly extends AbstractTrait {
 		ToolHelper.damageTool(event.getItemStack(), durabilityCost(event.getTarget()), event.getEntityLiving());
 		Sounds.playSoundToAll(event.getEntityPlayer(), SoundEvents.ENTITY_ENDERMEN_TELEPORT, 1.0f, 1.0f);
 		event.getEntityPlayer().swingArm(event.getHand());
-		ChatTools.addChatMessage(event.getEntityPlayer(), new TextComponentTranslation(
+		event.getEntityPlayer().sendMessage(new TextComponentTranslation(
 				"msg.plustic.portlymodifier.set", nbt.getCompoundTag("portlyGentleman").getString("id")));
 	}
 	@SideOnly(Side.CLIENT)

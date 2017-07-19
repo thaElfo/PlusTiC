@@ -37,7 +37,7 @@ public class DoubleCoord4D {
 	}
 	
 	public DoubleCoord4D(Vec3d pos, World world) {
-		this(pos.xCoord, pos.yCoord, pos.zCoord, world.provider.getDimension());
+		this(pos.x, pos.y, pos.z, world.provider.getDimension());
 	}
 	
 	public static Coord4D fromNBT(NBTTagCompound nbt) {

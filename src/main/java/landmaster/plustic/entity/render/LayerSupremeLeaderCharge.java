@@ -34,10 +34,10 @@ public class LayerSupremeLeaderCharge implements LayerRenderer<EntitySupremeLead
 			GlStateManager.disableLighting();
 			GlStateManager.blendFunc(GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ONE);
 			this.creeperModel.setModelAttributes(this.renderer.getMainModel());
-			Minecraft.getMinecraft().entityRenderer.func_191514_d(true);
+			Minecraft.getMinecraft().entityRenderer.setupFogColor(true);
 			this.creeperModel.render(entitylivingbaseIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch,
 					scale);
-			Minecraft.getMinecraft().entityRenderer.func_191514_d(false);
+			Minecraft.getMinecraft().entityRenderer.setupFogColor(false);
 			GlStateManager.matrixMode(5890);
 			GlStateManager.loadIdentity();
 			GlStateManager.matrixMode(5888);

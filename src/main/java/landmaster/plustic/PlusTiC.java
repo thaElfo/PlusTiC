@@ -7,7 +7,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.*;
 
 import gnu.trove.map.hash.*;
-import gnu.trove.set.hash.*;
 import landmaster.plustic.proxy.*;
 import landmaster.plustic.api.*;
 import landmaster.plustic.config.*;
@@ -17,17 +16,18 @@ import landmaster.plustic.util.*;
 import net.minecraft.block.*;
 import net.minecraft.item.*;
 import net.minecraft.util.*;
+import net.minecraftforge.event.*;
 import net.minecraftforge.fluids.*;
 import net.minecraftforge.fml.common.*;
 import net.minecraftforge.fml.common.event.*;
-import net.minecraftforge.fml.common.registry.*;
-import net.minecraftforge.oredict.*;
+import net.minecraftforge.fml.common.eventhandler.*;
 import net.minecraftforge.fml.common.Mod.*;
 import slimeknights.tconstruct.library.*;
 import slimeknights.tconstruct.library.materials.*;
 import slimeknights.tconstruct.shared.*;
-import slimeknights.tconstruct.tools.TinkerMaterials;
+import slimeknights.tconstruct.tools.*;
 
+@Mod.EventBusSubscriber
 @Mod(modid = ModInfo.MODID, name = ModInfo.NAME, version = ModInfo.VERSION, dependencies = ModInfo.DEPENDS, useMetadata = true, acceptedMinecraftVersions = "[1.9,1.12)")
 public class PlusTiC {
 	public static Config config;
@@ -43,24 +43,33 @@ public class PlusTiC {
 	
 	public static final Map<String, Material> materials = new THashMap<>();
 	public static final Map<String, MaterialIntegration> materialIntegrations = new THashMap<>();
-	public static final Collection<String> deferredMaterials = new THashSet<>();
 	
 	public static final BowMaterialStats justWhy = new BowMaterialStats(0.2f, 0.4f, -1f);
 	
-	@EventHandler
-	public void missingMappings(FMLMissingMappingsEvent event) {
-		event.get().forEach(mapping -> {
-			for (String name: new String[] { "osmium", "titanium", "iridium" }) {
-				if (mapping.resourceLocation.equals(new ResourceLocation(ModInfo.MODID, ModInfo.MODID+".molten_"+name))) {
+	private static final String[] renamesToHandle = new String[] { "osmium", "titanium", "iridium" };
+	
+	@SubscribeEvent
+	public static void missingBlockMappings(RegistryEvent.MissingMappings<Block> event) {
+		event.getMappings().forEach(mapping -> {
+			for (String name: renamesToHandle) {
+				if (mapping.key.equals(new ResourceLocation(ModInfo.MODID, ModInfo.MODID+".molten_"+name))) {
 					Optional.ofNullable(FluidRegistry.getFluid(name))
-					.map(fluid -> fluid.getBlock())
-					.ifPresent(block -> {
-						if (mapping.type == GameRegistry.Type.BLOCK) {
-							mapping.remap(block);
-						} else if (mapping.type == GameRegistry.Type.ITEM) {
-							mapping.remap(Item.getItemFromBlock(block));
-						}
-					});
+					.map(Fluid::getBlock)
+					.ifPresent(mapping::remap);
+				}
+			}
+		});
+	}
+	
+	@SubscribeEvent
+	public static void missingItemMappings(RegistryEvent.MissingMappings<Item> event) {
+		event.getMappings().forEach(mapping -> {
+			for (String name: renamesToHandle) {
+				if (mapping.key.equals(new ResourceLocation(ModInfo.MODID, ModInfo.MODID+".molten_"+name))) {
+					Optional.ofNullable(FluidRegistry.getFluid(name))
+					.map(Fluid::getBlock)
+					.map(Item::getItemFromBlock)
+					.ifPresent(mapping::remap);
 				}
 			}
 		});
@@ -98,8 +107,6 @@ public class PlusTiC {
 		
 		ModuleTools.init();
 		
-		integrate(materials, materialIntegrations, deferredMaterials);
-		
 		ModuleModifiers.init();
 	}
 	
@@ -130,8 +137,6 @@ public class PlusTiC {
 		Utils.setDispItem(materials.get("ruby"), "gemRuby");
 		Utils.setDispItem(materials.get("peridot"), "gemPeridot");
 		
-		initRecipes();
-		
 		{
 			// TODO add more materials to force out when needed
 			if (Config.botania && Config.forceOutNaturalPledgeMaterials) {
@@ -150,65 +155,6 @@ public class PlusTiC {
 		// Seriously? Registering oredicts *this* late? -_-
 		Utils.setDispItem(materials.get("desh"), "ingotDesh");
 	}
-	
-	private static void initRecipes() {
-		Item bronzeNugget = Item.REGISTRY.getObject(new ResourceLocation(ModInfo.MODID, "bronzenugget"));
-		Item bronzeIngot = Item.REGISTRY.getObject(new ResourceLocation(ModInfo.MODID, "bronzeingot"));
-		
-		Block osmiridiumBlock = Block.REGISTRY.getObject(new ResourceLocation(ModInfo.MODID, "osmiridiumblock"));
-		Item osmiridiumIngot = Item.REGISTRY.getObject(new ResourceLocation(ModInfo.MODID, "osmiridiumingot"));
-		Item osmiridiumNugget = Item.REGISTRY.getObject(new ResourceLocation(ModInfo.MODID, "osmiridiumnugget"));
-		
-		Block alumiteBlock = Block.REGISTRY.getObject(new ResourceLocation(ModInfo.MODID, "alumiteblock"));
-		Item alumiteIngot = Item.REGISTRY.getObject(new ResourceLocation(ModInfo.MODID, "alumiteingot"));
-		Item alumiteNugget = Item.REGISTRY.getObject(new ResourceLocation(ModInfo.MODID, "alumitenugget"));
-		
-		Block mirionBlock = Block.REGISTRY.getObject(new ResourceLocation(ModInfo.MODID, "mirionblock"));
-		Item mirionIngot = Item.REGISTRY.getObject(new ResourceLocation(ModInfo.MODID, "mirioningot"));
-		Item mirionNugget = Item.REGISTRY.getObject(new ResourceLocation(ModInfo.MODID, "mirionnugget"));
-		
-		Block invarBlock = Block.REGISTRY.getObject(new ResourceLocation(ModInfo.MODID, "invarblock"));
-		Item invarIngot = Item.REGISTRY.getObject(new ResourceLocation(ModInfo.MODID, "invaringot"));
-		Item invarNugget = Item.REGISTRY.getObject(new ResourceLocation(ModInfo.MODID, "invarnugget"));
-		
-		if (bronzeNugget != null) {
-			GameRegistry.addRecipe(
-					new ShapedOreRecipe(new ItemStack(bronzeIngot), "III", "III", "III", 'I', "nuggetBronze"));
-			GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(bronzeNugget, 9), "ingotBronze"));
-		}
-		if (osmiridiumNugget != null) {
-			GameRegistry.addRecipe(
-					new ShapedOreRecipe(new ItemStack(osmiridiumBlock), "III", "III", "III", 'I', "ingotOsmiridium"));
-			GameRegistry.addShapelessRecipe(new ItemStack(osmiridiumIngot, 9), osmiridiumBlock);
-			GameRegistry.addRecipe(
-					new ShapedOreRecipe(new ItemStack(osmiridiumIngot), "III", "III", "III", 'I', "nuggetOsmiridium"));
-			GameRegistry.addShapelessRecipe(new ItemStack(osmiridiumNugget, 9), osmiridiumIngot);
-		}
-		if (alumiteNugget != null) {
-			GameRegistry.addRecipe(
-					new ShapedOreRecipe(new ItemStack(alumiteBlock), "III", "III", "III", 'I', "ingotAlumite"));
-			GameRegistry.addShapelessRecipe(new ItemStack(alumiteIngot, 9), alumiteBlock);
-			GameRegistry.addRecipe(
-					new ShapedOreRecipe(new ItemStack(alumiteIngot), "III", "III", "III", 'I', "nuggetAlumite"));
-			GameRegistry.addShapelessRecipe(new ItemStack(alumiteNugget, 9), alumiteIngot);
-		}
-		if (mirionNugget != null) {
-			GameRegistry.addRecipe(
-					new ShapedOreRecipe(new ItemStack(mirionBlock), "III", "III", "III", 'I', "ingotMirion"));
-			GameRegistry.addShapelessRecipe(new ItemStack(mirionIngot, 9), mirionBlock);
-			GameRegistry.addRecipe(
-					new ShapedOreRecipe(new ItemStack(mirionIngot), "III", "III", "III", 'I', "nuggetMirion"));
-			GameRegistry.addShapelessRecipe(new ItemStack(mirionNugget, 9), mirionIngot);
-		}
-		if (invarNugget != null) {
-			GameRegistry.addRecipe(
-					new ShapedOreRecipe(new ItemStack(invarBlock), "III", "III", "III", 'I', "ingotInvar"));
-			GameRegistry.addShapelessRecipe(new ItemStack(invarIngot, 9), invarBlock);
-			GameRegistry.addRecipe(
-					new ShapedOreRecipe(new ItemStack(invarIngot), "III", "III", "III", 'I', "nuggetInvar"));
-			GameRegistry.addShapelessRecipe(new ItemStack(invarNugget, 9), invarIngot);
-		}
-	}
 
 	private static void integrate(Map<String,Material> materials,
 			Map<String,MaterialIntegration> materialIntegrations) {
@@ -225,7 +171,7 @@ public class PlusTiC {
 				} else {
 					mi = new MaterialIntegration(v);
 				}
-				mi.integrate(); mi.integrateRecipes();
+				mi.preInit(); mi.integrateRecipes();
 				materialIntegrations.put(k, mi);
 			}
 		});

@@ -8,7 +8,6 @@ import gnu.trove.*;
 import gnu.trove.list.*;
 import gnu.trove.list.array.*;
 import landmaster.plustic.traits.*;
-import mcjty.lib.tools.*;
 import net.minecraft.item.*;
 import net.minecraft.util.*;
 import net.minecraftforge.common.config.*;
@@ -75,7 +74,7 @@ public class Config extends Configuration {
 			trashThingsSum = trashThings.stream().mapToInt(t -> t.weight).sum();
 		}
 		int rval = random.nextInt(trashThingsSum);
-		ItemStack thing = ItemStackTools.getEmptyStack();
+		ItemStack thing = ItemStack.EMPTY;
 		for (TrashThing entry: trashThings) {
 			rval -= entry.weight;
 			thing = entry.stack;

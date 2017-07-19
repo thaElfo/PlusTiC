@@ -1,0 +1,5 @@
+{
+	"conditions": {
+		"item_exists": "landmaster.plustic.conditions.ItemExists"
+	}
+}

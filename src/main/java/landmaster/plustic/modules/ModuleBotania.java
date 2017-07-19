@@ -1,24 +1,8 @@
 package landmaster.plustic.modules;
 
-import static slimeknights.tconstruct.library.materials.MaterialTypes.*;
-import static slimeknights.tconstruct.library.utils.HarvestLevels.*;
-import static slimeknights.tconstruct.tools.TinkerTraits.*;
-
-import landmaster.plustic.*;
-import landmaster.plustic.config.*;
-import landmaster.plustic.fluids.*;
-import landmaster.plustic.traits.*;
-import landmaster.plustic.util.*;
-import net.minecraft.util.text.*;
-import net.minecraftforge.fluids.*;
-import net.minecraftforge.fml.common.*;
-import slimeknights.tconstruct.library.*;
-import slimeknights.tconstruct.library.materials.*;
-import slimeknights.tconstruct.shared.*;
-
 public class ModuleBotania {
 
-	public static void init() {
+	public static void init() {/*
 		if (Config.botania && (Loader.isModLoaded("Botania") || Loader.isModLoaded("botania"))) {
 			if (Config.forceOutNaturalPledgeMaterials || !Loader.isModLoaded("botanicaladdons")) {
 				Material terrasteel = new Material("terrasteel", TextFormatting.GREEN);
@@ -127,7 +111,7 @@ public class ModuleBotania {
 				
 				PlusTiC.materials.put("mirion", mirion);
 			}
-		}
+		}*/
 	}
 	
 }

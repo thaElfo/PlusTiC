@@ -3,7 +3,6 @@ package landmaster.plustic.net;
 import io.netty.buffer.*;
 import landmaster.plustic.api.*;
 import landmaster.plustic.traits.*;
-import mcjty.lib.tools.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.init.*;
@@ -39,9 +38,9 @@ public class PacketReleaseEntity implements IMessage {
 			int offsetZ = rtr.sideHit.getFrontOffsetZ();
 			AxisAlignedBB bb = ent.getEntityBoundingBox();
 			ent.setLocationAndAngles(
-					rtr.hitVec.xCoord+(bb.maxX-bb.minX)*0.5*offsetX,
-					rtr.hitVec.yCoord+(bb.maxY-bb.minY)*0.5*offsetY,
-					rtr.hitVec.zCoord+(bb.maxZ-bb.minZ)*0.5*offsetZ,
+					rtr.hitVec.x+(bb.maxX-bb.minX)*0.5*offsetX,
+					rtr.hitVec.y+(bb.maxY-bb.minY)*0.5*offsetY,
+					rtr.hitVec.z+(bb.maxZ-bb.minZ)*0.5*offsetZ,
 					ep.getRNG().nextFloat()*360, 0);
 			
 			if (!ep.getEntityWorld().spawnEntity(ent)) return;
@@ -51,7 +50,7 @@ public class PacketReleaseEntity implements IMessage {
 			ep.getHeldItemMainhand().setTagCompound(nbt);
 			Sounds.playSoundToAll(ep, SoundEvents.ENTITY_ENDERMEN_TELEPORT, 1.0f, 1.0f);
 			ep.swingArm(EnumHand.MAIN_HAND);
-			ChatTools.addChatMessage(ep, new TextComponentTranslation(
+			ep.sendMessage(new TextComponentTranslation(
 					"msg.plustic.portlymodifier.unset", id));
 		});
 		return null;

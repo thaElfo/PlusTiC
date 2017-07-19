@@ -12,63 +12,17 @@ import landmaster.plustic.fluids.*;
 import landmaster.plustic.tools.stats.*;
 import landmaster.plustic.traits.*;
 import landmaster.plustic.util.*;
-import mcjty.lib.tools.*;
-import net.minecraft.item.*;
 import net.minecraft.util.text.*;
 import net.minecraftforge.fluids.*;
 import net.minecraftforge.fml.common.Loader;
-import net.minecraftforge.fml.common.registry.*;
-import net.minecraftforge.oredict.*;
+import net.minecraftforge.fml.common.LoaderState;
 import slimeknights.tconstruct.library.*;
 import slimeknights.tconstruct.library.materials.*;
-import slimeknights.tconstruct.shared.*;
 
 public class ModuleMekanism {
 
 	public static void init() {
 		if (Config.mekanism && (Loader.isModLoaded("Mekanism") || Loader.isModLoaded("mekanism"))) {
-			// ugly workaround for dusts not melting
-			Item tinDust = new Item().setUnlocalizedName("tindust").setRegistryName("tindust");
-			tinDust.setCreativeTab(TinkerRegistry.tabGeneral);
-			GameRegistry.register(tinDust);
-			OreDictionary.registerOre("dustTin", tinDust);
-			PlusTiC.proxy.registerItemRenderer(tinDust, 0, "tindust");
-			
-			Item osmiumDust = new Item().setUnlocalizedName("osmiumdust").setRegistryName("osmiumdust");
-			osmiumDust.setCreativeTab(TinkerRegistry.tabGeneral);
-			GameRegistry.register(osmiumDust);
-			OreDictionary.registerOre("dustOsmium", osmiumDust);
-			PlusTiC.proxy.registerItemRenderer(osmiumDust, 0, "osmiumdust");
-			
-			Item steelDust = new Item().setUnlocalizedName("steeldust").setRegistryName("steeldust");
-			steelDust.setCreativeTab(TinkerRegistry.tabGeneral);
-			GameRegistry.register(steelDust);
-			OreDictionary.registerOre("dustSteel", steelDust);
-			PlusTiC.proxy.registerItemRenderer(steelDust, 0, "steeldust");
-			
-			
-			Item bronzeNugget = new Item().setUnlocalizedName("bronzenugget").setRegistryName("bronzenugget");
-			bronzeNugget.setCreativeTab(TinkerRegistry.tabGeneral);
-			GameRegistry.register(bronzeNugget);
-			OreDictionary.registerOre("nuggetBronze", bronzeNugget);
-			PlusTiC.proxy.registerItemRenderer(bronzeNugget, 0, "bronzenugget");
-			
-			Item bronzeIngot = new Item().setUnlocalizedName("bronzeingot").setRegistryName("bronzeingot");
-			bronzeIngot.setCreativeTab(TinkerRegistry.tabGeneral);
-			GameRegistry.register(bronzeIngot);
-			OreDictionary.registerOre("ingotBronze", bronzeIngot);
-			PlusTiC.proxy.registerItemRenderer(bronzeIngot, 0, "bronzeingot");
-			
-			
-			// ugly workaround for molten tin not registering
-			if (ItemStackTools.getOres("ingotTin").size() == 0
-					|| TinkerRegistry.getMelting(ItemStackTools.getOres("ingotTin").get(0)) == null) {
-				MaterialIntegration tinI = new MaterialIntegration(null, TinkerFluids.tin, "Tin");
-				tinI.integrate();
-				tinI.integrateRecipes();
-				PlusTiC.materialIntegrations.put("tin", tinI);
-			}
-			
 			Material osmium;
 			if (TinkerRegistry.getMaterial("osmium") == Material.UNKNOWN) {
 				osmium = new Material("osmium", TextFormatting.BLUE);
@@ -137,35 +91,39 @@ public class ModuleMekanism {
 			
 			PlusTiC.materials.put("refinedGlowstone", refinedGlowstone);
 			
-			Material iridium = Optional.ofNullable(PlusTiC.materials.get("iridium"))
-					.orElse(TinkerRegistry.getMaterial("iridium"));
-			
-			if (iridium.hasFluid()) {
-				// osmiridium
-				Utils.ItemMatGroup osmiridiumGroup = Utils.registerMatGroup("osmiridium");
+			new OreRegisterPromise("ingotIridium").thenAccept(stack -> {
+				if (Loader.instance().hasReachedState(LoaderState.INITIALIZATION)) return;
 				
-				Material osmiridium = new Material("osmiridium", TextFormatting.LIGHT_PURPLE);
-				osmiridium.addTrait(DevilsStrength.devilsstrength);
-				osmiridium.addTrait(Anticorrosion.anticorrosion, HEAD);
-				osmiridium.addItem("ingotOsmiridium", 1, Material.VALUE_Ingot);
-				osmiridium.setCraftable(false).setCastable(true);
-				osmiridium.setRepresentativeItem(osmiridiumGroup.ingot);
-				PlusTiC.proxy.setRenderInfo(osmiridium, 0x666DFF);
+				Material iridium = Optional.ofNullable(PlusTiC.materials.get("iridium"))
+						.orElse(TinkerRegistry.getMaterial("iridium"));
 				
-				FluidMolten osmiridiumFluid = Utils.fluidMetal("osmiridium", 0x666DFF);
-				osmiridiumFluid.setTemperature(840);
-				Utils.initFluidMetal(osmiridiumFluid);
-				osmiridium.setFluid(osmiridiumFluid);
-				TinkerRegistry.registerAlloy(new FluidStack(osmiridiumFluid, 2),
-						new FluidStack(osmium.getFluid(), 1), new FluidStack(iridium.getFluid(), 1));
-				
-				TinkerRegistry.addMaterialStats(osmiridium, new HeadMaterialStats(1300, 6.8f, 8, COBALT));
-				TinkerRegistry.addMaterialStats(osmiridium, new HandleMaterialStats(1.5f, 30));
-				TinkerRegistry.addMaterialStats(osmiridium, new ExtraMaterialStats(80));
-				TinkerRegistry.addMaterialStats(osmiridium, new BowMaterialStats(0.38f, 2.05f, 10));
-				
-				PlusTiC.materials.put("osmiridium", osmiridium);
-			}
+				if (iridium.hasFluid()) {
+					// osmiridium
+					Utils.ItemMatGroup osmiridiumGroup = Utils.registerMatGroup("osmiridium");
+					
+					Material osmiridium = new Material("osmiridium", TextFormatting.LIGHT_PURPLE);
+					osmiridium.addTrait(DevilsStrength.devilsstrength);
+					osmiridium.addTrait(Anticorrosion.anticorrosion, HEAD);
+					osmiridium.addItem("ingotOsmiridium", 1, Material.VALUE_Ingot);
+					osmiridium.setCraftable(false).setCastable(true);
+					osmiridium.setRepresentativeItem(osmiridiumGroup.ingot);
+					PlusTiC.proxy.setRenderInfo(osmiridium, 0x666DFF);
+					
+					FluidMolten osmiridiumFluid = Utils.fluidMetal("osmiridium", 0x666DFF);
+					osmiridiumFluid.setTemperature(840);
+					Utils.initFluidMetal(osmiridiumFluid);
+					osmiridium.setFluid(osmiridiumFluid);
+					TinkerRegistry.registerAlloy(new FluidStack(osmiridiumFluid, 2),
+							new FluidStack(osmium.getFluid(), 1), new FluidStack(iridium.getFluid(), 1));
+					
+					TinkerRegistry.addMaterialStats(osmiridium, new HeadMaterialStats(1300, 6.8f, 8, COBALT));
+					TinkerRegistry.addMaterialStats(osmiridium, new HandleMaterialStats(1.5f, 30));
+					TinkerRegistry.addMaterialStats(osmiridium, new ExtraMaterialStats(80));
+					TinkerRegistry.addMaterialStats(osmiridium, new BowMaterialStats(0.38f, 2.05f, 10));
+					
+					PlusTiC.materials.put("osmiridium", osmiridium);
+				}
+			});
 		}
 	}
 	

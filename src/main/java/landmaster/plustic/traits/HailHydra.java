@@ -5,7 +5,6 @@ import java.util.*;
 import com.google.common.collect.*;
 
 import landmaster.plustic.util.*;
-import mcjty.lib.tools.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.monster.*;
 import net.minecraft.init.*;
@@ -33,8 +32,8 @@ public class HailHydra extends AbstractTrait {
 	public void onUpdate(ItemStack tool, World world, Entity entity, int itemSlot, boolean isSelected) {
 		if (isSelected && !world.isRemote && random.nextFloat() < 0.02f) {
 			List<Entity> extras = entity instanceof EntityLivingBase
-					&& ((EntityLivingBase)entity).getAITarget() != null ?
-							ImmutableList.of(((EntityLivingBase)entity).getAITarget())
+					&& ((EntityLivingBase)entity).getRevengeTarget() != null ?
+							ImmutableList.of(((EntityLivingBase)entity).getRevengeTarget())
 							: ImmutableList.of();
 			entExplode(world, entity, extras, 1);
 		}
@@ -63,13 +62,13 @@ public class HailHydra extends AbstractTrait {
 		}
 		if (random.nextFloat() < event.getAmount()/8.0f) { // probability increases with damage
 			event.getEntityLiving().addPotionEffect(new PotionEffect(MobEffects.ABSORPTION, 1600, 3));
-			ChatTools.addChatMessage(event.getEntityLiving(), new TextComponentTranslation("msg.plustic.hailhydra.use"));
+			event.getEntityLiving().sendMessage(new TextComponentTranslation("msg.plustic.hailhydra.use"));
 		}
 	}
 	
 	private static @javax.annotation.Nonnull Optional<Entity> getAttacker(DamageSource source) {
 		if (source instanceof EntityDamageSource) {
-			return Optional.ofNullable(((EntityDamageSource)source).getEntity());
+			return Optional.ofNullable(((EntityDamageSource)source).getTrueSource());
 		}
 		return Optional.empty();
 	}

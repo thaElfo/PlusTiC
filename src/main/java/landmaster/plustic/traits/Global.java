@@ -4,11 +4,9 @@ import java.util.*;
 
 import landmaster.plustic.api.*;
 import landmaster.plustic.util.*;
-import mcjty.lib.tools.*;
 import net.minecraft.client.resources.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.item.*;
-import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
 import net.minecraft.tileentity.*;
@@ -59,7 +57,7 @@ public class Global extends AbstractTrait {
 				ItemStack stk = it.next();
 				for (int j=0; j<ih.getSlots(); ++j) {
 					ItemStack res = ih.insertItem(j, stk, false);
-					if (!ItemStackTools.isEmpty(res)) {
+					if (!res.isEmpty()) {
 						it.set(res);
 						stk = res;
 					} else {
@@ -91,11 +89,11 @@ public class Global extends AbstractTrait {
 				ListIterator<EntityItem> it = event.getDrops().listIterator();
 				while (it.hasNext()) {
 					EntityItem enti = it.next();
-					ItemStack stk = enti.getEntityItem();
+					ItemStack stk = enti.getItem();
 					for (int j=0; j<ih.getSlots(); ++j) {
 						ItemStack res = ih.insertItem(j, stk, false);
-						if (!ItemStackTools.isEmpty(res)) {
-							enti.setEntityItemStack(res);
+						if (!res.isEmpty()) {
+							enti.setItem(res);
 							stk = res;
 						} else {
 							it.remove();
@@ -126,7 +124,7 @@ public class Global extends AbstractTrait {
 		global.setByte("facing", (byte)event.getFace().ordinal());
 		nbt.setTag("global", global);
 		event.getItemStack().setTagCompound(nbt);
-		ChatTools.addChatMessage(event.getEntityPlayer(), new TextComponentTranslation(
+		event.getEntityPlayer().sendMessage(new TextComponentTranslation(
 				"msg.plustic.globalmodifier.set",
 						coord.xCoord,
 						coord.yCoord,
@@ -151,9 +149,9 @@ public class Global extends AbstractTrait {
 	}
 	private ItemStack getWeapon(DamageSource source) {
 		if (source instanceof EntityDamageSource) {
-			Entity entity = ((EntityDamageSource) source).getEntity();
-			if (entity instanceof EntityPlayer)
-				return ((EntityPlayer) entity).getHeldItemMainhand();
+			Entity entity = ((EntityDamageSource) source).getTrueSource();
+			if (entity instanceof EntityLivingBase)
+				return ((EntityLivingBase) entity).getHeldItemMainhand();
 		}
 		return null;
 	}

@@ -1,17 +1,8 @@
 package landmaster.plustic.modules;
 
-import static slimeknights.tconstruct.library.utils.HarvestLevels.*;
-
-import landmaster.plustic.*;
-import landmaster.plustic.config.*;
-import net.minecraft.item.*;
-import net.minecraftforge.fml.common.*;
-import powercrystals.minefactoryreloaded.setup.*;
-import slimeknights.tconstruct.library.*;
-import slimeknights.tconstruct.library.materials.*;
-
 public class ModuleMFR {
 	public static void init() {
+		/*
 		if (Config.mfr && Loader.isModLoaded("minefactoryreloaded")) {
 			Material pink_slime = new Material("pink_slime", 0xFF84AD);
 			pink_slime.addTrait(ModuleMFRStuff.slimey_pink);
@@ -28,5 +19,6 @@ public class ModuleMFR {
 			
 			PlusTiC.materials.put("pink_slime", pink_slime);
 		}
+		*/
 	}
 }

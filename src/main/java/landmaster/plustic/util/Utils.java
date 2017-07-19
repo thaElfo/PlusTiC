@@ -10,12 +10,10 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.google.common.base.*;
 
-import cofh.api.energy.*;
 import landmaster.plustic.*;
 import landmaster.plustic.api.*;
 import landmaster.plustic.block.*;
 import landmaster.plustic.fluids.*;
-import mcjty.lib.tools.*;
 import net.darkhax.tesla.capability.*;
 import net.minecraft.block.*;
 import net.minecraft.block.state.*;
@@ -45,7 +43,8 @@ public class Utils {
 			temp.setAccessible(true);
 			tinkerMaterials = (Map<String, Material>)MethodHandles.lookup().unreflectGetter(temp).invokeExact();
 		} catch (Throwable e) {
-			throw Throwables.propagate(e);
+			Throwables.throwIfUnchecked(e);
+			throw new RuntimeException(e);
 		}
 	}
 	
@@ -57,7 +56,8 @@ public class Utils {
 			temp.setAccessible(true);
 			tinkerMaterialRegisteredByMod = (Map<String, ModContainer>)MethodHandles.lookup().unreflectGetter(temp).invokeExact();
 		} catch (Throwable e) {
-			throw Throwables.propagate(e);
+			Throwables.throwIfUnchecked(e);
+			throw new RuntimeException(e);
 		}
 	}
 	
@@ -83,11 +83,11 @@ public class Utils {
 	}
 	
 	public static boolean matchesOre(ItemStack is, String od) {
-		return OreDictionary.doesOreNameExist(od) && !ItemStackTools.isEmpty(is) && ArrayUtils.contains(OreDictionary.getOreIDs(is), OreDictionary.getOreID(od));
+		return OreDictionary.doesOreNameExist(od) && !is.isEmpty() && ArrayUtils.contains(OreDictionary.getOreIDs(is), OreDictionary.getOreID(od));
 	}
 	
 	public static AxisAlignedBB AABBfromVecs(Vec3d v1, Vec3d v2) {
-		return new AxisAlignedBB(v1.xCoord, v1.yCoord, v1.zCoord, v2.xCoord, v2.yCoord, v2.zCoord);
+		return new AxisAlignedBB(v1.x, v1.y, v1.z, v2.x, v2.y, v2.z);
 	}
 	
 	public static void addModifierItem(Modifier modifier, String modid, String name) {
@@ -123,8 +123,8 @@ public class Utils {
 		block.setUnlocalizedName(ModInfo.MODID+"."+name);
 		block.setRegistryName(ModInfo.MODID+"."+name);
 		Item ib = new ItemBlock(block).setRegistryName(block.getRegistryName());
-		GameRegistry.register(block);
-		GameRegistry.register(ib);
+		ForgeRegistries.BLOCKS.register(block);
+		ForgeRegistries.ITEMS.register(ib);
 		return block;
 	}
 	
@@ -143,8 +143,8 @@ public class Utils {
 		mat.setRepresentativeItem(is);
 	}
 	public static void setDispItem(Material mat, String ore) {
-		List<ItemStack> ores = ItemStackTools.getOres(ore);
-		if (mat == null || ores.size() < 1) return;
+		List<ItemStack> ores = OreDictionary.getOres(ore);
+		if (mat == null || ores.isEmpty()) return;
 		mat.setRepresentativeItem(ores.get(0));
 	}
 	
@@ -160,9 +160,9 @@ public class Utils {
 	public static void teleportPlayerTo(EntityPlayerMP player, Coord4D coord) {
 		if (player.dimension != coord.dimensionId) {
 			int id = player.dimension;
-			WorldServer oldWorld = player.mcServer.worldServerForDimension(player.dimension);
+			WorldServer oldWorld = player.mcServer.getWorld(player.dimension);
 			player.dimension = coord.dimensionId;
-			WorldServer newWorld = player.mcServer.worldServerForDimension(player.dimension);
+			WorldServer newWorld = player.mcServer.getWorld(player.dimension);
 			player.connection.sendPacket(new SPacketRespawn(player.dimension, player.getEntityWorld().getDifficulty(), newWorld.getWorldInfo().getTerrainType(), player.interactionManager.getGameType()));
 			oldWorld.removeEntityDangerously(player);
 			player.isDead = false;
@@ -207,7 +207,8 @@ public class Utils {
 			}
 			getCollisionBoundingBoxM = temp;
 		} catch (Throwable e) {
-			throw Throwables.propagate(e);
+			Throwables.throwIfUnchecked(e);
+			throw new RuntimeException(e);
 		}
 	}
 	
@@ -215,7 +216,8 @@ public class Utils {
 		try {
 			return (AxisAlignedBB)getCollisionBoundingBoxM.invoke(state, world, pos);
 		} catch (Throwable e) {
-			throw Throwables.propagate(e);
+			Throwables.throwIfUnchecked(e);
+			throw new RuntimeException(e);
 		}
 	}
 
@@ -231,10 +233,6 @@ public class Utils {
 	
 	public static int extractEnergy(ItemStack is, int amount, boolean simulate) {
 		if (is != null) {
-			if (is.getItem() instanceof IEnergyContainerItem) {
-				IEnergyContainerItem energy = (IEnergyContainerItem)is.getItem();
-				return energy.extractEnergy(is, amount, simulate);
-			}
 			if (is.hasCapability(CapabilityEnergy.ENERGY, null)) {
 				return is.getCapability(CapabilityEnergy.ENERGY, null).extractEnergy(amount, simulate);
 			}
@@ -261,22 +259,22 @@ public class Utils {
 		img.nugget = new Item().setUnlocalizedName(name+"nugget")
 				.setRegistryName(name+"nugget");
 		img.nugget.setCreativeTab(TinkerRegistry.tabGeneral);
-		GameRegistry.register(img.nugget);
+		ForgeRegistries.ITEMS.register(img.nugget);
 		OreDictionary.registerOre("nugget"+StringUtils.capitalize(name), img.nugget);
 		PlusTiC.proxy.registerItemRenderer(img.nugget, 0, name+"nugget");
 		
 		img.ingot = new Item().setUnlocalizedName(name+"ingot")
 				.setRegistryName(name+"ingot");
 		img.ingot.setCreativeTab(TinkerRegistry.tabGeneral);
-		GameRegistry.register(img.ingot);
+		ForgeRegistries.ITEMS.register(img.ingot);
 		OreDictionary.registerOre("ingot"+StringUtils.capitalize(name), img.ingot);
 		PlusTiC.proxy.registerItemRenderer(img.ingot, 0, name+"ingot");
 		
 		img.block = new MetalBlock(name+"block");
 		img.block.setCreativeTab(TinkerRegistry.tabGeneral);
 		ItemBlock bitem = new ItemBlock(img.block);
-		GameRegistry.register(img.block);
-		GameRegistry.register(bitem, img.block.getRegistryName());
+		ForgeRegistries.BLOCKS.register(img.block);
+		ForgeRegistries.ITEMS.register(bitem.setRegistryName(img.block.getRegistryName()));
 		OreDictionary.registerOre("block"+StringUtils.capitalize(name), img.block);
 		PlusTiC.proxy.registerItemRenderer(bitem, 0, name+"block");
 		

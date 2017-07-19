@@ -22,7 +22,7 @@ public class Psicological extends AbstractTrait {
 	
 	@Override
 	public boolean canApplyTogether(IToolMod otherModifier) {
-		return !otherModifier.getIdentifier().equals(Mana.mana.getIdentifier());
+		return super.canApplyTogether(otherModifier) /*&& !otherModifier.getIdentifier().equals(Mana.mana.getIdentifier())*/;
 	}
 	
 	@Override

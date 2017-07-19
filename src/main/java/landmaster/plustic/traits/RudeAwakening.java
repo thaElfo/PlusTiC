@@ -21,7 +21,7 @@ public class RudeAwakening extends AbstractTrait {
 	@SubscribeEvent(priority = EventPriority.LOWEST/* for now */)
 	public void attack(LivingHurtEvent event) {
 		if (event.getSource() instanceof EntityDamageSource && event.getEntity() instanceof IMob) {
-			Entity ent = event.getSource().getEntity();
+			Entity ent = event.getSource().getTrueSource();
 			if (ent instanceof EntityLivingBase) {
 				ItemStack tool = ((EntityLivingBase)ent).getHeldItemMainhand();
 				if (TinkerUtil.hasTrait(TagUtil.getTagSafe(tool), identifier)) {

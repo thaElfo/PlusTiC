@@ -4,7 +4,6 @@ import io.netty.buffer.*;
 import landmaster.plustic.api.*;
 import landmaster.plustic.traits.*;
 import landmaster.plustic.util.*;
-import mcjty.lib.tools.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.init.*;
 import net.minecraft.nbt.*;
@@ -28,7 +27,7 @@ public class PacketBrownAbracadabra implements IMessage {
 					&& Utils.canTeleportTo(ep, coord)) {
 				Sounds.playSoundToAll(ep, SoundEvents.ENTITY_ENDERMEN_TELEPORT, 1.0f, 1.0f);
 				Utils.teleportPlayerTo(ep, coord);
-				ChatTools.addChatMessage(ep, new TextComponentTranslation("msg.plustic.brownmagic.use"));
+				ep.sendMessage(new TextComponentTranslation("msg.plustic.brownmagic.use"));
 			}
 		});
 		return null;

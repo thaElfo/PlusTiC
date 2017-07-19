@@ -42,10 +42,10 @@ public class BlindBandit extends AbstractTrait {
 						TagUtil.getTagSafe(tool),
 						getIdentifier())
 				|| !(event.getSource() instanceof EntityDamageSource)
-				|| !(event.getSource().getEntity() instanceof EntityLivingBase))
+				|| !(event.getSource().getTrueSource() instanceof EntityLivingBase))
 			return;
 		if (random.nextFloat() < 0.38f) {
-			EntityLivingBase target = (EntityLivingBase)event.getSource().getEntity();
+			EntityLivingBase target = (EntityLivingBase)event.getSource().getTrueSource();
 			EntityBlindBandit bandit = new EntityBlindBandit(event.getEntity().getEntityWorld(), event.getEntity(), target);
 			bandit.setPosition(event.getEntity().posX,
 					event.getEntity().posY,

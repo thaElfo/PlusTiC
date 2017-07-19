@@ -3,7 +3,7 @@ package landmaster.plustic.modules;
 import java.util.*;
 
 import landmaster.plustic.*;
-import landmaster.plustic.api.ModInfo;
+import landmaster.plustic.api.*;
 import landmaster.plustic.config.*;
 import landmaster.plustic.tools.*;
 import landmaster.plustic.tools.stats.*;
@@ -29,25 +29,25 @@ public class ModuleTools {
 	public static void init() {
 		pipe_piece = new ToolPart(Material.VALUE_Ingot * 4);
 		pipe_piece.setUnlocalizedName("pipe_piece").setRegistryName("pipe_piece");
-		GameRegistry.register(pipe_piece);
+		ForgeRegistries.ITEMS.register(pipe_piece);
 		PlusTiC.proxy.registerToolPartModel(pipe_piece);
 		TinkerRegistry.registerStencilTableCrafting(Pattern.setTagForPart(new ItemStack(TinkerTools.pattern), pipe_piece));
 		
 		laser_medium = new ToolPart(Material.VALUE_Ingot * 3);
 		laser_medium.setUnlocalizedName("laser_medium").setRegistryName("laser_medium");
-		GameRegistry.register(laser_medium);
+		ForgeRegistries.ITEMS.register(laser_medium);
 		PlusTiC.proxy.registerToolPartModel(laser_medium);
 		TinkerRegistry.registerStencilTableCrafting(Pattern.setTagForPart(new ItemStack(TinkerTools.pattern), laser_medium));
 		
 		battery_cell = new ToolPart(Material.VALUE_Ingot * 3);
 		battery_cell.setUnlocalizedName("battery_cell").setRegistryName("battery_cell");
-		GameRegistry.register(battery_cell);
+		ForgeRegistries.ITEMS.register(battery_cell);
 		PlusTiC.proxy.registerToolPartModel(battery_cell);
 		TinkerRegistry.registerStencilTableCrafting(Pattern.setTagForPart(new ItemStack(TinkerTools.pattern), battery_cell));
 		
 		if (Config.laserGun) {
 			laserGun = new ToolLaserGun();
-			GameRegistry.register(laserGun);
+			ForgeRegistries.ITEMS.register(laserGun);
 			TinkerRegistry.registerToolForgeCrafting(laserGun);
 			PlusTiC.proxy.registerToolModel(laserGun);
 			
@@ -66,7 +66,7 @@ public class ModuleTools {
 		
 		if (Config.katana) {
 			katana = new ToolKatana();
-			GameRegistry.register(katana);
+			ForgeRegistries.ITEMS.register(katana);
 			TinkerRegistry.registerToolForgeCrafting(katana);
 			PlusTiC.proxy.registerToolModel(katana);
 			

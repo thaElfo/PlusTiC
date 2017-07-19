@@ -5,7 +5,6 @@ import java.util.function.*;
 
 import landmaster.plustic.api.*;
 import landmaster.plustic.util.*;
-import mcjty.lib.tools.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.init.*;
 import net.minecraft.item.*;
@@ -66,14 +65,14 @@ public abstract class DeathSaveTrait extends AbstractTrait {
 			IItemHandler ih = event.getEntity().getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 			for (int i=0; i<ih.getSlots(); ++i) {
 				ItemStack is = ih.extractItem(i, cost, true);
-				if (stackMatcher.test(is) && ItemStackTools.getStackSize(is) >= cost) {
+				if (stackMatcher.test(is) && is.getCount() >= cost) {
 					Utils.teleportPlayerTo((EntityPlayerMP)event.getEntity(), coord);
 					ih.extractItem(i, cost, false);
 					event.setCanceled(true);
 					event.getEntityLiving().clearActivePotions();
 					event.getEntityLiving().extinguish();
 					event.getEntityLiving().addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 160));
-					ChatTools.addChatMessage(event.getEntity(), new TextComponentTranslation(
+					event.getEntity().sendMessage(new TextComponentTranslation(
 							unlocSaveMessage));
 					return;
 				}

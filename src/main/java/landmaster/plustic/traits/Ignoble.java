@@ -105,7 +105,7 @@ public class Ignoble extends AbstractTrait {
 	
 	private static @javax.annotation.Nonnull Optional<Entity> getAttacker(DamageSource source) {
 		if (source instanceof EntityDamageSource) {
-			return Optional.ofNullable(((EntityDamageSource)source).getEntity());
+			return Optional.ofNullable(((EntityDamageSource)source).getTrueSource());
 		}
 		return Optional.empty();
 	}

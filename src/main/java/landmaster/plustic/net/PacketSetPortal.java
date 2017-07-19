@@ -2,7 +2,6 @@ package landmaster.plustic.net;
 
 import io.netty.buffer.*;
 import landmaster.plustic.api.*;
-import mcjty.lib.tools.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.nbt.*;
 import net.minecraft.util.*;
@@ -33,7 +32,7 @@ public class PacketSetPortal implements IMessage {
 				nick.setInteger("dim", ep.getEntityWorld().provider.getDimension());
 				nbt.setTag(Portal.PORTAL_NBT, nick);
 				ep.getHeldItemMainhand().setTagCompound(nbt);
-				ChatTools.addChatMessage(ep, new TextComponentTranslation(
+				ep.sendMessage(new TextComponentTranslation(
 						"msg.plustic.portal.set", nick.getInteger("x"),
 						nick.getInteger("y"), nick.getInteger("z"), nick.getInteger("dim")));
 			}

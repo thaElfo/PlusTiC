@@ -2,8 +2,6 @@ package landmaster.plustic.tools;
 
 import java.util.*;
 
-import javax.annotation.*;
-
 import org.lwjgl.opengl.*;
 
 import landmaster.plustic.api.*;
@@ -14,7 +12,6 @@ import landmaster.plustic.tools.stats.*;
 import landmaster.plustic.util.*;
 import net.minecraft.client.*;
 import net.minecraft.client.renderer.*;
-import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.vertex.*;
 import net.minecraft.creativetab.*;
 import net.minecraft.entity.*;
@@ -37,7 +34,8 @@ import slimeknights.tconstruct.library.tools.*;
 import slimeknights.tconstruct.library.utils.*;
 import slimeknights.tconstruct.tools.*;
 
-public class ToolLaserGun extends TinkerToolCore implements cofh.api.energy.IEnergyContainerItem {
+@net.minecraftforge.fml.common.Optional.Interface(iface = "cofh.redstoneflux.api.IEnergyContainerItem", modid = "redstoneflux")
+public class ToolLaserGun extends TinkerToolCore implements cofh.redstoneflux.api.IEnergyContainerItem {
 	private static float range(ItemStack is) {
 		return (new LaserNBT(TagUtil.getToolTag(is))).range;
 	}
@@ -137,7 +135,7 @@ public class ToolLaserGun extends TinkerToolCore implements cofh.api.energy.IEne
 	            GlStateManager.translate(-doubleX, -doubleY, -doubleZ);
 				
 				Tessellator tessellator = Tessellator.getInstance();
-	            VertexBuffer buffer = tessellator.getBuffer();
+	            BufferBuilder buffer = tessellator.getBuffer();
 	            
 	            Minecraft.getMinecraft().renderEngine.bindTexture(LASER_LOC);
 	            
@@ -168,13 +166,10 @@ public class ToolLaserGun extends TinkerToolCore implements cofh.api.energy.IEne
 	}
 	
 	@Override
-	public void getSubItems(@Nonnull Item itemIn, CreativeTabs tab, NonNullList<ItemStack> list) {
-		this.func_150895_a(itemIn, tab, list);
-	}
-	
-	// for 1.10.2
-	public void func_150895_a(@Nonnull Item itemIn, CreativeTabs tab, List<ItemStack> subItems) {
-		this.addDefaultSubItems(subItems, null, null, TinkerMaterials.prismarine, TinkerMaterials.manyullyn);
+	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> list) {
+		if (this.isInCreativeTab(tab)) {
+			this.addDefaultSubItems(list, null, null, TinkerMaterials.prismarine, TinkerMaterials.manyullyn);
+		}
 	}
 
 	@Override

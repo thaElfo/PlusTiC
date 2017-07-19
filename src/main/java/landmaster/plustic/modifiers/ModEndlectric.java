@@ -1,16 +1,11 @@
 package landmaster.plustic.modifiers;
 
-import baubles.api.*;
-import baubles.api.cap.*;
 import landmaster.plustic.api.*;
 import landmaster.plustic.config.*;
 import landmaster.plustic.util.*;
-import mcjty.lib.tools.*;
 import net.minecraft.entity.*;
-import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
-import net.minecraftforge.fml.common.*;
 import net.minecraftforge.items.*;
 import slimeknights.tconstruct.library.modifiers.*;
 import slimeknights.tconstruct.library.utils.*;
@@ -31,7 +26,7 @@ public class ModEndlectric extends ModifierTrait {
 			IItemHandler handler = player.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 			if (handler instanceof IItemHandlerModifiable) {
 				for (int i=0; i<handler.getSlots(); ++i) {
-					ItemStack is = ItemStackTools.safeCopy(handler.getStackInSlot(i));
+					ItemStack is = handler.getStackInSlot(i).copy();
 					if (!Config.isInEndlectricBlacklist(is)) {
 						if (Utils.extractEnergy(is, ENERGY_DRAW, true) >= ENERGY_DRAW) {
 							Utils.extractEnergy(is, ENERGY_DRAW, false);
@@ -42,6 +37,7 @@ public class ModEndlectric extends ModifierTrait {
 					}
 				}
 			}
+			/*
 			if (Loader.isModLoaded("baubles") && player instanceof EntityPlayer) {
 				IBaublesItemHandler ib = BaublesApi.getBaublesHandler((EntityPlayer)player);
 				for (int i=0; i<ib.getSlots(); ++i) {
@@ -57,6 +53,7 @@ public class ModEndlectric extends ModifierTrait {
 					}
 				}
 			}
+			*/
 		}
 		return super.damage(tool, player, target, damage, newDamage, isCritical);
 	}

@@ -42,10 +42,10 @@ public class DPRK extends AbstractTrait {
 						TagUtil.getTagSafe(tool),
 						getIdentifier())
 				|| !(event.getSource() instanceof EntityDamageSource)
-				|| !(event.getSource().getEntity() instanceof EntityLivingBase))
+				|| !(event.getSource().getTrueSource() instanceof EntityLivingBase))
 			return;
 		if (random.nextFloat() < 0.38f) {
-			EntityLivingBase target = (EntityLivingBase)event.getSource().getEntity();
+			EntityLivingBase target = (EntityLivingBase)event.getSource().getTrueSource();
 			EntitySupremeLeader kim = new EntitySupremeLeader(event.getEntity().getEntityWorld(), event.getEntity(), target);
 			kim.setPosition(event.getEntity().posX,
 					event.getEntity().posY,

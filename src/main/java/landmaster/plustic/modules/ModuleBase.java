@@ -4,6 +4,8 @@ import static slimeknights.tconstruct.library.materials.MaterialTypes.*;
 import static slimeknights.tconstruct.library.utils.HarvestLevels.*;
 import static slimeknights.tconstruct.tools.TinkerTraits.*;
 
+import java.util.*;
+
 import landmaster.plustic.*;
 import landmaster.plustic.config.*;
 import landmaster.plustic.fluids.*;
@@ -13,8 +15,7 @@ import landmaster.plustic.util.*;
 import net.minecraft.init.*;
 import net.minecraft.util.text.*;
 import net.minecraftforge.fluids.*;
-import net.minecraftforge.fml.common.Loader;
-import net.minecraftforge.fml.common.LoaderState;
+import slimeknights.tconstruct.TinkerIntegration;
 import slimeknights.tconstruct.library.*;
 import slimeknights.tconstruct.library.materials.*;
 import slimeknights.tconstruct.shared.*;
@@ -46,110 +47,113 @@ public class ModuleBase {
 					new BowMaterialStats(1.1f, 1, 0.9f));
 			PlusTiC.materials.put("emerald", emerald);
 			
-			new OreRegisterPromise("ingotAluminum").acceptEither(new OreRegisterPromise("ingotAluminium"), stack -> {
-				if (Loader.instance().hasReachedState(LoaderState.INITIALIZATION)) return;
+			// alumite is back! (with some changes)
+			Utils.ItemMatGroup alumiteGroup = Utils.registerMatGroup("alumite");
+			
+			Material alumite = new Material("alumite", TextFormatting.RED);
+			alumite.addTrait(Global.global);
+			alumite.addItem("ingotAlumite", 1, Material.VALUE_Ingot);
+			alumite.setCraftable(false).setCastable(true);
+			alumite.setRepresentativeItem(alumiteGroup.ingot);
+			PlusTiC.proxy.setRenderInfo(alumite, 0xFFE0F1);
+			
+			FluidMolten alumiteFluid = Utils.fluidMetal("alumite", 0xFFE0F1);
+			alumiteFluid.setTemperature(890);
+			Utils.initFluidMetal(alumiteFluid);
+			alumite.setFluid(alumiteFluid);
+			
+			TinkerRegistry.addMaterialStats(alumite, new HeadMaterialStats(700, 6.8f, 5.5f, COBALT),
+					new HandleMaterialStats(1.10f, 70), new ExtraMaterialStats(80),
+					new BowMaterialStats(0.65f, 1.6f, 7f));
+			
+			PlusTiC.materials.put("alumite", alumite);
+			
+			if (TinkerRegistry.getMaterial("nickel") == Material.UNKNOWN) {
+				Material nickel = new Material("nickel", TextFormatting.YELLOW);
+				nickel.addTrait(NickOfTime.nickOfTime, HEAD);
+				nickel.addTrait(magnetic);
+				nickel.addItem("ingotNickel", 1, Material.VALUE_Ingot);
+				nickel.setCraftable(false).setCastable(true);
+				Utils.setDispItem(nickel, "ingotNickel");
+				PlusTiC.proxy.setRenderInfo(nickel, 0xFFF98E);
 				
-				// alumite is back! (with some changes)
-				Utils.ItemMatGroup alumiteGroup = Utils.registerMatGroup("alumite");
+				nickel.setFluid(TinkerFluids.nickel);
 				
-				Material alumite = new Material("alumite", TextFormatting.RED);
-				alumite.addTrait(Global.global);
-				alumite.addItem("ingotAlumite", 1, Material.VALUE_Ingot);
-				alumite.setCraftable(false).setCastable(true);
-				alumite.setRepresentativeItem(alumiteGroup.ingot);
-				PlusTiC.proxy.setRenderInfo(alumite, 0xFFE0F1);
+				TinkerRegistry.addMaterialStats(nickel, new HeadMaterialStats(460, 6, 4.5f, OBSIDIAN),
+						new HandleMaterialStats(1, -5), new ExtraMaterialStats(70), PlusTiC.justWhy,
+						new FletchingMaterialStats(0.95f, 1.05f), new BatteryCellMaterialStats(75000));
 				
-				FluidMolten alumiteFluid = Utils.fluidMetal("alumite", 0xFFE0F1);
-				alumiteFluid.setTemperature(890);
-				Utils.initFluidMetal(alumiteFluid);
-				alumite.setFluid(alumiteFluid);
+				PlusTiC.materials.put("nickel", nickel);
+			}
+			
+			if (TinkerRegistry.getMaterial("invar") == Material.UNKNOWN) {
+				Utils.ItemMatGroup invarGroup = Utils.registerMatGroup("invar");
+				
+				Material invar = new Material("invar", 0xD6D6D6);
+				invar.addTrait(DevilsStrength.devilsstrength);
+				invar.addTrait(magnetic);
+				invar.addItem("ingotInvar", 1, Material.VALUE_Ingot);
+				invar.setCraftable(false).setCastable(true);
+				invar.setRepresentativeItem(invarGroup.ingot);
+				PlusTiC.proxy.setRenderInfo(invar, 0xD6D6D6);
+				
+				FluidMolten invarFluid = Utils.fluidMetal("invar", 0xD6D6D6);
+				invarFluid.setTemperature(1000);
+				Utils.initFluidMetal(invarFluid);
+				invar.setFluid(invarFluid);
+				
+				TinkerRegistry.addMaterialStats(invar,
+						new HeadMaterialStats(600, 6, 5f, OBSIDIAN),
+						new HandleMaterialStats(1.3f, 0),
+						new ExtraMaterialStats(100),
+						PlusTiC.justWhy,
+						new FletchingMaterialStats(1, 1.15f));
+				
+				PlusTiC.materials.put("invar", invar);
+			}
+			
+			if (TinkerRegistry.getMaterial("iridium") == Material.UNKNOWN) {
+				Material iridium = new Material("iridium", TextFormatting.GRAY);
+				iridium.addTrait(dense);
+				iridium.addTrait(alien, HEAD);
+				iridium.addItem("ingotIridium", 1, Material.VALUE_Ingot);
+				iridium.setCraftable(false).setCastable(true);
+				PlusTiC.proxy.setRenderInfo(iridium, 0xE5E5E5);
+				
+				FluidMolten iridiumFluid = Utils.fluidMetal("iridium", 0xE5E5E5);
+				iridiumFluid.setTemperature(810);
+				Utils.initFluidMetal(iridiumFluid);
+				iridium.setFluid(iridiumFluid);
+				
+				TinkerRegistry.addMaterialStats(iridium, new HeadMaterialStats(520, 6, 5.8f, DIAMOND));
+				TinkerRegistry.addMaterialStats(iridium, new HandleMaterialStats(1.15f, -20));
+				TinkerRegistry.addMaterialStats(iridium, new ExtraMaterialStats(60));
+				TinkerRegistry.addMaterialStats(iridium, PlusTiC.justWhy);
+				
+				PlusTiC.materials.put("iridium", iridium);
+			}
+		}
+	}
+	
+	public static void init2() {
+		Optional.ofNullable(PlusTiC.materials.get("alumite"))
+		.map(Material::getFluid)
+		.ifPresent(alumiteFluid -> {
+			if (TinkerIntegration.isIntegrated(TinkerFluids.aluminum)) {
 				TinkerRegistry.registerAlloy(new FluidStack(alumiteFluid, 3), new FluidStack(TinkerFluids.aluminum, 5),
 						new FluidStack(TinkerFluids.iron, 2), new FluidStack(TinkerFluids.obsidian, 2));
-				
-				TinkerRegistry.addMaterialStats(alumite, new HeadMaterialStats(700, 6.8f, 5.5f, COBALT),
-						new HandleMaterialStats(1.10f, 70), new ExtraMaterialStats(80),
-						new BowMaterialStats(0.65f, 1.6f, 7f));
-				
-				PlusTiC.materials.put("alumite", alumite);
-			});
-			
-			new OreRegisterPromise("ingotNickel").thenAccept(stack -> {
-				if (Loader.instance().hasReachedState(LoaderState.INITIALIZATION)) return;
-				
-				if (TinkerRegistry.getMaterial("nickel") == Material.UNKNOWN) {
-					Material nickel = new Material("nickel", TextFormatting.YELLOW);
-					nickel.addTrait(NickOfTime.nickOfTime, HEAD);
-					nickel.addTrait(magnetic);
-					nickel.addItem("ingotNickel", 1, Material.VALUE_Ingot);
-					nickel.setCraftable(false).setCastable(true);
-					Utils.setDispItem(nickel, "ingotNickel");
-					PlusTiC.proxy.setRenderInfo(nickel, 0xFFF98E);
-					
-					nickel.setFluid(TinkerFluids.nickel);
-					
-					TinkerRegistry.addMaterialStats(nickel, new HeadMaterialStats(460, 6, 4.5f, OBSIDIAN),
-							new HandleMaterialStats(1, -5), new ExtraMaterialStats(70), PlusTiC.justWhy,
-							new FletchingMaterialStats(0.95f, 1.05f), new BatteryCellMaterialStats(75000));
-					
-					PlusTiC.materials.put("nickel", nickel);
-				}
-				
-				if (TinkerRegistry.getMaterial("invar") == Material.UNKNOWN) {
-					Utils.ItemMatGroup invarGroup = Utils.registerMatGroup("invar");
-					
-					Material invar = new Material("invar", 0xD6D6D6);
-					invar.addTrait(DevilsStrength.devilsstrength);
-					invar.addTrait(magnetic);
-					invar.addItem("ingotInvar", 1, Material.VALUE_Ingot);
-					invar.setCraftable(false).setCastable(true);
-					invar.setRepresentativeItem(invarGroup.ingot);
-					PlusTiC.proxy.setRenderInfo(invar, 0xD6D6D6);
-					
-					FluidMolten invarFluid = Utils.fluidMetal("invar", 0xD6D6D6);
-					invarFluid.setTemperature(1000);
-					Utils.initFluidMetal(invarFluid);
-					invar.setFluid(invarFluid);
-					TinkerRegistry.registerAlloy(new FluidStack(invarFluid, 3),
-							new FluidStack(TinkerFluids.iron, 2),
-							new FluidStack(TinkerFluids.nickel, 1));
-					
-					TinkerRegistry.addMaterialStats(invar,
-							new HeadMaterialStats(600, 6, 5f, OBSIDIAN),
-							new HandleMaterialStats(1.3f, 0),
-							new ExtraMaterialStats(100),
-							PlusTiC.justWhy,
-							new FletchingMaterialStats(1, 1.15f));
-					
-					PlusTiC.materials.put("invar", invar);
-				}
-			});
-			
-			new OreRegisterPromise("ingotIridium").thenAccept(iridiumIngot -> {
-				if (Loader.instance().hasReachedState(LoaderState.INITIALIZATION)) return;
-				
-				if (TinkerRegistry.getMaterial("iridium") == Material.UNKNOWN) {
-					Material iridium = new Material("iridium", TextFormatting.GRAY);
-					iridium.addTrait(dense);
-					iridium.addTrait(alien, HEAD);
-					iridium.addItem("ingotIridium", 1, Material.VALUE_Ingot);
-					iridium.setCraftable(false).setCastable(true);
-					iridium.setRepresentativeItem(iridiumIngot);
-					PlusTiC.proxy.setRenderInfo(iridium, 0xE5E5E5);
-					
-					FluidMolten iridiumFluid = Utils.fluidMetal("iridium", 0xE5E5E5);
-					iridiumFluid.setTemperature(810);
-					Utils.initFluidMetal(iridiumFluid);
-					iridium.setFluid(iridiumFluid);
-					
-					TinkerRegistry.addMaterialStats(iridium, new HeadMaterialStats(520, 6, 5.8f, DIAMOND));
-					TinkerRegistry.addMaterialStats(iridium, new HandleMaterialStats(1.15f, -20));
-					TinkerRegistry.addMaterialStats(iridium, new ExtraMaterialStats(60));
-					TinkerRegistry.addMaterialStats(iridium, PlusTiC.justWhy);
-					
-					PlusTiC.materials.put("iridium", iridium);
-				}
-			});
-		}
+			}
+		});
+		
+		Optional.ofNullable(PlusTiC.materials.get("invar"))
+		.map(Material::getFluid)
+		.ifPresent(invarFluid -> {
+			if (TinkerIntegration.isIntegrated(TinkerFluids.nickel)) {
+				TinkerRegistry.registerAlloy(new FluidStack(invarFluid, 3),
+						new FluidStack(TinkerFluids.iron, 2),
+						new FluidStack(TinkerFluids.nickel, 1));
+			}
+		});
 	}
 	
 }

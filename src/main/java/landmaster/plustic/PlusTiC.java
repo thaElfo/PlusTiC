@@ -109,6 +109,8 @@ public class PlusTiC {
 		ModuleTools.init();
 		
 		ModuleModifiers.init();
+		
+		preIntegrate(materials, materialIntegrations);
 	}
 	
 	@EventHandler
@@ -116,6 +118,8 @@ public class PlusTiC {
 		proxy.initToolGuis();
 		proxy.registerKeyBindings();
 		PacketHandler.init();
+		
+		ModuleBase.init2();
 		
 		final Material Void = materials.get("Void");
 		if (Void != null) {
@@ -163,26 +167,26 @@ public class PlusTiC {
 		// Seriously? Registering oredicts *this* late? -_-
 		Utils.setDispItem(materials.get("desh"), "ingotDesh");
 	}
-
-	private static void integrate(Map<String,Material> materials,
-			Map<String,MaterialIntegration> materialIntegrations) {
-		integrate(materials, materialIntegrations, Collections.emptyList());
-	}
 	
-	private static void integrate(Map<String,Material> materials,
-			Map<String,MaterialIntegration> materialIntegrations, Collection<String> excludedMaterials) {
+	private static void preIntegrate(Map<String,Material> materials,
+			Map<String,MaterialIntegration> materialIntegrations) {
 		materials.forEach((k, v) -> {
-			if (!materialIntegrations.containsKey(k) && !excludedMaterials.contains(k)) {
+			if (!materialIntegrations.containsKey(k)) {
 				MaterialIntegration mi;
 				if (v.getFluid() != null && v.getFluid() != TinkerFluids.emerald) {
 					mi = new MaterialIntegration(v, v.getFluid(), StringUtils.capitalize(k)).toolforge();
 				} else {
 					mi = new MaterialIntegration(v);
 				}
-				mi.preInit(); mi.integrateRecipes();
+				mi.preInit();
 				materialIntegrations.put(k, mi);
 			}
 		});
+	}
+	
+	private static void integrate(Map<String,Material> materials,
+			Map<String,MaterialIntegration> materialIntegrations) {
+		materialIntegrations.forEach((k, mi) -> mi.integrateRecipes());
 		
 		Utils.displace(TinkerMaterials.wood.getIdentifier()); // so that natura woods are prioritized
 	}

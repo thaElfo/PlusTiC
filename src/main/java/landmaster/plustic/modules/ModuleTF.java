@@ -3,7 +3,6 @@ package landmaster.plustic.modules;
 import static slimeknights.tconstruct.library.materials.MaterialTypes.*;
 import static slimeknights.tconstruct.library.utils.HarvestLevels.*;
 import static slimeknights.tconstruct.tools.TinkerTraits.*;
-import static slimeknights.tconstruct.tools.TinkerModifiers.*;
 
 import landmaster.plustic.*;
 import landmaster.plustic.config.*;
@@ -38,7 +37,7 @@ public class ModuleTF {
 			
 			Material lumium = new Material("lumium_plustic", TextFormatting.YELLOW);
 			lumium.addTrait(Illuminati.illuminati);
-			lumium.addTrait((ITrait)modGlowing); // since Glowing is also a Trait
+			new ModifierRegisterPromise("glowing").thenAccept(modifier -> lumium.addTrait((ITrait)modifier)); // since Glowing is also a Trait
 			lumium.addItem("ingotLumium", 1, Material.VALUE_Ingot);
 			lumium.setCraftable(false).setCastable(true);
 			Utils.setDispItem(lumium, "ingotLumium");

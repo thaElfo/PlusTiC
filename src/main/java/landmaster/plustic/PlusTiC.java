@@ -2,6 +2,7 @@ package landmaster.plustic;
 
 import java.util.*;
 import java.util.Optional;
+import java.util.function.*;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.*;
@@ -44,6 +45,8 @@ public class PlusTiC {
 	
 	public static final Map<String, Material> materials = new THashMap<>();
 	public static final Map<String, MaterialIntegration> materialIntegrations = new THashMap<>();
+	
+	public static final Map<String, Predicate<String>> materialIntegrationConditions = new THashMap<>();
 	
 	public static final BowMaterialStats justWhy = new BowMaterialStats(0.2f, 0.4f, -1f);
 	
@@ -159,7 +162,7 @@ public class PlusTiC {
 			}
 		}
 		
-		integrate(materials, materialIntegrations);
+		integrate(materials, materialIntegrations, materialIntegrationConditions);
 	}
 	
 	@EventHandler
@@ -185,8 +188,11 @@ public class PlusTiC {
 	}
 	
 	private static void integrate(Map<String,Material> materials,
-			Map<String,MaterialIntegration> materialIntegrations) {
-		materialIntegrations.forEach((k, mi) -> mi.integrateRecipes());
+			Map<String,MaterialIntegration> materialIntegrations,
+			Map<String, Predicate<String>> materialIntegrationConditions) {
+		materialIntegrations.forEach((k, mi) -> {
+			if (materialIntegrationConditions.getOrDefault(k, e -> true).test(k)) mi.integrateRecipes();
+		});
 		
 		Utils.displace(TinkerMaterials.wood.getIdentifier()); // so that natura woods are prioritized
 	}

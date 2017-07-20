@@ -15,7 +15,6 @@ import landmaster.plustic.util.*;
 import net.minecraft.init.*;
 import net.minecraft.util.text.*;
 import net.minecraftforge.fluids.*;
-import slimeknights.tconstruct.TinkerIntegration;
 import slimeknights.tconstruct.library.*;
 import slimeknights.tconstruct.library.materials.*;
 import slimeknights.tconstruct.shared.*;
@@ -74,7 +73,7 @@ public class ModuleBase {
 				nickel.addTrait(magnetic);
 				nickel.addItem("ingotNickel", 1, Material.VALUE_Ingot);
 				nickel.setCraftable(false).setCastable(true);
-				Utils.setDispItem(nickel, "ingotNickel");
+				new OreRegisterPromise("ingotNickel").thenAccept(ingot -> nickel.setRepresentativeItem(ingot));
 				PlusTiC.proxy.setRenderInfo(nickel, 0xFFF98E);
 				
 				nickel.setFluid(TinkerFluids.nickel);
@@ -118,6 +117,7 @@ public class ModuleBase {
 				iridium.addTrait(alien, HEAD);
 				iridium.addItem("ingotIridium", 1, Material.VALUE_Ingot);
 				iridium.setCraftable(false).setCastable(true);
+				new OreRegisterPromise("ingotIridium").thenAccept(ingot -> iridium.setRepresentativeItem(ingot));
 				PlusTiC.proxy.setRenderInfo(iridium, 0xE5E5E5);
 				
 				FluidMolten iridiumFluid = Utils.fluidMetal("iridium", 0xE5E5E5);
@@ -139,7 +139,7 @@ public class ModuleBase {
 		Optional.ofNullable(PlusTiC.materials.get("alumite"))
 		.map(Material::getFluid)
 		.ifPresent(alumiteFluid -> {
-			if (TinkerIntegration.isIntegrated(TinkerFluids.aluminum)) {
+			if (FluidRegistry.isFluidRegistered(TinkerFluids.aluminum)) {
 				TinkerRegistry.registerAlloy(new FluidStack(alumiteFluid, 3), new FluidStack(TinkerFluids.aluminum, 5),
 						new FluidStack(TinkerFluids.iron, 2), new FluidStack(TinkerFluids.obsidian, 2));
 			}
@@ -148,7 +148,7 @@ public class ModuleBase {
 		Optional.ofNullable(PlusTiC.materials.get("invar"))
 		.map(Material::getFluid)
 		.ifPresent(invarFluid -> {
-			if (TinkerIntegration.isIntegrated(TinkerFluids.nickel)) {
+			if (FluidRegistry.isFluidRegistered(TinkerFluids.nickel)) {
 				TinkerRegistry.registerAlloy(new FluidStack(invarFluid, 3),
 						new FluidStack(TinkerFluids.iron, 2),
 						new FluidStack(TinkerFluids.nickel, 1));

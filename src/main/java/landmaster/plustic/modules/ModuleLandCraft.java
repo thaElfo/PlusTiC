@@ -34,7 +34,7 @@ public class ModuleLandCraft {
 				String ingot = "ingot"+StringUtils.capitalize(matDatum.getLeft());
 				mat.addItem(ingot, 1, Material.VALUE_Ingot);
 				mat.setCraftable(false).setCastable(true);
-				Utils.setDispItem(mat, ingot);
+				//Utils.setDispItem(mat, ingot);
 				
 				FluidMolten matFluid = Utils.fluidMetal(matDatum.getLeft(), matDatum.getMiddle());
 				matFluid.setTemperature(matDatum.getRight());

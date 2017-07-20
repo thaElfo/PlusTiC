@@ -123,6 +123,7 @@ public class PlusTiC {
 		PacketHandler.init();
 		
 		ModuleBase.init2();
+		ModuleNatura.init2();
 		
 		final Material Void = materials.get("Void");
 		if (Void != null) {

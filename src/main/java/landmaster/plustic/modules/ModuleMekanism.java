@@ -18,9 +18,9 @@ import net.minecraftforge.fml.common.Loader;
 import slimeknights.tconstruct.library.*;
 import slimeknights.tconstruct.library.materials.*;
 
-public class ModuleMekanism {
+public class ModuleMekanism implements IModule {
 
-	public static void init() {
+	public void init() {
 		if (Config.mekanism && (Loader.isModLoaded("Mekanism") || Loader.isModLoaded("mekanism"))) {
 			Material osmium;
 			if (TinkerRegistry.getMaterial("osmium") == Material.UNKNOWN) {

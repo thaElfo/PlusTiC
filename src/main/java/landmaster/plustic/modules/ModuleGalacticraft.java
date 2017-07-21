@@ -12,8 +12,8 @@ import net.minecraftforge.fml.common.*;
 import slimeknights.tconstruct.library.*;
 import slimeknights.tconstruct.library.materials.*;
 
-public class ModuleGalacticraft {
-	public static void init() {
+public class ModuleGalacticraft implements IModule {
+	public void init() {
 		if (Config.galacticraft && Loader.isModLoaded("galacticraftcore")) {
 			if (Loader.isModLoaded("galacticraftplanets")) {
 				Material desh = new Material("desh", 0x161616);

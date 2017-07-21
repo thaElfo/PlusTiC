@@ -12,9 +12,9 @@ import net.minecraftforge.fml.common.*;
 import slimeknights.tconstruct.library.*;
 import slimeknights.tconstruct.library.materials.*;
 
-public class ModulePsi {
+public class ModulePsi implements IModule {
 
-	public static void init() {
+	public void init() {
 		if (Config.psi && (Loader.isModLoaded("Psi") || Loader.isModLoaded("psi"))) {
 			Material psimetal = new Material("psimetal", 0x6D9EFF);
 			psimetal.addTrait(Psicological.psicological);

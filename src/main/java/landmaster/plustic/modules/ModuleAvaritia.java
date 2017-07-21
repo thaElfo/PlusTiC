@@ -12,8 +12,8 @@ import net.minecraftforge.fml.common.*;
 import slimeknights.tconstruct.library.*;
 import slimeknights.tconstruct.library.materials.*;
 
-public class ModuleAvaritia {
-	public static void init() {
+public class ModuleAvaritia implements IModule {
+	public void init() {
 		if (Config.avaritia && Loader.isModLoaded("avaritia")) {
 			Material infinity = new Material("infinity_avaritia_plustic", TextFormatting.LIGHT_PURPLE);
 			infinity.addTrait(Global.global);

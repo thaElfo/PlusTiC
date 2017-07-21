@@ -14,7 +14,7 @@ import net.minecraftforge.fml.common.*;
 import slimeknights.tconstruct.library.*;
 import slimeknights.tconstruct.library.materials.*;
 
-public class ModuleDraconicEvolution {
+public class ModuleDraconicEvolution implements IModule {
 	
 	public static final Item wyvern_core;
 	
@@ -38,7 +38,7 @@ public class ModuleDraconicEvolution {
 				.findAny().orElse(null);
 	}
 
-	public static void init() {
+	public void init() {
 		if (Config.draconicEvolution && Loader.isModLoaded("draconicevolution")) {
 			Material wyvern = new Material("wyvern_plustic", TextFormatting.DARK_PURPLE);
 			wyvern.addTrait(BrownMagic.brownmagic, HEAD);

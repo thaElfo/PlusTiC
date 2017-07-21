@@ -18,8 +18,8 @@ import net.minecraftforge.fml.common.*;
 import slimeknights.tconstruct.library.*;
 import slimeknights.tconstruct.library.materials.*;
 
-public class ModuleLandCraft {
-	public static void init() {
+public class ModuleLandCraft implements IModule {
+	public void init() {
 		if (Config.landCraft && Loader.isModLoaded("landcraft")) {
 			List<Triple<String, Integer, Integer>> matData = Arrays.asList(
 					Triple.of("kelline", 0x7BFF00, 430),

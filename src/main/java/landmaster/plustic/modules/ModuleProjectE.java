@@ -13,8 +13,8 @@ import net.minecraftforge.fml.common.Loader;
 import slimeknights.tconstruct.library.*;
 import slimeknights.tconstruct.library.materials.*;
 
-public class ModuleProjectE {
-	public static void init() {
+public class ModuleProjectE implements IModule {
+	public void init() {
 		if (Config.projectE && (Loader.isModLoaded("ProjectE") || Loader.isModLoaded("projecte"))) {
 			final Item matter = Item.REGISTRY.getObject(new ResourceLocation("projecte", "item.pe_matter"));
 			

@@ -12,9 +12,9 @@ import net.minecraftforge.fml.common.*;
 import slimeknights.tconstruct.library.*;
 import slimeknights.tconstruct.library.materials.*;
 
-public class ModuleArmorPlus {
+public class ModuleArmorPlus implements IModule {
 
-	public static void init() {
+	public void init() {
 		if (Config.armorPlus && Loader.isModLoaded("armorplus")) {
 			Material witherBone = new Material("witherbone", TextFormatting.BLACK);
 			witherBone.addTrait(Apocalypse.apocalypse);

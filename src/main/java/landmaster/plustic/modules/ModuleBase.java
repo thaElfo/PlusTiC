@@ -5,23 +5,31 @@ import static slimeknights.tconstruct.library.utils.HarvestLevels.*;
 import static slimeknights.tconstruct.tools.TinkerTraits.*;
 
 import java.util.*;
+import java.util.concurrent.*;
 
 import landmaster.plustic.*;
+import landmaster.plustic.api.*;
 import landmaster.plustic.config.*;
 import landmaster.plustic.fluids.*;
 import landmaster.plustic.tools.stats.*;
 import landmaster.plustic.traits.*;
 import landmaster.plustic.util.*;
 import net.minecraft.init.*;
+import net.minecraft.item.Item;
 import net.minecraft.util.text.*;
+import net.minecraftforge.event.*;
 import net.minecraftforge.fluids.*;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.*;
 import slimeknights.tconstruct.library.*;
 import slimeknights.tconstruct.library.materials.*;
 import slimeknights.tconstruct.shared.*;
 
-public class ModuleBase {
+@Mod.EventBusSubscriber(modid = ModInfo.MODID)
+public class ModuleBase implements IModule {
+	private static final CompletableFuture<Object> emeraldStage = new CompletableFuture<>();
 
-	public static void init() {
+	public void init() {
 		if (Config.base) {
 			Material tnt = new Material("tnt", TextFormatting.RED);
 			tnt.addTrait(Explosive.explosive);
@@ -39,12 +47,13 @@ public class ModuleBase {
 			emerald.setRepresentativeItem(Items.EMERALD);
 			emerald.setCraftable(false).setCastable(true);
 			PlusTiC.proxy.setRenderInfo(emerald, 0x13DB52);
-			emerald.setFluid(TinkerFluids.emerald);
+			emeraldStage.thenRun(() -> emerald.setFluid(TinkerFluids.emerald));
 			TinkerRegistry.addMaterialStats(emerald, new HeadMaterialStats(1222, 7, 7, COBALT),
 					new HandleMaterialStats(1.1f, 0),
 					new ExtraMaterialStats(70),
 					new BowMaterialStats(1.1f, 1, 0.9f));
 			PlusTiC.materials.put("emerald", emerald);
+			PlusTiC.materialIntegrationStages.put("emerald", emeraldStage);
 			
 			// alumite is back! (with some changes)
 			Utils.ItemMatGroup alumiteGroup = Utils.registerMatGroup("alumite");
@@ -135,7 +144,12 @@ public class ModuleBase {
 		}
 	}
 	
-	public static void init2() {
+	@SubscribeEvent(priority = EventPriority.LOWEST)
+	public static void itemRegEvent(RegistryEvent.Register<Item> event) {
+		emeraldStage.complete(null);
+	}
+	
+	public void init2() {
 		Optional.ofNullable(PlusTiC.materials.get("alumite"))
 		.map(Material::getFluid)
 		.ifPresent(alumiteFluid -> {

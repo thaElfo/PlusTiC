@@ -20,10 +20,10 @@ import slimeknights.tconstruct.library.*;
 import slimeknights.tconstruct.library.materials.*;
 import slimeknights.tconstruct.shared.*;
 
-public class ModuleEnderIO {
+public class ModuleEnderIO implements IModule {
 
-	public static void init() {
-		if (Config.enderIO && Loader.isModLoaded("EnderIO")) {
+	public void init() {
+		if (Config.enderIO && Loader.isModLoaded("enderio")) {
 			Fluid coalFluid = Utils.fluidMetal("coal", 0x111111);
 			coalFluid.setTemperature(500);
 			Utils.initFluidMetal(coalFluid);

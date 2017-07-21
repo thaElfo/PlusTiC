@@ -2,7 +2,7 @@ package landmaster.plustic;
 
 import java.util.*;
 import java.util.Optional;
-import java.util.function.*;
+import java.util.concurrent.*;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.*;
@@ -16,6 +16,7 @@ import landmaster.plustic.modules.*;
 import landmaster.plustic.net.*;
 import landmaster.plustic.util.*;
 import net.minecraft.block.*;
+import net.minecraft.init.Items;
 import net.minecraft.item.*;
 import net.minecraft.util.*;
 import net.minecraftforge.event.*;
@@ -26,7 +27,6 @@ import net.minecraftforge.fml.common.eventhandler.*;
 import net.minecraftforge.fml.common.Mod.*;
 import slimeknights.tconstruct.library.*;
 import slimeknights.tconstruct.library.materials.*;
-import slimeknights.tconstruct.shared.*;
 import slimeknights.tconstruct.tools.*;
 
 @Mod.EventBusSubscriber
@@ -46,7 +46,7 @@ public class PlusTiC {
 	public static final Map<String, Material> materials = new THashMap<>();
 	public static final Map<String, MaterialIntegration> materialIntegrations = new THashMap<>();
 	
-	public static final Map<String, Predicate<String>> materialIntegrationConditions = new THashMap<>();
+	public static final Map<String, CompletionStage<?>> materialIntegrationStages = new THashMap<>();
 	
 	public static final BowMaterialStats justWhy = new BowMaterialStats(0.2f, 0.4f, -1f);
 	
@@ -87,33 +87,32 @@ public class PlusTiC {
 		
 		// TODO add more modules when needed
 		
-		ModuleBase.init();
+		IModule.modules.addAll(Arrays.asList(
+				new ModuleBase(),
+				new ModuleNatura(),
+				new ModuleBoP(),
+				new ModuleMekanism(),
+				new ModuleAdvRocketry(),
+				new ModuleArmorPlus(),
+				new ModuleEnderIO(),
+				new ModuleTF(),
+				new ModuleDraconicEvolution(),
+				new ModuleActAdd(),
+				new ModulePsi(),
+				new ModuleAvaritia(),
+				new ModuleLandCraft(),
+				new ModuleLandCore(),
+				new ModuleGalacticraft(),
+				new ModuleSurvivalist(),
+				new ModuleProjectE(),
+				new ModuleGemsPlus(),
+				new ModuleTools(),
+				new ModuleModifiers()
+				));
 		
-		ModuleBoP.init();
-		ModuleMekanism.init();
-		ModuleBotania.init();
-		ModuleAdvRocketry.init();
-		ModuleArmorPlus.init();
-		ModuleEnderIO.init();
-		ModuleTF.init();
-		ModuleDraconicEvolution.init();
-		ModuleActAdd.init();
-		ModuleNatura.init();
-		ModulePsi.init();
-		ModuleAvaritia.init();
-		ModuleLandCraft.init();
-		ModuleLandCore.init();
-		ModuleMFR.init();
-		ModuleGalacticraft.init();
-		ModuleSurvivalist.init();
-		ModuleProjectE.init();
-		ModuleGemsPlus.init();
+		IModule.modules.forEach(IModule::init);
 		
-		ModuleTools.init();
-		
-		ModuleModifiers.init();
-		
-		preIntegrate(materials, materialIntegrations);
+		preIntegrate(materials, materialIntegrations, materialIntegrationStages);
 	}
 	
 	@EventHandler
@@ -122,8 +121,7 @@ public class PlusTiC {
 		proxy.registerKeyBindings();
 		PacketHandler.init();
 		
-		ModuleBase.init2();
-		ModuleNatura.init2();
+		IModule.modules.forEach(IModule::init2);
 		
 		final Material Void = materials.get("Void");
 		if (Void != null) {
@@ -163,7 +161,7 @@ public class PlusTiC {
 			}
 		}
 		
-		integrate(materials, materialIntegrations, materialIntegrationConditions);
+		integrate(materials, materialIntegrations);
 	}
 	
 	@EventHandler
@@ -173,26 +171,30 @@ public class PlusTiC {
 	}
 	
 	private static void preIntegrate(Map<String,Material> materials,
-			Map<String,MaterialIntegration> materialIntegrations) {
+			Map<String,MaterialIntegration> materialIntegrations,
+			Map<String, CompletionStage<?>> materialIntegrationStages) {
 		materials.forEach((k, v) -> {
 			if (!materialIntegrations.containsKey(k)) {
-				MaterialIntegration mi;
-				if (v.getFluid() != null && v.getFluid() != TinkerFluids.emerald) {
-					mi = new MaterialIntegration(v, v.getFluid(), StringUtils.capitalize(k)).toolforge();
-				} else {
-					mi = new MaterialIntegration(v);
-				}
-				mi.preInit();
-				materialIntegrations.put(k, mi);
+				materialIntegrationStages.getOrDefault(k, CompletableFuture.completedFuture(null)).thenAccept(o -> {
+					MaterialIntegration mi;
+					if (v.getRepresentativeItem().getItem() == Items.EMERALD) {
+						mi = new MaterialIntegration(v, v.getFluid());
+					} else if (v.getFluid() != null) {
+						mi = new MaterialIntegration(v, v.getFluid(), StringUtils.capitalize(k)).toolforge();
+					} else {
+						mi = new MaterialIntegration(v);
+					}
+					mi.preInit();
+					materialIntegrations.put(k, mi);
+				});
 			}
 		});
 	}
 	
 	private static void integrate(Map<String,Material> materials,
-			Map<String,MaterialIntegration> materialIntegrations,
-			Map<String, Predicate<String>> materialIntegrationConditions) {
+			Map<String,MaterialIntegration> materialIntegrations) {
 		materialIntegrations.forEach((k, mi) -> {
-			if (materialIntegrationConditions.getOrDefault(k, e -> true).test(k)) mi.integrateRecipes();
+			mi.integrateRecipes();
 		});
 		
 		Utils.displace(TinkerMaterials.wood.getIdentifier()); // so that natura woods are prioritized

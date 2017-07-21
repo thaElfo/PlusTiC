@@ -10,9 +10,9 @@ import net.minecraftforge.fml.common.*;
 import slimeknights.tconstruct.library.*;
 import slimeknights.tconstruct.library.materials.*;
 
-public class ModuleGemsPlus {
+public class ModuleGemsPlus implements IModule {
 	
-	public static void init() {
+	public void init() {
 		if (Config.gemsplus && Loader.isModLoaded("gemsplus")) {
 			Material phoenixite = new Material("phoenixite", 0xFF4511);
 			phoenixite.addTrait(GetLucky.getlucky);

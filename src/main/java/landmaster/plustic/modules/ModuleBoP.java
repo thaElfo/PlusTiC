@@ -15,9 +15,9 @@ import net.minecraftforge.fml.common.*;
 import slimeknights.tconstruct.library.*;
 import slimeknights.tconstruct.library.materials.*;
 
-public class ModuleBoP {
+public class ModuleBoP implements IModule {
 
-	public static void init() {
+	public void init() {
 		final boolean isBoPLoaded = Loader.isModLoaded("BiomesOPlenty") || Loader.isModLoaded("biomesoplenty");
 		
 		if ((Config.bop && isBoPLoaded)

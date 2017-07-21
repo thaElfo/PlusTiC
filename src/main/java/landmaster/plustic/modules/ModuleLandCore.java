@@ -20,8 +20,8 @@ import net.minecraftforge.fml.common.*;
 import slimeknights.tconstruct.library.TinkerRegistry;
 import slimeknights.tconstruct.library.materials.*;
 
-public class ModuleLandCore {
-	public static void init() {
+public class ModuleLandCore implements IModule {
+	public void init() {
 		if (Config.landCore && Loader.isModLoaded("landcore")) {
 			List<Triple<String, Integer, Integer>> matData = Arrays.asList(
 					Triple.of("thorium", 0x00FFBF, 800),

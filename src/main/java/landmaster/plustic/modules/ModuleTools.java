@@ -20,7 +20,7 @@ import slimeknights.tconstruct.library.tools.*;
 import slimeknights.tconstruct.tools.*;
 
 @Mod.EventBusSubscriber(modid = ModInfo.MODID)
-public class ModuleTools {
+public class ModuleTools implements IModule {
 	public static ToolKatana katana;
 	public static ToolLaserGun laserGun;
 	
@@ -30,8 +30,6 @@ public class ModuleTools {
 	
 	private static final List<ToolCore> tools = new ArrayList<>();
 	private static final List<IToolPart> toolParts = new ArrayList<>();
-	
-	public static void init() {}
 	
 	@SubscribeEvent
 	public static void initItems(RegistryEvent.Register<Item> event) {

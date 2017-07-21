@@ -17,9 +17,9 @@ import slimeknights.tconstruct.library.materials.*;
 import slimeknights.tconstruct.library.traits.*;
 import slimeknights.tconstruct.shared.*;
 
-public class ModuleTF {
+public class ModuleTF implements IModule {
 
-	public static void init() {
+	public void init() {
 		if (Config.thermalFoundation && Loader.isModLoaded("thermalfoundation")
 				&& Config.pyrotheumSmelt) {
 			// SMELTERY FUEL

@@ -12,9 +12,9 @@ import net.minecraftforge.fml.common.*;
 import slimeknights.tconstruct.library.*;
 import slimeknights.tconstruct.library.materials.*;
 
-public class ModuleActAdd {
+public class ModuleActAdd implements IModule {
 
-	public static void init() {
+	public void init() {
 		if (Config.actuallyAdditions && Loader.isModLoaded("actuallyadditions")) {
 			Material blackQuartz = new Material("blackquartz_plustic", TextFormatting.BLACK);
 			blackQuartz.addTrait(DevilsStrength.devilsstrength);

@@ -6,8 +6,8 @@ import slimeknights.tconstruct.library.*;
 import slimeknights.tconstruct.library.materials.*;
 import slimeknights.tconstruct.shared.*;
 
-public class ModuleSurvivalist {
-	public static void init() {
+public class ModuleSurvivalist implements IModule {
+	public void init() {
 		if (Config.survivalist && Loader.isModLoaded("survivalist")) {
 			// add melting recipes
 			TinkerRegistry.registerMelting("rockOreIron", TinkerFluids.iron, Material.VALUE_Nugget*2);

@@ -13,9 +13,9 @@ import net.minecraftforge.fml.common.*;
 import slimeknights.tconstruct.library.*;
 import slimeknights.tconstruct.library.materials.*;
 
-public class ModuleAdvRocketry {
+public class ModuleAdvRocketry implements IModule {
 
-	public static void init() {
+	public void init() {
 		if (Config.advancedRocketry &&
 				(Loader.isModLoaded("libVulpes") || Loader.isModLoaded("libvulpes"))) {
 			if (TinkerRegistry.getMaterial("titanium") == Material.UNKNOWN) {

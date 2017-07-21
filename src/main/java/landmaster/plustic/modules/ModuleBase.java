@@ -27,7 +27,7 @@ import slimeknights.tconstruct.shared.*;
 
 @Mod.EventBusSubscriber(modid = ModInfo.MODID)
 public class ModuleBase implements IModule {
-	private static final CompletableFuture<Object> emeraldStage = new CompletableFuture<>();
+	private static CompletableFuture<?> emeraldStage = new CompletableFuture<>();
 
 	public void init() {
 		if (Config.base) {
@@ -47,13 +47,13 @@ public class ModuleBase implements IModule {
 			emerald.setRepresentativeItem(Items.EMERALD);
 			emerald.setCraftable(false).setCastable(true);
 			PlusTiC.proxy.setRenderInfo(emerald, 0x13DB52);
-			emeraldStage.thenRun(() -> emerald.setFluid(TinkerFluids.emerald));
+			CompletableFuture<?> emeraldStage1 = emeraldStage.thenRun(() -> emerald.setFluid(TinkerFluids.emerald));
 			TinkerRegistry.addMaterialStats(emerald, new HeadMaterialStats(1222, 7, 7, COBALT),
 					new HandleMaterialStats(1.1f, 0),
 					new ExtraMaterialStats(70),
 					new BowMaterialStats(1.1f, 1, 0.9f));
 			PlusTiC.materials.put("emerald", emerald);
-			PlusTiC.materialIntegrationStages.put("emerald", emeraldStage);
+			PlusTiC.materialIntegrationStages.put("emerald", emeraldStage1);
 			
 			// alumite is back! (with some changes)
 			Utils.ItemMatGroup alumiteGroup = Utils.registerMatGroup("alumite");

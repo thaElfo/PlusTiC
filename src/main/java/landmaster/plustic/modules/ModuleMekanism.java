@@ -19,7 +19,7 @@ import slimeknights.tconstruct.library.*;
 import slimeknights.tconstruct.library.materials.*;
 
 public class ModuleMekanism implements IModule {
-
+	@Override
 	public void init() {
 		if (Config.mekanism && (Loader.isModLoaded("Mekanism") || Loader.isModLoaded("mekanism"))) {
 			Material osmium;
@@ -120,6 +120,13 @@ public class ModuleMekanism implements IModule {
 				PlusTiC.materials.put("osmiridium", osmiridium);
 			}
 		}
+	}
+	
+	@Override
+	public void init2() {
+		Utils.setDispItem(PlusTiC.materials.get("refinedObsidian"), "ingotRefinedObsidian");
+		Utils.setDispItem(PlusTiC.materials.get("osmium"), "ingotOsmium");
+		Utils.setDispItem(PlusTiC.materials.get("refinedGlowstone"), "ingotRefinedGlowstone");
 	}
 	
 }

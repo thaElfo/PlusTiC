@@ -6,6 +6,7 @@ import landmaster.plustic.*;
 import landmaster.plustic.config.*;
 import landmaster.plustic.tools.stats.*;
 import landmaster.plustic.traits.*;
+import landmaster.plustic.util.Utils;
 import net.minecraftforge.fml.common.*;
 import slimeknights.tconstruct.library.*;
 import slimeknights.tconstruct.library.materials.*;
@@ -30,6 +31,10 @@ public class ModuleGemsPlus implements IModule {
 			
 			PlusTiC.materials.put("phoenixite", phoenixite);
 		}
+	}
+	
+	public void init2() {
+		Utils.setDispItem(PlusTiC.materials.get("phoenixite"), "gemPhoenixite");
 	}
 	
 }

@@ -7,7 +7,6 @@ import java.util.concurrent.*;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.*;
 
-import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import gnu.trove.map.hash.*;
 import landmaster.plustic.proxy.*;
 import landmaster.plustic.api.*;
@@ -122,44 +121,6 @@ public class PlusTiC {
 		PacketHandler.init();
 		
 		IModule.modules.forEach(IModule::init2);
-		
-		final Material Void = materials.get("Void");
-		if (Void != null) {
-			ItemStack voidStack = new ItemStack(InitItems.itemCrystal, 1, 3);
-			Void.addItem(voidStack, 1, Material.VALUE_Ingot);
-			Void.setRepresentativeItem(voidStack);
-		}
-		
-		Utils.setDispItem(materials.get("phoenixite"), "gemPhoenixite");
-		
-		// This is here for historical reasons, as Mekanism has fixed their thing.
-		Utils.setDispItem(materials.get("refinedObsidian"), "ingotRefinedObsidian");
-		Utils.setDispItem(materials.get("osmium"), "ingotOsmium");
-		Utils.setDispItem(materials.get("refinedGlowstone"), "ingotRefinedGlowstone");
-		
-		// NOT REGISTERING YOUR OREDICTS IN PREINIT, ARMORPLUS?
-		Utils.setDispItem(materials.get("witherbone"), "armorplus", "wither_bone");
-		Utils.setDispItem(materials.get("guardianscale"), "armorplus", "guardian_scale");
-		
-		// YOU TOO, ACTUALLY ADDITIONS?
-		Utils.setDispItem(materials.get("blackquartz"), "gemQuartzBlack");
-		
-		// SAME HERE, AVARITIA?
-		Utils.setDispItem(materials.get("infinity"), "ingotInfinity");
-		
-		Utils.setDispItem(materials.get("sapphire"), "gemSapphire");
-		Utils.setDispItem(materials.get("ruby"), "gemRuby");
-		Utils.setDispItem(materials.get("peridot"), "gemPeridot");
-		
-		{
-			// TODO add more materials to force out when needed
-			if (Config.botania && Config.forceOutNaturalPledgeMaterials) {
-				Utils.forceOutModsMaterial("terrasteel", "botanicaladdons");
-				Utils.forceOutModsMaterial("elementium", "botanicaladdons");
-				Utils.forceOutModsMaterial("manasteel", "botanicaladdons");
-				Utils.forceOutModsMaterial("livingwood", "botanicaladdons");
-			}
-		}
 		
 		integrate(materials, materialIntegrations);
 	}

@@ -7,6 +7,7 @@ import static slimeknights.tconstruct.tools.TinkerTraits.*;
 import landmaster.plustic.*;
 import landmaster.plustic.config.*;
 import landmaster.plustic.traits.*;
+import landmaster.plustic.util.Utils;
 import net.minecraft.util.text.*;
 import net.minecraftforge.fml.common.*;
 import slimeknights.tconstruct.library.*;
@@ -36,6 +37,12 @@ public class ModuleArmorPlus implements IModule {
 			TinkerRegistry.addMaterialStats(guardianScale, new BowMaterialStats(0.85f, 1.2f, 5.5f));
 			PlusTiC.materials.put("guardianscale", guardianScale);
 		}
+	}
+	
+	public void init2() {
+		// NOT REGISTERING YOUR OREDICTS IN PREINIT, ARMORPLUS?
+		Utils.setDispItem(PlusTiC.materials.get("witherbone"), "witherBone");
+		Utils.setDispItem(PlusTiC.materials.get("guardianscale"), "scaleGuardian");
 	}
 	
 }

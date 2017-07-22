@@ -39,4 +39,9 @@ public class ModuleAvaritia implements IModule {
 			PlusTiC.materials.put("infinity", infinity);
 		}
 	}
+	
+	public void init2() {
+		// SAME HERE, AVARITIA?
+		Utils.setDispItem(PlusTiC.materials.get("infinity"), "ingotInfinity");
+	}
 }

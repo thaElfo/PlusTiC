@@ -1,5 +1,8 @@
 package landmaster.plustic.modules;
 
+import landmaster.plustic.config.Config;
+import landmaster.plustic.util.Utils;
+
 public class ModuleBotania {
 
 	public static void init() {/*
@@ -112,6 +115,15 @@ public class ModuleBotania {
 				PlusTiC.materials.put("mirion", mirion);
 			}
 		}*/
+	}
+	
+	public static void init2() {
+		if (Config.botania && Config.forceOutNaturalPledgeMaterials) {
+			Utils.forceOutModsMaterial("terrasteel", "botanicaladdons");
+			Utils.forceOutModsMaterial("elementium", "botanicaladdons");
+			Utils.forceOutModsMaterial("manasteel", "botanicaladdons");
+			Utils.forceOutModsMaterial("livingwood", "botanicaladdons");
+		}
 	}
 	
 }

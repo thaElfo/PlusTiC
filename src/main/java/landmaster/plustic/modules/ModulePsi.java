@@ -42,7 +42,7 @@ public class ModulePsi implements IModule {
 			psigem.addTrait(Portly.portly);
 			psigem.addItem("gemPsi", 1, Material.VALUE_Ingot);
 			psigem.setCraftable(true);
-			Utils.setDispItem(psigem, "gemPsi");
+			new OreRegisterPromise("gemPsi").thenAccept(psigem::setRepresentativeItem);
 			PlusTiC.proxy.setRenderInfo(psigem, 0x0843A3);
 			
 			TinkerRegistry.addMaterialStats(psigem,

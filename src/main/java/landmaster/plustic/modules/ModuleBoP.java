@@ -26,7 +26,7 @@ public class ModuleBoP implements IModule {
 			sapphire.addTrait(aquadynamic);
 			sapphire.addItem("gemSapphire", 1, Material.VALUE_Ingot);
 			sapphire.setCraftable(true);
-			// sapphire.setRepresentativeItem(OreDictionary.getOres("gemSapphire").get(0));
+			new OreRegisterPromise("gemSapphire").thenAccept(sapphire::setRepresentativeItem);
 			PlusTiC.proxy.setRenderInfo(sapphire, 0x0000FF);
 			TinkerRegistry.addMaterialStats(sapphire, new HeadMaterialStats(700, 5, 6.4f, COBALT));
 			TinkerRegistry.addMaterialStats(sapphire, new HandleMaterialStats(1, 100));
@@ -39,7 +39,7 @@ public class ModuleBoP implements IModule {
 			ruby.addTrait(sharp, HEAD);
 			ruby.addItem("gemRuby", 1, Material.VALUE_Ingot);
 			ruby.setCraftable(true);
-			// ruby.setRepresentativeItem(OreDictionary.getOres("gemRuby").get(0));
+			new OreRegisterPromise("gemRuby").thenAccept(ruby::setRepresentativeItem);
 			PlusTiC.proxy.setRenderInfo(ruby, 0xFF0000);
 			TinkerRegistry.addMaterialStats(ruby, new HeadMaterialStats(660, 4.6f, 6.4f, COBALT));
 			TinkerRegistry.addMaterialStats(ruby, new HandleMaterialStats(1.2f, 0));
@@ -51,7 +51,7 @@ public class ModuleBoP implements IModule {
 			peridot.addTrait(NaturesBlessing.naturesblessing);
 			peridot.addItem("gemPeridot", 1, Material.VALUE_Ingot);
 			peridot.setCraftable(true);
-			// peridot.setRepresentativeItem(OreDictionary.getOres("gemPeridot").get(0));
+			new OreRegisterPromise("gemPeridot").thenAccept(peridot::setRepresentativeItem);
 			PlusTiC.proxy.setRenderInfo(peridot, 0xBEFA5C);
 			TinkerRegistry.addMaterialStats(peridot, new HeadMaterialStats(640, 4.0f, 6.1f, COBALT));
 			TinkerRegistry.addMaterialStats(peridot, new HandleMaterialStats(1.3f, -30));

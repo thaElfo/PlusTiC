@@ -4,9 +4,12 @@ import static slimeknights.tconstruct.library.materials.MaterialTypes.*;
 import static slimeknights.tconstruct.library.utils.HarvestLevels.*;
 import static slimeknights.tconstruct.tools.TinkerTraits.*;
 
+import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import landmaster.plustic.*;
 import landmaster.plustic.config.*;
 import landmaster.plustic.traits.*;
+import landmaster.plustic.util.Utils;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.*;
 import net.minecraftforge.fml.common.*;
 import slimeknights.tconstruct.library.*;
@@ -40,6 +43,18 @@ public class ModuleActAdd implements IModule {
 					new BowMaterialStats(1, 1.3f, 3.5f));
 			PlusTiC.materials.put("Void", Void);
 		}
+	}
+	
+	public void init2() {
+		final Material Void = PlusTiC.materials.get("Void");
+		if (Void != null) {
+			ItemStack voidStack = new ItemStack(InitItems.itemCrystal, 1, 3);
+			Void.addItem(voidStack, 1, Material.VALUE_Ingot);
+			Void.setRepresentativeItem(voidStack);
+		}
+		
+		// YOU TOO, ACTUALLY ADDITIONS?
+		Utils.setDispItem(PlusTiC.materials.get("blackquartz"), "gemQuartzBlack");
 	}
 	
 }

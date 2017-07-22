@@ -175,7 +175,7 @@ public class PlusTiC {
 			Map<String, CompletionStage<?>> materialIntegrationStages) {
 		materials.forEach((k, v) -> {
 			if (!materialIntegrations.containsKey(k)) {
-				materialIntegrationStages.getOrDefault(k, CompletableFuture.completedFuture(null)).thenAccept(o -> {
+				materialIntegrationStages.getOrDefault(k, CompletableFuture.completedFuture(null)).thenRun(() -> {
 					MaterialIntegration mi;
 					if (v.getRepresentativeItem().getItem() == Items.EMERALD) {
 						mi = new MaterialIntegration(v, v.getFluid());

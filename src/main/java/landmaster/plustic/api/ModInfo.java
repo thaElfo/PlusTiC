@@ -4,7 +4,7 @@ public class ModInfo {
 
 	public static final String MODID = "plustic";
 	public static final String NAME = "PlusTiC";
-	public static final String VERSION = "6.0.0.2";
+	public static final String VERSION = "6.0.0.3";
 	
 	// TODO add dependencies when needed
 	public static final String DEPENDS = "required-after:mantle;"

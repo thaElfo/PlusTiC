@@ -122,7 +122,7 @@ public class PlusTiC {
 		
 		IModule.modules.forEach(IModule::init2);
 		
-		integrate(materials, materialIntegrations);
+		postIntegrate();
 	}
 	
 	@EventHandler
@@ -145,19 +145,14 @@ public class PlusTiC {
 					} else {
 						mi = new MaterialIntegration(v);
 					}
-					mi.preInit();
+					TinkerRegistry.integrate(mi).preInit();
 					materialIntegrations.put(k, mi);
 				});
 			}
 		});
 	}
 	
-	private static void integrate(Map<String,Material> materials,
-			Map<String,MaterialIntegration> materialIntegrations) {
-		materialIntegrations.forEach((k, mi) -> {
-			mi.integrateRecipes();
-		});
-		
+	private static void postIntegrate() {
 		Utils.displace(TinkerMaterials.wood.getIdentifier()); // so that natura woods are prioritized
 	}
 }

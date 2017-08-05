@@ -22,8 +22,8 @@ public class ModuleMekanism implements IModule {
 	@Override
 	public void init() {
 		if (Config.mekanism && (Loader.isModLoaded("Mekanism") || Loader.isModLoaded("mekanism"))) {
-			Material osmium;
-			if (TinkerRegistry.getMaterial("osmium") == Material.UNKNOWN) {
+			Material osmium = TinkerRegistry.getMaterial("osmium");
+			if (osmium == Material.UNKNOWN) {
 				osmium = new Material("osmium", TextFormatting.BLUE);
 				osmium.addTrait(dense);
 				osmium.addTrait(established);
@@ -44,8 +44,6 @@ public class ModuleMekanism implements IModule {
 						new BatteryCellMaterialStats(80000));
 				
 				PlusTiC.materials.put("osmium", osmium);
-			} else {
-				osmium = TinkerRegistry.getMaterial("osmium");
 			}
 			
 			Material refinedObsidian = new Material("refinedObsidian", TextFormatting.LIGHT_PURPLE);
@@ -93,7 +91,7 @@ public class ModuleMekanism implements IModule {
 			Material iridium = Optional.ofNullable(PlusTiC.materials.get("iridium"))
 					.orElse(TinkerRegistry.getMaterial("iridium"));
 			
-			if (iridium.hasFluid()) {
+			if (iridium.hasFluid() && osmium.hasFluid()) {
 				// osmiridium
 				Utils.ItemMatGroup osmiridiumGroup = Utils.registerMatGroup("osmiridium");
 				

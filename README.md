@@ -1,4 +1,6 @@
 # PlusTiC
+![travis](https://travis-ci.org/Landmaster/PlusTiC.svg?branch=1.12)
+
 Minecraft mod for adding new tools to and integrating various mods with Tinkers Construct
 
 CurseForge page: https://minecraft.curseforge.com/projects/plustic

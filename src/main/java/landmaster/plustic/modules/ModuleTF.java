@@ -20,19 +20,8 @@ import slimeknights.tconstruct.shared.*;
 public class ModuleTF implements IModule {
 
 	public void init() {
-		if (Config.thermalFoundation && Loader.isModLoaded("thermalfoundation")
-				&& Config.pyrotheumSmelt) {
-			// SMELTERY FUEL
-			Fluid pyrotheum = FluidRegistry.getFluid("pyrotheum");
-			TinkerRegistry.registerSmelteryFuel(new FluidStack(pyrotheum, 50), 100);
-		}
 		if ((Config.thermalFoundation && Loader.isModLoaded("thermalfoundation"))
 				|| (Config.substratum && Loader.isModLoaded("substratum"))) {
-			// FETCH FLUIDS
-			Fluid redstoneFluid = FluidRegistry.getFluid(Loader.isModLoaded("thermalfoundation") ? "redstone" : "liquidredstone");
-			Fluid enderFluid = FluidRegistry.getFluid(Loader.isModLoaded("thermalfoundation") ? "ender" : "liquidenderpearl");
-			Fluid glowstoneFluid = FluidRegistry.getFluid(Loader.isModLoaded("thermalfoundation") ? "glowstone" : "liquidglowstone");
-			
 			// START MATERIALS
 			
 			Material lumium = new Material("lumium_plustic", TextFormatting.YELLOW);
@@ -47,10 +36,6 @@ public class ModuleTF implements IModule {
 			lumiumFluid.setTemperature(1000);
 			Utils.initFluidMetal(lumiumFluid);
 			lumium.setFluid(lumiumFluid);
-			TinkerRegistry.registerAlloy(new FluidStack(lumiumFluid, 72),
-					new FluidStack(TinkerFluids.tin, 54),
-					new FluidStack(TinkerFluids.silver, 18),
-					new FluidStack(glowstoneFluid, 125));
 			
 			TinkerRegistry.addMaterialStats(lumium,
 					new HeadMaterialStats(830, 7f, 6.5f, COBALT),
@@ -70,10 +55,6 @@ public class ModuleTF implements IModule {
 			signalumFluid.setTemperature(930);
 			Utils.initFluidMetal(signalumFluid);
 			signalum.setFluid(signalumFluid);
-			TinkerRegistry.registerAlloy(new FluidStack(signalumFluid, 72),
-					new FluidStack(TinkerFluids.copper, 54),
-					new FluidStack(TinkerFluids.silver, 18),
-					new FluidStack(redstoneFluid, 125));
 			
 			TinkerRegistry.addMaterialStats(signalum, new HeadMaterialStats(690, 7.5f, 5.2f, OBSIDIAN),
 					new HandleMaterialStats(1.2f, 0), new ExtraMaterialStats(55),
@@ -116,9 +97,6 @@ public class ModuleTF implements IModule {
 			enderiumFluid.setTemperature(970);
 			Utils.initFluidMetal(enderiumFluid);
 			enderium.setFluid(enderiumFluid);
-			TinkerRegistry.registerAlloy(new FluidStack(enderiumFluid, 144), new FluidStack(TinkerFluids.tin, 72),
-					new FluidStack(TinkerFluids.silver, 36), new FluidStack(platinumFluid, 36),
-					new FluidStack(enderFluid, 250));
 			
 			TinkerRegistry.addMaterialStats(enderium,
 					new HeadMaterialStats(800, 7.5f, 7, COBALT),
@@ -128,6 +106,41 @@ public class ModuleTF implements IModule {
 					new ArrowShaftMaterialStats(1, 12));
 			
 			PlusTiC.materials.put("enderium", enderium);
+		}
+	}
+	
+	@Override
+	public void init2() {
+		if (Config.thermalFoundation && Loader.isModLoaded("thermalfoundation")
+				&& Config.pyrotheumSmelt) {
+			// SMELTERY FUEL
+			Fluid pyrotheum = FluidRegistry.getFluid("pyrotheum");
+			TinkerRegistry.registerSmelteryFuel(new FluidStack(pyrotheum, 50), 100);
+		}
+		if ((Config.thermalFoundation && Loader.isModLoaded("thermalfoundation"))
+				|| (Config.substratum && Loader.isModLoaded("substratum"))) {
+			// FETCH FLUIDS
+			Fluid redstoneFluid = FluidRegistry.getFluid(Loader.isModLoaded("thermalfoundation") ? "redstone" : "liquidredstone");
+			Fluid enderFluid = FluidRegistry.getFluid(Loader.isModLoaded("thermalfoundation") ? "ender" : "liquidenderpearl");
+			Fluid glowstoneFluid = FluidRegistry.getFluid(Loader.isModLoaded("thermalfoundation") ? "glowstone" : "liquidglowstone");
+
+			TinkerRegistry.registerAlloy(new FluidStack(FluidRegistry.getFluid("lumium"), 72),
+					new FluidStack(TinkerFluids.tin, 54),
+					new FluidStack(TinkerFluids.silver, 18),
+					new FluidStack(glowstoneFluid, 125));
+			
+
+			TinkerRegistry.registerAlloy(new FluidStack(FluidRegistry.getFluid("signalum"), 72),
+					new FluidStack(TinkerFluids.copper, 54),
+					new FluidStack(TinkerFluids.silver, 18),
+					new FluidStack(redstoneFluid, 125));
+			
+
+			TinkerRegistry.registerAlloy(new FluidStack(FluidRegistry.getFluid("enderium"), 144),
+					new FluidStack(TinkerFluids.tin, 72),
+					new FluidStack(TinkerFluids.silver, 36),
+					new FluidStack(FluidRegistry.getFluid("platinum"), 36),
+					new FluidStack(enderFluid, 250));
 		}
 	}
 	

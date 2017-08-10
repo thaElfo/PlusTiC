@@ -3,7 +3,7 @@
 item.katana.name=Katana
 item.katana.desc=The Katana is a special weapon that unleashes combos on the target(s).\nComplements the Shuriken
 item.laser_gun.name=Laser Gun
-item.laser_gun.desc=The Laser Gun is a special ranged weapon that fires accurate shots from afar, but requires both durability and energy.\nAttack depends on the laser medium, not the pipe piece.
+item.laser_gun.desc=The Laser Gun is a special ranged weapon that fires accurate shots from afar, but requires both durability and energy. It can also change mode to enable smelting of blocks.\nAttack depends on the laser medium, not the pipe piece.
 
 item.pipe_piece.name=Pipe Piece
 item.laser_medium.name=Laser Medium
@@ -212,6 +212,12 @@ msg.plustic.nickmodifier.use=Just in the nick of time!
 msg.plustic.getlucky.use=I'm up all night to get lucky!
 msg.plustic.brownmagic.use=You're kidding.
 msg.plustic.hailhydra.use=If a §mHydra§r §nKelly§r head is cut off, two more shall take its place!
+msg.plustic.tool_mode=Tool mode: %s
+
+# TOOL MODES
+
+mode.laser_gun.attack=§9Attack
+mode.laser_gun.tool=§4Block Smelt
 
 # TOOLTIPS
 
@@ -234,6 +240,7 @@ key.plustic_release_entity.desc=Release Entity
 key.plustic_toggle_gui.desc=Toggle GUI
 key.plustic_set_portal.desc=Set Portal
 key.plustic_brown_magic.desc=Activate Brown Magic
+key.plustic_toggle_tool.desc=Change Tool Mode
 
 # ENTITIES
 

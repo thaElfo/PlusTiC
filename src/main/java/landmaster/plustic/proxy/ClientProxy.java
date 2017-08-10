@@ -18,6 +18,9 @@ import net.minecraft.util.*;
 import net.minecraftforge.fluids.*;
 import net.minecraftforge.fml.client.registry.*;
 import net.minecraftforge.client.model.*;
+import net.minecraftforge.client.settings.KeyConflictContext;
+import net.minecraftforge.client.settings.KeyModifier;
+
 import org.lwjgl.input.*;
 
 import com.google.common.collect.*;
@@ -65,10 +68,11 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void registerKeyBindings() {
 		keyBindings = ImmutableMap.of(
-				"release_entity", new KeyBinding("key.plustic_release_entity.desc", Keyboard.KEY_0, "key.categories.plustic"),
-				"toggle_gui", new KeyBinding("key.plustic_toggle_gui.desc", Keyboard.KEY_I, "key.categories.plustic"),
-				"set_portal", new KeyBinding("key.plustic_set_portal.desc", Keyboard.KEY_N, "key.categories.plustic"),
-				"brown_magic", new KeyBinding("key.plustic_brown_magic.desc", Keyboard.KEY_O, "key.categories.plustic"));
+				"release_entity", new KeyBinding("key.plustic_release_entity.desc", KeyConflictContext.IN_GAME, Keyboard.KEY_0, "key.categories.plustic"),
+				"toggle_gui", new KeyBinding("key.plustic_toggle_gui.desc", KeyConflictContext.IN_GAME, Keyboard.KEY_I, "key.categories.plustic"),
+				"set_portal", new KeyBinding("key.plustic_set_portal.desc", KeyConflictContext.IN_GAME, Keyboard.KEY_N, "key.categories.plustic"),
+				"brown_magic", new KeyBinding("key.plustic_brown_magic.desc", KeyConflictContext.IN_GAME, Keyboard.KEY_O, "key.categories.plustic"),
+				"toggle_tool", new KeyBinding("key.plustic_toggle_tool.desc", KeyConflictContext.IN_GAME, KeyModifier.ALT, Keyboard.KEY_COMMA, "key.categories.plustic"));
 		for (KeyBinding kb: keyBindings.values()) ClientRegistry.registerKeyBinding(kb);
 	}
 	

@@ -14,7 +14,7 @@ public class PacketLaserGunZapBlock implements IMessage {
 	
 	public static IMessage onMessage(PacketLaserGunZapBlock packet, MessageContext ctx) {
 		Minecraft.getMinecraft().addScheduledTask(() -> {
-			ToolLaserGun.addToZapBlockRendering(Minecraft.getMinecraft().world.getPlayerEntityByUUID(packet.playerUUID), packet.hitVec);
+			ToolLaserGun.proxy.addToZapBlockRendering(Minecraft.getMinecraft().world.getPlayerEntityByUUID(packet.playerUUID), packet.hitVec);
 		});
 		return null;
 	}

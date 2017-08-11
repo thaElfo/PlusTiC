@@ -1,6 +1,6 @@
 package landmaster.plustic.tools;
 
-import java.util.Arrays;
+import java.util.*;
 
 import landmaster.plustic.*;
 import landmaster.plustic.api.*;
@@ -20,12 +20,8 @@ public interface IToggleTool<T extends Enum<T>> {
 	
 	String getTag();
 	
-	public static boolean hasModes(ItemStack is) {
-		return is.getItem() instanceof IToggleTool;
-	}
-	
 	public static Enum<?> rotateMode(ItemStack is) {
-		if (!hasModes(is)) {
+		if (!(is.getItem() instanceof IToggleTool)) {
 			return null;
 		}
 		final Enum<?>[] vals = ((IToggleTool<?>)is.getItem()).clazz().getEnumConstants();
@@ -37,14 +33,14 @@ public interface IToggleTool<T extends Enum<T>> {
 	
 	@SuppressWarnings("unchecked")
 	public static <T extends Enum<T>> T rotateMode(ItemStack is, Class<T> clazz) {
-		if (!(hasModes(is) && ((IToggleTool<?>)is.getItem()).clazz() == clazz)) {
+		if (!(is.getItem() instanceof IToggleTool && ((IToggleTool<?>)is.getItem()).clazz() == clazz)) {
 			return null;
 		}
 		return (T)rotateMode(is);
 	}
 	
 	public static <T extends Enum<T>> T getMode(ItemStack is, Class<T> clazz) {
-		if (!(hasModes(is) && ((IToggleTool<?>)is.getItem()).clazz() == clazz)) {
+		if (!(is.getItem() instanceof IToggleTool && ((IToggleTool<?>)is.getItem()).clazz() == clazz)) {
 			return null;
 		}
 		return clazz.getEnumConstants()[is.getTagCompound().getInteger(((IToggleTool<?>)is.getItem()).getTag())];
@@ -63,7 +59,7 @@ public interface IToggleTool<T extends Enum<T>> {
 	public static void onInput(InputEvent.KeyInputEvent event) {
 		if (PlusTiC.proxy.isControlPressed("toggle_tool") && Arrays.stream(EnumHand.values())
 				.map(Minecraft.getMinecraft().player::getHeldItem)
-				.anyMatch(IToggleTool::hasModes)) {
+				.anyMatch(is -> is.getItem() instanceof IToggleTool)) {
 			PacketHandler.INSTANCE.sendToServer(new PacketUpdateToolModeServer());
 		}
 	}

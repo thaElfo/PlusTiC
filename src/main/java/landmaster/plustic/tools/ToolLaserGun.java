@@ -97,14 +97,6 @@ public class ToolLaserGun extends TinkerToolCore implements cofh.redstoneflux.ap
 		}
 	}
 	
-	@SideOnly(Side.CLIENT)
-	private static final IdentityHashMap<EntityPlayer, Vec3d> zapBlockRend = new IdentityHashMap<>();
-	
-	@SideOnly(Side.CLIENT)
-	public static void addToZapBlockRendering(EntityPlayer shooter, Vec3d target) {
-		zapBlockRend.put(shooter, target);
-	}
-	
 	public ToolLaserGun() {
 		super(PartMaterialType.handle(TinkerTools.toughToolRod),
 				PartMaterialType.head(ModuleTools.pipe_piece),
@@ -124,9 +116,18 @@ public class ToolLaserGun extends TinkerToolCore implements cofh.redstoneflux.ap
 	
 	public static class Proxy {
 		public void initEvents() { MinecraftForge.EVENT_BUS.register(Proxy.class); }
+		
+		public void addToZapBlockRendering(EntityPlayer shooter, Vec3d target) {
+		}
 	}
 	
 	public static class ProxyClient extends Proxy {
+		private static final IdentityHashMap<EntityPlayer, Vec3d> zapBlockRend = new IdentityHashMap<>();
+		
+		public void addToZapBlockRendering(EntityPlayer shooter, Vec3d target) {
+			zapBlockRend.put(shooter, target);
+		}
+		
 		@Override
 		public void initEvents() {
 			super.initEvents();

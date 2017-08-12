@@ -42,6 +42,7 @@ public class Config extends Configuration {
 	public static boolean forceOutNaturalPledgeMaterials;
 	
 	public static boolean pyrotheumSmelt;
+	public static boolean tfMelt;
 	
 	public static boolean alloyDarkSteel;
 	
@@ -90,6 +91,8 @@ public class Config extends Configuration {
 	}
 	
 	public void sync() {
+		this.addCustomCategoryComment("modules", "Use this to disable entire modules.");
+		
 		// MODULES
 		base = getBoolean("Enable vanilla TiC addons", "modules", true, "Add features to vanilla Tinkers Construct");
 		bop = getBoolean("Enable BoP integration", "modules", true, "Integrate with Biomes o' Plenty");
@@ -111,6 +114,7 @@ public class Config extends Configuration {
 		thermalFoundation = getBoolean("Enable Thermal Foundation integration", "modules", true, "Integrate with Thermal Foundation");
 		{
 			pyrotheumSmelt = getBoolean("Use Pyrotheum as smeltery fuel", "tweaks", true, "Use Pyrotheum as TiC smeltery fuel (only if Thermal Foundation is loaded)");
+			tfMelt = getBoolean("Add smeltery recipes for Redstone, Glowstone, and Ender pearl", "tweaks", true, "Add smelting recipes for Redstone, Glowstone, and Ender pearl (only if Thermal Foundation is loaded)");
 		}
 		draconicEvolution = getBoolean("Enable Draconic Evolution integration", "modules", true, "Integrate with Draconic Evolution");
 		actuallyAdditions = getBoolean("Enable Actually Additions support", "modules", true, "Integrate with Actually Additions");

@@ -12,8 +12,10 @@ import landmaster.plustic.util.*;
 import net.minecraft.util.text.*;
 import net.minecraftforge.fluids.*;
 import net.minecraftforge.fml.common.*;
+import slimeknights.mantle.util.*;
 import slimeknights.tconstruct.library.*;
 import slimeknights.tconstruct.library.materials.*;
+import slimeknights.tconstruct.library.smeltery.*;
 import slimeknights.tconstruct.library.traits.*;
 import slimeknights.tconstruct.shared.*;
 
@@ -115,7 +117,7 @@ public class ModuleTF implements IModule {
 				&& Config.pyrotheumSmelt) {
 			// SMELTERY FUEL
 			Fluid pyrotheum = FluidRegistry.getFluid("pyrotheum");
-			TinkerRegistry.registerSmelteryFuel(new FluidStack(pyrotheum, 50), 100);
+			TinkerRegistry.registerSmelteryFuel(new FluidStack(pyrotheum, 50), 400);
 		}
 		if ((Config.thermalFoundation && Loader.isModLoaded("thermalfoundation"))
 				|| (Config.substratum && Loader.isModLoaded("substratum"))) {
@@ -141,6 +143,22 @@ public class ModuleTF implements IModule {
 					new FluidStack(TinkerFluids.silver, 36),
 					new FluidStack(FluidRegistry.getFluid("platinum"), 36),
 					new FluidStack(enderFluid, 250));
+			
+			if (Config.thermalFoundation && Loader.isModLoaded("thermalfoundation") && Config.tfMelt) {
+				TinkerRegistry.registerMelting(new MeltingRecipe(new RecipeMatch.Oredict("dustRedstone", 1, 100), redstoneFluid, 1020));
+				TinkerRegistry.registerMelting(new MeltingRecipe(new RecipeMatch.Oredict("blockRedstone", 1, 900), redstoneFluid, 1020));
+				TinkerRegistry.registerMelting(new MeltingRecipe(new RecipeMatch.Oredict("dustGlowstone", 1, 250), glowstoneFluid, 1020));
+				TinkerRegistry.registerMelting(new MeltingRecipe(new RecipeMatch.Oredict("glowstone", 1, 1000), glowstoneFluid, 1020));
+				TinkerRegistry.registerMelting(new MeltingRecipe(new RecipeMatch.Oredict("enderpearl", 1, 250), enderFluid, 1020));
+				
+				TinkerRegistry.registerMelting("oreFluidRedstone", redstoneFluid, 1000);
+				TinkerRegistry.registerMelting("oreFluidGlowstone", glowstoneFluid, 1000);
+				TinkerRegistry.registerMelting("oreFluidEnder", enderFluid, 1000);
+				
+				TinkerRegistry.registerMelting("crystalRedstone", redstoneFluid, 250);
+				TinkerRegistry.registerMelting("crystalGlowstone", glowstoneFluid, 250);
+				TinkerRegistry.registerMelting("crystalEnder", enderFluid, 250);
+			}
 		}
 	}
 	

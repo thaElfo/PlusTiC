@@ -81,6 +81,7 @@ material.nickel.name=Nickel
 material.invar.name=Invar
 material.wyvern_plustic.name=Wyvern
 material.awakened_plustic.name=Awakened
+material.chaotic_plustic.name=Chaotic
 material.mirion.name=Mirion
 material.livingwood_plustic.name=Livingwood
 material.blackquartz_plustic.name=Black Quartz
@@ -180,6 +181,8 @@ modifier.dprk.name=Democratic People's Republic of Korea
 modifier.dprk.desc=§oWhen your missiles explode right after launch§r\nWhen attacking or defending, Supreme Leaders will spawn, exploding on opponents in the same manner as a creeper.
 modifier.getlucky.name=Get Lucky
 modifier.getlucky.desc=§oLike the legend of the phoenix...§r\nPress the "set portal" key (default "N") to set a virtual portal on the block you are pointing at. If you are on the brink of death, you have %d phoenixite gems to spare, and the portal has enough space above, then the gems are consumed, you are teleported to the virtual portal, and you are spared. (The tool must be in your hand.)
+modifier.vindictive.name=Vindictive
+modifier.vindictive.desc=§oYou are not forgiven!§r\nBonus damage to players, and you gain some health by attacking.
 
 # MISCELLANEOUS
 

@@ -122,7 +122,7 @@ public class ToolLaserGun extends TinkerToolCore implements cofh.redstoneflux.ap
 	}
 	
 	public static class ProxyClient extends Proxy {
-		private static final IdentityHashMap<EntityPlayer, Vec3d> zapBlockRend = new IdentityHashMap<>();
+		private static final Map<EntityPlayer, Vec3d> zapBlockRend = new HashMap<>();
 		
 		public void addToZapBlockRendering(EntityPlayer shooter, Vec3d target) {
 			zapBlockRend.put(shooter, target);

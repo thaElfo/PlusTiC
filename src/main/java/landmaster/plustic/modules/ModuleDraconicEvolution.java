@@ -7,10 +7,11 @@ import java.util.concurrent.*;
 import landmaster.plustic.*;
 import landmaster.plustic.api.*;
 import landmaster.plustic.config.*;
+import landmaster.plustic.tools.stats.*;
 import landmaster.plustic.traits.*;
 import net.minecraft.item.*;
 import net.minecraft.util.text.*;
-import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.event.*;
 import net.minecraftforge.fml.common.*;
 import net.minecraftforge.fml.common.eventhandler.*;
 import net.minecraftforge.fml.common.registry.*;
@@ -76,6 +77,7 @@ public class ModuleDraconicEvolution implements IModule {
 				TinkerRegistry.addMaterialStats(chaotic, new HandleMaterialStats(2.3f, 700));
 				TinkerRegistry.addMaterialStats(chaotic, new ExtraMaterialStats(800));
 				TinkerRegistry.addMaterialStats(chaotic, new BowMaterialStats(2.3f, 4.0f, 24));
+				TinkerRegistry.addMaterialStats(chaotic, new LaserMediumMaterialStats(45, 256));
 			});
 			
 			PlusTiC.materialIntegrationStages.put("wyvern_core", draconicFut);

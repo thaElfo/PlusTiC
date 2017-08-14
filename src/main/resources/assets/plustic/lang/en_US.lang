@@ -107,6 +107,7 @@ material.refinedglowstone.name=Refined Glowstone
 material.darkmatter.name=Dark Matter
 material.redmatter.name=Red Matter
 material.phoenixite.name=Phoenixite
+material.enori_actadd_plustic.name=Enori
 
 modifier.bloodymary.name=Bloody Mary
 modifier.bloodymary.desc=§oBrought to you by the legendary Queen of England...§r\nDeals bonus damage depending on the amount of health already lost by the target. Also, a chance to drop a Coagulated Blood for each hit.
@@ -183,6 +184,8 @@ modifier.getlucky.name=Get Lucky
 modifier.getlucky.desc=§oLike the legend of the phoenix...§r\nPress the "set portal" key (default "N") to set a virtual portal on the block you are pointing at. If you are on the brink of death, you have %d phoenixite gems to spare, and the portal has enough space above, then the gems are consumed, you are teleported to the virtual portal, and you are spared. (The tool must be in your hand.)
 modifier.vindictive.name=Vindictive
 modifier.vindictive.desc=§oYou are not forgiven!§r\nBonus damage to players, and you gain some health by attacking.
+modifier.starfishy.name=Starfishy
+modifier.starfishy.desc=§o2+2=5§r\nPress the "set portal" key (default "N") to set a virtual portal on the block you are pointing at. If you are on the brink of death, you have %d enori crystals to spare, and the portal has enough space above, then the crystals are consumed, you are teleported to the virtual portal, and you are spared. (The tool must be in your hand.)
 
 # MISCELLANEOUS
 
@@ -216,6 +219,7 @@ msg.plustic.getlucky.use=I'm up all night to get lucky!
 msg.plustic.brownmagic.use=You're kidding.
 msg.plustic.hailhydra.use=If a §mHydra§r §nKelly§r head is cut off, two more shall take its place!
 msg.plustic.tool_mode=Tool mode: %s
+msg.plustic.starfishy.use=Seems starfishy to me.
 
 # TOOL MODES
 

@@ -80,7 +80,7 @@ public class PlusTiC {
 	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
-		(config = new Config(event)).sync();
+		(config = new Config(event)).init1();
 		
 		proxy.initEntities();
 		
@@ -110,6 +110,10 @@ public class PlusTiC {
 				));
 		
 		IModule.modules.forEach(IModule::init);
+		
+		config.init2(materials);
+		
+		config.update();
 		
 		preIntegrate(materials, materialIntegrations, materialIntegrationStages);
 	}

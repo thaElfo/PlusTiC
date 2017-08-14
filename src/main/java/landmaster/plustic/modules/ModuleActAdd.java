@@ -8,8 +8,8 @@ import de.ellpeck.actuallyadditions.mod.items.InitItems;
 import landmaster.plustic.*;
 import landmaster.plustic.config.*;
 import landmaster.plustic.traits.*;
-import landmaster.plustic.util.Utils;
-import net.minecraft.item.ItemStack;
+import landmaster.plustic.util.*;
+import net.minecraft.item.*;
 import net.minecraft.util.text.*;
 import net.minecraftforge.fml.common.*;
 import slimeknights.tconstruct.library.*;
@@ -42,6 +42,17 @@ public class ModuleActAdd implements IModule {
 					new ExtraMaterialStats(140),
 					new BowMaterialStats(1, 1.3f, 3.5f));
 			PlusTiC.materials.put("Void", Void);
+			
+			Material enori = new Material("enori_actadd_plustic", TextFormatting.WHITE);
+			enori.addTrait(Starfishy.starfishy, HEAD);
+			enori.addTrait(Anticorrosion.anticorrosion);
+			enori.setCraftable(true);
+			PlusTiC.proxy.setRenderInfo(enori, 0xF2F7FF);
+			TinkerRegistry.addMaterialStats(enori, new HeadMaterialStats(600, 7, 5.2f, OBSIDIAN),
+					new HandleMaterialStats(1.2f, -5),
+					new ExtraMaterialStats(75),
+					new BowMaterialStats(1.2f, 1.2f, 5.1f));
+			PlusTiC.materials.put("enori", enori);
 		}
 	}
 	
@@ -51,6 +62,13 @@ public class ModuleActAdd implements IModule {
 			ItemStack voidStack = new ItemStack(InitItems.itemCrystal, 1, 3);
 			Void.addItem(voidStack, 1, Material.VALUE_Ingot);
 			Void.setRepresentativeItem(voidStack);
+		}
+		
+		final Material enori = PlusTiC.materials.get("enori");
+		if (enori != null) {
+			ItemStack enoriStack = new ItemStack(InitItems.itemCrystal, 1, 5);
+			enori.addItem(enoriStack, 1, Material.VALUE_Ingot);
+			enori.setRepresentativeItem(enoriStack);
 		}
 		
 		// YOU TOO, ACTUALLY ADDITIONS?

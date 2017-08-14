@@ -226,7 +226,9 @@ public class Config extends Configuration {
 		try {
 			final String[] langFiles = new String[] { "/assets/plustic/lang/en_us.lang", "/assets/plustic/lang/en_US.lang" };
 			for (String langFile: langFiles) {
-				injectHandle.invokeExact(englishMap, Config.class.getResourceAsStream(langFile));
+				try (InputStream inS = Config.class.getResourceAsStream(langFile)) {
+					injectHandle.invokeExact(englishMap, inS);
+				}
 			}
 		} catch (Throwable e) {
 			Throwables.throwIfUnchecked(e);

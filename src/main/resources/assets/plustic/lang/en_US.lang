@@ -108,6 +108,8 @@ material.darkmatter.name=Dark Matter
 material.redmatter.name=Red Matter
 material.phoenixite.name=Phoenixite
 material.enori_actadd_plustic.name=Enori
+material.palis_actadd_plustic.name=Palis
+material.restonia_actadd_plustic.name=Restonia
 
 modifier.bloodymary.name=Bloody Mary
 modifier.bloodymary.desc=§oBrought to you by the legendary Queen of England...§r\nDeals bonus damage depending on the amount of health already lost by the target. Also, a chance to drop a Coagulated Blood for each hit.
@@ -186,6 +188,10 @@ modifier.vindictive.name=Vindictive
 modifier.vindictive.desc=§oYou are not forgiven!§r\nBonus damage to players, and you gain some health by attacking.
 modifier.starfishy.name=Starfishy
 modifier.starfishy.desc=§o2+2=5§r\nPress the "set portal" key (default "N") to set a virtual portal on the block you are pointing at. If you are on the brink of death, you have %d enori crystals to spare, and the portal has enough space above, then the crystals are consumed, you are teleported to the virtual portal, and you are spared. (The tool must be in your hand.)
+modifier.spades.name=Spades
+modifier.spades.desc=§oTrump suit: Make Tinkers Great Again!§r\nThe lower your health, the more damage you do.
+modifier.hearts.name=Hearts
+modifier.hearts.desc=§oHey, what's with that plus sign on that guy's mod?§r\nThe higher your health, the more damage you do.
 
 # MISCELLANEOUS
 

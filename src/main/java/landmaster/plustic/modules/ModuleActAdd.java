@@ -77,6 +77,27 @@ public class ModuleActAdd implements IModule {
 					new BowMaterialStats(1.4f, 1.7f, 5.7f),
 					new BatteryCellMaterialStats(80000));
 			PlusTiC.materials.put("restonia", restonia);
+			
+			Material emeradic = new Material("emeradic_actadd_plustic", TextFormatting.DARK_GREEN);
+			emeradic.addTrait(Vindictive.vindictive);
+			emeradic.setCraftable(true);
+			PlusTiC.proxy.setRenderInfo(emeradic, 0x00C12D);
+			TinkerRegistry.addMaterialStats(emeradic, new HeadMaterialStats(1400, 8, 7.7f, COBALT),
+					new HandleMaterialStats(1.1f, 0),
+					new ExtraMaterialStats(77),
+					new BowMaterialStats(1.1f, 2.0f, 7.0f),
+					new LaserMediumMaterialStats(10, 24));
+			PlusTiC.materials.put("emeradic", emeradic);
+			
+			Material diamatine = new Material("diamatine_actadd_plustic", TextFormatting.BLUE);
+			diamatine.addTrait(MorganLeFay.morganlefay);
+			diamatine.setCraftable(true);
+			PlusTiC.proxy.setRenderInfo(diamatine, 0x609DFF);
+			TinkerRegistry.addMaterialStats(diamatine, new HeadMaterialStats(1700, 8, 6.3f, COBALT),
+					new HandleMaterialStats(1.2f, 10),
+					new ExtraMaterialStats(88),
+					new LaserMediumMaterialStats(10, 24));
+			PlusTiC.materials.put("diamatine", diamatine);
 		}
 	}
 	
@@ -106,6 +127,20 @@ public class ModuleActAdd implements IModule {
 		if (restonia != null) {
 			restonia.addItem(InitItems.itemCrystal, 1, Material.VALUE_Ingot);
 			restonia.setRepresentativeItem(InitItems.itemCrystal);
+		}
+		
+		final Material emeradic = PlusTiC.materials.get("emeradic");
+		if (emeradic != null) {
+			ItemStack emeradicStack = new ItemStack(InitItems.itemCrystal, 1, 4);
+			emeradic.addItem(emeradicStack, 1, Material.VALUE_Ingot);
+			emeradic.setRepresentativeItem(emeradicStack);
+		}
+		
+		final Material diamatine = PlusTiC.materials.get("diamatine");
+		if (diamatine != null) {
+			ItemStack diamatineStack = new ItemStack(InitItems.itemCrystal, 1, 2);
+			diamatine.addItem(diamatineStack, 1, Material.VALUE_Ingot);
+			diamatine.setRepresentativeItem(diamatineStack);
 		}
 		
 		// YOU TOO, ACTUALLY ADDITIONS?

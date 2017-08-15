@@ -112,6 +112,8 @@ material.palis_actadd_plustic.name=Palis
 material.restonia_actadd_plustic.name=Restonia
 material.emeradic_actadd_plustic.name=Emeradic
 material.diamatine_actadd_plustic.name=Diamatine
+material.ghostwood_plustic.name=Ghostwood
+material.fusewood_plustic.name=Fusewood
 
 modifier.bloodymary.name=Bloody Mary
 modifier.bloodymary.desc=§oBrought to you by the legendary Queen of England...§r\nDeals bonus damage depending on the amount of health already lost by the target. Also, a chance to drop a Coagulated Blood for each hit.
@@ -194,6 +196,8 @@ modifier.spades.name=Spades
 modifier.spades.desc=§oTrump suit: Make Tinkers Great Again!§r\nThe lower your health, the more damage you do.
 modifier.hearts.name=Hearts
 modifier.hearts.desc=§oHey, what's with that plus sign on that guy's mod?§r\nThe higher your health, the more damage you do.
+modifier.ghastly.name=Ghastly
+modifier.ghastly.desc=§oOh, the horror!§r\nIf the holder is attacked while sneaking, the attacker is inflicted with Slowness.
 
 # MISCELLANEOUS
 

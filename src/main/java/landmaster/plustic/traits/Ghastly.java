@@ -10,6 +10,7 @@ import net.minecraftforge.common.*;
 import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.fml.common.eventhandler.*;
 import slimeknights.tconstruct.library.traits.*;
+import slimeknights.tconstruct.library.utils.*;
 
 public class Ghastly extends AbstractTrait {
 	public static final Ghastly ghastly = new Ghastly();
@@ -21,7 +22,12 @@ public class Ghastly extends AbstractTrait {
 	
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void defend(LivingHurtEvent event) {
-		if (event.getEntityLiving().isSneaking() && event.getSource() instanceof EntityDamageSource) {
+		if (event.getEntityLiving().isSneaking()
+				&& event.getSource() instanceof EntityDamageSource
+				&& Arrays.stream(EnumHand.values())
+				.map(event.getEntityLiving()::getHeldItem)
+				.map(TagUtil::getTagSafe)
+				.anyMatch(nbt -> TinkerUtil.hasTrait(nbt, identifier))) {
 			Optional.ofNullable(event.getSource().getTrueSource()).ifPresent(attacker -> {
 				if (attacker instanceof EntityLivingBase) {
 					((EntityLivingBase)attacker).addPotionEffect(

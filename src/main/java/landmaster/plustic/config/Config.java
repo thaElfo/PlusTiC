@@ -43,6 +43,7 @@ public class Config extends Configuration {
 	public static boolean survivalist;
 	public static boolean projectE;
 	public static boolean gemsplus;
+	public static boolean appEng2;
 	
 	// alas…
 	public static boolean forceOutNaturalPledgeMaterials;
@@ -135,6 +136,7 @@ public class Config extends Configuration {
 		survivalist = getBoolean("Enable Survivalist support", "modules", true, "Integrate with Survivalist");
 		projectE = getBoolean("Enable ProjectE support", "modules", true, "Integrate with ProjectE");
 		gemsplus = getBoolean("Enable Gems+ support", "modules", true, "Integrate with Gems+");
+		appEng2 = getBoolean("Enable Applied Energistics 2 support", "modules", true, "Integrate with Applied Energistics 2");
 		
 		// TOOLS
 		katana = getBoolean("Enable Katana", "tools", true, "Enable Katana");

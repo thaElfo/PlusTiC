@@ -8,8 +8,8 @@
 	"type": "forge:ore_shapeless",
 	"ingredients": [
 		{
-            "item": "plustic:osgloglasingot"
-        }
+			"item": "plustic:osgloglasingot"
+		}
 	],
 	"result": {
 		"item": "plustic:osgloglasnugget",

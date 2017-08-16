@@ -8,8 +8,8 @@
 	"type": "forge:ore_shapeless",
 	"ingredients": [
 		{
-            "item": "plustic:mirionblock"
-        }
+			"item": "plustic:mirionblock"
+		}
 	],
 	"result": {
 		"item": "plustic:mirioningot",

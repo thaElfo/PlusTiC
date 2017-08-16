@@ -14,7 +14,7 @@
 	"key": {
 		"I": {
 			"type": "forge:ore_dict",
-            "ore": "nuggetOsmiridium"
+			"ore": "nuggetOsmiridium"
 		}
 	},
 	"result": {

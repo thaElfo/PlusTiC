@@ -106,6 +106,7 @@ public class PlusTiC {
 				new ModuleProjectE(),
 				new ModuleGemsPlus(),
 				new ModuleAppEng2(),
+				new ModuleEnvironTech(),
 				new ModuleTools(),
 				new ModuleModifiers()
 				));

@@ -2,7 +2,7 @@
 	"forge_marker": 1,
 	"defaults": {
 		"textures": {
-			"all": "plustic:blocks/osmiridiumblock"
+			"all": "plustic:blocks/osgloglasblock"
 		}
 	},
 	"variants": {

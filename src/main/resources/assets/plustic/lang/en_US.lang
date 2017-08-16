@@ -52,6 +52,7 @@ fluid.plustic.tungsten.name=Molten Tungsten
 fluid.plustic.landium.name=Molten Landium
 fluid.plustic.desh.name=Molten Desh
 fluid.plustic.refinedglowstone.name=Refined Glowstone
+fluid.plustic.osgloglas.name=Molten Osgloglas
 
 material.sapphire.name=Sapphire
 material.ruby.name=Ruby
@@ -116,6 +117,8 @@ material.ghostwood_plustic.name=Ghostwood
 material.fusewood_plustic.name=Fusewood
 material.certusquartz_plustic.name=Certus Quartz
 material.fluixcrystal_plustic.name=Fluix Crystal
+material.osgloglas.name=Osgloglas
+material.mica.name=Mica
 
 modifier.bloodymary.name=Bloody Mary
 modifier.bloodymary.desc=§oBrought to you by the legendary Queen of England...§r\nDeals bonus damage depending on the amount of health already lost by the target. Also, a chance to drop a Coagulated Blood for each hit.
@@ -200,6 +203,8 @@ modifier.hearts.name=Hearts
 modifier.hearts.desc=§oHey, what's with that plus sign on that guy's mod?§r\nThe higher your health, the more damage you do.
 modifier.ghastly.name=Ghastly
 modifier.ghastly.desc=§oOh, the horror!§r\nIf the holder is attacked while sneaking, the attacker is inflicted with Slowness.
+modifier.slashing.name=Slashing
+modifier.slashing.desc=§oA critical hit!§r\nCritical hits gain 20% more damage!
 
 # MISCELLANEOUS
 
@@ -216,11 +221,14 @@ item.mirionnugget.name=Mirion Nugget
 item.mirioningot.name=Mirion Ingot
 item.invarnugget.name=Invar Nugget
 item.invaringot.name=Invar Ingot
+item.osgloglasnugget.name=Osgloglas Nugget
+item.osgloglasingot.name=Osgloglas Ingot
 
 tile.osmiridiumblock.name=Osmiridium Block
 tile.alumiteblock.name=Alumite Block
 tile.mirionblock.name=Mirion Block
 tile.invarblock.name=Invar Block
+tile.osgloglasblock.name=Osgloglas Block
 
 # CHAT MESSAGES
 

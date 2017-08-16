@@ -1,5 +1,5 @@
-#!/usr/bin/env python
-for metal in ['osmiridium', 'alumite', 'mirion', 'invar']:
+#!/usr/bin/env python3
+for metal in ['osmiridium', 'alumite', 'mirion', 'invar', 'osgloglas']:
 	with open(metal+'_ingot_nugget.json', 'w', encoding='utf-8') as file:
 		file.write('''{
 	"conditions": [

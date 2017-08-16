@@ -88,6 +88,36 @@ public class ModuleMekanism implements IModule {
 			
 			PlusTiC.materials.put("refinedGlowstone", refinedGlowstone);
 			
+			if (osmium.hasFluid()) {
+				// osgloglas
+				Utils.ItemMatGroup osgloglasGroup = Utils.registerMatGroup("osgloglas");
+				
+				Material osgloglas = new Material("osgloglas", 0x72FF68);
+				osgloglas.addTrait(BrownMagic.brownmagic);
+				osgloglas.addTrait(Sassy.sassy);
+				osgloglas.addTrait(Global.global);
+				osgloglas.addItem("ingotOsgloglas", 1, Material.VALUE_Ingot);
+				osgloglas.setCraftable(false).setCastable(true);
+				osgloglas.setRepresentativeItem(osgloglasGroup.ingot);
+				PlusTiC.proxy.setRenderInfo(osgloglas, 0x72FF68);
+				
+				FluidMolten osgloglasFluid = Utils.fluidMetal("osgloglas", 0x72FF68);
+				osgloglasFluid.setTemperature(1300);
+				Utils.initFluidMetal(osgloglasFluid);
+				osgloglas.setFluid(osgloglasFluid);
+				TinkerRegistry.registerAlloy(new FluidStack(osgloglasFluid, 1),
+						new FluidStack(osmium.getFluid(), 1),
+						new FluidStack(refinedObsidianFluid, 1),
+						new FluidStack(refinedGlowstoneFluid, 1));
+				
+				TinkerRegistry.addMaterialStats(osgloglas, new HeadMaterialStats(2800, 7.5f, 11, 5),
+						new HandleMaterialStats(1.5f, -50),
+						new ExtraMaterialStats(100),
+						new BowMaterialStats(0.6f, 1.8f, 8.2f));
+				
+				PlusTiC.materials.put("osgloglas", osgloglas);
+			}
+			
 			Material iridium = Optional.ofNullable(PlusTiC.materials.get("iridium"))
 					.orElse(TinkerRegistry.getMaterial("iridium"));
 			

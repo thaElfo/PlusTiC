@@ -138,11 +138,10 @@ public class ModuleTF implements IModule {
 					new FluidStack(redstoneFluid, 125));
 			
 
-			TinkerRegistry.registerAlloy(new FluidStack(FluidRegistry.getFluid("enderium"), 144),
-					new FluidStack(TinkerFluids.tin, 72),
-					new FluidStack(TinkerFluids.silver, 36),
-					new FluidStack(FluidRegistry.getFluid("platinum"), 36),
-					new FluidStack(enderFluid, 250));
+			TinkerRegistry.registerAlloy(new FluidStack(FluidRegistry.getFluid("enderium"), 72),
+					new FluidStack(TinkerFluids.lead, 54),
+					new FluidStack(FluidRegistry.getFluid("platinum"), 18),
+					new FluidStack(enderFluid, 125));
 			
 			if (Config.thermalFoundation && Loader.isModLoaded("thermalfoundation") && Config.tfMelt) {
 				TinkerRegistry.registerMelting(new MeltingRecipe(new RecipeMatch.Oredict("dustRedstone", 1, 100), redstoneFluid, 1020));

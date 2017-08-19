@@ -92,6 +92,7 @@ public class PlusTiC {
 				new ModuleBoP(),
 				new ModuleMekanism(),
 				new ModuleAdvRocketry(),
+				new ModuleBotania(),
 				new ModuleArmorPlus(),
 				new ModuleEnderIO(),
 				new ModuleTF(),

@@ -1,5 +1,5 @@
 package landmaster.plustic.traits;
-/*
+
 import baubles.api.*;
 import baubles.api.cap.*;
 import landmaster.plustic.api.*;
@@ -12,8 +12,8 @@ import net.minecraftforge.items.*;
 import slimeknights.tconstruct.library.traits.*;
 import slimeknights.tconstruct.library.utils.*;
 import vazkii.botania.api.mana.*;
-*/
-public class Mana {}/*extends AbstractTrait {
+
+public class Mana extends AbstractTrait {
 	public static final int MANA_DRAW = 100;
 	public static final Mana mana = new Mana();
 	
@@ -61,4 +61,4 @@ public class Mana {}/*extends AbstractTrait {
 		
 		return false;
  	}
-}*/
+}

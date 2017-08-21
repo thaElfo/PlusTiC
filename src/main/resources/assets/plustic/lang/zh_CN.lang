@@ -52,6 +52,7 @@ fluid.plustic.tungsten.name=熔融钨
 fluid.plustic.landium.name=熔融Landium
 fluid.plustic.desh.name=熔融戴斯
 fluid.plustic.refinedglowstone.name=熔融强化荧石
+fluid.plustic.osgloglas.name=熔融Osgloglas
 
 material.sapphire.name=蓝宝石
 material.ruby.name=红宝石
@@ -81,6 +82,7 @@ material.nickel.name=镍
 material.invar.name=殷钢
 material.wyvern_plustic.name=双足飞龙
 material.awakened_plustic.name=觉醒龙
+material.chaotic_plustic.name=混沌
 material.mirion.name=蕴魔结晶
 material.livingwood_plustic.name=活木
 material.blackquartz_plustic.name=焦黑石英
@@ -106,6 +108,17 @@ material.refinedglowstone.name=强化荧石
 material.darkmatter.name=暗物质
 material.redmatter.name=红物质
 material.phoenixite.name=Phoenixite
+material.enori_actadd_plustic.name=铁晶
+material.palis_actadd_plustic.name=青金石水晶
+material.restonia_actadd_plustic.name=红石水晶
+material.emeradic_actadd_plustic.name=绿宝石水晶
+material.diamatine_actadd_plustic.name=钻石水晶
+material.ghostwood_plustic.name=幽魂木
+material.fusewood_plustic.name=熔融原木
+material.certusquartz_plustic.name=赛特斯石英
+material.fluixcrystal_plustic.name=福鲁伊克斯水晶
+material.osgloglas.name=Osgloglas
+material.mica.name=云母
 
 modifier.bloodymary.name=血腥玛丽
 modifier.bloodymary.desc=§o由传说中的英国女王赋予你...§r\n根据目标失去的生命值来使其受到额外的伤害。同时,每一次也有概率在你下一次攻击时凝结一滴凝血滴。
@@ -179,7 +192,19 @@ modifier.ignoble.desc=§o降到最低底线§r\n当受到伤害时，便会积�
 modifier.dprk.name=意志坚定
 modifier.dprk.desc=§o灾难将至大洋彼岸。§r\n每当进攻或者防守，NO.1都会进行爆炸。这种方式类似爬行者的爆炸，你可以用这种方式对待你的对手。
 modifier.getlucky.name=豪运
-modifier.getlucky.desc=§o如凤凰一样的传说...§r\n按‘设置传送门’键（默认‘N’）设置您指向方块的虚拟门户.如果你正处在死亡的边缘,你有 %d 一堆的宝石,且有足够的空间。那么通过消化宝石，你将被传送到传送门，期间你不能放手(工具必须在你手上)。
+modifier.getlucky.desc=§o如凤凰一样的传说...§r\n按‘设置传送门’键（默认‘N’）设置您指向方块的虚拟门户.如果你正处在死亡的边缘,你有 %d 一堆的宝石,且有足够的空间。那么通过消耗宝石，你将被传送到传送门，期间你不能放手(工具必须在你手上)。
+modifier.vindictive.name=报复
+modifier.vindictive.desc=§o你不可原谅!§r\n先前攻击你的玩家，你可以通过对其进行攻击来回复生命。
+modifier.starfishy.name=守候
+modifier.starfishy.desc=§o2+2=5§r\n按‘设置传送门’键（默认‘N’）设置您指向方块的虚拟门户.如果你正处在死亡的边缘,你有 %d 一堆的晶体，且有足够的空间。那么通过消耗晶体，你将被传送到传送门，期间你不能放手(工具必须在你手上)。
+modifier.spades.name=百折不挠
+modifier.spades.desc=§o王牌:让渺小的生命散发光彩!§r\n当你的生命值越低，造成的伤害也就越高。
+modifier.hearts.name=海纳百川
+modifier.hearts.desc=§o嘿, 这个家伙加了多少模组?§r\n你的生命值越高，造成的伤害也就越高。
+modifier.ghastly.name=阴森
+modifier.ghastly.desc=§o哦,突然背后一冷!§r\n如果攻击者在持有该工具者背后进行攻击时，就会给予攻击者缓慢效果。
+modifier.slashing.name=剥削
+modifier.slashing.desc=§o致命一击!§r\n增加暴击伤害20%点。
 
 # MISCELLANEOUS
 
@@ -196,11 +221,14 @@ item.mirionnugget.name=蕴魔结晶粒
 item.mirioningot.name=蕴魔结晶锭
 item.invarnugget.name=殷钢粒
 item.invaringot.name=殷钢锭
+item.osgloglasnugget.name=Osgloglas粒
+item.osgloglasingot.name=Osgloglas锭
 
 tile.osmiridiumblock.name=铱锇合金块
 tile.alumiteblock.name=耐酸铝块
 tile.mirionblock.name=蕴魔结晶块
 tile.invarblock.name=殷钢块
+tile.osgloglasblock.name=Osgloglas块
 
 # CHAT MESSAGES
 
@@ -212,6 +240,13 @@ msg.plustic.nickmodifier.use=在千钧一发之际!
 msg.plustic.getlucky.use=我彻夜不眠就为了成为一个辛运儿！
 msg.plustic.brownmagic.use=你在开玩笑。
 msg.plustic.hailhydra.use=如果一个§m九头蛇§r §n徽章§r被破坏,另外两个将取代它的位置!
+msg.plustic.tool_mode=工具模式: %s
+msg.plustic.starfishy.use=似乎海星守候着你。
+
+# TOOLTIPS
+
+mode.laser_gun.attack=§9攻击
+mode.laser_gun.tool=§4熔炼
 
 # TOOLTIPS
 
@@ -234,6 +269,7 @@ key.plustic_release_entity.desc=释放实体
 key.plustic_toggle_gui.desc=切换界面
 key.plustic_set_portal.desc=设置传送门
 key.plustic_brown_magic.desc=激活布朗魔术
+key.plustic_toggle_tool.desc=更换工具模式
 
 # ENTITIES
 

@@ -3,7 +3,7 @@
 item.katana.name=武士刀
 item.katana.desc=武士刀是一種特殊的武器，可以對著目標釋放技能(s)。 \n補充飛鏢
 item.laser_gun.name=激光槍
-item.laser_gun.desc=激光槍是一種精準的遠程攻擊武器, 使用時會消耗耐久及能源。 \n攻擊力及攻擊範圍取決於傳導器而非槍管。
+item.laser_gun.desc=激光槍是一種精準的遠程攻擊武器, 使用時會消耗耐久及能源。此外它可以通過更改模式來實現對方塊的熔煉。\n攻擊力及攻擊範圍取決於傳導器而非槍管。
 
 item.pipe_piece.name=槍管
 item.laser_medium.name=激光傳導器

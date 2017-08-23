@@ -1,88 +1,88 @@
-#!/usr/bin/env python
-for metal in ['osmiridium', 'alumite', 'mirion', 'invar']:
+#!/usr/bin/env python3
+for metal in ['osmiridium', 'alumite', 'mirion', 'invar', 'osgloglas']:
 	with open(metal+'_ingot_nugget.json', 'w', encoding='utf-8') as file:
 		file.write('''{
-	"conditions": [
-		{
-			"type": "plustic:item_exists",
-			"item": "plustic:%(lower)singot"
-		}
-	],
-	"type": "forge:ore_shaped",
-	"pattern": [
-		"III",
-		"III",
-		"III"
-	],
-	"key": {
-		"I": {
-			"type": "forge:ore_dict",
-            "ore": "nugget%(upper)s"
-		}
-	},
-	"result": {
-		"item": "plustic:%(lower)singot"
-	}
+\t"conditions": [
+\t\t{
+\t\t\t"type": "plustic:item_exists",
+\t\t\t"item": "plustic:%(lower)singot"
+\t\t}
+\t],
+\t"type": "forge:ore_shaped",
+\t"pattern": [
+\t\t"III",
+\t\t"III",
+\t\t"III"
+\t],
+\t"key": {
+\t\t"I": {
+\t\t\t"type": "forge:ore_dict",
+\t\t\t"ore": "nugget%(upper)s"
+\t\t}
+\t},
+\t"result": {
+\t\t"item": "plustic:%(lower)singot"
+\t}
 }''' % { 'upper': metal.capitalize(), 'lower': metal })
 	with open(metal+'_nugget.json', 'w', encoding='utf-8') as file:
 		file.write('''{
-	"conditions": [
-		{
-			"type": "plustic:item_exists",
-			"item": "plustic:%(lower)singot"
-		}
-	],
-	"type": "forge:ore_shapeless",
-	"ingredients": [
-		{
-            "item": "plustic:%(lower)singot"
-        }
-	],
-	"result": {
-		"item": "plustic:%(lower)snugget",
-		"count": 9
-	}
+\t"conditions": [
+\t\t{
+\t\t\t"type": "plustic:item_exists",
+\t\t\t"item": "plustic:%(lower)singot"
+\t\t}
+\t],
+\t"type": "forge:ore_shapeless",
+\t"ingredients": [
+\t\t{
+\t\t\t"item": "plustic:%(lower)singot"
+\t\t}
+\t],
+\t"result": {
+\t\t"item": "plustic:%(lower)snugget",
+\t\t"count": 9
+\t}
 }''' % { 'upper': metal.capitalize(), 'lower': metal })
 	with open(metal+'_ingot.json', 'w', encoding='utf-8') as file:
 		file.write('''{
-	"conditions": [
-		{
-			"type": "plustic:item_exists",
-			"item": "plustic:%(lower)singot"
-		}
-	],
-	"type": "forge:ore_shapeless",
-	"ingredients": [
-		{
-            "item": "plustic:%(lower)sblock"
-        }
-	],
-	"result": {
-		"item": "plustic:%(lower)singot",
-		"count": 9
-	}
+\t"conditions": [
+\t\t{
+\t\t\t"type": "plustic:item_exists",
+\t\t\t"item": "plustic:%(lower)singot"
+\t\t}
+\t],
+\t"type": "forge:ore_shapeless",
+\t"ingredients": [
+\t\t{
+\t\t\t"item": "plustic:%(lower)sblock"
+\t\t}
+\t],
+\t"result": {
+\t\t"item": "plustic:%(lower)singot",
+\t\t"count": 9
+\t}
 }''' % { 'upper': metal.capitalize(), 'lower': metal })
 	with open(metal+'_block.json', 'w', encoding='utf-8') as file:
 		file.write('''{
-	"conditions": [
-		{
-			"type": "plustic:item_exists",
-			"item": "plustic:%(lower)singot"
-		}
-	],
-	"type": "forge:ore_shaped",
-	"pattern": [
-		"III",
-		"III",
-		"III"
-	],
-	"key": {
-		"I": {
-			"type": "forge:ore_dict",
-            "ore": "ingot%(upper)s"
-		}
-	},
-	"result": {
-		"item": "plustic:%(lower)sblock"
-	}
+\t"conditions": [
+\t\t{
+\t\t\t"type": "plustic:item_exists",
+\t\t\t"item": "plustic:%(lower)singot"
+\t\t}
+\t],
+\t"type": "forge:ore_shaped",
+\t"pattern": [
+\t\t"III",
+\t\t"III",
+\t\t"III"
+\t],
+\t"key": {
+\t\t"I": {
+\t\t\t"type": "forge:ore_dict",
+\t\t\t"ore": "ingot%(upper)s"
+\t\t}
+\t},
+\t"result": {
+\t\t"item": "plustic:%(lower)sblock"
+\t}
 }''' % { 'upper': metal.capitalize(), 'lower': metal })

@@ -8,8 +8,8 @@
 	"type": "forge:ore_shapeless",
 	"ingredients": [
 		{
-            "item": "plustic:invaringot"
-        }
+			"item": "plustic:invaringot"
+		}
 	],
 	"result": {
 		"item": "plustic:invarnugget",

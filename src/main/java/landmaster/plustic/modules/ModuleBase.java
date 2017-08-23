@@ -82,7 +82,7 @@ public class ModuleBase implements IModule {
 				nickel.addTrait(magnetic);
 				nickel.addItem("ingotNickel", 1, Material.VALUE_Ingot);
 				nickel.setCraftable(false).setCastable(true);
-				new OreRegisterPromise("ingotNickel").thenAccept(ingot -> nickel.setRepresentativeItem(ingot));
+				new OreRegisterPromise("ingotNickel").thenAccept(nickel::setRepresentativeItem);
 				PlusTiC.proxy.setRenderInfo(nickel, 0xFFF98E);
 				
 				nickel.setFluid(TinkerFluids.nickel);
@@ -126,7 +126,7 @@ public class ModuleBase implements IModule {
 				iridium.addTrait(alien, HEAD);
 				iridium.addItem("ingotIridium", 1, Material.VALUE_Ingot);
 				iridium.setCraftable(false).setCastable(true);
-				new OreRegisterPromise("ingotIridium").thenAccept(ingot -> iridium.setRepresentativeItem(ingot));
+				new OreRegisterPromise("ingotIridium").thenAccept(iridium::setRepresentativeItem);
 				PlusTiC.proxy.setRenderInfo(iridium, 0xE5E5E5);
 				
 				FluidMolten iridiumFluid = Utils.fluidMetal("iridium", 0xE5E5E5);

@@ -2,21 +2,29 @@ package landmaster.plustic.tools;
 
 import java.util.*;
 
+import javax.annotation.Nullable;
+
 import org.lwjgl.opengl.*;
 
 import landmaster.plustic.api.*;
 import landmaster.plustic.api.event.*;
 import landmaster.plustic.modules.*;
+import landmaster.plustic.net.*;
 import landmaster.plustic.tools.nbt.*;
 import landmaster.plustic.tools.stats.*;
 import landmaster.plustic.util.*;
+import net.minecraft.block.state.*;
 import net.minecraft.client.*;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.vertex.*;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.*;
 import net.minecraft.entity.*;
+import net.minecraft.entity.item.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
+import net.minecraft.item.crafting.*;
 import net.minecraft.nbt.*;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
@@ -28,6 +36,8 @@ import net.minecraftforge.common.capabilities.*;
 import net.minecraftforge.energy.*;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.eventhandler.*;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import slimeknights.tconstruct.library.materials.*;
 import slimeknights.tconstruct.library.tinkering.*;
 import slimeknights.tconstruct.library.tools.*;
@@ -35,12 +45,14 @@ import slimeknights.tconstruct.library.utils.*;
 import slimeknights.tconstruct.tools.*;
 
 @net.minecraftforge.fml.common.Optional.Interface(iface = "cofh.redstoneflux.api.IEnergyContainerItem", modid = "redstoneflux")
-public class ToolLaserGun extends TinkerToolCore implements cofh.redstoneflux.api.IEnergyContainerItem {
+public class ToolLaserGun extends TinkerToolCore implements cofh.redstoneflux.api.IEnergyContainerItem, IToggleTool<ToolLaserGun.Mode> {
 	private static float range(ItemStack is) {
 		return (new LaserNBT(TagUtil.getToolTag(is))).range;
 	}
 	
 	public static final String ATTACK_DURATION_TAG = "AttackDuration";
+	public static final String MODE_TAG = "Mode";
+	public static final String POS_LCOOL_TAG = "LockCooldown";
 	
 	private int maxAttackDuration(ItemStack is) {
 		return (int)(20 / ToolHelper.getActualAttackSpeed(is));
@@ -65,6 +77,26 @@ public class ToolLaserGun extends TinkerToolCore implements cofh.redstoneflux.ap
 	
 	public static final ResourceLocation LASER_LOC = new ResourceLocation(ModInfo.MODID, "textures/effects/laserbeam.png");
 	
+	public static enum Mode implements IEnumL10n {
+		ATTACK, TOOL;
+
+		@Override
+		public String getUnlocName() {
+			return "mode.laser_gun."+name().toLowerCase(Locale.US);
+		}
+	}
+	
+	public static RayTraceResult trace(Mode mode, EntityPlayer entity, float range) {
+		switch (mode) {
+		case ATTACK:
+			return EntityUtil.raytraceEntityPlayerLook(entity, range);
+		case TOOL:
+			return entity.getEntityWorld().rayTraceBlocks(entity.getPositionEyes(1), entity.getPositionEyes(1).add(entity.getLook(1).scale(range)));
+		default:
+			throw new RuntimeException("Bad mode, you copycat!");
+		}
+	}
+	
 	public ToolLaserGun() {
 		super(PartMaterialType.handle(TinkerTools.toughToolRod),
 				PartMaterialType.head(ModuleTools.pipe_piece),
@@ -83,12 +115,24 @@ public class ToolLaserGun extends TinkerToolCore implements cofh.redstoneflux.ap
 	public static Proxy proxy;
 	
 	public static class Proxy {
-		public void initEvents() {}
+		public void initEvents() { MinecraftForge.EVENT_BUS.register(Proxy.class); }
+		
+		public void addToZapBlockRendering(EntityPlayer shooter, Vec3d target) {
+		}
 	}
 	
 	public static class ProxyClient extends Proxy {
+		private static final Map<EntityPlayer, Vec3d> zapBlockRend = new HashMap<>();
+		
+		public void addToZapBlockRendering(EntityPlayer shooter, Vec3d target) {
+			zapBlockRend.put(shooter, target);
+		}
+		
 		@Override
-		public void initEvents() { MinecraftForge.EVENT_BUS.register(ProxyClient.class); }
+		public void initEvents() {
+			super.initEvents();
+			MinecraftForge.EVENT_BUS.register(ProxyClient.class);
+		}
 		
 		@SubscribeEvent
 		public static void renderBeam(RenderWorldLastEvent event) { // for this player
@@ -128,9 +172,23 @@ public class ToolLaserGun extends TinkerToolCore implements cofh.redstoneflux.ap
 	            
 	            Vec3d vec = new Vec3d(doubleX, doubleY+player.getEyeHeight(), doubleZ);
 	            Vec3d vec0 = shooter.getPositionVector().addVector(0, shooter.getEyeHeight()+0.2, 0);
-	            Vec3d vec1 = Optional.ofNullable(EntityUtil.raytraceEntityPlayerLook(player, range(stack)))
+	            Vec3d vec1 = vec0;
+	            
+	            switch (IToggleTool.getMode(stack, Mode.class)) {
+				case ATTACK:
+					vec1 = Optional.ofNullable(EntityUtil.raytraceEntityPlayerLook(player, range(stack)))
 	            		.map(rtr -> rtr.hitVec)
-	            		.orElse(vec.add(player.getLookVec().scale(range(stack))));
+	            		.orElse(vec1);
+					break;
+				case TOOL:
+					if (zapBlockRend.containsKey(shooter)) {
+						vec1 = zapBlockRend.get(shooter);
+						zapBlockRend.remove(shooter);
+					}
+					break;
+				default:
+					break;
+	            }
 	            
 	            GlStateManager.translate(-doubleX, -doubleY, -doubleZ);
 				
@@ -162,6 +220,8 @@ public class ToolLaserGun extends TinkerToolCore implements cofh.redstoneflux.ap
 			if (atkDur < 0) atkDur = 0;
 			nbt.setInteger(ATTACK_DURATION_TAG, atkDur);
 			stack.setTagCompound(nbt);
+			
+			nbt.setInteger(POS_LCOOL_TAG, MathHelper.clamp(nbt.getInteger(POS_LCOOL_TAG)-1, 0, Integer.MAX_VALUE));
 		}
 	}
 	
@@ -193,7 +253,18 @@ public class ToolLaserGun extends TinkerToolCore implements cofh.redstoneflux.ap
 	}
 	
 	@Override
+	@SideOnly(Side.CLIENT)
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+		Optional.ofNullable(IToggleTool.getMode(stack, Mode.class))
+		.ifPresent(mode -> tooltip.add(I18n.format("msg.plustic.tool_mode", I18n.format(mode.getUnlocName()))));
+		
+		super.addInformation(stack, worldIn, tooltip, flagIn);
+	}
+	
+	@Override
 	public List<String> getInformation(ItemStack stack, boolean detailed) {
+		List<String> list = new ArrayList<>();
+		
 		TooltipBuilder info = new TooltipBuilder(stack);
 		
 	    info.addDurability(!detailed);
@@ -210,7 +281,9 @@ public class ToolLaserGun extends TinkerToolCore implements cofh.redstoneflux.ap
 			info.addModifierInfo();
 		}
 		
-	    return info.getTooltip();
+		list.addAll(info.getTooltip());
+		
+	    return list;
 	}
 	
 	/**
@@ -219,36 +292,75 @@ public class ToolLaserGun extends TinkerToolCore implements cofh.redstoneflux.ap
 	 */
 	@Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand hand) {
-		return this.func_77659_a(playerIn.getHeldItem(hand), worldIn, playerIn, hand);
+		return this._rightClick(playerIn.getHeldItem(hand), worldIn, playerIn, hand);
 	}
 	
-	// for 1.10.2
-	public ActionResult<ItemStack> func_77659_a(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand) {
+	public ActionResult<ItemStack> _rightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand) {
 		if (worldIn.isRemote) return new ActionResult<>(EnumActionResult.PASS, itemStackIn);
 		
 		NBTTagCompound nbt = TagUtil.getTagSafe(itemStackIn);
 		
-		ActionResult<ItemStack> res = Optional.ofNullable(EntityUtil.raytraceEntityPlayerLook(playerIn, range(itemStackIn)))
-		.map(rtr -> rtr.entityHit)
-		.map(ent -> {
-			PTEnergyDrain eevent = new PTEnergyDrain(itemStackIn, playerIn, this.energyPerAttack(itemStackIn)); // event
-			MinecraftForge.EVENT_BUS.post(eevent);
-			int energyTaken = eevent.energyDrained; // grab event result
-			
-			if (this.extractEnergy(itemStackIn, energyTaken, true) >= energyTaken
-					&& nbt.getInteger(ATTACK_DURATION_TAG) <= 0) { // able to attack?
-				if (ToolHelper.attackEntity(itemStackIn, this, playerIn, ent)) { // try attacking
-					this.extractEnergy(itemStackIn, energyTaken, false); // if success, use energy
-					nbt.setInteger(ATTACK_DURATION_TAG, this.maxAttackDuration(itemStackIn));
-					itemStackIn.setTagCompound(nbt);
-					Sounds.playSoundToAll(playerIn, Sounds.LASER_BEAM, 1.0f, 1.0f);
-					return new ActionResult<>(EnumActionResult.SUCCESS, itemStackIn);
+		ActionResult<ItemStack> res = new ActionResult<>(EnumActionResult.PASS, itemStackIn);
+		
+		if (IToggleTool.getMode(itemStackIn, Mode.class) == Mode.ATTACK) {
+			res = Optional.ofNullable(EntityUtil.raytraceEntityPlayerLook(playerIn, range(itemStackIn)))
+			.map(rtr -> rtr.entityHit)
+			.map(ent -> {
+				PTEnergyDrain eevent = new PTEnergyDrain(itemStackIn, playerIn, this.energyPerAttack(itemStackIn)); // event
+				MinecraftForge.EVENT_BUS.post(eevent);
+				int energyTaken = eevent.energyDrained; // grab event result
+				
+				if (this.extractEnergy(itemStackIn, energyTaken, true) >= energyTaken
+						&& nbt.getInteger(ATTACK_DURATION_TAG) <= 0) { // able to attack?
+					if (ToolHelper.attackEntity(itemStackIn, this, playerIn, ent)) { // try attacking
+						this.extractEnergy(itemStackIn, energyTaken, false); // if success, use energy
+						nbt.setInteger(ATTACK_DURATION_TAG, this.maxAttackDuration(itemStackIn));
+						itemStackIn.setTagCompound(nbt);
+						Sounds.playSoundToAll(playerIn, Sounds.LASER_BEAM, 1.0f, 1.0f);
+						return new ActionResult<>(EnumActionResult.SUCCESS, itemStackIn);
+					}
 				}
-			}
-			return new ActionResult<>(EnumActionResult.FAIL, itemStackIn);
-		}).orElse(new ActionResult<>(EnumActionResult.FAIL, itemStackIn));
+				return new ActionResult<>(EnumActionResult.FAIL, itemStackIn);
+			}).orElse(new ActionResult<>(EnumActionResult.FAIL, itemStackIn));
+		}
 		
 		return res;
+	}
+	
+	@Override
+	public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+		if (worldIn.isRemote) return EnumActionResult.PASS;
+		
+		final ItemStack stack = player.getHeldItem(hand);
+		
+		if (IToggleTool.getMode(stack, Mode.class) == Mode.TOOL) {
+			final NBTTagCompound nbt = stack.getTagCompound();
+			
+			if (nbt.getInteger(POS_LCOOL_TAG) > 0) return EnumActionResult.FAIL;
+			
+			ItemStack smeltingRes = ItemStack.EMPTY;
+			
+			final IBlockState state = worldIn.getBlockState(pos);
+			
+			if (!(smeltingRes = FurnaceRecipes.instance().getSmeltingResult(new ItemStack(state.getBlock()))).isEmpty()) {
+				PTEnergyDrain eevent = new PTEnergyDrain(stack, player, this.energyPerAttack(stack)); // event
+				MinecraftForge.EVENT_BUS.post(eevent);
+				int energyTaken = eevent.energyDrained; // grab event result
+				
+				if (this.extractEnergy(stack, energyTaken, true) >= energyTaken) {
+					this.extractEnergy(stack, energyTaken, false);
+					worldIn.destroyBlock(pos, false);
+					worldIn.spawnEntity(new EntityItem(worldIn, pos.getX()+0.5, pos.getY()+0.5, pos.getZ()+0.5, smeltingRes));
+					nbt.setInteger(POS_LCOOL_TAG, MathHelper.ceil(220 / ToolHelper.getActualMiningSpeed(stack)));
+					if (player instanceof EntityPlayerMP) {
+						PacketHandler.INSTANCE.sendTo(new PacketLaserGunZapBlock(new Vec3d(hitX, hitY, hitZ), EntityPlayer.getUUID(player.getGameProfile())), (EntityPlayerMP)player);
+					}
+					return EnumActionResult.SUCCESS;
+				}
+			}
+		}
+		
+		return EnumActionResult.PASS;
 	}
 	
 	@Override
@@ -356,5 +468,15 @@ public class ToolLaserGun extends TinkerToolCore implements cofh.redstoneflux.ap
 	@Override
 	public ICapabilityProvider initCapabilities(ItemStack is, NBTTagCompound capNbt) {
 		return new Provider(is);
+	}
+
+	@Override
+	public Class<Mode> clazz() {
+		return Mode.class;
+	}
+
+	@Override
+	public String getTag() {
+		return MODE_TAG;
 	}
 }

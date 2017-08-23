@@ -1,4 +1,4 @@
-# PlusTiC
+# PlusTiC [![Build Status](https://travis-ci.org/Landmaster/PlusTiC.svg?branch=1.12)](http://travis-ci.org/Landmaster/PlusTiC)
 Minecraft mod for adding new tools to and integrating various mods with Tinkers Construct
 
 CurseForge page: https://minecraft.curseforge.com/projects/plustic
@@ -27,6 +27,9 @@ Starting in 5.1.2.0, PlusTiC forces out and *overrides* Natural Pledge TiC mater
 - Galacticraft by micdoodle8
 - Survivalist by gigaherz
 - ProjectE by sinkillerj
+- Gems+ by RobZ51
+- Applied Energistics 2 by AlgorithmX2 (Llamagistics by thiakil should work as well)
+- Environmental Tech by ValkyrieofNight
 ## Using the source and building
 After cloning this repository, run the commands (with working directory in the folder with the repository)
 ```

@@ -15,4 +15,20 @@ public class ModuleNaturaStuff {
 		return new ItemStack(NaturaNether.netherLog,
 			1, BlockNetherLog.LogType.DARKWOOD.getMeta());
 	}
+	public static ItemStack ghostwoodPlankStack() {
+		return new ItemStack(NaturaNether.netherPlanks,
+			1, BlockNetherPlanks.PlankType.GHOSTWOOD.getMeta());
+	}
+	public static ItemStack ghostwoodLogStack() {
+		return new ItemStack(NaturaNether.netherLog,
+			1, BlockNetherLog.LogType.GHOSTWOOD.getMeta());
+	}
+	public static ItemStack fusewoodPlankStack() {
+		return new ItemStack(NaturaNether.netherPlanks,
+			1, BlockNetherPlanks.PlankType.FUSEWOOD.getMeta());
+	}
+	public static ItemStack fusewoodLogStack() {
+		return new ItemStack(NaturaNether.netherLog,
+			1, BlockNetherLog.LogType.FUSEWOOD.getMeta());
+	}
 }

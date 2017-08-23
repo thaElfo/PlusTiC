@@ -1,7 +1,11 @@
 package landmaster.plustic.config;
 
+import java.io.*;
+import java.lang.invoke.*;
+import java.lang.reflect.*;
 import java.util.*;
 
+import com.google.common.base.Throwables;
 import com.google.common.collect.*;
 
 import gnu.trove.*;
@@ -10,8 +14,10 @@ import gnu.trove.list.array.*;
 import landmaster.plustic.traits.*;
 import net.minecraft.item.*;
 import net.minecraft.util.*;
+import net.minecraft.util.text.translation.*;
 import net.minecraftforge.common.config.*;
 import net.minecraftforge.fml.common.event.*;
+import slimeknights.tconstruct.library.materials.*;
 
 public class Config extends Configuration {
 	// MODULES
@@ -37,11 +43,14 @@ public class Config extends Configuration {
 	public static boolean survivalist;
 	public static boolean projectE;
 	public static boolean gemsplus;
+	public static boolean appEng2;
+	public static boolean environTech;
 	
 	// alas…
 	public static boolean forceOutNaturalPledgeMaterials;
 	
 	public static boolean pyrotheumSmelt;
+	public static boolean tfMelt;
 	
 	public static boolean alloyDarkSteel;
 	
@@ -89,7 +98,9 @@ public class Config extends Configuration {
 		super(event.getSuggestedConfigurationFile());
 	}
 	
-	public void sync() {
+	public void init1() {
+		this.addCustomCategoryComment("modules", "Use this to disable entire modules.");
+		
 		// MODULES
 		base = getBoolean("Enable vanilla TiC addons", "modules", true, "Add features to vanilla Tinkers Construct");
 		bop = getBoolean("Enable BoP integration", "modules", true, "Integrate with Biomes o' Plenty");
@@ -111,6 +122,7 @@ public class Config extends Configuration {
 		thermalFoundation = getBoolean("Enable Thermal Foundation integration", "modules", true, "Integrate with Thermal Foundation");
 		{
 			pyrotheumSmelt = getBoolean("Use Pyrotheum as smeltery fuel", "tweaks", true, "Use Pyrotheum as TiC smeltery fuel (only if Thermal Foundation is loaded)");
+			tfMelt = getBoolean("Add smeltery recipes for Redstone, Glowstone, and Ender pearl", "tweaks", true, "Add smelting recipes for Redstone, Glowstone, and Ender pearl (only if Thermal Foundation is loaded)");
 		}
 		draconicEvolution = getBoolean("Enable Draconic Evolution integration", "modules", true, "Integrate with Draconic Evolution");
 		actuallyAdditions = getBoolean("Enable Actually Additions support", "modules", true, "Integrate with Actually Additions");
@@ -125,6 +137,8 @@ public class Config extends Configuration {
 		survivalist = getBoolean("Enable Survivalist support", "modules", true, "Integrate with Survivalist");
 		projectE = getBoolean("Enable ProjectE support", "modules", true, "Integrate with ProjectE");
 		gemsplus = getBoolean("Enable Gems+ support", "modules", true, "Integrate with Gems+");
+		appEng2 = getBoolean("Enable Applied Energistics 2 support", "modules", true, "Integrate with Applied Energistics 2");
+		environTech = getBoolean("Enable Environmental Tech support", "modules", true, "Integrate with Environmental Tech");
 		
 		// TOOLS
 		katana = getBoolean("Enable Katana", "tools", true, "Enable Katana");
@@ -197,8 +211,49 @@ public class Config extends Configuration {
 		while (botan_amount.size() < Botanical.MAX_LEVELS) {
 			botan_amount.add(botan_amount.get(botan_amount.size()-1)<<1);
 		}
+	}
+	
+	private static final MethodHandle injectHandle;
+	static {
+		try {
+			Method temp = LanguageMap.class.getDeclaredMethod("inject", LanguageMap.class, InputStream.class);
+			temp.setAccessible(true);
+			injectHandle = MethodHandles.lookup().unreflect(temp);
+		} catch (Throwable e) {
+			Throwables.throwIfUnchecked(e);
+			throw new RuntimeException(e);
+		}
+	}
+	
+	private static final LanguageMap englishMap = new LanguageMap();
+	static {
+		try {
+			final String[] langFiles = new String[] { "/assets/plustic/lang/en_us.lang", "/assets/plustic/lang/en_US.lang" };
+			for (String langFile: langFiles) {
+				try (InputStream inS = Config.class.getResourceAsStream(langFile)) {
+					injectHandle.invokeExact(englishMap, inS);
+				}
+			}
+		} catch (Throwable e) {
+			Throwables.throwIfUnchecked(e);
+			throw new RuntimeException(e);
+		}
+	}
+	
+	public void init2(Map<String, Material> materials) {
+		this.addCustomCategoryComment("materials", "Materials will only appear here when their respective modules are loaded.");
 		
-		
+		for (final Iterator<Material> it = materials.values().iterator(); it.hasNext(); ) {
+			final Material mat = it.next();
+			final String matName = englishMap.translateKey(String.format(Material.LOC_Name, mat.getIdentifier()));
+			if (!this.getBoolean(String.format("Enable material %s", mat.getIdentifier()),
+					"materials", true, String.format("Set to false to prevent %s from being loaded", matName))) {
+				it.remove(); // delete the disabled material
+			}
+		}
+	}
+	
+	public void update() {
 		if (hasChanged()) save();
 	}
 	

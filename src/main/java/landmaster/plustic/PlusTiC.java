@@ -80,7 +80,7 @@ public class PlusTiC {
 	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
-		(config = new Config(event)).sync();
+		(config = new Config(event)).init1();
 		
 		proxy.initEntities();
 		
@@ -92,6 +92,7 @@ public class PlusTiC {
 				new ModuleBoP(),
 				new ModuleMekanism(),
 				new ModuleAdvRocketry(),
+				new ModuleBotania(),
 				new ModuleArmorPlus(),
 				new ModuleEnderIO(),
 				new ModuleTF(),
@@ -105,11 +106,17 @@ public class PlusTiC {
 				new ModuleSurvivalist(),
 				new ModuleProjectE(),
 				new ModuleGemsPlus(),
+				new ModuleAppEng2(),
+				new ModuleEnvironTech(),
 				new ModuleTools(),
 				new ModuleModifiers()
 				));
 		
 		IModule.modules.forEach(IModule::init);
+		
+		config.init2(materials);
+		
+		config.update();
 		
 		preIntegrate(materials, materialIntegrations, materialIntegrationStages);
 	}
@@ -122,7 +129,7 @@ public class PlusTiC {
 		
 		IModule.modules.forEach(IModule::init2);
 		
-		integrate(materials, materialIntegrations);
+		postIntegrate();
 	}
 	
 	@EventHandler
@@ -145,19 +152,14 @@ public class PlusTiC {
 					} else {
 						mi = new MaterialIntegration(v);
 					}
-					mi.preInit();
+					TinkerRegistry.integrate(mi).preInit();
 					materialIntegrations.put(k, mi);
 				});
 			}
 		});
 	}
 	
-	private static void integrate(Map<String,Material> materials,
-			Map<String,MaterialIntegration> materialIntegrations) {
-		materialIntegrations.forEach((k, mi) -> {
-			mi.integrateRecipes();
-		});
-		
+	private static void postIntegrate() {
 		Utils.displace(TinkerMaterials.wood.getIdentifier()); // so that natura woods are prioritized
 	}
 }

@@ -44,6 +44,44 @@ public class ModuleNatura implements IModule {
 	                new BowMaterialStats(1.2f, 1.3f, 3));
 			PlusTiC.materials.put("darkwood", darkwood);
 			PlusTiC.materialIntegrationStages.put("darkwood", darkwoodPromise);
+			
+			Material ghostwood = new Material("ghostwood_plustic", TextFormatting.WHITE);
+			ghostwood.addTrait(Ghastly.ghastly);
+			ghostwood.addTrait(ecological);
+			CompletableFuture<?> ghostwoodPromise = itemPromise.thenRun(() -> {
+				ghostwood.addItem(ModuleNaturaStuff.ghostwoodPlankStack(), 1, Material.VALUE_Ingot);
+				ghostwood.addItem(ModuleNaturaStuff.ghostwoodLogStack(), 1, 4*Material.VALUE_Ingot);
+				ghostwood.addItem(NaturaCommons.ghostwood_stick, 1, Material.VALUE_Shard);
+				ghostwood.setRepresentativeItem(ModuleNaturaStuff.ghostwoodPlankStack());
+			});
+			ghostwood.setCraftable(true);
+			PlusTiC.proxy.setRenderInfo(ghostwood, 0xFFFFFF);
+			TinkerRegistry.addMaterialStats(ghostwood,
+					new HeadMaterialStats(300, 4.9f, 2.5f, COBALT),
+	                new HandleMaterialStats(1.1f, 0),
+	                new ExtraMaterialStats(100),
+	                new BowMaterialStats(1.6f, 1.1f, 2));
+			PlusTiC.materials.put("ghostwood", ghostwood);
+			PlusTiC.materialIntegrationStages.put("ghostwood", ghostwoodPromise);
+			
+			Material fusewood = new Material("fusewood_plustic", 0x00D18E);
+			fusewood.addTrait(DPRK.dprk);
+			fusewood.addTrait(ecological);
+			CompletableFuture<?> fusewoodPromise = itemPromise.thenRun(() -> {
+				fusewood.addItem(ModuleNaturaStuff.fusewoodPlankStack(), 1, Material.VALUE_Ingot);
+				fusewood.addItem(ModuleNaturaStuff.fusewoodLogStack(), 1, 4*Material.VALUE_Ingot);
+				fusewood.addItem(NaturaCommons.fusewood_stick, 1, Material.VALUE_Shard);
+				fusewood.setRepresentativeItem(ModuleNaturaStuff.fusewoodPlankStack());
+			});
+			fusewood.setCraftable(true);
+			PlusTiC.proxy.setRenderInfo(fusewood, 0x00D18E);
+			TinkerRegistry.addMaterialStats(fusewood,
+					new HeadMaterialStats(430, 6.0f, 4f, COBALT),
+	                new HandleMaterialStats(1.0f, -20),
+	                new ExtraMaterialStats(50),
+	                new BowMaterialStats(0.7f, 2.0f, 7));
+			PlusTiC.materials.put("fusewood", fusewood);
+			PlusTiC.materialIntegrationStages.put("fusewood", fusewoodPromise);
 		}
 	}
 	

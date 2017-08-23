@@ -6,6 +6,7 @@ import landmaster.plustic.*;
 import landmaster.plustic.api.*;
 import landmaster.plustic.config.*;
 import landmaster.plustic.tools.*;
+import landmaster.plustic.tools.parts.*;
 import landmaster.plustic.tools.stats.*;
 import net.minecraft.item.*;
 import net.minecraft.util.*;
@@ -33,21 +34,21 @@ public class ModuleTools implements IModule {
 	
 	@SubscribeEvent
 	public static void initItems(RegistryEvent.Register<Item> event) {
-		pipe_piece = new ToolPart(Material.VALUE_Ingot * 4);
+		pipe_piece = new ToolPartWithStoneMold(Material.VALUE_Ingot * 4);
 		pipe_piece.setUnlocalizedName("pipe_piece").setRegistryName("pipe_piece");
 		event.getRegistry().register(pipe_piece);
 		TinkerRegistry.registerToolPart(pipe_piece);
 		PlusTiC.proxy.registerToolPartModel(pipe_piece);
 		toolParts.add(pipe_piece);
 		
-		laser_medium = new ToolPart(Material.VALUE_Ingot * 3);
+		laser_medium = new ToolPartWithStoneMold(Material.VALUE_Ingot * 3);
 		laser_medium.setUnlocalizedName("laser_medium").setRegistryName("laser_medium");
 		event.getRegistry().register(laser_medium);
 		TinkerRegistry.registerToolPart(laser_medium);
 		PlusTiC.proxy.registerToolPartModel(laser_medium);
 		toolParts.add(laser_medium);
 		
-		battery_cell = new ToolPart(Material.VALUE_Ingot * 3);
+		battery_cell = new ToolPartWithStoneMold(Material.VALUE_Ingot * 3);
 		battery_cell.setUnlocalizedName("battery_cell").setRegistryName("battery_cell");
 		event.getRegistry().register(battery_cell);
 		TinkerRegistry.registerToolPart(battery_cell);

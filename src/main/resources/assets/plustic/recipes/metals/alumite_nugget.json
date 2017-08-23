@@ -8,8 +8,8 @@
 	"type": "forge:ore_shapeless",
 	"ingredients": [
 		{
-            "item": "plustic:alumiteingot"
-        }
+			"item": "plustic:alumiteingot"
+		}
 	],
 	"result": {
 		"item": "plustic:alumitenugget",

@@ -8,8 +8,8 @@
 	"type": "forge:ore_shapeless",
 	"ingredients": [
 		{
-            "item": "plustic:osmiridiumblock"
-        }
+			"item": "plustic:osmiridiumblock"
+		}
 	],
 	"result": {
 		"item": "plustic:osmiridiumingot",

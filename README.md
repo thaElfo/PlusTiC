@@ -43,5 +43,6 @@ For Eclipse, run
 and add the jars in ./libs to the build path.
 Build with
 ```
+./gradlew clean
 ./gradlew build
 ```

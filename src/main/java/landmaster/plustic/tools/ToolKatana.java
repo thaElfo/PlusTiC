@@ -143,7 +143,7 @@ public class ToolKatana extends SwordCore {
 		if (success) {
 			if (entity instanceof EntityLivingBase) {
 				EntityLivingBase targetLiving = (EntityLivingBase)entity;
-				if (targetLiving.getHealth() <= 0) counter += 1.0f;
+				if (targetLiving.getHealth() <= 0 || !Config.katana_boosts_only_on_killing) counter += 1.0f;
 				counter = MathHelper.clamp(counter, 0, counter_cap(stack));
 			}
 			tag.setFloat(COUNTER_TAG, counter);

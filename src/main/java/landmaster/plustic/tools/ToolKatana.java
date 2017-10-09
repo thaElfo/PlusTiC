@@ -36,7 +36,16 @@ public class ToolKatana extends SwordCore {
 	}
 	
 	private static float counter_multiplier(float attack) {
-		return MathHelper.clamp(1.2f + 0.025f * attack, 1.2f, 1.8f);
+		if (Config.katana_smooth_progression) {
+			return MathHelper.clamp(1.2f + 0.025f * attack, 1.2f, 1.8f);
+		}
+		if (attack <= 5) {
+			return 1.2f;
+		}
+		if (attack <= 11) {
+			return 1.35f;
+		}
+		return 1.5f;
 	}
 	
 	public static float counter_cap(ItemStack tool) {

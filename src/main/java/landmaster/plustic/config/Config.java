@@ -59,6 +59,7 @@ public class Config extends Configuration {
 	
 	public static float katana_combo_multiplier;
 	public static boolean katana_boosts_only_on_killing;
+	public static boolean katana_smooth_progression;
 	
 	private static final TIntArrayList botan_amount = new TIntArrayList(Botanical.MAX_LEVELS);
 	
@@ -145,6 +146,7 @@ public class Config extends Configuration {
 		katana = getBoolean("Enable Katana", "tools", true, "Enable Katana");
 		katana_combo_multiplier = getFloat("Katana combo multiplier", "tools", 1.25f, 0, Float.MAX_VALUE, "Multiply combo value by this to calculate bonus damage");
 		katana_boosts_only_on_killing = getBoolean("Katana boosts only on killing", "tools", true, "Does Katana boost only on killing mob (true) or on any hit (false)?");
+		katana_smooth_progression = getBoolean("Smooth Katana progression", "tools", false, "Should boosted damage of Katana change smoothly from material to material?");
 		
 		laserGun = getBoolean("Enable Laser Gun", "tools", true, "Enable Laser Gun");
 		

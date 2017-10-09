@@ -36,6 +36,9 @@ public class ToolKatana extends SwordCore {
 	}
 	
 	private static float counter_multiplier(float attack) {
+		if (Config.katana_smooth_progression) {
+			return MathHelper.clamp(1.2f + 0.025f * attack, 1.2f, 1.8f);
+		}
 		if (attack <= 5) {
 			return 1.2f;
 		}
@@ -143,7 +146,7 @@ public class ToolKatana extends SwordCore {
 		if (success) {
 			if (entity instanceof EntityLivingBase) {
 				EntityLivingBase targetLiving = (EntityLivingBase)entity;
-				if (targetLiving.getHealth() <= 0) counter += 1.0f;
+				if (targetLiving.getHealth() <= 0 || !Config.katana_boosts_only_on_killing) counter += 1.0f;
 				counter = MathHelper.clamp(counter, 0, counter_cap(stack));
 			}
 			tag.setFloat(COUNTER_TAG, counter);

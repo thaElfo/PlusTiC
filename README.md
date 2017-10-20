@@ -46,3 +46,9 @@ Build with
 ./gradlew clean
 ./gradlew build
 ```
+## Developers/Credits
+Lead Developer: @Landmaster
+
+Chinese translation: @DYColdWind
+
+New weapon textures: @Tenebris11

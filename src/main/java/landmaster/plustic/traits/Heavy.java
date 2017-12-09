@@ -10,7 +10,7 @@ public class Heavy extends AbstractTrait {
 	public static final Heavy heavy = new Heavy();
 	
 	public Heavy() {
-		super("heavy", 0x555555);
+		super("heavy_metal", 0x555555);
 	}
 	
 	@Override

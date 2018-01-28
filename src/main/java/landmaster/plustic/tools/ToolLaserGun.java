@@ -122,7 +122,7 @@ public class ToolLaserGun extends TinkerToolCore implements cofh.redstoneflux.ap
 	}
 	
 	public static class ProxyClient extends Proxy {
-		private static final Map<EntityPlayer, Vec3d> zapBlockRend = new HashMap<>();
+		private static final Map<EntityPlayer, Vec3d> zapBlockRend = new WeakHashMap<>();
 		
 		public void addToZapBlockRendering(EntityPlayer shooter, Vec3d target) {
 			zapBlockRend.put(shooter, target);
@@ -295,7 +295,7 @@ public class ToolLaserGun extends TinkerToolCore implements cofh.redstoneflux.ap
 		return this._rightClick(playerIn.getHeldItem(hand), worldIn, playerIn, hand);
 	}
 	
-	public ActionResult<ItemStack> _rightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand) {
+	protected ActionResult<ItemStack> _rightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand) {
 		if (worldIn.isRemote) return new ActionResult<>(EnumActionResult.PASS, itemStackIn);
 		
 		NBTTagCompound nbt = TagUtil.getTagSafe(itemStackIn);
@@ -342,7 +342,7 @@ public class ToolLaserGun extends TinkerToolCore implements cofh.redstoneflux.ap
 			
 			final IBlockState state = worldIn.getBlockState(pos);
 			
-			if (!(smeltingRes = FurnaceRecipes.instance().getSmeltingResult(new ItemStack(state.getBlock()))).isEmpty()) {
+			if (!( smeltingRes = FurnaceRecipes.instance().getSmeltingResult(new ItemStack(state.getBlock())).copy() ).isEmpty()) {
 				PTEnergyDrain eevent = new PTEnergyDrain(stack, player, this.energyPerAttack(stack)); // event
 				MinecraftForge.EVENT_BUS.post(eevent);
 				int energyTaken = eevent.energyDrained; // grab event result

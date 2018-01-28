@@ -88,6 +88,7 @@ public class PlusTiC {
 		
 		IModule.modules.addAll(Arrays.asList(
 				new ModuleBase(),
+				
 				new ModuleNatura(),
 				new ModuleBoP(),
 				new ModuleMekanism(),
@@ -108,6 +109,8 @@ public class PlusTiC {
 				new ModuleGemsPlus(),
 				new ModuleAppEng2(),
 				new ModuleEnvironTech(),
+				new ModuleMFR(),
+				
 				new ModuleTools(),
 				new ModuleModifiers()
 				));

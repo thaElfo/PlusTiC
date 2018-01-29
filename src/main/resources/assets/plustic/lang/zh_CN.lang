@@ -119,6 +119,7 @@ material.certusquartz_plustic.name=赛特斯石英
 material.fluixcrystal_plustic.name=福鲁伊克斯水晶
 material.osgloglas.name=Osgloglas
 material.mica.name=云母
+material.flamestring_plustic.name=火弦
 
 modifier.bloodymary.name=血腥玛丽
 modifier.bloodymary.desc=§o由传说中的英国女王赋予你...§r\n根据目标失去的生命值来使其受到额外的伤害。同时,每一次也有概率在你下一次攻击时凝结一滴凝血滴。
@@ -205,6 +206,8 @@ modifier.ghastly.name=阴森
 modifier.ghastly.desc=§o哦,突然背后一冷!§r\n如果攻击者在持有该工具者背后进行攻击时，就会给予攻击者缓慢效果。
 modifier.slashing.name=剥削
 modifier.slashing.desc=§o致命一击!§r\n增加暴击伤害20%点。
+modifier.naphtha.name=石脑油
+modifier.naphtha.desc=§o太阳的后裔§r\n箭矢击中目标将给予目标着火效果。
 
 # MISCELLANEOUS
 

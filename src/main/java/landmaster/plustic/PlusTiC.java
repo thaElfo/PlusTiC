@@ -110,6 +110,7 @@ public class PlusTiC {
 				new ModuleAppEng2(),
 				new ModuleEnvironTech(),
 				new ModuleMFR(),
+				new ModuleTwilightForest(),
 				
 				new ModuleTools(),
 				new ModuleModifiers()

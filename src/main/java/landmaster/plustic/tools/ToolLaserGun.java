@@ -303,7 +303,7 @@ public class ToolLaserGun extends TinkerToolCore implements cofh.redstoneflux.ap
 		ActionResult<ItemStack> res = new ActionResult<>(EnumActionResult.PASS, itemStackIn);
 		
 		if (IToggleTool.getMode(itemStackIn, Mode.class) == Mode.ATTACK) {
-			res = Optional.ofNullable(EntityUtil.raytraceEntityPlayerLook(playerIn, range(itemStackIn)))
+			res = Optional.ofNullable(Utils.raytraceEntityPlayerLookWithPred(playerIn, range(itemStackIn), ent -> !(ent instanceof IEntityMultiPart)))
 			.map(rtr -> rtr.entityHit)
 			.map(ent -> {
 				PTEnergyDrain eevent = new PTEnergyDrain(itemStackIn, playerIn, this.energyPerAttack(itemStackIn)); // event

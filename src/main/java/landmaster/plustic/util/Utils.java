@@ -17,6 +17,7 @@ import landmaster.plustic.fluids.*;
 import net.darkhax.tesla.capability.*;
 import net.minecraft.block.*;
 import net.minecraft.block.state.*;
+import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.network.play.server.*;
@@ -88,6 +89,73 @@ public class Utils {
 	
 	public static AxisAlignedBB AABBfromVecs(Vec3d v1, Vec3d v2) {
 		return new AxisAlignedBB(v1.x, v1.y, v1.z, v2.x, v2.y, v2.z);
+	}
+	
+	/**
+	 * Based on {@link slimeknights.tconstruct.library.utils.EntityUtil#raytraceEntityPlayerLook(EntityPlayer, float)}, except with a predicate to filter out unwanted entities.
+	 */
+	public static RayTraceResult raytraceEntityPlayerLookWithPred(EntityPlayer player, float range, Predicate<? super Entity> pred) {
+		Vec3d eye = new Vec3d(player.posX, player.posY + player.getEyeHeight(), player.posZ); // Entity.getPositionEyes
+		Vec3d look = player.getLook(1.0f);
+		
+		return raytraceEntityWithPred(player, eye, look, range, true, pred);
+	}
+	
+	/**
+	 * Based on {@link slimeknights.tconstruct.library.utils.EntityUtil#raytraceEntity(Entity, Vec3d, Vec3d, double, boolean)}, except with a predicate to filter out unwanted entities.
+	 */
+	public static RayTraceResult raytraceEntityWithPred(Entity entity, Vec3d start, Vec3d look, double range,
+			boolean ignoreCanBeCollidedWith, Predicate<? super Entity> pred) {
+		// Vec3 look = entity.getLook(partialTicks);
+		Vec3d direction = start.addVector(look.x * range, look.y * range, look.z * range);
+		
+		// Vec3 direction = vec3.addVector(vec31.x * d0, vec31.y * d0, vec31.z *
+		// d0);
+		Entity pointedEntity = null;
+		Vec3d hit = null;
+		AxisAlignedBB bb = entity.getEntityBoundingBox().expand(look.x * range, look.y * range, look.z * range)
+				.expand(1, 1, 1);
+		List<Entity> entitiesInArea = entity.getEntityWorld().getEntitiesInAABBexcluding(entity, bb, Predicates.and(pred, EntitySelectors.NOT_SPECTATING));
+		double range2 = range; // range to the current candidate. Used to find
+								// the closest entity.
+		
+		for (Entity candidate : entitiesInArea) {
+			if (ignoreCanBeCollidedWith || candidate.canBeCollidedWith()) {
+				// does our vector go through the entity?
+				double colBorder = candidate.getCollisionBorderSize();
+				AxisAlignedBB entityBB = candidate.getEntityBoundingBox().expand(colBorder, colBorder, colBorder);
+				RayTraceResult movingobjectposition = entityBB.calculateIntercept(start, direction);
+				
+				// needs special casing: vector starts inside the entity
+				if (entityBB.contains(start)) {
+					if (0.0D < range2 || range2 == 0.0D) {
+						pointedEntity = candidate;
+						hit = movingobjectposition == null ? start : movingobjectposition.hitVec;
+						range2 = 0.0D;
+					}
+				} else if (movingobjectposition != null) {
+					double dist = start.distanceTo(movingobjectposition.hitVec);
+					
+					if (dist < range2 || range2 == 0.0D) {
+						if (candidate == entity.getRidingEntity() && !entity.canRiderInteract()) {
+							if (range2 == 0.0D) {
+								pointedEntity = candidate;
+								hit = movingobjectposition.hitVec;
+							}
+						} else {
+							pointedEntity = candidate;
+							hit = movingobjectposition.hitVec;
+							range2 = dist;
+						}
+					}
+				}
+			}
+		}
+		
+		if (pointedEntity != null && range2 < range) {
+			return new RayTraceResult(pointedEntity, hit);
+		}
+		return null;
 	}
 	
 	public static void addModifierItem(Modifier modifier, String modid, String name) {

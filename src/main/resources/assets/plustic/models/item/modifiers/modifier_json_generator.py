@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 for modifierSpec in [
-	('bane_of_arthropods', 'bane_spider'),
+	('bane_of_arthopods', 'bane_spider'), # Why TConstruct…
 	('beheading', 'beheading'),
 	('diamond', 'diamond'),
 	('emerald', 'emerald'),

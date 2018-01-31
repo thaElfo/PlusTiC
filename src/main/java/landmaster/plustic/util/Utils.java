@@ -178,6 +178,7 @@ public class Utils {
 	
 	public static void initFluidMetal(Fluid fluid) {
 		registerMoltenBlock(fluid);
+		FluidRegistry.addBucketForFluid(fluid);
         PlusTiC.proxy.registerFluidModels(fluid);
 	}
 	

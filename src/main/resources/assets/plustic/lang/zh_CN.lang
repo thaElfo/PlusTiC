@@ -210,7 +210,7 @@ modifier.ghastly.desc=§o哦，突然背后一冷！§r\n如果攻击者在持�
 modifier.slashing.name=剥削
 modifier.slashing.desc=§o致命一击！§r\n增加暴击伤害20%点。
 modifier.naphtha.name=石脑油
-modifier.naphtha.desc=§o太阳的后裔§r\n箭矢击中目标将给予目标着火效果。
+modifier.naphtha.desc=§o太阳的后裔§r\n箭矢以及弩箭击中目标将给予目标着火效果。
 modifier.mystical_fire.name=魔焰
 modifier.mystical_fire.desc=§o这是个秘密...§r\n持有该效果工具攻击目标会使其着火并赋予一定的魔法伤害。
 

@@ -64,6 +64,8 @@ public class ModuleTwilightForest implements IModule {
 					new BowMaterialStats(0.8f, 1.2f, 5.5f));
 			
 			PlusTiC.materials.put("fiery", fiery);
+			
+			// TODO add the remaining Twilight Forest materials
 		}
 	}
 	

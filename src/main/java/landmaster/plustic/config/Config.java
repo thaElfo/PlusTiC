@@ -118,7 +118,7 @@ public class Config extends Configuration {
 		}
 		advancedRocketry = getBoolean("Enable Advanced Rocketry integration", "modules", true, "Integrate with Advanced Rocketry (actually LibVulpes)");
 		armorPlus = getBoolean("Enable ArmorPlus integration", "modules", true, "Integrate with ArmorPlus");
-		enderIO = getBoolean("Enable EnderIO integration", "modules", true, "Integrate with EnderIO");
+		enderIO = getBoolean("Enable EnderIO integration", "modules", false, "Integrate with EnderIO (DEPRECATED; will be removed when EnderIO adds TiCon integration)");
 		{
 			alloyDarkSteel = getBoolean("Alloy Dark Steel in smeltery", "tweaks", true, "Allow Dark Steel alloying in the TiC smeltery");
 		}

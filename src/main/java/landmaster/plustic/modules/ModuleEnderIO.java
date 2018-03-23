@@ -23,6 +23,7 @@ import slimeknights.tconstruct.shared.*;
 public class ModuleEnderIO implements IModule {
 
 	public void init() {
+		// TODO remove EnderIO support when EnderIO finalizes its TiCon support for 1.12
 		if (Config.enderIO && Loader.isModLoaded("enderio")) {
 			Fluid coalFluid = Utils.fluidMetal("coal", 0x111111);
 			coalFluid.setTemperature(500);

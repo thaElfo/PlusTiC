@@ -31,6 +31,7 @@ public class ModuleTwilightForest implements IModule {
 	@Override
 	public void init() {
 		if (Config.twilightForest && Loader.isModLoaded("twilightforest")) {
+			// TODO deprecate and remove Twilight Forest support when they add their own
 			Material fiery = new Material("fiery", 0x681302);
 			fiery.addTrait(superheat);
 			fiery.addTrait(MysticalFire.mystical_fire, HEAD);
@@ -64,8 +65,6 @@ public class ModuleTwilightForest implements IModule {
 					new BowMaterialStats(0.8f, 1.2f, 5.5f));
 			
 			PlusTiC.materials.put("fiery", fiery);
-			
-			// TODO add the remaining Twilight Forest materials
 		}
 	}
 	

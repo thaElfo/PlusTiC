@@ -96,6 +96,7 @@ public class ModuleActAdd implements IModule {
 			TinkerRegistry.addMaterialStats(diamatine, new HeadMaterialStats(1700, 8, 6.3f, COBALT),
 					new HandleMaterialStats(1.2f, 10),
 					new ExtraMaterialStats(88),
+					new BowMaterialStats(0.7f, 2.0f, 11.0f),
 					new LaserMediumMaterialStats(10, 24));
 			PlusTiC.materials.put("diamatine", diamatine);
 		}

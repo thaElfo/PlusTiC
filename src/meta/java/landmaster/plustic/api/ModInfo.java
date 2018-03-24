@@ -14,7 +14,7 @@ public class ModInfo {
 	+ "after:armorplus;after:enderio;after:projectred-exploration;"
 	+ "after:thermalfoundation;after:substratum;after:draconicevolution;"
 	+ "after:landcore;after:tesla;after:baubles;after:actuallyadditions;"
-	+ "after:natura;after:psi;after:avaritia;after:landcore;after:landcraft;"
+	+ "after:natura@[1.12.2-4.3.2.42,);after:psi;after:avaritia;after:landcore;after:landcraft;"
 	+ "after:galacticraftcore;after:galacticraftplanets;after:minefactoryreloaded;"
 	+ "after:botanicaladdons;after:survivalist;after:modernmetals;after:basemetals;"
 	+ "after:projecte;after:gemsplus;after:appliedenergistics2;after:environmentaltech;"

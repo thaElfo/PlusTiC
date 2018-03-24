@@ -5,6 +5,7 @@ import com.progwml6.natura.nether.block.logs.*;
 import com.progwml6.natura.nether.block.planks.*;
 
 import net.minecraft.item.*;
+import net.minecraftforge.oredict.OreDictionary;
 
 public class ModuleNaturaStuff {
 	public static ItemStack darkwoodPlankStack() {
@@ -30,5 +31,12 @@ public class ModuleNaturaStuff {
 	public static ItemStack fusewoodLogStack() {
 		return new ItemStack(NaturaNether.netherLog,
 			1, BlockNetherLog.LogType.FUSEWOOD.getMeta());
+	}
+	public static ItemStack bloodwoodPlankStack() {
+		return new ItemStack(NaturaNether.netherPlanks,
+			1, BlockNetherPlanks.PlankType.BLOODWOOD.getMeta());
+	}
+	public static ItemStack bloodwoodLogStack() {
+		return new ItemStack(NaturaNether.netherLog2, 1, OreDictionary.WILDCARD_VALUE);
 	}
 }

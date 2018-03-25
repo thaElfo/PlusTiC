@@ -16,7 +16,7 @@ Starting in 5.1.2.0, PlusTiC forces out and *overrides* Natural Pledge TiC mater
 - Botania by Vazkii
 - Advanced Rocketry by zmaster587
 - ArmorPlus by Moritz30
-~~- EnderIO by crazypants~~ **(deprecated in MC 1.12)**
+- ~~EnderIO by crazypants~~ **(deprecated in MC 1.12)**
 - Thermal Foundation by CoFH
 - Draconic Evolution by brandon3055
 - Actually Additions by Ellpeck

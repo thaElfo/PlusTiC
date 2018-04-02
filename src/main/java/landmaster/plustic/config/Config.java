@@ -28,7 +28,6 @@ public class Config extends Configuration {
 	public static boolean botania;
 	public static boolean advancedRocketry;
 	public static boolean armorPlus;
-	public static boolean enderIO;
 	public static boolean thermalFoundation;
 	public static boolean draconicEvolution;
 	public static boolean actuallyAdditions;
@@ -118,10 +117,6 @@ public class Config extends Configuration {
 		}
 		advancedRocketry = getBoolean("Enable Advanced Rocketry integration", "modules", true, "Integrate with Advanced Rocketry (actually LibVulpes)");
 		armorPlus = getBoolean("Enable ArmorPlus integration", "modules", true, "Integrate with ArmorPlus");
-		enderIO = getBoolean("Enable EnderIO integration", "modules", false, "Integrate with EnderIO (DEPRECATED; will be removed when EnderIO adds TiCon integration)");
-		{
-			alloyDarkSteel = getBoolean("Alloy Dark Steel in smeltery", "tweaks", true, "Allow Dark Steel alloying in the TiC smeltery");
-		}
 		thermalFoundation = getBoolean("Enable Thermal Foundation integration", "modules", true, "Integrate with Thermal Foundation");
 		{
 			pyrotheumSmelt = getBoolean("Use Pyrotheum as smeltery fuel", "tweaks", true, "Use Pyrotheum as TiC smeltery fuel (only if Thermal Foundation is loaded)");

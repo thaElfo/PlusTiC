@@ -1,3 +1,4 @@
+# Read this *before* you file an issue!
 - **EnderIO support is disabled by default and deprecated as of PlusTiC 6.3.7.0. If updating from an older version of PlusTiC, the config might not be updated automatically; in this case, disable EnderIO support manually.**
 - **Do not post duplicate issues!** Search before you file an issue.
 - **Versions 5.0.0.0 (INCLUSIVE) to 6.0.0.0 (EXCLUSIVE) support *both 1.11.2 and 1.10.2!* Do not open issues concerning outdated versions of PlusTiC!**

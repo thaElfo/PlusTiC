@@ -31,7 +31,6 @@ public class Config extends Configuration {
 	public static boolean thermalFoundation;
 	public static boolean draconicEvolution;
 	public static boolean actuallyAdditions;
-	public static boolean substratum;
 	public static boolean natura;
 	public static boolean psi;
 	public static boolean avaritia;
@@ -124,7 +123,6 @@ public class Config extends Configuration {
 		}
 		draconicEvolution = getBoolean("Enable Draconic Evolution integration", "modules", true, "Integrate with Draconic Evolution");
 		actuallyAdditions = getBoolean("Enable Actually Additions support", "modules", true, "Integrate with Actually Additions");
-		substratum = getBoolean("Enable Substratum support", "modules", true, "Integrate with Substratum");
 		natura = getBoolean("Enable Natura support", "modules", true, "Integrate with Natura");
 		psi = getBoolean("Enable Psi support", "modules", true, "Integrate with Psi");
 		avaritia = getBoolean("Enable Avaritia support", "modules", true, "Integrate with Avaritia");

@@ -28,6 +28,8 @@ import slimeknights.tconstruct.shared.*;
 @Mod.EventBusSubscriber(modid = ModInfo.MODID)
 public class ModuleBase implements IModule {
 	private static CompletableFuture<?> emeraldStage = new CompletableFuture<>();
+	
+	private static boolean usePlusTiCInvarFluid = false;
 
 	public void init() {
 		if (Config.base) {
@@ -105,10 +107,13 @@ public class ModuleBase implements IModule {
 				invar.setRepresentativeItem(invarGroup.ingot);
 				PlusTiC.proxy.setRenderInfo(invar, 0xD6D6D6);
 				
-				FluidMolten invarFluid = Utils.fluidMetal("invar", 0xD6D6D6);
-				invarFluid.setTemperature(1000);
-				Utils.initFluidMetal(invarFluid);
-				invar.setFluid(invarFluid);
+				if (!FluidRegistry.isFluidRegistered("invar")) {
+					usePlusTiCInvarFluid = true;
+					FluidMolten invarFluid = Utils.fluidMetal("invar", 0xD6D6D6);
+					invarFluid.setTemperature(1000);
+					Utils.initFluidMetal(invarFluid);
+				}
+				invar.setFluid(FluidRegistry.getFluid("invar"));
 				
 				TinkerRegistry.addMaterialStats(invar,
 						new HeadMaterialStats(600, 6, 5f, OBSIDIAN),
@@ -129,10 +134,12 @@ public class ModuleBase implements IModule {
 				new OreRegisterPromise("ingotIridium").thenAccept(iridium::setRepresentativeItem);
 				PlusTiC.proxy.setRenderInfo(iridium, 0xE5E5E5);
 				
-				FluidMolten iridiumFluid = Utils.fluidMetal("iridium", 0xE5E5E5);
-				iridiumFluid.setTemperature(810);
-				Utils.initFluidMetal(iridiumFluid);
-				iridium.setFluid(iridiumFluid);
+				if (!FluidRegistry.isFluidRegistered("iridium")) {
+					FluidMolten iridiumFluid = Utils.fluidMetal("iridium", 0xE5E5E5);
+					iridiumFluid.setTemperature(810);
+					Utils.initFluidMetal(iridiumFluid);
+				}
+				iridium.setFluid(FluidRegistry.getFluid("iridium"));
 				
 				TinkerRegistry.addMaterialStats(iridium, new HeadMaterialStats(520, 6, 5.8f, DIAMOND));
 				TinkerRegistry.addMaterialStats(iridium, new HandleMaterialStats(1.15f, -20));
@@ -162,7 +169,7 @@ public class ModuleBase implements IModule {
 		Optional.ofNullable(PlusTiC.materials.get("invar"))
 		.map(Material::getFluid)
 		.ifPresent(invarFluid -> {
-			if (FluidRegistry.isFluidRegistered(TinkerFluids.nickel)) {
+			if (usePlusTiCInvarFluid && FluidRegistry.isFluidRegistered(TinkerFluids.nickel)) {
 				TinkerRegistry.registerAlloy(new FluidStack(invarFluid, 3),
 						new FluidStack(TinkerFluids.iron, 2),
 						new FluidStack(TinkerFluids.nickel, 1));

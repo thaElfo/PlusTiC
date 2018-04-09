@@ -6,7 +6,6 @@ import static slimeknights.tconstruct.tools.TinkerTraits.*;
 
 import landmaster.plustic.*;
 import landmaster.plustic.config.*;
-import landmaster.plustic.fluids.*;
 import landmaster.plustic.traits.*;
 import landmaster.plustic.util.*;
 import net.minecraft.util.text.*;
@@ -17,13 +16,11 @@ import slimeknights.tconstruct.library.*;
 import slimeknights.tconstruct.library.materials.*;
 import slimeknights.tconstruct.library.smeltery.*;
 import slimeknights.tconstruct.library.traits.*;
-import slimeknights.tconstruct.shared.*;
 
 public class ModuleTF implements IModule {
 
 	public void init() {
-		if ((Config.thermalFoundation && Loader.isModLoaded("thermalfoundation"))
-				|| (Config.substratum && Loader.isModLoaded("substratum"))) {
+		if (Config.thermalFoundation && Loader.isModLoaded("thermalfoundation")) {
 			// START MATERIALS
 			
 			Material lumium = new Material("lumium_plustic", TextFormatting.YELLOW);
@@ -34,10 +31,7 @@ public class ModuleTF implements IModule {
 			Utils.setDispItem(lumium, "ingotLumium");
 			PlusTiC.proxy.setRenderInfo(lumium, 0xFFFF7F);
 			
-			FluidMolten lumiumFluid = Utils.fluidMetal("lumium", 0xFFFF7F);
-			lumiumFluid.setTemperature(1000);
-			Utils.initFluidMetal(lumiumFluid);
-			lumium.setFluid(lumiumFluid);
+			lumium.setFluid(FluidRegistry.getFluid("lumium"));
 			
 			TinkerRegistry.addMaterialStats(lumium,
 					new HeadMaterialStats(830, 7f, 6.5f, COBALT),
@@ -53,10 +47,7 @@ public class ModuleTF implements IModule {
 			Utils.setDispItem(signalum, "ingotSignalum");
 			PlusTiC.proxy.setRenderInfo(signalum, 0xD84100);
 			
-			FluidMolten signalumFluid = Utils.fluidMetal("signalum", 0xD84100);
-			signalumFluid.setTemperature(930);
-			Utils.initFluidMetal(signalumFluid);
-			signalum.setFluid(signalumFluid);
+			signalum.setFluid(FluidRegistry.getFluid("signalum"));
 			
 			TinkerRegistry.addMaterialStats(signalum, new HeadMaterialStats(690, 7.5f, 5.2f, OBSIDIAN),
 					new HandleMaterialStats(1.2f, 0), new ExtraMaterialStats(55),
@@ -72,10 +63,7 @@ public class ModuleTF implements IModule {
 			Utils.setDispItem(platinum, "ingotPlatinum");
 			PlusTiC.proxy.setRenderInfo(platinum, 0xB7E7FF);
 			
-			FluidMolten platinumFluid = Utils.fluidMetal("platinum", 0xB7E7FF);
-			platinumFluid.setTemperature(680);
-			Utils.initFluidMetal(platinumFluid);
-			platinum.setFluid(platinumFluid);
+			platinum.setFluid(FluidRegistry.getFluid("platinum"));
 			
 			TinkerRegistry.addMaterialStats(platinum, new HeadMaterialStats(720, 8, 6, COBALT),
 					new HandleMaterialStats(1.05f, -5),
@@ -95,10 +83,7 @@ public class ModuleTF implements IModule {
 			Utils.setDispItem(enderium, "ingotEnderium");
 			PlusTiC.proxy.setRenderInfo(enderium, 0x007068);
 			
-			FluidMolten enderiumFluid = Utils.fluidMetal("enderium", 0x007068);
-			enderiumFluid.setTemperature(970);
-			Utils.initFluidMetal(enderiumFluid);
-			enderium.setFluid(enderiumFluid);
+			enderium.setFluid(FluidRegistry.getFluid("enderium"));
 			
 			TinkerRegistry.addMaterialStats(enderium,
 					new HeadMaterialStats(800, 7.5f, 7, COBALT),
@@ -119,31 +104,13 @@ public class ModuleTF implements IModule {
 			Fluid pyrotheum = FluidRegistry.getFluid("pyrotheum");
 			TinkerRegistry.registerSmelteryFuel(new FluidStack(pyrotheum, 50), 400);
 		}
-		if ((Config.thermalFoundation && Loader.isModLoaded("thermalfoundation"))
-				|| (Config.substratum && Loader.isModLoaded("substratum"))) {
+		if (Config.thermalFoundation && Loader.isModLoaded("thermalfoundation")) {
 			// FETCH FLUIDS
-			Fluid redstoneFluid = FluidRegistry.getFluid(Loader.isModLoaded("thermalfoundation") ? "redstone" : "liquidredstone");
-			Fluid enderFluid = FluidRegistry.getFluid(Loader.isModLoaded("thermalfoundation") ? "ender" : "liquidenderpearl");
-			Fluid glowstoneFluid = FluidRegistry.getFluid(Loader.isModLoaded("thermalfoundation") ? "glowstone" : "liquidglowstone");
-
-			TinkerRegistry.registerAlloy(new FluidStack(FluidRegistry.getFluid("lumium"), 72),
-					new FluidStack(TinkerFluids.tin, 54),
-					new FluidStack(TinkerFluids.silver, 18),
-					new FluidStack(glowstoneFluid, 125));
+			Fluid redstoneFluid = FluidRegistry.getFluid("redstone");
+			Fluid enderFluid = FluidRegistry.getFluid("ender");
+			Fluid glowstoneFluid = FluidRegistry.getFluid("glowstone");
 			
-
-			TinkerRegistry.registerAlloy(new FluidStack(FluidRegistry.getFluid("signalum"), 72),
-					new FluidStack(TinkerFluids.copper, 54),
-					new FluidStack(TinkerFluids.silver, 18),
-					new FluidStack(redstoneFluid, 125));
-			
-
-			TinkerRegistry.registerAlloy(new FluidStack(FluidRegistry.getFluid("enderium"), 72),
-					new FluidStack(TinkerFluids.lead, 54),
-					new FluidStack(FluidRegistry.getFluid("platinum"), 18),
-					new FluidStack(enderFluid, 125));
-			
-			if (Config.thermalFoundation && Loader.isModLoaded("thermalfoundation") && Config.tfMelt) {
+			if (Config.tfMelt) {
 				TinkerRegistry.registerMelting(new MeltingRecipe(new RecipeMatch.Oredict("dustRedstone", 1, 100), redstoneFluid, 1020));
 				TinkerRegistry.registerMelting(new MeltingRecipe(new RecipeMatch.Oredict("blockRedstone", 1, 900), redstoneFluid, 1020));
 				TinkerRegistry.registerMelting(new MeltingRecipe(new RecipeMatch.Oredict("dustGlowstone", 1, 250), glowstoneFluid, 1020));

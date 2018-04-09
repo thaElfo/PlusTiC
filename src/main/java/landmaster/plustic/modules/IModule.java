@@ -7,4 +7,5 @@ public interface IModule {
 	
 	default void init() {}
 	default void init2() {}
+	default void init3() {}
 }

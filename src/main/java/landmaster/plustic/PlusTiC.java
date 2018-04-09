@@ -15,7 +15,7 @@ import landmaster.plustic.modules.*;
 import landmaster.plustic.net.*;
 import landmaster.plustic.util.*;
 import net.minecraft.block.*;
-import net.minecraft.init.Items;
+import net.minecraft.init.*;
 import net.minecraft.item.*;
 import net.minecraft.util.*;
 import net.minecraftforge.event.*;
@@ -49,7 +49,8 @@ public class PlusTiC {
 	
 	public static final BowMaterialStats justWhy = new BowMaterialStats(0.2f, 0.4f, -1f);
 	
-	private static final String[] renamesToHandle = new String[] { "osmium", "titanium", "iridium" };
+	private static final String[] renamesToHandle = new String[] {
+			"osmium", "titanium", "iridium", "enderium", "lumium", "platinum", "signalum", "invar" };
 	
 	@SubscribeEvent
 	public static void missingBlockMappings(RegistryEvent.MissingMappings<Block> event) {
@@ -137,8 +138,7 @@ public class PlusTiC {
 	
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
-		// Seriously? Registering oredicts *this* late? -_-
-		Utils.setDispItem(materials.get("desh"), "ingotDesh");
+		IModule.modules.forEach(IModule::init3);
 	}
 	
 	private static void preIntegrate(Map<String,Material> materials,

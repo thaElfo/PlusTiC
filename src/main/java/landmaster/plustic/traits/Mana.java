@@ -29,6 +29,7 @@ public class Mana extends AbstractTrait {
 				&& ToolHelper.getCurrentDurability(tool) < ToolHelper.getMaxDurability(tool)
 				&& Toggle.getToggleState(tool, identifier)
 				&& drawMana((EntityPlayer)entity)) {
+			ToolHelper.unbreakTool(tool);
 			ToolHelper.healTool(tool, 1, (EntityPlayer)entity);
 		}
 	}

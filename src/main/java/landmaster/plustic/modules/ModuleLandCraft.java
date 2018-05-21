@@ -8,7 +8,7 @@ import java.util.*;
 import org.apache.commons.lang3.*;
 import org.apache.commons.lang3.tuple.*;
 
-import gnu.trove.map.hash.*;
+import it.unimi.dsi.fastutil.objects.*;
 import landmaster.plustic.*;
 import landmaster.plustic.config.*;
 import landmaster.plustic.fluids.*;
@@ -28,7 +28,7 @@ public class ModuleLandCraft implements IModule {
 					Triple.of("racheline", 0xD37DDC, 1400),
 					Triple.of("friscion", 0xD2FF1C, 400)
 					);
-			Map<String, Material> mats = new THashMap<>();
+			Map<String, Material> mats = new Object2ObjectOpenHashMap<>();
 			matData.forEach(matDatum -> {
 				Material mat = new Material(matDatum.getLeft(), matDatum.getMiddle());
 				String ingot = "ingot"+StringUtils.capitalize(matDatum.getLeft());

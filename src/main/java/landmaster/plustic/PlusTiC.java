@@ -7,7 +7,7 @@ import java.util.concurrent.*;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.*;
 
-import gnu.trove.map.hash.*;
+import it.unimi.dsi.fastutil.objects.*;
 import landmaster.plustic.proxy.*;
 import landmaster.plustic.api.*;
 import landmaster.plustic.config.*;
@@ -42,10 +42,12 @@ public class PlusTiC {
 	public static final Logger log = LogManager.getLogger(
 			ModInfo.MODID.toUpperCase(Locale.US/* to avoid problems with Turkish */));
 	
-	public static final Map<String, Material> materials = new THashMap<>();
-	public static final Map<String, MaterialIntegration> materialIntegrations = new THashMap<>();
+	public static final Map<String, Material> materials = new Object2ObjectOpenHashMap<>();
+	public static final Map<String, MaterialIntegration> materialIntegrations = new Object2ObjectOpenHashMap<>();
 	
-	public static final Map<String, CompletionStage<?>> materialIntegrationStages = new THashMap<>();
+	public static final Map<String, CompletionStage<?>> materialIntegrationStages = new Object2ObjectOpenHashMap<>();
+	
+	public static final Map<String, String> materialOreDicts = new Object2ObjectOpenHashMap<>();
 	
 	public static final BowMaterialStats justWhy = new BowMaterialStats(0.2f, 0.4f, -1f);
 	
@@ -62,6 +64,12 @@ public class PlusTiC {
 					.ifPresent(mapping::remap);
 				}
 			}
+			
+			if (mapping.key.equals(new ResourceLocation(ModInfo.MODID, ModInfo.MODID+".molten_fiery"))) {
+				Optional.ofNullable(FluidRegistry.getFluid("fierymetal"))
+				.map(Fluid::getBlock)
+				.ifPresent(mapping::remap);
+			}
 		});
 	}
 	
@@ -71,6 +79,13 @@ public class PlusTiC {
 			for (String name: renamesToHandle) {
 				if (mapping.key.equals(new ResourceLocation(ModInfo.MODID, ModInfo.MODID+".molten_"+name))) {
 					Optional.ofNullable(FluidRegistry.getFluid(name))
+					.map(Fluid::getBlock)
+					.map(Item::getItemFromBlock)
+					.ifPresent(mapping::remap);
+				}
+				
+				if (mapping.key.equals(new ResourceLocation(ModInfo.MODID, ModInfo.MODID+".molten_fiery"))) {
+					Optional.ofNullable(FluidRegistry.getFluid("fierymetal"))
 					.map(Fluid::getBlock)
 					.map(Item::getItemFromBlock)
 					.ifPresent(mapping::remap);
@@ -110,7 +125,6 @@ public class PlusTiC {
 				new ModuleAppEng2(),
 				new ModuleEnvironTech(),
 				new ModuleMFR(),
-				new ModuleTwilightForest(),
 				
 				new ModuleTools(),
 				new ModuleModifiers()
@@ -122,7 +136,7 @@ public class PlusTiC {
 		
 		config.update();
 		
-		preIntegrate(materials, materialIntegrations, materialIntegrationStages);
+		preIntegrate();
 	}
 	
 	@EventHandler
@@ -141,9 +155,7 @@ public class PlusTiC {
 		IModule.modules.forEach(IModule::init3);
 	}
 	
-	private static void preIntegrate(Map<String,Material> materials,
-			Map<String,MaterialIntegration> materialIntegrations,
-			Map<String, CompletionStage<?>> materialIntegrationStages) {
+	private static void preIntegrate() {
 		materials.forEach((k, v) -> {
 			if (!materialIntegrations.containsKey(k)) {
 				materialIntegrationStages.getOrDefault(k, CompletableFuture.completedFuture(null)).thenRun(() -> {
@@ -154,6 +166,9 @@ public class PlusTiC {
 						mi = new MaterialIntegration(v, v.getFluid(), StringUtils.capitalize(k)).toolforge();
 					} else {
 						mi = new MaterialIntegration(v);
+					}
+					if (materialOreDicts.containsKey(k)) {
+						mi.representativeItem = materialOreDicts.get(k);
 					}
 					TinkerRegistry.integrate(mi).preInit();
 					materialIntegrations.put(k, mi);

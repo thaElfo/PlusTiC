@@ -9,7 +9,7 @@ import java.util.*;
 import org.apache.commons.lang3.*;
 import org.apache.commons.lang3.tuple.*;
 
-import gnu.trove.map.hash.*;
+import it.unimi.dsi.fastutil.objects.*;
 import landmaster.plustic.*;
 import landmaster.plustic.config.*;
 import landmaster.plustic.fluids.*;
@@ -27,7 +27,7 @@ public class ModuleLandCore implements IModule {
 					Triple.of("thorium", 0x00FFBF, 800),
 					Triple.of("tungsten", 0x5C5C5C, 1100),
 					Triple.of("landium", 0xFF0077, 1500));
-			Map<String, Material> mats = new THashMap<>();
+			Map<String, Material> mats = new Object2ObjectOpenHashMap<>();
 			matData.forEach(matDatum -> {
 				Material mat = new Material(matDatum.getLeft(), matDatum.getMiddle());
 				String ingot = "ingot"+StringUtils.capitalize(matDatum.getLeft());

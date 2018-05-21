@@ -9,7 +9,7 @@ import java.util.concurrent.*;
 
 import com.google.common.collect.*;
 
-import gnu.trove.map.hash.*;
+import it.unimi.dsi.fastutil.objects.*;
 import landmaster.plustic.*;
 import landmaster.plustic.api.ModInfo;
 import landmaster.plustic.config.*;
@@ -34,7 +34,7 @@ public class ModuleBotania implements IModule {
 	public void init() {
 		if (Config.botania && Loader.isModLoaded("botania")) {
 			if (Config.forceOutNaturalPledgeMaterials || !Loader.isModLoaded("botanicaladdons")) {
-				final Map<String, Material> botaniaMaterials = new THashMap<>();
+				final Map<String, Material> botaniaMaterials = new Object2ObjectOpenHashMap<>();
 				
 				Material terrasteel = new Material("terrasteel", TextFormatting.GREEN);
 				botaniaMaterials.put("terrasteel", terrasteel);

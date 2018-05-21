@@ -1,7 +1,7 @@
 {
 	"conditions": [
 		{
-			"type": "plustic:item_exists",
+			"type": "minecraft:item_exists",
 			"item": "plustic:mirioningot"
 		}
 	],

@@ -8,9 +8,7 @@ import java.util.*;
 import com.google.common.base.Throwables;
 import com.google.common.collect.*;
 
-import gnu.trove.*;
-import gnu.trove.list.*;
-import gnu.trove.list.array.*;
+import it.unimi.dsi.fastutil.ints.*;
 import landmaster.plustic.traits.*;
 import net.minecraft.item.*;
 import net.minecraft.util.*;
@@ -60,10 +58,10 @@ public class Config extends Configuration {
 	public static boolean katana_boosts_only_on_killing;
 	public static boolean katana_smooth_progression;
 	
-	private static final TIntArrayList botan_amount = new TIntArrayList(Botanical.MAX_LEVELS);
+	private static final IntArrayList botan_amount = new IntArrayList(Botanical.MAX_LEVELS);
 	
-	public static TIntList getBotanAmount() {
-		return TCollections.unmodifiableList(botan_amount);
+	public static IntList getBotanAmount() {
+		return IntLists.unmodifiable(botan_amount);
 	}
 	
 	private static class TrashThing {
@@ -205,10 +203,10 @@ public class Config extends Configuration {
 		botan_amount_prop.setComment("Enter integer amounts in order of level (defaults will be extrapolated if some left blank)");
 		botan_amount_prop.setMinValue(0);
 		
-		botan_amount.add(botan_amount_prop.getIntList());
+		botan_amount.addElements(botan_amount.size(), botan_amount_prop.getIntList());
 		if (botan_amount.isEmpty()) botan_amount.add(1);
 		while (botan_amount.size() < Botanical.MAX_LEVELS) {
-			botan_amount.add(botan_amount.get(botan_amount.size()-1)<<1);
+			botan_amount.add(botan_amount.getInt(botan_amount.size()-1)<<1);
 		}
 	}
 	

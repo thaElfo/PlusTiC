@@ -4,7 +4,7 @@ for metal in ['osmiridium', 'alumite', 'mirion', 'invar', 'osgloglas']:
 		file.write('''{
 \t"conditions": [
 \t\t{
-\t\t\t"type": "plustic:item_exists",
+\t\t\t"type": "minecraft:item_exists",
 \t\t\t"item": "plustic:%(lower)singot"
 \t\t}
 \t],
@@ -28,7 +28,7 @@ for metal in ['osmiridium', 'alumite', 'mirion', 'invar', 'osgloglas']:
 		file.write('''{
 \t"conditions": [
 \t\t{
-\t\t\t"type": "plustic:item_exists",
+\t\t\t"type": "minecraft:item_exists",
 \t\t\t"item": "plustic:%(lower)singot"
 \t\t}
 \t],
@@ -47,7 +47,7 @@ for metal in ['osmiridium', 'alumite', 'mirion', 'invar', 'osgloglas']:
 		file.write('''{
 \t"conditions": [
 \t\t{
-\t\t\t"type": "plustic:item_exists",
+\t\t\t"type": "minecraft:item_exists",
 \t\t\t"item": "plustic:%(lower)singot"
 \t\t}
 \t],
@@ -66,7 +66,7 @@ for metal in ['osmiridium', 'alumite', 'mirion', 'invar', 'osgloglas']:
 		file.write('''{
 \t"conditions": [
 \t\t{
-\t\t\t"type": "plustic:item_exists",
+\t\t\t"type": "minecraft:item_exists",
 \t\t\t"item": "plustic:%(lower)singot"
 \t\t}
 \t],

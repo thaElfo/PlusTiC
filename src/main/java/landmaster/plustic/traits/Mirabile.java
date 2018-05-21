@@ -1,5 +1,6 @@
 package landmaster.plustic.traits;
 
+import net.minecraft.block.BlockStone;
 import net.minecraft.block.state.*;
 import net.minecraft.entity.*;
 import net.minecraft.init.*;
@@ -28,7 +29,7 @@ public class Mirabile extends AbstractTrait {
 				if (curd < 1) break;
 				BlockPos pos = stdpos.add((i/3)/3-1, (i/3)%3-1, i%3-1);
 				IBlockState state = world.getBlockState(pos);
-				if (state.getBlock() == Blocks.STONE) {
+				if (state.getBlock() == Blocks.STONE && state.getValue(BlockStone.VARIANT) == BlockStone.EnumType.STONE) {
 					float rand = random.nextFloat();
 					if (rand < 0.003f && curd >= 5) {
 						world.setBlockState(pos, Blocks.DIAMOND_ORE.getDefaultState());

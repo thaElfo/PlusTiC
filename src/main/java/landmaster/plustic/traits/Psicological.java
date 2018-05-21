@@ -31,6 +31,7 @@ public class Psicological extends AbstractTrait {
 				&& Toggle.getToggleState(tool, identifier)
 				&& ToolHelper.getCurrentDurability(tool) < ToolHelper.getMaxDurability(tool)) {
 			if (PsiUtils.extractPsiExact((EntityPlayer)entity, PSI_COST) >= PSI_COST) {
+				ToolHelper.unbreakTool(tool);
 				ToolHelper.healTool(tool, 1, (EntityPlayer)entity);
 			}
 		}

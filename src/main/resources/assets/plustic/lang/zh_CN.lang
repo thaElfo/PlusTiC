@@ -12,13 +12,13 @@ item.battery_cell.name=蓄电池
 # STATS
 
 stat.laser_medium.name=激光传导器
-stat.laser_medium.power.name=激光攻击力: %s
+stat.laser_medium.power.name=激光攻击力：%s
 stat.laser_medium.power.desc=决定激光伤害
-stat.laser_medium.range.name=范围: %s
+stat.laser_medium.range.name=范围：%s
 stat.laser_medium.range.desc=决定激光延伸距离
 
 stat.battery_cell.name=蓄电池
-stat.battery_cell.energy.name=能源容量: §6%s RF
+stat.battery_cell.energy.name=能源容量：§6%s RF
 stat.battery_cell.energy.desc=决定储存能源
 
 # TINKER MATERIALS
@@ -123,6 +123,8 @@ material.osgloglas.name=Osgloglas
 material.mica.name=云母
 material.flamestring_plustic.name=火弦
 material.fiery.name=炽热金属
+material.litherite.name=莱泽尔
+material.erodium.name=艾洛蒂
 
 modifier.bloodymary.name=血腥玛丽
 modifier.bloodymary.desc=§o由传说中的英国女王赋予你...§r\n根据目标失去的生命值来使其受到额外的伤害。同时，每一次也有概率在你下一次攻击时凝结一滴凝血滴。
@@ -142,7 +144,7 @@ modifier.elemental.name=本源
 modifier.elemental.desc=§o元素...§r\n当受到重力影响的方块被破坏时，挖掘其上方与下方同类所有方块。同时，有概率获得多方面的正面效果溢出。
 modifier.devilsstrength.name=恶魔之力
 modifier.devilsstrength.desc=§o堪比撒旦...§r\n对非主世界的怪物造成额外的伤害。
-modifier.devilsstrength.extra=对非主世界怪物： +%s
+modifier.devilsstrength.extra=对非主世界怪物：+%s
 modifier.anticorrosion.name=抗腐蚀
 modifier.anticorrosion.desc=§o当你溅起化学药剂的时候§r\n每一次喷洒瞬间，持有者身体的毒素都有小概率被治愈的可能（当它们握在手里的时候）。
 modifier.light.name=轻金属

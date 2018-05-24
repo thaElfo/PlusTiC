@@ -42,6 +42,7 @@ public class Config extends Configuration {
 	public static boolean appEng2;
 	public static boolean environTech;
 	public static boolean twilightForest;
+	public static boolean thaumcraft;
 	
 	// alas…
 	public static boolean forceOutNaturalPledgeMaterials;
@@ -134,6 +135,7 @@ public class Config extends Configuration {
 		appEng2 = getBoolean("Enable Applied Energistics 2 support", "modules", true, "Integrate with Applied Energistics 2");
 		environTech = getBoolean("Enable Environmental Tech support", "modules", true, "Integrate with Environmental Tech");
 		twilightForest = getBoolean("Enable Twilight Forest support", "modules", true, "Integrate with Twilight Forest");
+		thaumcraft = getBoolean("Enable Thaumcraft support", "modules", true, "Integrate with Thaumcraft");
 		
 		// TOOLS
 		katana = getBoolean("Enable Katana", "tools", true, "Enable Katana");
@@ -200,7 +202,7 @@ public class Config extends Configuration {
 		// Modifier values for Botanical
 		Property botan_amount_prop = this.get("tweaks", "Modifier values for Botanical", new int[0]);
 		botan_amount_prop.setLanguageKey("Modifiers added for Botanical modifier");
-		botan_amount_prop.setComment("Enter integer amounts in order of level (defaults will be extrapolated if some left blank)");
+		botan_amount_prop.setComment("Enter integer amounts, specifying the amount of modifiers added to the tool for each level, in increasing order of level (defaults will be extrapolated if some left blank)");
 		botan_amount_prop.setMinValue(0);
 		
 		botan_amount.addElements(botan_amount.size(), botan_amount_prop.getIntList());

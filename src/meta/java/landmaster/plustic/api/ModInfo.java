@@ -18,6 +18,6 @@ public class ModInfo {
 	+ "after:galacticraftcore;after:galacticraftplanets;after:minefactoryreloaded;"
 	+ "after:botanicaladdons;after:survivalist;after:modernmetals;after:basemetals;"
 	+ "after:projecte;after:gemsplus;after:appliedenergistics2;after:environmentaltech;"
-	+ "after:industrialforegoing;after:twilightforest@[3.7,);";
+	+ "after:industrialforegoing;after:twilightforest@[3.7,);after:thaumcraft;";
 	
 }

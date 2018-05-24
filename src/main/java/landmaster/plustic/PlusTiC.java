@@ -125,6 +125,7 @@ public class PlusTiC {
 				new ModuleAppEng2(),
 				new ModuleEnvironTech(),
 				new ModuleMFR(),
+				new ModuleThaumcraft(),
 				
 				new ModuleTools(),
 				new ModuleModifiers()

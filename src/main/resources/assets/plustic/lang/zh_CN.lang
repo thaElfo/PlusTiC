@@ -137,138 +137,138 @@ modifier.natureswrath.desc=§o大自然的愤怒在燃烧...§r\n每次攻击怪
 modifier.naturespower.name=自然之力
 modifier.naturespower.desc=§o感受力量...§r\n攻击怪物后：20%概率燃烧目标，20%概率赋予玩家速度效果，20%概率赋予玩家力量效果。
 modifier.apocalypse.name=启示录
-modifier.apocalypse.desc=§o时间终结...§r\nYour victim becomes moribund and is afflicted with increasing levels of Wither.
+modifier.apocalypse.desc=§o时间终结...§r\n你的受害者将会变得奄奄一息，并且会受到越来越强的凋零效果的折磨。
 modifier.mana.name=Mana
 modifier.mana.desc=§o可充电的...用鲜花§r\nMana能代替装备的耐久，并随着时间的推移修补工具。
 modifier.terrafirma.name=Terrafirma
 modifier.terrafirma.desc=§oSolid earth§r\n手持该工具时，你将随着时间推移而愈合。
 modifier.elemental.name=本源
-modifier.elemental.desc=§o元素...§r\n当受重力影响的方块破坏掉落时，其上下方的方块也会Also, a chance to gain various benefits from a sucessful attack.
+modifier.elemental.desc=§o元素...§r\n当受到重力影响的方块被破坏时，挖掘其上方与下方同类所有方块。同时，攻击成功时有几率获得各种增益。
 modifier.devilsstrength.name=恶魔之力
 modifier.devilsstrength.desc=§o堪比撒旦...§r\n对非主世界的怪物造成额外的伤害。
 modifier.devilsstrength.extra=对非主世界怪物：+%s
-modifier.anticorrosion.name=Anti-Corrosion
-modifier.anticorrosion.desc=§oFor the times when you splash the chemical§r\nEvery tick, there is a small chance that the holder's poison is healed (when held in hand).
-modifier.light.name=Light Metal
-modifier.light.desc=§oLow-weight§r\nAttack and mining speed increases.
-modifier.explosive.name=Explosive
-modifier.explosive.desc=§oKa-boom!§r\nAn explosion is created on each hit.
-modifier.global.name=Global Traveler
-modifier.global.desc=§oAround the world... and back§r\nShift-right-click a block in order for items from broken blocks and killed entities to get transported in there if it is an inventory.
-modifier.thundering.name=Thundering
-modifier.thundering.desc=§oRise, Thor!§r\nSummon a thunderbolt on impact.
-modifier.divineshield.name=Divine Shield
-modifier.divineshield.desc=§oOf the guardians, by the guardians, and for the guardians§r\nWhile this tool is in your hand, you are granted fire resistance. Also, damage is reduced, but at a durability cost.
-modifier.portly.name=Portly Gentleman
-modifier.portly.desc=§oTesting nuclear bombs off the Korean coast, oh yeah!§r\nShift-right-click an entity to capture it (costs durability based on entity health). Press the "release entity" key (default "0") in order to release it.
-modifier.nickoftime.name=Nick of Time
-modifier.nickoftime.desc=§oPhew!§r\nPress the "set portal" key (default "N") to set a virtual portal on the block you are pointing at. If you are on the brink of death, you have %d ender pearls to spare, and the portal has enough space above, then the pearls are consumed, you are teleported to the virtual portal, and you are spared. (The tool must be in your hand.)
-modifier.blindbandit.name=Blind Bandit
-modifier.blindbandit.desc=§oPulling a ... someone.§r\nA mob called the "Blind Bandit" will sometimes be summoned for a limited time after you attack or are attacked. She will attack hostile mobs, and will also attack those who dare attack her (except you), piercing armor on mobs.
-modifier.brownmagic.name=Brown Magic
-modifier.brownmagic.desc=§oYou're weird.§r\nPress the "set portal" key (default "N") to set a virtual portal on the block you are pointing at. By default, press "Y" to teleport there (if there is enough space).
-modifier.rudeawakening.name=Rude Awakening
-modifier.rudeawakening.desc=§oThe hydra grovels before me...§r\nDamage pierces armor (mobs only).
-modifier.mirabile.name=Mirabile Visu
-modifier.mirabile.desc=§oWonderful to see§r\nOccasionally, a gold or diamond ore will appear in stone immediately surrounding you (at the cost of durability).
-modifier.botanical.name=Botanical
-modifier.botanical.desc=§oI eat zombies for breakfast§r\nIncreases the amount of modifier slots; the effect stacks greatly.
-modifier.heavy_metal.name=Heavy Metal
-modifier.heavy_metal.desc=§oHeave-ho!§r\nIncreased knockback + Slowness on target.
-modifier.unnamed.name=He Who Must Not Be Named
-modifier.unnamed.desc=§oIt's you-know-who...§r\nBonus damage accrued for each entity of the same type as the target close to it.
-modifier.darktraveler.name=Dark Traveler
-modifier.darktraveler.desc=§oAll hail...the King of Chaos!§r\nSurrounding mobs get randomly afflicted with damage.
-modifier.psicological.name=Psicological
-modifier.psicological.desc=§o...the reverse kind§r\nTools heal with Psi.
-modifier.illuminati.name=Illuminati
-modifier.illuminati.desc=§oConfirmed!§r\nWhile the tool is in your hand, nearby entities (that do not hold a tool with this trait) glow, and you become invisible.
-modifier.hailhydra.name=Hail Hydra
-modifier.hailhydra.desc=§oHeads§r\nRandom explosions plague your enemies. Also, when you are attacked, there is a chance to get Absorption.
-modifier.barrett.name=Barrett
-modifier.barrett.desc=§oBam!§r\nAs health decreases, there is an increasing chance of a critical hit.
-modifier.morganlefay.name=Morgan Le Fay
-modifier.morganlefay.desc=§oLancelot...§r\nBonus magic damage (ranging from 0.0 to 5.0; Gaussian distributed) is afflicted (it is absolute).
-modifier.trash.name=Traaaaaassshhh!
-modifier.trash.desc=§oTraaaaaassshhh!§r\nRandom stuff is slowly generated when the tool is selected, but the tool is damaged slowly in this way.
-modifier.sassy.name=Sassy
-modifier.sassy.desc=§oThe sass...§r\nCrit on players and bosses.
-modifier.ignoble.name=Ignoble
-modifier.ignoble.desc=§oTo a new low§r\nAs one takes damage, one starts to harbor feelings of ignoble jealousy as the offender is killed. When this trait is enabled, those feelings are vented when attacking while sneaking.
-modifier.dprk.name=Democratic People's Republic of Korea
-modifier.dprk.desc=§oWhen your missiles explode right after launch§r\nWhen attacking or defending, Supreme Leaders will spawn, exploding on opponents in the same manner as a creeper.
-modifier.getlucky.name=Get Lucky
-modifier.getlucky.desc=§oLike the legend of the phoenix...§r\nPress the "set portal" key (default "N") to set a virtual portal on the block you are pointing at. If you are on the brink of death, you have %d phoenixite gems to spare, and the portal has enough space above, then the gems are consumed, you are teleported to the virtual portal, and you are spared. (The tool must be in your hand.)
-modifier.vindictive.name=Vindictive
-modifier.vindictive.desc=§oYou are not forgiven!§r\nBonus damage to players, and you gain some health by attacking.
-modifier.starfishy.name=Starfishy
-modifier.starfishy.desc=§o2+2=5§r\nPress the "set portal" key (default "N") to set a virtual portal on the block you are pointing at. If you are on the brink of death, you have %d enori crystals to spare, and the portal has enough space above, then the crystals are consumed, you are teleported to the virtual portal, and you are spared. (The tool must be in your hand.)
-modifier.spades.name=Spades
-modifier.spades.desc=§oTrump suit: Make Tinkers Great Again!§r\nThe lower your health, the more damage you do.
-modifier.hearts.name=Hearts
-modifier.hearts.desc=§oHey, what's with that plus sign on that guy's mod?§r\nThe higher your health, the more damage you do.
-modifier.ghastly.name=Ghastly
-modifier.ghastly.desc=§oOh, the horror!§r\nIf the holder is attacked while sneaking, the attacker is inflicted with Slowness.
-modifier.slashing.name=Slashing
-modifier.slashing.desc=§oA critical hit!§r\nCritical hits gain 20% more damage!
-modifier.naphtha.name=Naphtha
-modifier.naphtha.desc=§oChildren of the Sun§r\nArrows (and bolts) burn the target on impact.
-modifier.mystical_fire.name=Mystical Fire
-modifier.mystical_fire.desc=§oA hidden secret lies within...§r\nSets the target on fire, and damages the target with magic for a certain amount of time.
-modifier.thaumic.name=Thaumic
-modifier.thaumic.desc=§oYou're back.§r\nA tool with this modifier gains 1 extra modifier slot, or 2 extra slots if either at least 3 parts have this trait, or the tool is made entirely out of parts with this trait.
+modifier.anticorrosion.name=抗腐蚀
+modifier.anticorrosion.desc=§o以防你弄洒了化学药剂§r\n手持该工具时，每一刻（tick）都有微小概率治愈持有者的中毒效果。
+modifier.light.name=轻金属
+modifier.light.desc=§o低重量§r\n增加挖掘及攻击速度。
+modifier.explosive.name=易爆
+modifier.explosive.desc=§oKa-boom!§r\n每次击中都会产生爆炸。
+modifier.global.name=环球旅行者
+modifier.global.desc=§o全世界...折返§r\n潜行右击一个方块，如果该方块是一个容器，则破坏的方块与杀死怪物的掉落物都会被传送到其中。
+modifier.thundering.name=雷鸣
+modifier.thundering.desc=§o崛起，托尔！§r\n召唤雷电。
+modifier.divineshield.name=圣盾
+modifier.divineshield.desc=§o为守卫者所有，为守卫者所创，为守卫者所用§r\n手持该工具时，你将获得防火和伤害减免效果，但耐久也会随之消耗。
+modifier.portly.name=憨厚的绅士
+modifier.portly.desc=§o在朝鲜海岸测试核弹，噢耶！§r\n潜行右击一个实体来捕获它（基于实体的生命值消耗耐久）。按"释放实体"键（默认为"0"）释放它。
+modifier.nickoftime.name=千钧一发
+modifier.nickoftime.desc=§o唷！§r\n按"设置传送门"键（默认为"N"）在你指向的方块上设置一个虚拟的传送门。当你即将死亡时，如果你有 %d 颗末影珍珠，且传送门上方有足够的空间，则会消耗末影珍珠将你传送到传送门处，使你获救。（工具必须拿在手中）。
+modifier.blindbandit.name=盲匪
+modifier.blindbandit.desc=§o呀...有人。§r\n当你攻击或被攻击时，有时会召唤出一个只持续一定时间的“盲匪”。它会攻击敌对生物以及敢攻击它的人（除了你），造成穿透伤害。
+modifier.brownmagic.name=布朗魔术
+modifier.brownmagic.desc=§o你真奇怪。§r\n按"设置传送门"键（默认为"N"）在你指向的方块上设置一个虚拟的传送门。按"Y"（默认时）传送到该位置（如果有足够空间）。
+modifier.rudeawakening.name=惊醒
+modifier.rudeawakening.desc=§o九头蛇跪倒在我面前...§r\n穿透目标护甲（仅怪物）。
+modifier.mirabile.name=光怪陆离
+modifier.mirabile.desc=§o看上去真奇妙§r\n偶尔，你周围的石头中会出现金矿或钻石矿（以消耗工具耐久作为代价）。
+modifier.botanical.name=植物学
+modifier.botanical.desc=§o我早餐吃僵尸§r\n增加强化槽；效果显著叠加。
+modifier.heavy_metal.name=重金属
+modifier.heavy_metal.desc=§o拒绝！§r\n击退目标并赋予其缓慢效果。
+modifier.unnamed.name=佚名
+modifier.unnamed.desc=§o神秘人...§r\n对目标附近的同类型实体造成额外伤害。
+modifier.darktraveler.name=暗黑行者
+modifier.darktraveler.desc=§o混沌之王万岁！§r\n周围的怪物会随机受到伤害。
+modifier.psicological.name=Psi生态学
+modifier.psicological.desc=§o...反转§r\nPsi可以修复工具。
+modifier.illuminati.name=光照派
+modifier.illuminati.desc=§o确认！§r\n手持该属性工具时，附近的实体（仅限未手持该属性工具实体）会发光，且你将变得隐形。
+modifier.hailhydra.name=赤诚
+modifier.hailhydra.desc=§o头目§r\n产生随机爆炸折磨你的敌人。此外，当你受到攻击时，有概率获得伤害吸收效果。
+modifier.barrett.name=银色子弹
+modifier.barrett.desc=§o砰！§r\n你的生命值越低，对目标造成致命伤害的概率越高。
+modifier.morganlefay.name=摩根勒菲
+modifier.morganlefay.desc=§o兰斯洛特...§r\n造成额外的魔法伤害（从0.0到5.0，高斯分布，绝对伤害）。
+modifier.trash.name=垃圾！
+modifier.trash.desc=§o垃圾！§r\n当工具被选中时，随机的东西会慢慢产生，但是工具会以这种方式慢慢的被破坏。
+modifier.sassy.name=无礼
+modifier.sassy.desc=§o无理取闹...§r\n对玩家和boss暴击。
+modifier.ignoble.name=卑鄙
+modifier.ignoble.desc=§o降到最低底线§r\n当受到伤害时，便会积攒卑鄙值。当这个效果被启用时，你可以潜行进行攻击，这些情绪便会宣泄出来。
+modifier.dprk.name=意志坚定
+modifier.dprk.desc=§o灾难将至大洋彼岸§r\n每次攻击或者格挡时会生成NO.1，它会像爬行者那样爆炸以进攻目标。
+modifier.getlucky.name=豪运
+modifier.getlucky.desc=§o如凤凰一样的传说...§r\n按"设置传送门"键（默认为"N"）在你指向的方块上设置一个虚拟的传送门。当你即将死亡时，如果你有 %d 个凤凰宝石，且传送门上方有足够的空间，则会消耗宝石将你传送到传送门处，使你获救。（工具必须拿在手中）。
+modifier.vindictive.name=报复
+modifier.vindictive.desc=§o你不可原谅！§r\n对玩家造成额外伤害，你可以通过攻击其来回复生命。
+modifier.starfishy.name=海星
+modifier.starfishy.desc=§o2+2=5§r\n按"设置传送门"键（默认为"N"）在你指向的方块上设置一个虚拟的传送门。当你即将死亡时，如果你有 %d 个铁晶，且传送门上方有足够的空间，则会消耗铁晶将你传送到传送门处，使你获救。（工具必须拿在手中）。
+modifier.spades.name=黑桃
+modifier.spades.desc=§o王牌：让匠魂再次强大！§r\n你的生命值越低，造成的伤害越高。
+modifier.hearts.name=红心
+modifier.hearts.desc=§o嘿，那家伙的模组上面的加号是什么？§r\n你的生命值越高，造成的伤害越高。
+modifier.ghastly.name=恐怖
+modifier.ghastly.desc=§o哦，吓人！§r\n如果持有者在潜行的时受到攻击，则攻击者会被施加缓慢效果。
+modifier.slashing.name=斩击
+modifier.slashing.desc=§o致命一击！§r\n暴击增加 20% 伤害。
+modifier.naphtha.name=石脑油
+modifier.naphtha.desc=§o太阳的后裔§r\n箭矢以及弩箭击中目标将给予目标着火效果。
+modifier.mystical_fire.name=魔焰
+modifier.mystical_fire.desc=§o这是个秘密...§r\n持有该效果工具攻击目标会使其着火并赋予一定的魔法伤害。
+modifier.thaumic.name=神秘
+modifier.thaumic.desc=§o你回来了！§r\n具有该属性的工具将获得一个额外的强化槽；若至少有3个部件具备该属性或该工具完全由该材料制成则可以获得两个额外的强化槽。
 
 # MISCELLANEOUS
 
-item.tindust.name=Tin Dust
-item.osmiumdust.name=Osmium Dust
-item.steeldust.name=Steel Dust
-item.osmiridiumingot.name=Osmiridium Ingot
-item.osmiridiumnugget.name=Osmiridium Nugget
-item.bronzenugget.name=Bronze Nugget
-item.bronzeingot.name=Bronze Ingot
-item.alumitenugget.name=Alumite Nugget
-item.alumiteingot.name=Alumite Ingot
-item.mirionnugget.name=Mirion Nugget
-item.mirioningot.name=Mirion Ingot
-item.invarnugget.name=Invar Nugget
-item.invaringot.name=Invar Ingot
-item.osgloglasnugget.name=Osgloglas Nugget
-item.osgloglasingot.name=Osgloglas Ingot
+item.tindust.name=锡粉
+item.osmiumdust.name=锇粉
+item.steeldust.name=钢粉
+item.osmiridiumingot.name=铱锇合金锭
+item.osmiridiumnugget.name=铱锇合金粒
+item.bronzenugget.name=青铜粒
+item.bronzeingot.name=青铜锭
+item.alumitenugget.name=耐酸铝粒
+item.alumiteingot.name=耐酸铝锭
+item.mirionnugget.name=蕴魔结晶粒
+item.mirioningot.name=蕴魔结晶锭
+item.invarnugget.name=殷钢粒
+item.invaringot.name=殷钢锭
+item.osgloglasnugget.name=Osgloglas粒
+item.osgloglasingot.name=Osgloglas锭
 
-tile.osmiridiumblock.name=Osmiridium Block
-tile.alumiteblock.name=Alumite Block
-tile.mirionblock.name=Mirion Block
-tile.invarblock.name=Invar Block
-tile.osgloglasblock.name=Osgloglas Block
+tile.osmiridiumblock.name=铱锇合金块
+tile.alumiteblock.name=耐酸铝块
+tile.mirionblock.name=蕴魔结晶块
+tile.invarblock.name=殷钢块
+tile.osgloglasblock.name=Osgloglas块
 
 # CHAT MESSAGES
 
-msg.plustic.globalmodifier.set=Linked inventory at [x=%d, y=%d, z=%d] and dimension %d
-msg.plustic.portlymodifier.set=Captured entity %s
-msg.plustic.portlymodifier.unset=Released entity %s
-msg.plustic.portal.set=Set teleportation point to be [x=%d, y=%d, z=%d] in dimension %d
-msg.plustic.nickmodifier.use=Just in the nick of time!
-msg.plustic.getlucky.use=I'm up all night to get lucky!
-msg.plustic.brownmagic.use=You're kidding.
-msg.plustic.hailhydra.use=If a §mHydra§r §nKelly§r head is cut off, two more shall take its place!
-msg.plustic.tool_mode=Tool mode: %s
-msg.plustic.starfishy.use=Seems starfishy to me.
+msg.plustic.globalmodifier.set=连接的容器位于 [x=%d, y=%d, z=%d] 在维度 %d
+msg.plustic.portlymodifier.set=捕获实体 %s
+msg.plustic.portlymodifier.unset=释放实体 %s
+msg.plustic.portal.set=设置传送点 [x=%d, y=%d, z=%d] 在维度 %d 中。
+msg.plustic.nickmodifier.use=在千钧一发之际！
+msg.plustic.getlucky.use=我彻夜不眠就为了成为一个辛运儿！
+msg.plustic.brownmagic.use=你在开玩笑。
+msg.plustic.hailhydra.use=如果一个§m九头蛇§r §n徽章§r被破坏，另外两个将取代它的位置！
+msg.plustic.tool_mode=工具模式：%s
+msg.plustic.starfishy.use=似乎海星守候着你。
 
 # TOOL MODES
 
-mode.laser_gun.attack=§9Attack
-mode.laser_gun.tool=§4Block Smelt
+mode.laser_gun.attack=§9攻击
+mode.laser_gun.tool=§4熔炼
 
 # TOOLTIPS
 
-tooltip.plustic.globalmodifier.info=Linked inventory at [x=%d, y=%d, z=%d] and dimension %d
-tooltip.plustic.portlymodifier.info=Entity: %s
-tooltip.plustic.ignoblemodifier.info=Ignobility: §1%f
-tooltip.plustic.portal.info=Teleportation point: [x=%d, y=%d, z=%d]; dimension %d
-tooltip.plustic.toggle.info=Click to toggle
-tooltip.plustic.toggle.state.true=%s currently §aenabled
-tooltip.plustic.toggle.state.false=%s currently §cdisabled
+tooltip.plustic.globalmodifier.info=连接的容器位于 [x=%d, y=%d, z=%d] 在维度 %d
+tooltip.plustic.portlymodifier.info=实体：%s
+tooltip.plustic.ignoblemodifier.info=卑鄙值: §1%f
+tooltip.plustic.portal.info=传送点：[x=%d, y=%d, z=%d]；维度 %d
+tooltip.plustic.toggle.info=点击切换
+tooltip.plustic.toggle.state.true=%s 当前 §a启用
+tooltip.plustic.toggle.state.false=%s 当前 §c禁用
 
 # METER(S)
 

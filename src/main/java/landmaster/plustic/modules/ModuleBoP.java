@@ -113,8 +113,7 @@ public class ModuleBoP implements IModule {
 			
 			Material amethyst = new Material("amethyst", TextFormatting.LIGHT_PURPLE);
 			amethyst.addTrait(Apocalypse.apocalypse);
-			amethyst.addItem(Item.REGISTRY.getObject(new ResourceLocation("biomesoplenty", "gem")), 1,
-					Material.VALUE_Ingot);
+			amethyst.addItem("gemAmethyst", 1, Material.VALUE_Ingot);
 			amethyst.setCraftable(true);
 			Utils.setDispItem(amethyst, "biomesoplenty", "gem");
 			PlusTiC.proxy.setRenderInfo(amethyst, 0xFF00FF);

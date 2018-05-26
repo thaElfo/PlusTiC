@@ -4,6 +4,7 @@ import java.util.*;
 
 import landmaster.plustic.api.*;
 import landmaster.plustic.util.*;
+import net.minecraft.block.*;
 import net.minecraft.client.resources.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.item.*;
@@ -17,6 +18,7 @@ import net.minecraftforge.common.*;
 import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.player.*;
 import net.minecraftforge.event.world.*;
+import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.fml.common.eventhandler.*;
 import net.minecraftforge.fml.relauncher.*;
 import net.minecraftforge.items.*;
@@ -27,13 +29,15 @@ import slimeknights.tconstruct.library.utils.*;
 public class Global extends AbstractTrait {
 	public static final Global global = new Global();
 	
+	private static final Set<Block> warnedBlocks = Collections.newSetFromMap(new WeakHashMap<>());
+	
 	public Global() {
 		super("global", 0xFFE0F1);
 		MinecraftForge.EVENT_BUS.register(this);
 		Toggle.toggleable.add(identifier);
 	}
 	
-	@SubscribeEvent(priority = EventPriority.LOWEST)
+	@SubscribeEvent(priority = EventPriority.LOW)
 	public void blockDrops(BlockEvent.HarvestDropsEvent event) {
 		if (event.getWorld().isRemote
 				|| event.getHarvester() == null) return;
@@ -52,7 +56,31 @@ public class Global extends AbstractTrait {
 			IItemHandler ih = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY,
 					EnumFacing.VALUES[nbt.getByte("facing")]);
 			if (ih == null) return;
+			
+			// *cough* Extra Utilities *cough*
+			try {
+				ListIterator<ItemStack> dummy = event.getDrops().listIterator();
+				
+				if (dummy.hasNext()) {
+					ItemStack is = dummy.next();
+					dummy.set(is); // This simply sets the 1st element of the list to itself, leaving the list unchanged. If the list is immutable, then this will throw an UnsupportedOperationException.
+				}
+			} catch (UnsupportedOperationException e) {
+				if (!warnedBlocks.contains(event.getState().getBlock())) {
+					FMLLog.bigWarning("Block "+event.getState().getBlock()+" implements block drops incorrectly. "
+							+ "It appears that it overrides the OFFICIALLY DEPRECATED method "
+							+ "getDrops(IBlockAccess, BlockPos, IBlockState, int) instead of the correct method "
+							+ "getDrops(NonNullList, IBlockAccess, BlockPos, IBlockState, int). This prevents "
+							+ "features such as PlusTiC's Global Traveler from working properly with these blocks.\n"
+							+ "USERS: This is a BUG in the mod "+event.getState().getBlock().getRegistryName().getResourceDomain()+"; report this to them!");
+					warnedBlocks.add(event.getState().getBlock());
+				}
+				
+				return;
+			}
+			
 			ListIterator<ItemStack> it = event.getDrops().listIterator();
+			
 			while (it.hasNext()) {
 				ItemStack stk = it.next();
 				for (int j=0; j<ih.getSlots(); ++j) {
@@ -66,6 +94,7 @@ public class Global extends AbstractTrait {
 					}
 				}
 			}
+			
 			te.markDirty();
 		}
 	}

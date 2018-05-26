@@ -8,8 +8,6 @@ import landmaster.plustic.*;
 import landmaster.plustic.config.*;
 import landmaster.plustic.traits.*;
 import landmaster.plustic.util.*;
-import net.minecraft.item.*;
-import net.minecraft.util.*;
 import net.minecraft.util.text.*;
 import net.minecraftforge.fml.common.*;
 import slimeknights.tconstruct.library.*;

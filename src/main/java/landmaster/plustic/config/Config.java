@@ -6,7 +6,6 @@ import java.lang.reflect.*;
 import java.util.*;
 
 import com.google.common.base.Throwables;
-import com.google.common.collect.*;
 
 import it.unimi.dsi.fastutil.ints.*;
 import landmaster.plustic.traits.*;
@@ -92,8 +91,6 @@ public class Config extends Configuration {
 		return thing;
 	}
 	
-	private static final ArrayListMultimap<Item, ItemStack> endlectricBlacklist = ArrayListMultimap.create();
-	
 	public Config(FMLPreInitializationEvent event) {
 		super(event.getSuggestedConfigurationFile());
 	}
@@ -178,26 +175,6 @@ public class Config extends Configuration {
 			}
 		}
 		
-		// Endlectric
-		
-		String[] arr_endlectric = getStringList("Items that Endlectric will not drain from", "tweaks", new String[0], "Enter in the format \"modid:name;meta\" (leave meta blank to match any meta)");
-		{
-			int meta = -1;
-			for (int i=0; i<arr_endlectric.length; ++i) {
-				String[] loc_meta = arr_endlectric[i].split(";");
-				if (loc_meta.length > 1) {
-					try {
-						meta = Integer.parseInt(loc_meta[1]);
-					} catch (NumberFormatException e) {
-						e.printStackTrace();
-					}
-				}
-				Item it = Item.REGISTRY.getObject(new ResourceLocation(loc_meta[0]));
-				if (it != null) {
-					endlectricBlacklist.put(it, (meta>=0 ? new ItemStack(it, 1, meta) : null));
-				}
-			}
-		}
 		
 		// Modifier values for Botanical
 		Property botan_amount_prop = this.get("tweaks", "Modifier values for Botanical", new int[0]);
@@ -254,16 +231,5 @@ public class Config extends Configuration {
 	
 	public void update() {
 		if (hasChanged()) save();
-	}
-	
-	public static boolean isInEndlectricBlacklist(ItemStack is) {
-		if (is == null) return true;
-		if (endlectricBlacklist.containsKey(is.getItem())) {
-			List<ItemStack> lst = endlectricBlacklist.get(is.getItem());
-			for (ItemStack is1: lst) {
-				if (is1 == null || is.getMetadata() == is1.getMetadata()) return true;
-			}
-		}
-		return false;
 	}
 }

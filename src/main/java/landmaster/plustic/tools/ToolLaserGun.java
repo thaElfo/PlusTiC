@@ -342,7 +342,7 @@ public class ToolLaserGun extends TinkerToolCore implements cofh.redstoneflux.ap
 			
 			final IBlockState state = worldIn.getBlockState(pos);
 			
-			if (!( smeltingRes = FurnaceRecipes.instance().getSmeltingResult(new ItemStack(state.getBlock())).copy() ).isEmpty()) {
+			if (!( smeltingRes = FurnaceRecipes.instance().getSmeltingResult(new ItemStack(state.getBlock(), 1, state.getBlock().getMetaFromState(state))).copy() ).isEmpty()) {
 				PTEnergyDrain eevent = new PTEnergyDrain(stack, player, this.energyPerAttack(stack)); // event
 				MinecraftForge.EVENT_BUS.post(eevent);
 				int energyTaken = eevent.energyDrained; // grab event result

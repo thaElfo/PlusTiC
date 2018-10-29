@@ -162,7 +162,7 @@ public class PlusTiC {
 				materialIntegrationStages.getOrDefault(k, CompletableFuture.completedFuture(null)).thenRun(() -> {
 					MaterialIntegration mi;
 					if (v.getRepresentativeItem().getItem() == Items.EMERALD) {
-						mi = new MaterialIntegration(v, v.getFluid());
+						mi = new MaterialIntegration(v, v.getFluid()).toolforge();
 					} else if (v.getFluid() != null) {
 						mi = new MaterialIntegration(v, v.getFluid(), StringUtils.capitalize(k)).toolforge();
 					} else {

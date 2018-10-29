@@ -291,11 +291,21 @@ public class Utils {
 		try {
 			MethodHandle temp;
 			try {
-				temp = MethodHandles.lookup().findVirtual(IBlockState.class, "func_185890_d",
-						MethodType.methodType(AxisAlignedBB.class, IBlockAccess.class, BlockPos.class));
-			} catch (NoSuchMethodException e) {
-				temp = MethodHandles.lookup().findVirtual(IBlockState.class, "func_185890_d",
-						MethodType.methodType(AxisAlignedBB.class, World.class, BlockPos.class));
+				try {
+					temp = MethodHandles.lookup().findVirtual(IBlockState.class, "getCollisionBoundingBox",
+							MethodType.methodType(AxisAlignedBB.class, IBlockAccess.class, BlockPos.class));
+				} catch (NoSuchMethodException e) {
+					temp = MethodHandles.lookup().findVirtual(IBlockState.class, "getCollisionBoundingBox",
+							MethodType.methodType(AxisAlignedBB.class, World.class, BlockPos.class));
+				}
+			} catch (NoSuchMethodException e1) {
+				try {
+					temp = MethodHandles.lookup().findVirtual(IBlockState.class, "func_185890_d",
+							MethodType.methodType(AxisAlignedBB.class, IBlockAccess.class, BlockPos.class));
+				} catch (NoSuchMethodException e) {
+					temp = MethodHandles.lookup().findVirtual(IBlockState.class, "func_185890_d",
+							MethodType.methodType(AxisAlignedBB.class, World.class, BlockPos.class));
+				}
 			}
 			getCollisionBoundingBoxM = temp;
 		} catch (Throwable e) {

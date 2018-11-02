@@ -127,6 +127,7 @@ material.fiery.name=Fiery Metal
 material.litherite.name=Litherite
 material.erodium.name=Erodium
 material.thaumium.name=Thaumium
+material.ionite.name=Ionite
 
 modifier.bloodymary.name=Bloody Mary
 modifier.bloodymary.desc=§oBrought to you by the legendary Queen of England...§r\nDeals bonus damage depending on the amount of health already lost by the target. Also, a chance to drop a Coagulated Blood for each hit.
@@ -217,6 +218,8 @@ modifier.mystical_fire.name=Mystical Fire
 modifier.mystical_fire.desc=§oA hidden secret lies within...§r\nSets the target on fire, and damages the target with magic for a certain amount of time.
 modifier.thaumic.name=Thaumic
 modifier.thaumic.desc=§oYou're back.§r\nA tool with this modifier gains 1 extra modifier slot, or 2 extra slots if either at least 3 parts have this trait, or the tool is made entirely out of parts with this trait.
+modifier.chadthunder.name=Chad Thunder****
+modifier.chadthunder.desc=§oThe virgin killing by weapon alone vs the CHAD killing by thunder strikes§r\nEnemies struck by this weapon have thunderbolts rained down on them.
 
 # MISCELLANEOUS
 

@@ -55,6 +55,19 @@ public class ModuleEnvironTech implements IModule {
 					PlusTiC.justWhy);
 			PlusTiC.materials.put("erodium", erodium);
 			PlusTiC.materialOreDicts.put("erodium", "crystalErodium");
+			
+			Material ionite = new Material("ionite", 0x6df5ff);
+			ionite.addTrait(ChadThunder.chadthunder, HEAD);
+			ionite.addTrait(Illuminati.illuminati);
+			ionite.addItem("crystalIonite", 1, Material.VALUE_Ingot);
+			ionite.setCraftable(true);
+			PlusTiC.proxy.setRenderInfo(ionite, 0x6df5ff);
+			TinkerRegistry.addMaterialStats(ionite, new HeadMaterialStats(1900, 12.9f, 12, 5),
+					new HandleMaterialStats(0.9f, -5),
+					new ExtraMaterialStats(227),
+					PlusTiC.justWhy);
+			PlusTiC.materials.put("ionite", ionite);
+			PlusTiC.materialOreDicts.put("ionite", "crystalIonite");
 		}
 	}
 	

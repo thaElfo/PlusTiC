@@ -16,5 +16,6 @@ public class PacketHandler {
 		INSTANCE.registerMessage(PacketBrownAbracadabra::onMessage, PacketBrownAbracadabra.class, 4, Side.SERVER);
 		INSTANCE.registerMessage(PacketUpdateToolModeServer::onMessage, PacketUpdateToolModeServer.class, 5, Side.SERVER);
 		INSTANCE.registerMessage(PacketLaserGunZapBlock::onMessage, PacketLaserGunZapBlock.class, 6, Side.CLIENT);
+		INSTANCE.registerMessage(PacketOpenFSGui::onMessage, PacketOpenFSGui.class, 7, Side.SERVER);
 	}
 }

@@ -11,6 +11,7 @@ import it.unimi.dsi.fastutil.objects.*;
 import landmaster.plustic.proxy.*;
 import landmaster.plustic.api.*;
 import landmaster.plustic.config.*;
+import landmaster.plustic.gui.handler.*;
 import landmaster.plustic.modules.*;
 import landmaster.plustic.net.*;
 import landmaster.plustic.util.*;
@@ -23,6 +24,7 @@ import net.minecraftforge.fluids.*;
 import net.minecraftforge.fml.common.*;
 import net.minecraftforge.fml.common.event.*;
 import net.minecraftforge.fml.common.eventhandler.*;
+import net.minecraftforge.fml.common.network.*;
 import net.minecraftforge.fml.common.Mod.*;
 import slimeknights.tconstruct.library.*;
 import slimeknights.tconstruct.library.materials.*;
@@ -138,6 +140,8 @@ public class PlusTiC {
 		config.update();
 		
 		preIntegrate();
+		
+		NetworkRegistry.INSTANCE.registerGuiHandler(INSTANCE, new PTGuiHandler());
 	}
 	
 	@EventHandler

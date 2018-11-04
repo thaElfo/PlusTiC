@@ -14,6 +14,7 @@ import net.minecraft.util.*;
 import net.minecraft.util.text.translation.*;
 import net.minecraftforge.common.config.*;
 import net.minecraftforge.fml.common.event.*;
+import net.minecraftforge.oredict.OreDictionary;
 import slimeknights.tconstruct.library.materials.*;
 
 public class Config extends Configuration {
@@ -89,6 +90,22 @@ public class Config extends Configuration {
 			if (rval < 0) break;
 		}
 		return thing;
+	}
+	
+	public static List<ItemStack> fruitStacks = new ArrayList<>();
+	public static IntSet fruitOreDicts;
+	public static boolean isFruit(ItemStack stack) {
+		for (int id: OreDictionary.getOreIDs(stack)) {
+			if (fruitOreDicts.contains(id)) {
+				return true;
+			}
+		}
+		for (ItemStack fruit: fruitStacks) {
+			if (OreDictionary.itemMatches(fruit, stack, false)) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	public Config(FMLPreInitializationEvent event) {
@@ -175,6 +192,30 @@ public class Config extends Configuration {
 			}
 		}
 		
+		// Fruit salad
+		String[] fruitStacksArr = this.getStringList("Fruits stack list", "tweaks",
+				new String[] {"apple", "golden_apple;"+OreDictionary.WILDCARD_VALUE, "melon", "chorus_fruit"}, "Enter in the format \"modid:name;meta\" (leave meta blank for zero metadata)");
+		{
+			int meta = 0;
+			for (int i=0; i<fruitStacksArr.length; ++i) {
+				String[] loc_meta = fruitStacksArr[i].split(";");
+				if (loc_meta.length > 1) {
+					try {
+						meta = Integer.parseInt(loc_meta[1]);
+					} catch (NumberFormatException e) {
+						e.printStackTrace();
+					}
+				}
+				Item it = Item.REGISTRY.getObject(new ResourceLocation(loc_meta[0]));
+				if (it != null) {
+					fruitStacks.add(new ItemStack(it, 1, meta));
+				}
+			}
+		}
+		fruitOreDicts = Arrays.stream(this.getStringList("Fruits oredict list", "tweaks",
+				new String[] { "cropApple", "listAllfruit" }, "Valid ore dictionary values for Fruit Salad"))
+				.mapToInt(OreDictionary::getOreID)
+				.collect(IntOpenHashSet::new, IntOpenHashSet::add, IntOpenHashSet::addAll);
 		
 		// Modifier values for Botanical
 		Property botan_amount_prop = this.get("tweaks", "Modifier values for Botanical", new int[0]);

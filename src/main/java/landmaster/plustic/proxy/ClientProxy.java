@@ -67,12 +67,14 @@ public class ClientProxy extends CommonProxy {
 	
 	@Override
 	public void registerKeyBindings() {
-		keyBindings = ImmutableMap.of(
-				"release_entity", new KeyBinding("key.plustic_release_entity.desc", KeyConflictContext.IN_GAME, Keyboard.KEY_0, "key.categories.plustic"),
-				"toggle_gui", new KeyBinding("key.plustic_toggle_gui.desc", KeyConflictContext.IN_GAME, Keyboard.KEY_I, "key.categories.plustic"),
-				"set_portal", new KeyBinding("key.plustic_set_portal.desc", KeyConflictContext.IN_GAME, Keyboard.KEY_N, "key.categories.plustic"),
-				"brown_magic", new KeyBinding("key.plustic_brown_magic.desc", KeyConflictContext.IN_GAME, Keyboard.KEY_O, "key.categories.plustic"),
-				"toggle_tool", new KeyBinding("key.plustic_toggle_tool.desc", KeyConflictContext.IN_GAME, KeyModifier.ALT, Keyboard.KEY_COMMA, "key.categories.plustic"));
+		keyBindings = ImmutableMap.<String, KeyBinding>builder()
+				.put("release_entity", new KeyBinding("key.plustic_release_entity.desc", KeyConflictContext.IN_GAME, Keyboard.KEY_0, "key.categories.plustic"))
+				.put("toggle_gui", new KeyBinding("key.plustic_toggle_gui.desc", KeyConflictContext.IN_GAME, Keyboard.KEY_I, "key.categories.plustic"))
+				.put("set_portal", new KeyBinding("key.plustic_set_portal.desc", KeyConflictContext.IN_GAME, Keyboard.KEY_N, "key.categories.plustic"))
+				.put("brown_magic", new KeyBinding("key.plustic_brown_magic.desc", KeyConflictContext.IN_GAME, Keyboard.KEY_O, "key.categories.plustic"))
+				.put("toggle_tool", new KeyBinding("key.plustic_toggle_tool.desc", KeyConflictContext.IN_GAME, KeyModifier.ALT, Keyboard.KEY_COMMA, "key.categories.plustic"))
+				.put("fruit_salad", new KeyBinding("key.plustic_fruit_salad.desc", KeyConflictContext.IN_GAME, KeyModifier.ALT, Keyboard.KEY_MINUS, "key.categories.plustic"))
+				.build();
 		for (KeyBinding kb: keyBindings.values()) ClientRegistry.registerKeyBinding(kb);
 	}
 	

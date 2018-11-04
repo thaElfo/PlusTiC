@@ -128,6 +128,7 @@ material.litherite.name=Litherite
 material.erodium.name=Erodium
 material.thaumium.name=Thaumium
 material.ionite.name=Ionite
+material.kyronite.name=Kyronite
 
 modifier.bloodymary.name=Bloody Mary
 modifier.bloodymary.desc=§oBrought to you by the legendary Queen of England...§r\nDeals bonus damage depending on the amount of health already lost by the target. Also, a chance to drop a Coagulated Blood for each hit.
@@ -220,6 +221,8 @@ modifier.thaumic.name=Thaumic
 modifier.thaumic.desc=§oYou're back.§r\nA tool with this modifier gains 1 extra modifier slot, or 2 extra slots if either at least 3 parts have this trait, or the tool is made entirely out of parts with this trait.
 modifier.chadthunder.name=Chad Thunder****
 modifier.chadthunder.desc=§oThe virgin killing by weapon alone vs the CHAD killing by thunder strikes§r\nEnemies struck by this weapon have thunderbolts rained down on them.
+modifier.fruitsalad.name=Fruit Salad
+modifier.fruitsalad.desc=§oYummy yummy§r\nA tool with this trait can store up to 5 types of fruits.
 
 # MISCELLANEOUS
 

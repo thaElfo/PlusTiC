@@ -56,6 +56,19 @@ public class ModuleEnvironTech implements IModule {
 			PlusTiC.materials.put("erodium", erodium);
 			PlusTiC.materialOreDicts.put("erodium", "crystalErodium");
 			
+			Material kyronite = new Material("kyronite", 0x77007f);
+			kyronite.addTrait(FruitSalad.fruitsalad, HEAD);
+			kyronite.addTrait(NaturesBlessing.naturesblessing);
+			kyronite.addItem("crystalKyronite", 1, Material.VALUE_Ingot);
+			kyronite.setCraftable(true);
+			PlusTiC.proxy.setRenderInfo(kyronite, 0x77007f);
+			TinkerRegistry.addMaterialStats(kyronite, new HeadMaterialStats(1300, 10.3f, 9, COBALT),
+					new HandleMaterialStats(0.9f, -5),
+					new ExtraMaterialStats(169),
+					new BowMaterialStats(0.6f, 1.6f, 5));
+			PlusTiC.materials.put("kyronite", kyronite);
+			PlusTiC.materialOreDicts.put("kyronite", "crystalKyronite");
+			
 			Material ionite = new Material("ionite", 0x6df5ff);
 			ionite.addTrait(ChadThunder.chadthunder, HEAD);
 			ionite.addTrait(Illuminati.illuminati);
@@ -65,7 +78,7 @@ public class ModuleEnvironTech implements IModule {
 			TinkerRegistry.addMaterialStats(ionite, new HeadMaterialStats(1900, 12.9f, 12, 5),
 					new HandleMaterialStats(0.9f, -5),
 					new ExtraMaterialStats(227),
-					PlusTiC.justWhy);
+					new BowMaterialStats(0.38f, 3f, 8));
 			PlusTiC.materials.put("ionite", ionite);
 			PlusTiC.materialOreDicts.put("ionite", "crystalIonite");
 		}

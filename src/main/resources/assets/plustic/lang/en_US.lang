@@ -129,6 +129,7 @@ material.erodium.name=Erodium
 material.thaumium.name=Thaumium
 material.ionite.name=Ionite
 material.kyronite.name=Kyronite
+material.pladium.name=Pladium
 
 modifier.bloodymary.name=Bloody Mary
 modifier.bloodymary.desc=§oBrought to you by the legendary Queen of England...§r\nDeals bonus damage depending on the amount of health already lost by the target. Also, a chance to drop a Coagulated Blood for each hit.
@@ -223,6 +224,8 @@ modifier.chadthunder.name=Chad Thunder****
 modifier.chadthunder.desc=§oThe virgin killing by weapon alone vs the CHAD killing by thunder strikes§r\nEnemies struck by this weapon have thunderbolts rained down on them.
 modifier.fruitsalad.name=Fruit Salad
 modifier.fruitsalad.desc=§oYummy yummy§r\nA tool with this trait can store up to 5 types of fruits.
+modifier.stopbeingselfish.name=Stop Being Selfish
+modifier.stopbeingselfish.desc=§oBrayden stop being selfish!§r\nMore damage is added the closer other players are to the attacker.
 
 # MISCELLANEOUS
 

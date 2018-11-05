@@ -69,6 +69,18 @@ public class ModuleEnvironTech implements IModule {
 			PlusTiC.materials.put("kyronite", kyronite);
 			PlusTiC.materialOreDicts.put("kyronite", "crystalKyronite");
 			
+			Material pladium = new Material("pladium", 0x070070);
+			pladium.addTrait(StopBeingSelfish.stopbeingselfish);
+			pladium.addItem("crystalPladium", 1, Material.VALUE_Ingot);
+			pladium.setCraftable(true);
+			PlusTiC.proxy.setRenderInfo(pladium, 0x070070);
+			TinkerRegistry.addMaterialStats(pladium, new HeadMaterialStats(1600, 11.6f, 10.5f, COBALT),
+					new HandleMaterialStats(0.9f, -5),
+					new ExtraMaterialStats(198),
+					new BowMaterialStats(0.49f, 2.2f, 6.5f));
+			PlusTiC.materials.put("pladium", pladium);
+			PlusTiC.materialOreDicts.put("pladium", "crystalPladium");
+			
 			Material ionite = new Material("ionite", 0x6df5ff);
 			ionite.addTrait(ChadThunder.chadthunder, HEAD);
 			ionite.addTrait(Illuminati.illuminati);

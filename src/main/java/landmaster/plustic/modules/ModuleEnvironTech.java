@@ -93,6 +93,18 @@ public class ModuleEnvironTech implements IModule {
 					new BowMaterialStats(0.38f, 3f, 8));
 			PlusTiC.materials.put("ionite", ionite);
 			PlusTiC.materialOreDicts.put("ionite", "crystalIonite");
+			
+			Material aethium = new Material("aethium", 0x000000);
+			aethium.addTrait(MusicOfTheSpheres.musicofthespheres);
+			aethium.addItem("crystalAethium", 1, Material.VALUE_Ingot);
+			aethium.setCraftable(true);
+			PlusTiC.proxy.setRenderInfo(aethium, 0x000000);
+			TinkerRegistry.addMaterialStats(aethium, new HeadMaterialStats(2200, 14.2f, 13.5f, 6),
+					new HandleMaterialStats(0.9f, -5),
+					new ExtraMaterialStats(227),
+					new BowMaterialStats(0.38f, 3f, 12));
+			PlusTiC.materials.put("aethium", aethium);
+			PlusTiC.materialOreDicts.put("aethium", "crystalAethium");
 		}
 	}
 	

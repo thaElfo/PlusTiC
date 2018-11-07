@@ -4,13 +4,18 @@ import java.util.*;
 
 import javax.annotation.*;
 import landmaster.plustic.api.*;
+import landmaster.plustic.api.Sounds;
 import landmaster.plustic.entity.*;
 import landmaster.plustic.entity.render.*;
 import landmaster.plustic.modules.*;
+import landmaster.plustic.traits.*;
+import net.minecraft.client.*;
+import net.minecraft.client.audio.*;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.block.model.*;
 import net.minecraft.client.renderer.block.statemap.*;
 import net.minecraft.client.settings.*;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.block.*;
 import net.minecraft.block.state.*;
 import net.minecraft.item.*;
@@ -20,6 +25,8 @@ import net.minecraftforge.fml.client.registry.*;
 import net.minecraftforge.client.model.*;
 import net.minecraftforge.client.settings.KeyConflictContext;
 import net.minecraftforge.client.settings.KeyModifier;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.CapabilityInject;
 
 import org.lwjgl.input.*;
 
@@ -74,6 +81,7 @@ public class ClientProxy extends CommonProxy {
 				.put("brown_magic", new KeyBinding("key.plustic_brown_magic.desc", KeyConflictContext.IN_GAME, Keyboard.KEY_O, "key.categories.plustic"))
 				.put("toggle_tool", new KeyBinding("key.plustic_toggle_tool.desc", KeyConflictContext.IN_GAME, KeyModifier.ALT, Keyboard.KEY_COMMA, "key.categories.plustic"))
 				.put("fruit_salad", new KeyBinding("key.plustic_fruit_salad.desc", KeyConflictContext.IN_GAME, KeyModifier.ALT, Keyboard.KEY_MINUS, "key.categories.plustic"))
+				.put("mots", new KeyBinding("key.plustic_mots.desc", KeyConflictContext.IN_GAME, KeyModifier.ALT, Keyboard.KEY_EQUALS, "key.categories.plustic"))
 				.build();
 		for (KeyBinding kb: keyBindings.values()) ClientRegistry.registerKeyBinding(kb);
 	}
@@ -124,6 +132,29 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public boolean isControlPressed(String control) {
 		return keyBindings.get(control).isPressed();
+	}
+	
+	@CapabilityInject(MusicOfTheSpheres.IMOTSItemHandler.class)
+	private static Capability<MusicOfTheSpheres.IMOTSItemHandler> MOTS_ITEM_CAP = null;
+	
+	@Override
+	public Object setAndPlaySound(EntityPlayer player, SoundEvent sndEv) {
+		Sounds.MOTSSound sound = new Sounds.MOTSSound(player, sndEv, SoundCategory.MUSIC);
+		//System.out.println("TEEHEE! "+sound.getSound());
+		Minecraft.getMinecraft().getSoundHandler().playSound(sound);
+		return sound;
+	}
+	
+	@Override
+	public void stopSound(Object sound) {
+		if (sound instanceof ISound) {
+			Minecraft.getMinecraft().getSoundHandler().stopSound((ISound)sound);
+		}
+	}
+	
+	@Override
+	public boolean isSoundPlaying(Object sound) {
+		return sound instanceof ISound && Minecraft.getMinecraft().getSoundHandler().isSoundPlaying((ISound)sound);
 	}
 	
 	public static class FluidStateMapper extends StateMapperBase implements ItemMeshDefinition {

@@ -3,6 +3,7 @@ package landmaster.plustic.proxy;
 import landmaster.plustic.*;
 import landmaster.plustic.api.*;
 import landmaster.plustic.entity.*;
+import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.util.*;
 import net.minecraftforge.fluids.*;
@@ -46,6 +47,17 @@ public class CommonProxy {
 	}
 	
 	public boolean isControlPressed(String control) {
+		return false;
+	}
+	
+	public Object setAndPlaySound(EntityPlayer player, SoundEvent sndEv) {
+		return null;
+	}
+	
+	public void stopSound(Object sound) {
+	}
+	
+	public boolean isSoundPlaying(Object sound) {
 		return false;
 	}
 }

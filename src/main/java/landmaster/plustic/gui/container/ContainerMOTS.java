@@ -9,19 +9,28 @@ import net.minecraftforge.common.capabilities.*;
 import net.minecraftforge.items.*;
 import slimeknights.tconstruct.library.utils.*;
 
-public class ContainerFruitSalad extends Container {
-	@CapabilityInject(FruitSalad.IFSItemHandler.class)
-	private static Capability<FruitSalad.IFSItemHandler> FS_ITEM_CAP = null;
+public class ContainerMOTS extends Container {
+	@CapabilityInject(MusicOfTheSpheres.IMOTSItemHandler.class)
+	private static Capability<MusicOfTheSpheres.IMOTSItemHandler> MOTS_ITEM_CAP = null;
 	
-	public ContainerFruitSalad(EntityPlayer player) {	
-		//System.out.println("CAP: "+FS_ITEM_CAP);
-		if (player.getHeldItemMainhand().hasCapability(FS_ITEM_CAP, null)) {
-			//System.out.println("TEEHEE!");
-			FruitSalad.IFSItemHandler fshandler = player.getHeldItemMainhand().getCapability(FS_ITEM_CAP, null);
-			final int sz = fshandler.getSlots();
-			for (int i=0; i<sz; ++i) {
-				addSlotToContainer(new SlotItemHandler(fshandler, i, 80 + (i - 2) * 18, 35));
-			}
+	public ContainerMOTS(EntityPlayer player) {
+		if (player.getHeldItemMainhand().hasCapability(MOTS_ITEM_CAP, null)) {
+			MusicOfTheSpheres.IMOTSItemHandler cap = player.getHeldItemMainhand().getCapability(MOTS_ITEM_CAP, null);
+			addSlotToContainer(new SlotItemHandler(cap, 0, 80, 35) {
+				@Override
+				public void onSlotChanged() {
+					super.onSlotChanged();
+					if (!player.world.isRemote) {
+						ItemStack stack = cap.getStackInSlot(0);
+						if (stack.isEmpty()
+								|| !(stack.getItem() instanceof ItemRecord)) {
+							cap.stop(player);
+						} else {
+							cap.play(player, ((ItemRecord)stack.getItem()).getSound());
+						}
+					}
+				}
+			});
 		}
 		
 		for (int i = 0; i < 3; i++) {
@@ -38,7 +47,7 @@ public class ContainerFruitSalad extends Container {
 	@Override
 	public boolean canInteractWith(EntityPlayer playerIn) {
 		return TinkerUtil.hasTrait(TagUtil.getTagSafe(Minecraft.getMinecraft().player.getHeldItemMainhand()),
-				FruitSalad.fruitsalad.identifier);
+				MusicOfTheSpheres.musicofthespheres.identifier);
 	}
 	
 	@Override

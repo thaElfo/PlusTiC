@@ -15,18 +15,17 @@ import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.block.model.*;
 import net.minecraft.client.renderer.block.statemap.*;
 import net.minecraft.client.settings.*;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.*;
 import net.minecraft.block.*;
 import net.minecraft.block.state.*;
 import net.minecraft.item.*;
 import net.minecraft.util.*;
 import net.minecraftforge.fluids.*;
 import net.minecraftforge.fml.client.registry.*;
+import net.minecraftforge.fml.relauncher.*;
 import net.minecraftforge.client.model.*;
-import net.minecraftforge.client.settings.KeyConflictContext;
-import net.minecraftforge.client.settings.KeyModifier;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.CapabilityInject;
+import net.minecraftforge.client.settings.*;
+import net.minecraftforge.common.capabilities.*;
 
 import org.lwjgl.input.*;
 
@@ -39,6 +38,7 @@ import slimeknights.tconstruct.library.materials.*;
 import slimeknights.tconstruct.library.modifiers.*;
 import slimeknights.tconstruct.library.tools.*;
 
+@SideOnly(Side.CLIENT)
 public class ClientProxy extends CommonProxy {
 	private static Map<String, KeyBinding> keyBindings;
 	

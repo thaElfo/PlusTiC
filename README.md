@@ -31,10 +31,9 @@ Starting in 5.1.2.0, PlusTiC forces out and *overrides* Natural Pledge TiC mater
 - Environmental Tech by ValkyrieofNight
 - Thaumcraft by azanor
 ## Using the source and building
-After cloning this repository, run the commands (with working directory in the folder with the repository)
+After cloning this repository, run the command (with working directory in the folder with the repository)
 ```
 ./gradlew setupDecompWorkspace
-./gradlew setupDevWorkspace
 ```
 For Eclipse, run
 ```
@@ -47,7 +46,7 @@ Build with
 ./gradlew build
 ```
 ## Developers/Credits
-Lead Developer: @Landmaster
+Creator/Lead Developer: @Landmaster
 
 Chinese translation: @DYColdWind
 

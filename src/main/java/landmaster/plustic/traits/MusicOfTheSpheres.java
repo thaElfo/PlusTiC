@@ -17,7 +17,6 @@ import net.minecraft.util.*;
 import net.minecraftforge.common.*;
 import net.minecraftforge.common.capabilities.*;
 import net.minecraftforge.event.*;
-import net.minecraftforge.fml.common.*;
 import net.minecraftforge.fml.common.eventhandler.*;
 import net.minecraftforge.fml.common.gameevent.*;
 import net.minecraftforge.fml.common.registry.*;
@@ -48,7 +47,6 @@ public class MusicOfTheSpheres extends AbstractTrait {
 		void stop(EntityPlayer player);
 	}
 	
-	@Mod.EventBusSubscriber(modid = ModInfo.MODID)
 	private static class MOTSItemHandler extends ItemStackHandler implements IMOTSItemHandler {
 		@CapabilityInject(IMOTSItemHandler.class)
 		private static Capability<IMOTSItemHandler> MOTS_ITEM_CAP = null;
@@ -85,14 +83,6 @@ public class MusicOfTheSpheres extends AbstractTrait {
 					PlusTiC.proxy.stopSound(playerToSound.get(player.getUniqueID()));
 					playerToSound.remove(player.getUniqueID());
 				}
-			}
-		}
-		
-		@SubscribeEvent
-		public static void changeDim(PlayerEvent.PlayerChangedDimensionEvent event) {
-			if (!event.player.world.isRemote && event.player.getHeldItemMainhand().hasCapability(MOTS_ITEM_CAP, null)
-					&& TinkerUtil.hasTrait(TagUtil.getTagSafe(event.player.getHeldItemMainhand()), musicofthespheres.identifier)) {
-				PacketHandler.INSTANCE.sendToDimension(new PacketStopMOTS(event.player), event.fromDim);
 			}
 		}
 	}

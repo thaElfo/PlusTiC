@@ -10,7 +10,7 @@ public class MetalBlock extends Block {
 		super(Material.IRON);
 		this.setHarvestLevel("pickaxe", -1);
 		this.setHardness(5);
-		this.setUnlocalizedName(name).setRegistryName(name);
+		this.setTranslationKey(name).setRegistryName(name);
 	}
 	
 	@Override

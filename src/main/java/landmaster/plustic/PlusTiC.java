@@ -130,7 +130,9 @@ public class PlusTiC {
 				new ModuleThaumcraft(),
 				
 				new ModuleTools(),
-				new ModuleModifiers()
+				new ModuleModifiers(),
+				
+				new ModuleConArm()
 				));
 		
 		IModule.modules.forEach(IModule::init);

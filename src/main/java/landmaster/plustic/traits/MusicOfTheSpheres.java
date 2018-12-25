@@ -39,7 +39,7 @@ public class MusicOfTheSpheres extends AbstractTrait {
 	
 	static {
 		// see analogous comment at FruitSalad.java
-		CapabilityManager.INSTANCE.register(IMOTSItemHandler.class, (Capability.IStorage)CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.getStorage(), MOTSItemHandler.class);
+		CapabilityManager.INSTANCE.register(IMOTSItemHandler.class, (Capability.IStorage)CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.getStorage(), MOTSItemHandler::new);
 	}
 	
 	public static interface IMOTSItemHandler extends IItemHandler {

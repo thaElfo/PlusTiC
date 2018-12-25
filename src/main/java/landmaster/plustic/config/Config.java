@@ -43,6 +43,7 @@ public class Config extends Configuration {
 	public static boolean environTech;
 	public static boolean twilightForest;
 	public static boolean thaumcraft;
+	public static boolean constructsArmory;
 	
 	// alas…
 	public static boolean forceOutNaturalPledgeMaterials;
@@ -150,6 +151,7 @@ public class Config extends Configuration {
 		environTech = getBoolean("Enable Environmental Tech support", "modules", true, "Integrate with Environmental Tech");
 		twilightForest = getBoolean("Enable Twilight Forest support", "modules", true, "Integrate with Twilight Forest");
 		thaumcraft = getBoolean("Enable Thaumcraft support", "modules", true, "Integrate with Thaumcraft");
+		constructsArmory = getBoolean("Enable Constructs Armory support", "modules", true, "Integrate with Constructs Armory");
 		
 		// TOOLS
 		katana = getBoolean("Enable Katana", "tools", true, "Enable Katana");

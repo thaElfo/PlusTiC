@@ -24,7 +24,7 @@ public class Illuminati extends AbstractTrait {
 			((EntityLivingBase)entity).addPotionEffect(new PotionEffect(MobEffects.INVISIBILITY, 20));
 			List<EntityLivingBase> lst = world.getEntitiesWithinAABB(EntityLivingBase.class, Utils.AABBfromVecs(
 					entity.getPositionVector().subtract(11, 11, 11),
-					entity.getPositionVector().addVector(11, 11, 11)),
+					entity.getPositionVector().add(11, 11, 11)),
 					ent -> !ent.equals(entity) && !TinkerUtil.hasTrait(TagUtil.getTagSafe(ent.getHeldItemMainhand()), identifier));
 			for (EntityLivingBase ent: lst) {
 				ent.addPotionEffect(new PotionEffect(MobEffects.GLOWING, 20));

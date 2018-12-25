@@ -76,7 +76,7 @@ public class HailHydra extends AbstractTrait {
 	private static void entExplode(World world, Entity entity, Collection<Entity> extraTargets, float power) {
 		List<Entity> ents = world.getEntitiesWithinAABB(EntityLiving.class, Utils.AABBfromVecs(
 				entity.getPositionVector().subtract(9, 9, 9),
-				entity.getPositionVector().addVector(9, 9, 9)),
+				entity.getPositionVector().add(9, 9, 9)),
 				ent -> ent instanceof IMob && ent != entity && !extraTargets.contains(ent));
 		ents.addAll(extraTargets);
 		if (!ents.isEmpty()) {

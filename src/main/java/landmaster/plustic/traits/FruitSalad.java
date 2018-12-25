@@ -43,7 +43,7 @@ public class FruitSalad extends AbstractTrait {
 	
 	static {
 		// Basically, the base item handler capabilty's IStorage and this IStorage are one and the same.
-		CapabilityManager.INSTANCE.register(IFSItemHandler.class, (Capability.IStorage)CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.getStorage(), FSItemHandler.class);
+		CapabilityManager.INSTANCE.register(IFSItemHandler.class, (Capability.IStorage)CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.getStorage(), FSItemHandler::new);
 	}
 	
 	public static interface IFSItemHandler extends IItemHandler {}

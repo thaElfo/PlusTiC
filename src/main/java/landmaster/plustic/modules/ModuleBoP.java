@@ -26,7 +26,7 @@ public class ModuleBoP implements IModule {
 			sapphire.setCraftable(true);
 			new OreRegisterPromise("gemSapphire").thenAccept(sapphire::setRepresentativeItem);
 			PlusTiC.proxy.setRenderInfo(sapphire, 0x0000FF);
-			TinkerRegistry.addMaterialStats(sapphire, new HeadMaterialStats(700, 5, 6.4f, COBALT));
+			TinkerRegistry.addMaterialStats(sapphire, new HeadMaterialStats(700, 5, 6.4f, OBSIDIAN));
 			TinkerRegistry.addMaterialStats(sapphire, new HandleMaterialStats(1, 100));
 			TinkerRegistry.addMaterialStats(sapphire, new ExtraMaterialStats(120));
 			TinkerRegistry.addMaterialStats(sapphire, new BowMaterialStats(1, 1.5f, 4));
@@ -39,7 +39,7 @@ public class ModuleBoP implements IModule {
 			ruby.setCraftable(true);
 			new OreRegisterPromise("gemRuby").thenAccept(ruby::setRepresentativeItem);
 			PlusTiC.proxy.setRenderInfo(ruby, 0xFF0000);
-			TinkerRegistry.addMaterialStats(ruby, new HeadMaterialStats(660, 4.6f, 6.4f, COBALT));
+			TinkerRegistry.addMaterialStats(ruby, new HeadMaterialStats(660, 4.6f, 6.4f, OBSIDIAN));
 			TinkerRegistry.addMaterialStats(ruby, new HandleMaterialStats(1.2f, 0));
 			TinkerRegistry.addMaterialStats(ruby, new ExtraMaterialStats(20));
 			TinkerRegistry.addMaterialStats(ruby, new BowMaterialStats(1.5f, 1.4f, 4));
@@ -51,7 +51,7 @@ public class ModuleBoP implements IModule {
 			peridot.setCraftable(true);
 			new OreRegisterPromise("gemPeridot").thenAccept(peridot::setRepresentativeItem);
 			PlusTiC.proxy.setRenderInfo(peridot, 0xBEFA5C);
-			TinkerRegistry.addMaterialStats(peridot, new HeadMaterialStats(640, 4.0f, 6.1f, COBALT));
+			TinkerRegistry.addMaterialStats(peridot, new HeadMaterialStats(640, 4.0f, 6.1f, OBSIDIAN));
 			TinkerRegistry.addMaterialStats(peridot, new HandleMaterialStats(1.3f, -30));
 			TinkerRegistry.addMaterialStats(peridot, new ExtraMaterialStats(20));
 			TinkerRegistry.addMaterialStats(peridot, new BowMaterialStats(1.4f, 1.4f, 4));
@@ -64,7 +64,7 @@ public class ModuleBoP implements IModule {
 			malachite.setCraftable(true);
 			Utils.setDispItem(malachite, "biomesoplenty", "gem", 5);
 			PlusTiC.proxy.setRenderInfo(malachite, 0x007523);
-			TinkerRegistry.addMaterialStats(malachite, new HeadMaterialStats(640, 3.0f, 6.1f, COBALT));
+			TinkerRegistry.addMaterialStats(malachite, new HeadMaterialStats(640, 3.0f, 6.1f, OBSIDIAN));
 			TinkerRegistry.addMaterialStats(malachite, new HandleMaterialStats(1.3f, -30));
 			TinkerRegistry.addMaterialStats(malachite, new ExtraMaterialStats(20));
 			TinkerRegistry.addMaterialStats(malachite, new BowMaterialStats(1.4f, 1.4f, 4));
@@ -78,7 +78,7 @@ public class ModuleBoP implements IModule {
 			amber.setCraftable(true);
 			Utils.setDispItem(amber, "biomesoplenty", "gem", 7);
 			PlusTiC.proxy.setRenderInfo(amber, 0xFFD000);
-			TinkerRegistry.addMaterialStats(amber, new HeadMaterialStats(730, 4.6f, 5.7f, COBALT));
+			TinkerRegistry.addMaterialStats(amber, new HeadMaterialStats(730, 4.6f, 5.7f, OBSIDIAN));
 			TinkerRegistry.addMaterialStats(amber, new HandleMaterialStats(1, 30));
 			TinkerRegistry.addMaterialStats(amber, new ExtraMaterialStats(100));
 			TinkerRegistry.addMaterialStats(amber, PlusTiC.justWhy);
@@ -91,7 +91,7 @@ public class ModuleBoP implements IModule {
 			topaz.setCraftable(true);
 			Utils.setDispItem(topaz, "biomesoplenty", "gem", 3);
 			PlusTiC.proxy.setRenderInfo(topaz, 0xFFFF00);
-			TinkerRegistry.addMaterialStats(topaz, new HeadMaterialStats(690, 6, 6, COBALT));
+			TinkerRegistry.addMaterialStats(topaz, new HeadMaterialStats(690, 6, 6, OBSIDIAN));
 			TinkerRegistry.addMaterialStats(topaz, new HandleMaterialStats(0.8f, 70));
 			TinkerRegistry.addMaterialStats(topaz, new ExtraMaterialStats(65));
 			TinkerRegistry.addMaterialStats(topaz, new BowMaterialStats(0.4f, 1.4f, 7));
@@ -103,7 +103,7 @@ public class ModuleBoP implements IModule {
 			tanzanite.setCraftable(true);
 			Utils.setDispItem(tanzanite, "biomesoplenty", "gem", 4);
 			PlusTiC.proxy.setRenderInfo(tanzanite, 0x6200FF);
-			TinkerRegistry.addMaterialStats(tanzanite, new HeadMaterialStats(650, 3, 7, COBALT));
+			TinkerRegistry.addMaterialStats(tanzanite, new HeadMaterialStats(650, 3, 7, OBSIDIAN));
 			TinkerRegistry.addMaterialStats(tanzanite, new HandleMaterialStats(0.7f, 0));
 			TinkerRegistry.addMaterialStats(tanzanite, new ExtraMaterialStats(25));
 			TinkerRegistry.addMaterialStats(tanzanite, PlusTiC.justWhy);

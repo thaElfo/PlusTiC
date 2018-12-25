@@ -12,19 +12,28 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 //Only edit below this line, the above code adds and enables the nessasary things for Forge to be setup.
 
 
-version = "6.5.4.2"
+version = "7.0.0.0"
 group= "landmaster.plustic" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "plustic"
 
 repositories {
 	maven {
-		url 'http://dvs1.progwml6.com/files/maven'
+		url "http://dvs1.progwml6.com/files/maven"
 	}
 	maven {
-		url = "http://maven.covers1624.net"
+		url "http://maven.covers1624.net"
 	}
 	maven {
 		url "http://maven.blamejared.com"
+	}
+	maven {
+		url "https://maven.chaosfield.at"
+	}
+	maven {
+		url "https://minecraft.curseforge.com/api/maven/"
+	}
+	maven {
+		url "http://maven.mcmoddev.com"
 	}
 }
 
@@ -34,7 +43,7 @@ compileJava {
 }
 
 minecraft {
-	version = "1.12-14.21.1.2387"
+	version = "1.12.2-14.23.5.2768"
 	runDir = "run"
 	
 	// the mappings can be changed at any time, and must be in the following format.
@@ -42,7 +51,7 @@ minecraft {
 	// stable_#            stables are built at the discretion of the MCP team.
 	// Use non-default mappings at your own risk. they may not allways work.
 	// simply re-run your setup task after changing the mappings to update your workspace.
-	mappings = "snapshot_20170717"
+	mappings = "stable_39"
 	// makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
 }
 
@@ -72,6 +81,15 @@ dependencies {
 	deobfCompile "slimeknights:TConstruct:1.12-2.7.2.15"
 	deobfCompile "cofh:RedstoneFlux:1.12-2.0.0.1:universal"
 	deobfCompile "CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.1.11.494"
+	deobfCompile "de.ellpeck.actuallyadditions:ActuallyAdditions:1.12.2-r143"
+	deobfCompile "baubles:Baubles:1.12:1.5.2"
+	deobfCompile "net.darkhax.tesla:Tesla-1.12.2:1.0.63"
+	compile files("./libs/Botania r1.9-346.jar")
+	compile files("./libs/conarm-1.12.2-1.2.0.2.jar")
+	compile files("./libs/industrialforegoing-1.12.2-1.11.7-217-deobf.jar")
+	compile files("./libs/modtweaker-4.0.15.jar")
+	compile files("./libs/natura-1.12.2-4.3.2.42.jar")
+	compile files("./libs/Psi-r1.1-52-deobf.jar")
 }
 
 import org.apache.tools.ant.filters.ReplaceTokens

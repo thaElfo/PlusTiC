@@ -24,7 +24,7 @@ public class DarkTraveler extends AbstractTrait {
 		if (random.nextFloat() < 0.035f && ToolHelper.getCurrentDurability(tool) >= 1) {
 			List<EntityLiving> lst = world.getEntitiesWithinAABB(EntityLiving.class,
 					Utils.AABBfromVecs(entity.getPositionVector().subtract(8,8,8),
-							entity.getPositionVector().addVector(8,8,8)),
+							entity.getPositionVector().add(8,8,8)),
 					ent -> ent instanceof IMob && ent != entity);
 			if (lst.size() > 0) {
 				EntityLiving randomEntity = lst.get(random.nextInt(lst.size()));

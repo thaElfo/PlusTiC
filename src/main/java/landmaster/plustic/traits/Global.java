@@ -72,7 +72,7 @@ public class Global extends AbstractTrait {
 							+ "getDrops(IBlockAccess, BlockPos, IBlockState, int) instead of the correct method "
 							+ "getDrops(NonNullList, IBlockAccess, BlockPos, IBlockState, int). This prevents "
 							+ "features such as PlusTiC's Global Traveler from working properly with these blocks.\n"
-							+ "USERS: This is a BUG in the mod "+event.getState().getBlock().getRegistryName().getResourceDomain()+"; report this to them!");
+							+ "USERS: This is a BUG in the mod "+event.getState().getBlock().getRegistryName().getNamespace()+"; report this to them!");
 					warnedBlocks.add(event.getState().getBlock());
 				}
 				

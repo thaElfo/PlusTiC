@@ -61,7 +61,7 @@ public class ToolKatana extends SwordCore {
 		
 		this.addCategory(Category.WEAPON);
 		
-		setUnlocalizedName("katana").setRegistryName("katana");
+		setTranslationKey("katana").setRegistryName("katana");
 	}
 	
 	@SideOnly(Side.CLIENT)

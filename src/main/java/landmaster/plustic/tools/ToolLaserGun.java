@@ -107,7 +107,7 @@ public class ToolLaserGun extends TinkerToolCore implements cofh.redstoneflux.ap
 		
 		proxy.initEvents();
 		
-		this.setUnlocalizedName("laser_gun").setRegistryName("laser_gun");
+		this.setTranslationKey("laser_gun").setRegistryName("laser_gun");
 	}
 	
 	// to avoid errors with certain methods
@@ -171,7 +171,7 @@ public class ToolLaserGun extends TinkerToolCore implements cofh.redstoneflux.ap
 				double doubleZ = player.lastTickPosZ + (player.posZ - player.lastTickPosZ) * partialTicks;
 				
 				Vec3d vec = new Vec3d(doubleX, doubleY+player.getEyeHeight(), doubleZ);
-				Vec3d vec0 = shooter.getPositionVector().addVector(0, shooter.getEyeHeight()+0.2, 0);
+				Vec3d vec0 = shooter.getPositionVector().add(0, shooter.getEyeHeight()+0.2, 0);
 				Vec3d vec1 = vec0;
 				
 				switch (IToggleTool.getMode(stack, Mode.class)) {

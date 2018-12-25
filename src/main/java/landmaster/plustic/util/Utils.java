@@ -116,7 +116,7 @@ public class Utils {
 	public static RayTraceResult raytraceEntityWithPred(Entity entity, Vec3d start, Vec3d look, double range,
 			boolean ignoreCanBeCollidedWith, Predicate<? super Entity> pred) {
 		// Vec3 look = entity.getLook(partialTicks);
-		Vec3d direction = start.addVector(look.x * range, look.y * range, look.z * range);
+		Vec3d direction = start.add(look.x * range, look.y * range, look.z * range);
 		
 		// Vec3 direction = vec3.addVector(vec31.x * d0, vec31.y * d0, vec31.z *
 		// d0);
@@ -201,7 +201,7 @@ public class Utils {
 	}
 	
 	public static <T extends Block> T registerBlock(T block, String name) {
-		block.setUnlocalizedName(ModInfo.MODID + "." + name);
+		block.setTranslationKey(ModInfo.MODID + "." + name);
 		block.setRegistryName(ModInfo.MODID + "." + name);
 		Item ib = new ItemBlock(block).setRegistryName(block.getRegistryName());
 		ForgeRegistries.BLOCKS.register(block);
@@ -246,9 +246,9 @@ public class Utils {
 	public static void teleportPlayerTo(EntityPlayerMP player, Coord4D coord) {
 		if (player.dimension != coord.dimensionId) {
 			int id = player.dimension;
-			WorldServer oldWorld = player.mcServer.getWorld(player.dimension);
+			WorldServer oldWorld = player.getServer().getWorld(player.dimension);
 			player.dimension = coord.dimensionId;
-			WorldServer newWorld = player.mcServer.getWorld(player.dimension);
+			WorldServer newWorld = player.getServer().getWorld(player.dimension);
 			player.connection.sendPacket(new SPacketRespawn(player.dimension, player.getEntityWorld().getDifficulty(),
 					newWorld.getWorldInfo().getTerrainType(), player.interactionManager.getGameType()));
 			oldWorld.removeEntityDangerously(player);
@@ -262,12 +262,12 @@ public class Utils {
 				player.setWorld(newWorld);
 			}
 			
-			player.mcServer.getPlayerList().preparePlayer(player, oldWorld);
+			player.getServer().getPlayerList().preparePlayer(player, oldWorld);
 			player.connection.setPlayerLocation(coord.xCoord + 0.5, coord.yCoord + 1, coord.zCoord + 0.5,
 					player.rotationYaw, player.rotationPitch);
 			player.interactionManager.setWorld(newWorld);
-			player.mcServer.getPlayerList().updateTimeAndWeatherForPlayer(player, newWorld);
-			player.mcServer.getPlayerList().syncPlayerInventory(player);
+			player.getServer().getPlayerList().updateTimeAndWeatherForPlayer(player, newWorld);
+			player.getServer().getPlayerList().syncPlayerInventory(player);
 			
 			for (PotionEffect potioneffect : player.getActivePotionEffects()) {
 				player.connection.sendPacket(new SPacketEntityEffect(player.getEntityId(), potioneffect));
@@ -362,13 +362,13 @@ public class Utils {
 	
 	public static ItemMatGroup registerMatGroup(String name) {
 		ItemMatGroup img = new ItemMatGroup();
-		img.nugget = new Item().setUnlocalizedName(name + "nugget").setRegistryName(name + "nugget");
+		img.nugget = new Item().setTranslationKey(name + "nugget").setRegistryName(name + "nugget");
 		img.nugget.setCreativeTab(TinkerRegistry.tabGeneral);
 		ForgeRegistries.ITEMS.register(img.nugget);
 		OreDictionary.registerOre("nugget" + StringUtils.capitalize(name), img.nugget);
 		PlusTiC.proxy.registerItemRenderer(img.nugget, 0, name + "nugget");
 		
-		img.ingot = new Item().setUnlocalizedName(name + "ingot").setRegistryName(name + "ingot");
+		img.ingot = new Item().setTranslationKey(name + "ingot").setRegistryName(name + "ingot");
 		img.ingot.setCreativeTab(TinkerRegistry.tabGeneral);
 		ForgeRegistries.ITEMS.register(img.ingot);
 		OreDictionary.registerOre("ingot" + StringUtils.capitalize(name), img.ingot);

@@ -19,7 +19,7 @@ public class PacketReleaseEntity implements IMessage {
 		IThreadListener mainThread = (WorldServer)ctx.getServerHandler().player.getEntityWorld();
 		mainThread.addScheduledTask(() -> {
 			EntityPlayer ep = ctx.getServerHandler().player;
-			Vec3d eye = ep.getPositionVector().addVector(0, ep.getEyeHeight(), 0);
+			Vec3d eye = ep.getPositionVector().add(0, ep.getEyeHeight(), 0);
 			Vec3d look = ep.getLookVec().scale(5);
 			RayTraceResult rtr = ep.getEntityWorld().rayTraceBlocks(eye, eye.add(look));
 			NBTTagCompound nbt = TagUtil.getTagSafe(ep.getHeldItemMainhand());
@@ -33,9 +33,9 @@ public class PacketReleaseEntity implements IMessage {
 					nbt.getCompoundTag("portlyGentleman"), ep.getEntityWorld());
 			if (ent == null) return;
 			
-			int offsetX = rtr.sideHit.getFrontOffsetX();
+			int offsetX = rtr.sideHit.getXOffset();
 			int offsetY = rtr.sideHit == EnumFacing.DOWN ? -1 : 0;
-			int offsetZ = rtr.sideHit.getFrontOffsetZ();
+			int offsetZ = rtr.sideHit.getZOffset();
 			AxisAlignedBB bb = ent.getEntityBoundingBox();
 			ent.setLocationAndAngles(
 					rtr.hitVec.x+(bb.maxX-bb.minX)*0.5*offsetX,

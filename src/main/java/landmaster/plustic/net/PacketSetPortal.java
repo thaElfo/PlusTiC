@@ -21,7 +21,7 @@ public class PacketSetPortal implements IMessage {
 				return;
 			NBTTagCompound nbt = TagUtil.getTagSafe(ep.getHeldItemMainhand());
 			if (Portal.canUse(nbt)) {
-				Vec3d eye = ep.getPositionVector().addVector(0, ep.getEyeHeight(), 0);
+				Vec3d eye = ep.getPositionVector().add(0, ep.getEyeHeight(), 0);
 				Vec3d look = ep.getLookVec().scale(5);
 				RayTraceResult rtr = ep.getEntityWorld().rayTraceBlocks(eye, eye.add(look));
 				if (rtr == null || rtr.getBlockPos() == null) return;

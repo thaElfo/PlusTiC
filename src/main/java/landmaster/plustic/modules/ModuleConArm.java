@@ -22,6 +22,14 @@ public class ModuleConArm implements IModule {
 						new PlatesMaterialStats(1, 9, 2.2f),
 						new TrimMaterialStats(13.5f));
 			});
+			Optional.ofNullable(PlusTiC.materials.get("alumite")).ifPresent(mat -> {
+				ArmorMaterials.addArmorTrait(mat, CamDaiBay.camdaibay, ArmorMaterialType.CORE);
+				ArmorMaterials.addArmorTrait(mat, DunansTransport.dunanstransport);
+				TinkerRegistry.addMaterialStats(mat,
+						new CoreMaterialStats(14, 20),
+						new PlatesMaterialStats(1, 7, 2.2f),
+						new TrimMaterialStats(10f));
+			});
 		}
 	}
 }

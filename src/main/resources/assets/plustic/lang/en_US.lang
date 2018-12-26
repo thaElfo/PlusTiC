@@ -231,6 +231,10 @@ modifier.musicofthespheres.name=Music of the Spheres
 modifier.musicofthespheres.desc=§o"The earth is flat!" said Steve§r\nThe tool doubles as a movable boombox.
 modifier.goodfridayagreement_armor.name=Good Friday Agreement
 modifier.goodfridayagreement_armor.desc=§oTroubles over?§r\nIron golems will not attack a player having this trait.
+modifier.camdaibay_armor.name=Cam Dai Bay
+modifier.camdaibay_armor.desc=§oNo, it's not some bay in Vietnam!§r\nIf the player is attacked and is blocking, inflicts the player's negative status effects on the attacker.
+modifier.dunanstransport_armor.name=Dunans Transport
+modifier.dunanstransport_armor.desc=§oThe FedEx of one square foot of land§r\nBonus armor protection and toughness for riding players.
 
 # MISCELLANEOUS
 

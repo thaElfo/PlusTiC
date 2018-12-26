@@ -10,7 +10,7 @@ public class DunansTransport extends AbstractArmorTrait {
 	public static final DunansTransport dunanstransport = new DunansTransport();
 	
 	private static final float TOUGH_PER_LEVEL = 2.0F;
-    private static final int[] ARMOR_VALUES = new int[] {2, 3, 4, 2};
+	private static final int[] ARMOR_VALUES = new int[] {2, 3, 4, 2};
 	
 	public DunansTransport() {
 		super("dunanstransport", 0xFFE0F1);

@@ -37,7 +37,7 @@ public class Global extends AbstractTrait {
 		Toggle.toggleable.add(identifier);
 	}
 	
-	@SubscribeEvent(priority = EventPriority.LOW)
+	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void blockDrops(BlockEvent.HarvestDropsEvent event) {
 		if (event.getWorld().isRemote
 				|| event.getHarvester() == null) return;

@@ -1,7 +1,6 @@
 package landmaster.plustic.traits.armor;
 
 import java.util.*;
-import java.util.stream.*;
 
 import c4.conarm.lib.capabilities.*;
 import c4.conarm.lib.traits.*;
@@ -26,10 +25,8 @@ public class GoodFridayAgreement extends AbstractArmorTrait {
 				&& event.getTarget() instanceof EntityPlayer) {
 			boolean doReset = Optional.ofNullable(ArmorAbilityHandler.getArmorAbilitiesData((EntityPlayer)event.getTarget()))
 			.map(ArmorAbilityHandler.IArmorAbilities::getAbilityMap)
-			.map(Map::keySet)
-			.map(Set::stream)
-			.orElseGet(Stream::empty)
-			.anyMatch(str -> str.equals(identifier));
+			.map(map -> map.containsKey(identifier))
+			.orElse(false);
 			
 			if (doReset) {
 				((EntityIronGolem)event.getEntityLiving()).setAttackTarget(null);

@@ -30,7 +30,8 @@ import slimeknights.tconstruct.library.utils.*;
 public class MusicOfTheSpheres extends AbstractTrait {
 	public static final MusicOfTheSpheres musicofthespheres = new MusicOfTheSpheres();
 	
-	public static final ResourceLocation MOTS_CAPLOCATION = new ResourceLocation(ModInfo.MODID, "");
+	public static final ResourceLocation MOTS_CAPLOCATION = new ResourceLocation(ModInfo.MODID, "musicofthespheres_cap");
+	public static final @Deprecated ResourceLocation MOTS_OLDCAPLOCATION = new ResourceLocation(ModInfo.MODID, "");
 	
 	public MusicOfTheSpheres() {
 		super("musicofthespheres", 0xffffff);
@@ -117,7 +118,9 @@ public class MusicOfTheSpheres extends AbstractTrait {
 
 		@Override
 		public void deserializeNBT(NBTTagCompound nbt) {
-			cap.deserializeNBT(nbt);
+			if (!nbt.isEmpty()) {
+				cap.deserializeNBT(nbt);
+			}
 		}
 		
 	}
@@ -125,6 +128,7 @@ public class MusicOfTheSpheres extends AbstractTrait {
 	@SubscribeEvent
 	public void addMOTSCapability(AttachCapabilitiesEvent<ItemStack> event) {
 		if (event.getObject().getItem() instanceof ToolCore) {
+			event.addCapability(MOTS_OLDCAPLOCATION, new MOTSItemHandlerCapProvider());
 			event.addCapability(MOTS_CAPLOCATION, new MOTSItemHandlerCapProvider());
 		}
 	}

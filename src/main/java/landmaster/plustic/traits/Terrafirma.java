@@ -14,11 +14,12 @@ import net.minecraft.util.*;
 import net.minecraft.world.*;
 import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.player.*;
-import net.minecraftforge.fml.common.Optional;
+import slimeknights.tconstruct.library.modifiers.*;
 import slimeknights.tconstruct.library.traits.*;
 
-@Optional.Interface(iface = "c4.conarm.lib.traits.IArmorTrait", modid = "conarm")
-public class Terrafirma extends AbstractTraitLeveled implements IArmorTrait {
+@net.minecraftforge.fml.common.Optional.Interface(iface = "c4.conarm.lib.traits.IArmorTrait", modid = "conarm")
+@net.minecraftforge.fml.common.Optional.Interface(iface = "c4.conarm.lib.traits.IArmorAbility", modid = "conarm")
+public class Terrafirma extends AbstractTraitLeveled implements IArmorTrait, IArmorAbility {
 	public static final List<Terrafirma> terrafirma = ImmutableList.of(new Terrafirma(1), new Terrafirma(2));
 	
 	public Terrafirma(int levels) {
@@ -46,7 +47,7 @@ public class Terrafirma extends AbstractTraitLeveled implements IArmorTrait {
 	@Override
 	public void onAbilityTick(int arg0, World arg1, EntityPlayer arg2) {
 		if (random.nextFloat() < 0.05) {
-			arg2.heal(arg0 / 3.0f);
+			arg2.heal(arg0 / 6.0f);
 		}
 	}
 
@@ -105,5 +106,10 @@ public class Terrafirma extends AbstractTraitLeveled implements IArmorTrait {
 	@Override
 	public void onKnockback(ItemStack arg0, EntityPlayer arg1, LivingKnockBackEvent arg2) {
 		// nothing
+	}
+
+	@Override
+	public int getAbilityLevel(ModifierNBT arg0) {
+		return arg0.level;
 	}
 }

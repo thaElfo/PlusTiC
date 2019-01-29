@@ -4,10 +4,15 @@ import java.util.*;
 
 import landmaster.plustic.*;
 import landmaster.plustic.net.*;
-import net.minecraft.client.*;
+import landmaster.plustic.util.*;
 import net.minecraft.client.resources.*;
+import net.minecraft.entity.*;
+import net.minecraft.entity.player.*;
 import net.minecraft.nbt.*;
+import net.minecraft.util.*;
 import net.minecraftforge.common.*;
+import net.minecraftforge.common.capabilities.*;
+import net.minecraftforge.event.*;
 import net.minecraftforge.event.entity.player.*;
 import net.minecraftforge.fml.common.eventhandler.*;
 import net.minecraftforge.fml.common.gameevent.*;
@@ -15,8 +20,79 @@ import net.minecraftforge.fml.relauncher.*;
 import slimeknights.tconstruct.library.utils.*;
 
 public class Portal {
+	public static final ResourceLocation PORTALARMOR_CAPLOCATION = new ResourceLocation(ModInfo.MODID, "portalarmor_cap");
+	
 	static {
 		MinecraftForge.EVENT_BUS.register(Portal.class);
+		CapabilityManager.INSTANCE.register(IPortalArmor.class, new Capability.IStorage<IPortalArmor>() {
+			@Override
+			public NBTBase writeNBT(Capability<IPortalArmor> capability, IPortalArmor instance, EnumFacing side) {
+				return instance.location().toNBT(new NBTTagCompound());
+			}
+
+			@Override
+			public void readNBT(Capability<IPortalArmor> capability, IPortalArmor instance, EnumFacing side,
+					NBTBase nbt) {
+				instance.location(Coord4D.fromNBT((NBTTagCompound)nbt));
+			}
+		}, PortalArmor::new);
+	}
+	
+	public static interface IPortalArmor {
+		Coord4D location();
+		void location(Coord4D loc);
+	}
+	private static class PortalArmor implements IPortalArmor {
+		private Coord4D loc = new Coord4D(0, 0, 0, 0);
+
+		@Override
+		public Coord4D location() {
+			return loc;
+		}
+
+		@Override
+		public void location(Coord4D loc) {
+			this.loc = loc;
+		}
+	}
+	private static class PortalArmorProvider implements ICapabilitySerializable<NBTTagCompound> {
+		@CapabilityInject(IPortalArmor.class)
+		private static Capability<IPortalArmor> PORTAL_ARMOR = null;
+		
+		private final PortalArmor cap;
+		public PortalArmorProvider() { this.cap = new PortalArmor(); }
+		
+		@Override
+		public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
+			return capability == PORTAL_ARMOR;
+		}
+
+		@SuppressWarnings("unchecked")
+		@Override
+		public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
+			if (capability == PORTAL_ARMOR) {
+				return (T)cap;
+			}
+			return null;
+		}
+
+		@Override
+		public NBTTagCompound serializeNBT() {
+			return (NBTTagCompound)PORTAL_ARMOR.getStorage().writeNBT(PORTAL_ARMOR, cap, null);
+		}
+
+		@Override
+		public void deserializeNBT(NBTTagCompound nbt) {
+			PORTAL_ARMOR.getStorage().readNBT(PORTAL_ARMOR, cap, null, nbt);
+		}
+		
+	}
+	
+	@SubscribeEvent
+	public static void addPortalArmorCapability(AttachCapabilitiesEvent<Entity> event) {
+		if (event.getObject() instanceof EntityPlayer) {
+			event.addCapability(PORTALARMOR_CAPLOCATION, new PortalArmorProvider());
+		}
 	}
 	
 	public static final String PORTAL_NBT = "nickoftime";
@@ -35,9 +111,7 @@ public class Portal {
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public static void testSetPortal(InputEvent.KeyInputEvent event) {
-		if (PlusTiC.proxy.isControlPressed("set_portal")
-				&& canUse(TagUtil.getTagSafe(
-						Minecraft.getMinecraft().player.getHeldItemMainhand()))) {
+		if (PlusTiC.proxy.isControlPressed("set_portal")) {
 			PacketHandler.INSTANCE.sendToServer(new PacketSetPortal());
 		}
 	}

@@ -128,8 +128,9 @@ public class MusicOfTheSpheres extends AbstractTrait {
 	@SubscribeEvent
 	public void addMOTSCapability(AttachCapabilitiesEvent<ItemStack> event) {
 		if (event.getObject().getItem() instanceof ToolCore) {
-			event.addCapability(MOTS_OLDCAPLOCATION, new MOTSItemHandlerCapProvider());
-			event.addCapability(MOTS_CAPLOCATION, new MOTSItemHandlerCapProvider());
+			MOTSItemHandlerCapProvider provider = new MOTSItemHandlerCapProvider();
+			event.addCapability(MOTS_OLDCAPLOCATION, provider);
+			event.addCapability(MOTS_CAPLOCATION, provider);
 		}
 	}
 	

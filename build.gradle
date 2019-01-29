@@ -12,7 +12,7 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 //Only edit below this line, the above code adds and enables the nessasary things for Forge to be setup.
 
 
-version = "7.0.1.0"
+version = "7.0.2.0"
 group= "landmaster.plustic" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "plustic"
 
@@ -84,6 +84,7 @@ dependencies {
 	deobfCompile "de.ellpeck.actuallyadditions:ActuallyAdditions:1.12.2-r143"
 	deobfCompile "baubles:Baubles:1.12:1.5.2"
 	deobfCompile "net.darkhax.tesla:Tesla-1.12.2:1.0.63"
+	compile files("./libs/appliedenergistics2-rv6-stable-6.jar")
 	compile files("./libs/Botania r1.9-346.jar")
 	compile files("./libs/conarm-1.12.2-1.2.0.2.jar")
 	compile files("./libs/industrialforegoing-1.12.2-1.11.7-217-deobf.jar")

@@ -2,10 +2,12 @@ package landmaster.plustic.tools;
 
 import java.util.*;
 
-import javax.annotation.Nullable;
+import javax.annotation.*;
 
 import org.lwjgl.opengl.*;
 
+import appeng.api.config.*;
+import appeng.api.implementations.items.*;
 import landmaster.plustic.api.*;
 import landmaster.plustic.api.event.*;
 import landmaster.plustic.modules.*;
@@ -45,7 +47,8 @@ import slimeknights.tconstruct.library.utils.*;
 import slimeknights.tconstruct.tools.*;
 
 @net.minecraftforge.fml.common.Optional.Interface(iface = "cofh.redstoneflux.api.IEnergyContainerItem", modid = "redstoneflux")
-public class ToolLaserGun extends TinkerToolCore implements cofh.redstoneflux.api.IEnergyContainerItem, IToggleTool<ToolLaserGun.Mode> {
+@net.minecraftforge.fml.common.Optional.Interface(iface = "appeng.api.implementations.items.IAEItemPowerStorage", modid = "appliedenergistics2")
+public class ToolLaserGun extends TinkerToolCore implements cofh.redstoneflux.api.IEnergyContainerItem, IAEItemPowerStorage, IToggleTool<ToolLaserGun.Mode> {
 	private static float range(ItemStack is) {
 		return (new LaserNBT(TagUtil.getToolTag(is))).range;
 	}
@@ -53,6 +56,7 @@ public class ToolLaserGun extends TinkerToolCore implements cofh.redstoneflux.ap
 	public static final String ATTACK_DURATION_TAG = "AttackDuration";
 	public static final String MODE_TAG = "Mode";
 	public static final String POS_LCOOL_TAG = "LockCooldown";
+	public static final String ENERGY_NBT = "Energy";
 	
 	private int maxAttackDuration(ItemStack is) {
 		return (int)(20 / ToolHelper.getActualAttackSpeed(is));
@@ -365,40 +369,48 @@ public class ToolLaserGun extends TinkerToolCore implements cofh.redstoneflux.ap
 	
 	@Override
 	public int receiveEnergy(ItemStack container, int maxReceive, boolean simulate) {
+		return (int)this._receiveEnergy(container, maxReceive, simulate);
+	}
+	
+	protected double _receiveEnergy(ItemStack container, double maxReceive, boolean simulate) {
 		if (!container.hasTagCompound()) {
 			container.setTagCompound(new NBTTagCompound());
 		}
-		int energy = container.getTagCompound().getInteger("Energy");
-		int energyReceived = Math.min(getFullEnergy(container) - energy, Math.min(getFullEnergy(container), maxReceive));
+		double energy = container.getTagCompound().getDouble(ENERGY_NBT);
+		double energyReceived = Math.min(getFullEnergy(container) - energy, Math.min(getFullEnergy(container), maxReceive));
 		
 		if (!simulate) {
 			energy += energyReceived;
-			container.getTagCompound().setInteger("Energy", energy);
+			container.getTagCompound().setDouble(ENERGY_NBT, energy);
 		}
 		return energyReceived;
 	}
 	
 	@Override
 	public int extractEnergy(ItemStack container, int maxExtract, boolean simulate) {
-		if (container.getTagCompound() == null || !container.getTagCompound().hasKey("Energy")) {
+		return (int)this._extractEnergy(container, maxExtract, simulate);
+	}
+	
+	protected double _extractEnergy(ItemStack container, double maxExtract, boolean simulate) {
+		if (container.getTagCompound() == null || !container.getTagCompound().hasKey(ENERGY_NBT)) {
 			return 0;
 		}
-		int energy = container.getTagCompound().getInteger("Energy");
-		int energyExtracted = Math.min(energy, Math.min(getFullEnergy(container), maxExtract));
+		double energy = container.getTagCompound().getDouble(ENERGY_NBT);
+		double energyExtracted = Math.min(energy, Math.min(getFullEnergy(container), maxExtract));
 		
 		if (!simulate) {
 			energy -= energyExtracted;
-			container.getTagCompound().setInteger("Energy", energy);
+			container.getTagCompound().setDouble(ENERGY_NBT, energy);
 		}
 		return energyExtracted;
 	}
 	
 	@Override
 	public int getEnergyStored(ItemStack container) {
-		if (container.getTagCompound() == null || !container.getTagCompound().hasKey("Energy")) {
+		if (container.getTagCompound() == null || !container.getTagCompound().hasKey(ENERGY_NBT)) {
 			return 0;
 		}
-		return container.getTagCompound().getInteger("Energy");
+		return container.getTagCompound().getInteger(ENERGY_NBT);
 	}
 	
 	@Override
@@ -478,5 +490,37 @@ public class ToolLaserGun extends TinkerToolCore implements cofh.redstoneflux.ap
 	@Override
 	public String getTag() {
 		return MODE_TAG;
+	}
+
+	@Override
+	@net.minecraftforge.fml.common.Optional.Method(modid = "appliedenergistics2")
+	public double extractAEPower(ItemStack arg0, double arg1, Actionable arg2) {
+		return PowerUnits.RF.convertTo(PowerUnits.AE, this._extractEnergy(arg0, PowerUnits.AE.convertTo(PowerUnits.RF, arg1), arg2 == Actionable.SIMULATE));
+	}
+
+	@Override
+	public double getAECurrentPower(ItemStack arg0) {
+		if (arg0.getTagCompound() == null || !arg0.getTagCompound().hasKey(ENERGY_NBT)) {
+			return 0;
+		}
+		return PowerUnits.RF.convertTo(PowerUnits.AE, arg0.getTagCompound().getDouble(ENERGY_NBT));
+	}
+
+	@Override
+	public double getAEMaxPower(ItemStack arg0) {
+		return PowerUnits.RF.convertTo(PowerUnits.AE, this.getMaxEnergyStored(arg0));
+	}
+
+	@Override
+	@net.minecraftforge.fml.common.Optional.Method(modid = "appliedenergistics2")
+	public AccessRestriction getPowerFlow(ItemStack arg0) {
+		return AccessRestriction.READ_WRITE;
+	}
+
+	@Override
+	@net.minecraftforge.fml.common.Optional.Method(modid = "appliedenergistics2")
+	public double injectAEPower(ItemStack arg0, double arg1, Actionable arg2) {
+		// Whereas RF returns energy able to be stored, AE2 returns energy **unable** to be stored.
+		return arg1 - PowerUnits.RF.convertTo(PowerUnits.AE, this._receiveEnergy(arg0, PowerUnits.AE.convertTo(PowerUnits.RF, arg1), arg2 == Actionable.SIMULATE));
 	}
 }

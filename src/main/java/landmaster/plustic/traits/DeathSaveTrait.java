@@ -122,6 +122,7 @@ public abstract class DeathSaveTrait extends AbstractTrait implements IArmorTrai
 	}
 
 	@Override
+	@net.minecraftforge.fml.common.Optional.Method(modid = "conarm")
 	public ArmorModifications getModifications(EntityPlayer arg0, ArmorModifications arg1, ItemStack arg2,
 			DamageSource arg3, double arg4, int arg5) {
 		return arg1;

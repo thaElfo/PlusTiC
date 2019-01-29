@@ -69,10 +69,6 @@ public abstract class DeathSaveTrait extends AbstractTrait implements IArmorTrai
 		
 		boolean hasDeathSaveArmor = Optional.ofNullable(ArmorAbilityHandler.getArmorAbilitiesData((EntityPlayerMP)event.getEntity()))
 		.map(ArmorAbilityHandler.IArmorAbilities::getAbilityMap)
-		.map(abilities -> {
-			System.out.println(Arrays.toString(abilities.keySet().toArray()));
-			return abilities;
-		})
 		.map(map -> map.containsKey(identifier))
 		.orElse(false);
 		System.out.println("Hmm… "+hasDeathSaveArmor);

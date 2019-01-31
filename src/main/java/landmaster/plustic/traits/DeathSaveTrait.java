@@ -21,6 +21,7 @@ import net.minecraftforge.common.*;
 import net.minecraftforge.common.capabilities.*;
 import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.player.*;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.eventhandler.*;
 import net.minecraftforge.fml.common.gameevent.*;
 import net.minecraftforge.items.*;
@@ -67,12 +68,8 @@ public abstract class DeathSaveTrait extends AbstractTrait implements IArmorTrai
 			return;
 		}
 		
-		boolean hasDeathSaveArmor = Optional.ofNullable(ArmorAbilityHandler.getArmorAbilitiesData((EntityPlayerMP)event.getEntity()))
-		.map(ArmorAbilityHandler.IArmorAbilities::getAbilityMap)
-		.map(map -> map.containsKey(identifier))
-		.orElse(false);
-		System.out.println("Hmm… "+hasDeathSaveArmor);
-		if (hasDeathSaveArmor && event.getEntity().hasCapability(PORTAL_ARMOR, null)) {
+		//System.out.println("Hmm… "+hasDeathSaveArmor);
+		if (Loader.isModLoaded("conarm") && hasDeathSaveArmor((EntityPlayer)event.getEntity()) && event.getEntity().hasCapability(PORTAL_ARMOR, null)) {
 			checkItems(event, event.getEntity().getCapability(PORTAL_ARMOR, null).location());
 		} else {
 			Arrays.stream(EnumHand.values())
@@ -88,6 +85,13 @@ public abstract class DeathSaveTrait extends AbstractTrait implements IArmorTrai
 				checkItems(event, coord);
 			});
 		}
+	}
+	
+	private boolean hasDeathSaveArmor(EntityPlayer player) {
+		return Optional.ofNullable(ArmorAbilityHandler.getArmorAbilitiesData(player))
+				.map(ArmorAbilityHandler.IArmorAbilities::getAbilityMap)
+				.filter(map -> map.containsKey(identifier))
+				.isPresent();
 	}
 	
 	private void checkItems(LivingHurtEvent event, Coord4D coord) {

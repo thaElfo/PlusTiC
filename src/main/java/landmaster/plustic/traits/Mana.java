@@ -19,7 +19,7 @@ public class Mana extends AbstractTrait {
 	
 	public Mana() {
 		super("mana", 0x54E5FF);
-		Toggle.toggleable.add(identifier);
+		Toggle.addToggleable(identifier);
 	}
 	
 	@Override

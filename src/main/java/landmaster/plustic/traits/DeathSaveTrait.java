@@ -39,6 +39,8 @@ import slimeknights.tconstruct.library.utils.*;
 public abstract class DeathSaveTrait extends AbstractTrait implements IArmorTrait, IArmorAbility {
 	@CapabilityInject(Portal.IPortalArmor.class)
 	private static Capability<Portal.IPortalArmor> PORTAL_ARMOR = null;
+	@CapabilityInject(Toggle.IToggleArmor.class)
+	private static Capability<Toggle.IToggleArmor> TOGGLE_ARMOR = null;
 	
 	private final int cost;
 	private final Predicate<ItemStack> stackMatcher;
@@ -50,8 +52,8 @@ public abstract class DeathSaveTrait extends AbstractTrait implements IArmorTrai
 		this.stackMatcher = stackMatcher;
 		this.unlocSaveMessage = unlocSaveMessage;
 		MinecraftForge.EVENT_BUS.register(this);
-		Toggle.toggleable.add(identifier);
-		Portal.portalable.add(identifier);
+		Toggle.addToggleable(identifier);
+		Portal.addPortalable(identifier);
 	}
 	
 	@Override
@@ -69,7 +71,11 @@ public abstract class DeathSaveTrait extends AbstractTrait implements IArmorTrai
 		}
 		
 		//System.out.println("Hmm… "+hasDeathSaveArmor);
-		if (Loader.isModLoaded("conarm") && hasDeathSaveArmor((EntityPlayer)event.getEntity()) && event.getEntity().hasCapability(PORTAL_ARMOR, null)) {
+		if (Loader.isModLoaded("conarm")
+				&& hasDeathSaveArmor((EntityPlayer)event.getEntity())
+				&& event.getEntity().hasCapability(PORTAL_ARMOR, null)
+				&& event.getEntity().hasCapability(TOGGLE_ARMOR, null)
+				&& !event.getEntity().getCapability(TOGGLE_ARMOR, null).getDisabled().contains(identifier)) {
 			checkItems(event, event.getEntity().getCapability(PORTAL_ARMOR, null).location());
 		} else {
 			Arrays.stream(EnumHand.values())

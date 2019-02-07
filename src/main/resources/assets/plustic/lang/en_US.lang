@@ -235,6 +235,10 @@ modifier.camdaibay_armor.name=Cam Dai Bay
 modifier.camdaibay_armor.desc=§oNo, it's not some bay in Vietnam!§r\nIf the player is attacked and is blocking, inflicts the player's negative status effects on the attacker.
 modifier.dunanstransport_armor.name=Dunans Transport
 modifier.dunanstransport_armor.desc=§oThe FedEx of one square foot of land§r\nBonus armor protection and toughness for riding players.
+modifier.invariant_armor.name=Invariant
+modifier.invariant_armor.desc=§oThe more things change, the more they stay the same.§r\nChance to stop terrain (not entity) damage from nearby explosions.
+modifier.jetpackpancakehippos.name=Jetpack Pancake Hippos
+modifier.jetpackpancakehippos.desc=§oTOUCHDOWN!§r\nGrants the user the ability to fly using energy. (Same stats as the jetpack used.)
 
 # MISCELLANEOUS
 
@@ -314,3 +318,5 @@ entity.SupremeLeader.name=Supreme Leader
 # GUI
 
 gui.header.toggle=Toggle Modifiers
+gui.toggle.armor=%s (Armor)
+gui.toggle.tool=%s (Tool)

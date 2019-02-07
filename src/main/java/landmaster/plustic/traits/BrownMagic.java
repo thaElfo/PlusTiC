@@ -14,7 +14,7 @@ public class BrownMagic extends AbstractTrait {
 	
 	public BrownMagic() {
 		super("brownmagic", 0x3A1B00);
-		Portal.portalable.add(identifier);
+		Portal.addPortalable(identifier);
 	}
 	
 	@Override

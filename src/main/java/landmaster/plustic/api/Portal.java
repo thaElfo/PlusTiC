@@ -14,6 +14,7 @@ import net.minecraftforge.common.*;
 import net.minecraftforge.common.capabilities.*;
 import net.minecraftforge.event.*;
 import net.minecraftforge.event.entity.player.*;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.eventhandler.*;
 import net.minecraftforge.fml.common.gameevent.*;
 import net.minecraftforge.fml.relauncher.*;
@@ -78,26 +79,29 @@ public class Portal {
 
 		@Override
 		public NBTTagCompound serializeNBT() {
-			return (NBTTagCompound)PORTAL_ARMOR.getStorage().writeNBT(PORTAL_ARMOR, cap, null);
+			return (NBTTagCompound)PORTAL_ARMOR.writeNBT(cap, null);
 		}
 
 		@Override
 		public void deserializeNBT(NBTTagCompound nbt) {
-			PORTAL_ARMOR.getStorage().readNBT(PORTAL_ARMOR, cap, null, nbt);
+			PORTAL_ARMOR.readNBT(cap, null, nbt);
 		}
 		
 	}
 	
 	@SubscribeEvent
 	public static void addPortalArmorCapability(AttachCapabilitiesEvent<Entity> event) {
-		if (event.getObject() instanceof EntityPlayer) {
+		if (Loader.isModLoaded("conarm") && event.getObject() instanceof EntityPlayer) {
 			event.addCapability(PORTALARMOR_CAPLOCATION, new PortalArmorProvider());
 		}
 	}
 	
 	public static final String PORTAL_NBT = "nickoftime";
 	
-	public static final Set<String> portalable = new HashSet<>();
+	private static final Set<String> portalable = new HashSet<>();
+	public static void addPortalable(String identifier) {
+		portalable.add(identifier);
+	}
 	
 	public static boolean canUse(NBTTagCompound nbt) {
 		for (String identifier: portalable) {

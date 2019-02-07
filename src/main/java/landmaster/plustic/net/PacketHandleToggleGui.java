@@ -1,16 +1,23 @@
 package landmaster.plustic.net;
 
+import java.util.*;
+
 import io.netty.buffer.*;
 import landmaster.plustic.api.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.nbt.*;
 import net.minecraft.util.*;
 import net.minecraft.world.*;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.fml.common.network.*;
 import net.minecraftforge.fml.common.network.simpleimpl.*;
 import slimeknights.tconstruct.library.utils.*;
 
 public class PacketHandleToggleGui implements IMessage {
+	@CapabilityInject(Toggle.IToggleArmor.class)
+	private static Capability<Toggle.IToggleArmor> TOGGLE_ARMOR = null;
+	
 	private String identifier;
 	
 	public PacketHandleToggleGui() {}
@@ -22,13 +29,27 @@ public class PacketHandleToggleGui implements IMessage {
 		IThreadListener mainThread = (WorldServer)ctx.getServerHandler().player.getEntityWorld();
 		mainThread.addScheduledTask(() -> {
 			EntityPlayerMP ep = ctx.getServerHandler().player;
-			if (ep.getEntityWorld().isRemote)
+			if (ep.getEntityWorld().isRemote) {
 				return;
-			NBTTagCompound nbt = TagUtil.getTagSafe(ep.getHeldItemMainhand());
-			boolean newState = !Toggle.getToggleState(nbt, message.identifier);
-			Toggle.setToggleState(nbt, message.identifier, newState);
-			ep.getHeldItemMainhand().setTagCompound(nbt);
-			ep.inventory.markDirty();
+			}
+			boolean newState = false;
+			if (message.identifier.startsWith(Toggle.ARMOR_FLAG) && ep.hasCapability(TOGGLE_ARMOR, null)) {
+				String rawIdentifier = Toggle.rawIdentifier(message.identifier);
+				Toggle.IToggleArmor cap = ep.getCapability(TOGGLE_ARMOR, null);
+				Set<String> disabled = cap.getDisabled();
+				newState = disabled.contains(rawIdentifier);
+				if (newState) {
+					disabled.remove(rawIdentifier);
+				} else {
+					disabled.add(rawIdentifier);
+				}
+			} else {
+				NBTTagCompound nbt = TagUtil.getTagSafe(ep.getHeldItemMainhand());
+				newState = !Toggle.getToggleState(nbt, message.identifier);
+				Toggle.setToggleState(nbt, message.identifier, newState);
+				ep.getHeldItemMainhand().setTagCompound(nbt);
+				ep.inventory.markDirty();
+			}
 			PacketHandler.INSTANCE.sendTo(new PacketUpdateToggleGui(message.identifier, newState), ep);
 		});
 		return null;

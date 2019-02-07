@@ -15,7 +15,7 @@ public class Trash extends AbstractTrait {
 	
 	public Trash() {
 		super("trash", 0x005500);
-		Toggle.toggleable.add(identifier);
+		Toggle.addToggleable(identifier);
 	}
 	
 	@Override

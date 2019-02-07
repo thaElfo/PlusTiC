@@ -45,13 +45,13 @@ public class Config extends Configuration {
 	public static boolean thaumcraft;
 	public static boolean constructsArmory;
 	
+	public static boolean jetpackConarmModifier;
+	
 	// alas…
 	public static boolean forceOutNaturalPledgeMaterials;
 	
 	public static boolean pyrotheumSmelt;
 	public static boolean tfMelt;
-	
-	public static boolean alloyDarkSteel;
 	
 	public static boolean katana;
 	public static boolean laserGun;
@@ -152,6 +152,8 @@ public class Config extends Configuration {
 		twilightForest = getBoolean("Enable Twilight Forest support", "modules", true, "Integrate with Twilight Forest");
 		thaumcraft = getBoolean("Enable Thaumcraft support", "modules", true, "Integrate with Thaumcraft");
 		constructsArmory = getBoolean("Enable Constructs Armory support", "modules", true, "Integrate with Constructs Armory");
+		
+		jetpackConarmModifier = getBoolean("Add Simply Jetpacks as ConArm modifiers", "modifiers", true, "Add Simply Jetpacks as ConArm modifiers");
 		
 		// TOOLS
 		katana = getBoolean("Enable Katana", "tools", true, "Enable Katana");

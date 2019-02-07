@@ -34,7 +34,7 @@ public class Global extends AbstractTrait {
 	public Global() {
 		super("global", 0xFFE0F1);
 		MinecraftForge.EVENT_BUS.register(this);
-		Toggle.toggleable.add(identifier);
+		Toggle.addToggleable(identifier);
 	}
 	
 	@SubscribeEvent(priority = EventPriority.LOWEST)

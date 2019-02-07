@@ -17,7 +17,7 @@ public class DPRK extends AbstractTrait {
 	public DPRK() {
 		super("dprk", 0xE30000);
 		MinecraftForge.EVENT_BUS.register(this);
-		Toggle.toggleable.add(identifier);
+		Toggle.addToggleable(identifier);
 	}
 	
 	@Override

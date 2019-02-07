@@ -30,7 +30,7 @@ public class Ignoble extends AbstractTrait {
 	public Ignoble() {
 		super("ignoble", 0x270133);
 		MinecraftForge.EVENT_BUS.register(this);
-		Toggle.toggleable.add(identifier);
+		Toggle.addToggleable(identifier);
 	}
 	
 	@SideOnly(Side.CLIENT)

@@ -9,6 +9,7 @@ import org.apache.commons.lang3.*;
 import org.apache.commons.lang3.StringUtils;
 
 import com.google.common.base.*;
+import com.google.common.collect.Lists;
 
 import landmaster.plustic.*;
 import landmaster.plustic.api.*;
@@ -20,6 +21,7 @@ import net.minecraft.block.state.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.play.server.*;
 import net.minecraft.potion.*;
 import net.minecraft.util.*;
@@ -33,7 +35,9 @@ import net.minecraftforge.oredict.*;
 import slimeknights.tconstruct.smeltery.block.*;
 import slimeknights.tconstruct.library.*;
 import slimeknights.tconstruct.library.materials.*;
+import slimeknights.tconstruct.library.modifiers.*;
 import slimeknights.tconstruct.library.modifiers.Modifier;
+import slimeknights.tconstruct.library.utils.TagUtil;
 
 public class Utils {
 	private static final Map<String, Material> tinkerMaterials;
@@ -383,5 +387,17 @@ public class Utils {
 		PlusTiC.proxy.registerItemRenderer(bitem, 0, name + "block");
 		
 		return img;
+	}
+	
+	public static List<IModifier> getModifiers(ItemStack stack) {
+		List<IModifier> modifiers = Lists.newLinkedList();
+		NBTTagList modifiersTagList = TagUtil.getBaseModifiersTagList(stack);
+		for(int i = 0; i < modifiersTagList.tagCount(); i++) {
+			IModifier modifier = TinkerRegistry.getModifier(modifiersTagList.getStringTagAt(i));
+			if(modifier != null) {
+				modifiers.add(modifier);
+			}
+		}
+		return modifiers;
 	}
 }

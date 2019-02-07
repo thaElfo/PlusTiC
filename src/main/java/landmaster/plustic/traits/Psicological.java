@@ -6,7 +6,6 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.world.*;
-import slimeknights.tconstruct.library.modifiers.*;
 import slimeknights.tconstruct.library.traits.*;
 import slimeknights.tconstruct.library.utils.*;
 
@@ -17,12 +16,7 @@ public class Psicological extends AbstractTrait {
 	
 	public Psicological() {
 		super("psicological", 0x6D9EFF);
-		Toggle.toggleable.add(identifier);
-	}
-	
-	@Override
-	public boolean canApplyTogether(IToolMod otherModifier) {
-		return super.canApplyTogether(otherModifier) /*&& !otherModifier.getIdentifier().equals(Mana.mana.getIdentifier())*/;
+		Toggle.addToggleable(identifier);
 	}
 	
 	@Override

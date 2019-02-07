@@ -18,7 +18,7 @@ public class DivineShield extends AbstractTrait {
 	public DivineShield() {
 		super("divineshield", 0x00FFFF);
 		MinecraftForge.EVENT_BUS.register(this);
-		Toggle.toggleable.add(identifier);
+		Toggle.addToggleable(identifier);
 	}
 	
 	@Override

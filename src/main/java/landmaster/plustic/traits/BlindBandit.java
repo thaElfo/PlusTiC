@@ -17,7 +17,7 @@ public class BlindBandit extends AbstractTrait {
 	public BlindBandit() {
 		super("blindbandit", 0xFF00FF);
 		MinecraftForge.EVENT_BUS.register(this);
-		Toggle.toggleable.add(identifier);
+		Toggle.addToggleable(identifier);
 	}
 	
 	@Override

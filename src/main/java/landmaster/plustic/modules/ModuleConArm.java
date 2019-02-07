@@ -3,8 +3,10 @@ package landmaster.plustic.modules;
 import java.util.*;
 
 import c4.conarm.lib.materials.*;
+import c4.conarm.lib.utils.*;
 import landmaster.plustic.*;
 import landmaster.plustic.config.*;
+import landmaster.plustic.modifiers.armor.*;
 import landmaster.plustic.traits.*;
 import landmaster.plustic.traits.armor.*;
 import net.minecraftforge.fml.common.Loader;
@@ -38,6 +40,27 @@ public class ModuleConArm implements IModule {
 						new CoreMaterialStats(13, 16.5f),
 						new PlatesMaterialStats(1, -0.1f, 1),
 						new TrimMaterialStats(4.25f));
+			});
+			Optional.ofNullable(PlusTiC.materials.get("invar")).ifPresent(mat -> {
+				ArmorMaterials.addArmorTrait(mat, Invariant.invariant);
+				ArmorMaterials.addArmorTrait(mat, magnetic);
+				TinkerRegistry.addMaterialStats(mat,
+						new CoreMaterialStats(16.7f, 18f),
+						new PlatesMaterialStats(1.2f, 0, 5),
+						new TrimMaterialStats(7f));
+			});
+			
+			if (Config.jetpackConarmModifier && Loader.isModLoaded("simplyjetpacks")) {
+				SJ.init();
+			}
+		}
+	}
+	
+	private static class SJ {
+		public static void init() {
+			JetpackPancakeHippos.jetpackpancakehippos.values().forEach(mod -> {
+				//System.out.println(mod.jetpack.getStackJetpack());
+				RecipeMatchHolder.addItem(mod, mod.jetpack.getStackJetpack(), 1, 1);
 			});
 		}
 	}

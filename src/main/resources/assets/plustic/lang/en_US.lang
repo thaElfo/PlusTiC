@@ -238,7 +238,7 @@ modifier.dunanstransport_armor.desc=§oThe FedEx of one square foot of land§r\n
 modifier.invariant_armor.name=Invariant
 modifier.invariant_armor.desc=§oThe more things change, the more they stay the same.§r\nStops terrain (not entity) damage from nearby explosions.
 modifier.jetpackpancakehippos.name=Jetpack Pancake Hippos
-modifier.jetpackpancakehippos.desc=§oTOUCHDOWN!§r\nGrants the user the ability to fly using energy. (Same stats as the jetpack used.)
+modifier.jetpackpancakehippos.desc=§oTOUCHDOWN!§r\nGrants the user the ability to fly using energy. (Same stats as the jetpack used.) Also grants a bonus to durability.
 
 # MISCELLANEOUS
 

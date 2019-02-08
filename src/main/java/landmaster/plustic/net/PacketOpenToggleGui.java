@@ -5,6 +5,7 @@ import java.util.*;
 import io.netty.buffer.*;
 import landmaster.plustic.api.*;
 import net.minecraft.client.*;
+import net.minecraftforge.fml.common.*;
 import net.minecraftforge.fml.common.network.*;
 import net.minecraftforge.fml.common.network.simpleimpl.*;
 
@@ -17,10 +18,23 @@ public class PacketOpenToggleGui implements IMessage {
 	}
 	
 	public static IMessage onMessage(PacketOpenToggleGui message, MessageContext ctx) {
-		Minecraft.getMinecraft().addScheduledTask(() -> {
-			Minecraft.getMinecraft().displayGuiScreen(new Toggle.Gui(Minecraft.getMinecraft().player, message.abilities));
-		});
+		proxy.handle(message, ctx);
 		return null;
+	}
+	
+	@SidedProxy(clientSide = "landmaster.plustic.net.PacketOpenToggleGui$ProxyClient", serverSide = "landmaster.plustic.net.PacketOpenToggleGui$Proxy")
+	public static Proxy proxy;
+	
+	public static class Proxy {
+		public void handle(PacketOpenToggleGui message, MessageContext ctx) {}
+	}
+	public static class ProxyClient extends Proxy {
+		@Override
+		public void handle(PacketOpenToggleGui message, MessageContext ctx) {
+			Minecraft.getMinecraft().addScheduledTask(() -> {
+				Minecraft.getMinecraft().displayGuiScreen(new Toggle.Gui(Minecraft.getMinecraft().player, message.abilities));
+			});
+		}
 	}
 	
 	@Override

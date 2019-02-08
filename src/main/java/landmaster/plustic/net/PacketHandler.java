@@ -23,5 +23,6 @@ public class PacketHandler {
 		INSTANCE.registerMessage(PacketSJKey::onMessage, PacketSJKey.class, 11, Side.SERVER);
 		INSTANCE.registerMessage(PacketRequestToggleGui::onMessage, PacketRequestToggleGui.class, 12, Side.SERVER);
 		INSTANCE.registerMessage(PacketOpenToggleGui::onMessage, PacketOpenToggleGui.class, 13, Side.CLIENT);
+		INSTANCE.registerMessage(PacketSJSyncParticles::onMessage, PacketSJSyncParticles.class, 14, Side.CLIENT);
 	}
 }

@@ -2,6 +2,8 @@ package landmaster.plustic.api;
 
 import java.lang.ref.*;
 
+import it.unimi.dsi.fastutil.ints.*;
+import landmaster.plustic.modifiers.armor.*;
 import landmaster.plustic.traits.*;
 import net.minecraft.client.audio.*;
 import net.minecraft.entity.*;
@@ -12,6 +14,7 @@ import net.minecraftforge.fml.common.*;
 import net.minecraftforge.fml.common.eventhandler.*;
 import net.minecraftforge.fml.relauncher.*;
 import slimeknights.tconstruct.library.utils.*;
+import tonius.simplyjetpacks.sound.*;
 
 @Mod.EventBusSubscriber(modid = ModInfo.MODID)
 public class Sounds {
@@ -50,6 +53,46 @@ public class Sounds {
 			this.zPosF = (float)this.player.get().posZ;
 			
 			//System.out.println("TEEHEE! "+this.player.get().getPositionVector());
+		}
+	}
+	
+	@SideOnly(Side.CLIENT)
+	public static class PTSoundJetpack extends MovingSound {
+		private static final Int2ObjectMap<PTSoundJetpack> playingFor = Int2ObjectMaps.synchronize(new Int2ObjectOpenHashMap<>());
+		
+		private final EntityLivingBase user;
+		private int fadeOut = -1;
+		
+		public PTSoundJetpack(EntityLivingBase target) {
+			super(SJSoundRegistry.JETPACK.getSoundEvent(), SoundCategory.PLAYERS);
+			this.repeat = true;
+			this.user = target;
+			playingFor.put(target.getEntityId(), this);
+		}
+		
+		public static boolean isPlayingFor(int entityId) {
+			return playingFor.containsKey(entityId) && playingFor.get(entityId) != null && !playingFor.get(entityId).donePlaying;
+		}
+		
+		public static void clearPlayingFor() {
+			playingFor.clear();
+		}
+
+		@Override
+		public void update() {
+			this.xPosF = (float) this.user.posX;
+			this.yPosF = (float) this.user.posY;
+			this.zPosF = (float) this.user.posZ;
+
+			if (this.fadeOut < 0 && !JetpackPancakeHippos.getJetpackStates().containsKey(this.user.getEntityId())) {
+				this.fadeOut = 0;
+				playingFor.remove(this.user.getEntityId());
+			} else if (this.fadeOut >= 5) {
+				this.donePlaying = true;
+			} else if (this.fadeOut >= 0) {
+				this.volume = 1.0F - this.fadeOut / 5F;
+				this.fadeOut++;
+			}
 		}
 	}
 }

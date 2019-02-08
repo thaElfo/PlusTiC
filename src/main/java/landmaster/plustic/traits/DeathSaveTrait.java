@@ -53,6 +53,7 @@ public abstract class DeathSaveTrait extends AbstractTrait implements IArmorTrai
 		this.unlocSaveMessage = unlocSaveMessage;
 		MinecraftForge.EVENT_BUS.register(this);
 		Toggle.addToggleable(identifier);
+		Toggle.addToggleable(Toggle.ARMOR_FLAG+identifier);
 		Portal.addPortalable(identifier);
 	}
 	

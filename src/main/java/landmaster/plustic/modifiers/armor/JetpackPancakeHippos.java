@@ -8,26 +8,40 @@ import org.lwjgl.opengl.GL11;
 
 import com.google.common.base.Throwables;
 
+import c4.conarm.common.armor.utils.*;
+import c4.conarm.lib.armor.*;
 import c4.conarm.lib.modifiers.*;
+import it.unimi.dsi.fastutil.ints.*;
+import landmaster.plustic.api.Sounds;
+import landmaster.plustic.config.*;
 import landmaster.plustic.net.*;
 import landmaster.plustic.util.*;
 import net.minecraft.client.*;
 import net.minecraft.client.gui.*;
+import net.minecraft.client.model.*;
+import net.minecraft.client.renderer.entity.*;
+import net.minecraft.client.renderer.entity.layers.*;
+import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.settings.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
+import net.minecraft.init.MobEffects;
 import net.minecraft.inventory.*;
 import net.minecraft.item.*;
+import net.minecraft.nbt.*;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.*;
 import net.minecraft.util.text.*;
 import net.minecraft.world.*;
 import net.minecraftforge.client.event.*;
 import net.minecraftforge.common.*;
 import net.minecraftforge.energy.*;
+import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.fml.client.*;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.eventhandler.*;
 import net.minecraftforge.fml.common.gameevent.*;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.relauncher.*;
 import net.minecraftforge.items.*;
 import slimeknights.tconstruct.library.*;
@@ -35,9 +49,11 @@ import slimeknights.tconstruct.library.modifiers.*;
 import slimeknights.tconstruct.library.utils.*;
 import tonius.simplyjetpacks.*;
 import tonius.simplyjetpacks.client.handler.*;
+import tonius.simplyjetpacks.client.model.PackModelType;
 import tonius.simplyjetpacks.client.util.*;
 import tonius.simplyjetpacks.handler.*;
 import tonius.simplyjetpacks.item.*;
+import tonius.simplyjetpacks.setup.ParticleType;
 import tonius.simplyjetpacks.util.*;
 
 /**
@@ -144,7 +160,6 @@ public class JetpackPancakeHippos extends ArmorModifierTrait {
 			if ((Minecraft.getMinecraft().currentScreen == null || tonius.simplyjetpacks.config.Config.showHUDWhileChatting && Minecraft.getMinecraft().currentScreen instanceof GuiChat) && !Minecraft.getMinecraft().gameSettings.hideGUI && !Minecraft.getMinecraft().gameSettings.showDebugInfo) {
 				ItemStack chestplate = Minecraft.getMinecraft().player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
 				Utils.getModifiers(chestplate).stream()
-				//.peek(modifier -> System.out.println(modifier.getIdentifier()))
 				.filter(trait -> trait instanceof JetpackPancakeHippos)
 				.findAny().ifPresent(trait -> {
 					List<String> info = new ArrayList<String>();
@@ -169,15 +184,116 @@ public class JetpackPancakeHippos extends ArmorModifierTrait {
 		}
 	}
 	
-	/*
+	private static final Set<RenderLivingBase<?>> layerAdded = Collections.newSetFromMap(new WeakHashMap<>());
+	
+	@SideOnly(Side.CLIENT)
+	@SubscribeEvent
+	public static void renderJetpack(RenderLivingEvent.Pre<?> event) {
+		if (!layerAdded.contains(event.getRenderer())) {
+			layerAdded.add(event.getRenderer());
+			event.getRenderer().addLayer(new LayerBipedArmor(event.getRenderer()) {
+				@Override
+				protected ModelBiped getArmorModelHook(EntityLivingBase entity, ItemStack itemStack, EntityEquipmentSlot slot, ModelBiped model) {
+					if (slot == EntityEquipmentSlot.CHEST) {
+						return Utils.getModifiers(event.getEntity().getItemStackFromSlot(EntityEquipmentSlot.CHEST)).stream()
+						.filter(trait -> trait instanceof JetpackPancakeHippos)
+						.findAny()
+						.map(modifier -> ((JetpackPancakeHippos)modifier).jetpack)
+						.filter(jetpack -> tonius.simplyjetpacks.config.Config.enableArmor3DModels)
+						.map(jetpack -> RenderUtils.getArmorModel(jetpack, entity))
+						.orElse(super.getArmorModelHook(entity, itemStack, slot, model));
+					}
+					return super.getArmorModelHook(entity, itemStack, slot, model);
+				}
+				
+				@Override
+				public ResourceLocation getArmorResource(Entity entity, ItemStack stack, EntityEquipmentSlot slot, String type) {
+					if (slot == EntityEquipmentSlot.CHEST) {
+						return Utils.getModifiers(event.getEntity().getItemStackFromSlot(EntityEquipmentSlot.CHEST)).stream()
+								.filter(trait -> trait instanceof JetpackPancakeHippos)
+								.findAny()
+								.map(modifier -> ((JetpackPancakeHippos)modifier).jetpack)
+								.map(jetpack -> new ResourceLocation(SimplyJetpacks.RESOURCE_PREFIX + "textures/armor/" + jetpack.getBaseName() + (tonius.simplyjetpacks.config.Config.enableArmor3DModels || jetpack.armorModel == PackModelType.FLAT ? "" : ".flat") + ".png"))
+								.orElse(TextureManager.RESOURCE_LOCATION_EMPTY);
+					}
+					return TextureManager.RESOURCE_LOCATION_EMPTY;
+				}
+			});
+		}
+	}
+	
+	private static ParticleType lastJetpackState0 = null;
+	private static boolean wearingJetpack0 = false;
+	private static boolean sprintKeyCheck0 = false;
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public static void onClientTick(TickEvent.ClientTickEvent evt) {
-		if (evt.phase == TickEvent.Phase.START) {
-			
+		if (Minecraft.getMinecraft().player == null || Minecraft.getMinecraft().world == null) {
+			return;
 		}
-	}*/
-	
+		if (evt.phase == TickEvent.Phase.START) {
+			ItemStack stack = Minecraft.getMinecraft().player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
+			Optional<Jetpack> jetpackOpt = Utils.getModifiers(stack).stream()
+			.filter(trait -> trait instanceof JetpackPancakeHippos)
+			.findAny()
+			.map(modifier -> ((JetpackPancakeHippos)modifier).jetpack);
+			ParticleType particleType = jetpackOpt.map(jetpack -> getParticleType(Minecraft.getMinecraft().player, stack, jetpack)).orElse(null);
+			wearingJetpack0 = jetpackOpt.isPresent();
+			if (lastJetpackState0 != particleType) {
+				lastJetpackState0 = particleType;
+				processJetpackUpdate(Minecraft.getMinecraft().player.getEntityId(), particleType);
+			}
+		} else {
+			if (!Minecraft.getMinecraft().isGamePaused()) {
+				IntIterator it = lastJetpackState.keySet().iterator();
+				while (it.hasNext()) {
+					int cur = it.nextInt();
+					Entity entity = Minecraft.getMinecraft().world.getEntityByID(cur);
+					if (entity == null || !(entity instanceof EntityLivingBase) || entity.dimension != Minecraft.getMinecraft().player.dimension) {
+						it.remove();
+					} else {
+						ParticleType particle = lastJetpackState.get(cur);
+						if (particle != null) {
+							if (entity.isInWater() && particle != ParticleType.NONE) {
+								particle = ParticleType.BUBBLE;
+							}
+							SimplyJetpacks.proxy.showJetpackParticles(Minecraft.getMinecraft().world, (EntityLivingBase)entity, particle);
+							if (tonius.simplyjetpacks.config.Config.jetpackSounds && !Sounds.PTSoundJetpack.isPlayingFor(entity.getEntityId())) {
+								Minecraft.getMinecraft().getSoundHandler().playSound(new Sounds.PTSoundJetpack((EntityLivingBase)entity));
+							}
+						} else {
+							it.remove();
+						}
+					}
+				}
+			}
+			
+			if (sprintKeyCheck0 && Minecraft.getMinecraft().player.movementInput.moveForward < 1.0F) {
+				sprintKeyCheck0 = false;
+			}
+			
+			if (!tonius.simplyjetpacks.config.Config.doubleTapSprintInAir
+					|| !wearingJetpack0
+					|| Minecraft.getMinecraft().player.onGround
+					|| Minecraft.getMinecraft().player.isSprinting()
+					|| Minecraft.getMinecraft().player.isHandActive()
+					|| Minecraft.getMinecraft().player.isPotionActive(MobEffects.POISON)) {
+				return;
+			}
+			
+			if (!sprintKeyCheck0
+					&& Minecraft.getMinecraft().player.movementInput.moveForward >= 1.0F
+					&& !Minecraft.getMinecraft().player.collidedHorizontally
+					&& (Minecraft.getMinecraft().player.getFoodStats().getFoodLevel() > 6.0F || Minecraft.getMinecraft().player.capabilities.allowFlying)) {
+				if (Minecraft.getMinecraft().player.sprintToggleTimer <= 0 && !Minecraft.getMinecraft().gameSettings.keyBindSprint.isKeyDown()) {
+					Minecraft.getMinecraft().player.sprintToggleTimer = 7;
+					sprintKeyCheck0 = true;
+				} else {
+					Minecraft.getMinecraft().player.setSprinting(true);
+				}
+			}
+		}
+	}
 	public void addHUDInfo(List<String> list, ItemStack stack, boolean showState) {
 		if (showState) {
 			list.add(this.getHUDStatesInfo(stack));
@@ -225,10 +341,66 @@ public class JetpackPancakeHippos extends ArmorModifierTrait {
 		return res;
 	}*/
 	
+	private static final Int2ObjectMap<ParticleType> lastJetpackState = Int2ObjectMaps.synchronize(new Int2ObjectOpenHashMap<>()), jetpackState = new Int2ObjectOpenHashMap<>();
+	
+	public static void processJetpackUpdate(int entityId, ParticleType particleType) {
+		if (particleType != null) {
+			jetpackState.put(entityId, particleType);
+		} else {
+			jetpackState.remove(entityId);
+		}
+	}
+	public static Int2ObjectMap<ParticleType> getJetpackStates() { return jetpackState; }
+	
 	@Override
 	public void onArmorTick(ItemStack armor, World world, EntityPlayer player) {
 		this.flyUser(player, armor, false);
 	}
+	
+	@SubscribeEvent
+	public static void onLivingTick(LivingEvent.LivingUpdateEvent evt) {
+		if (!evt.getEntityLiving().world.isRemote) {
+			ParticleType jetpackState = null;
+			ItemStack armor = evt.getEntityLiving().getItemStackFromSlot(EntityEquipmentSlot.CHEST);
+			Jetpack jetpack = Utils.getModifiers(armor).stream()
+			.filter(trait -> trait instanceof JetpackPancakeHippos)
+			.findAny()
+			.map(trait -> ((JetpackPancakeHippos)trait).jetpack)
+			.orElse(null);
+			if (jetpack != null) {
+				jetpackState = getParticleType(evt.getEntityLiving(), armor, jetpack);
+			}
+			if (jetpackState != lastJetpackState.get(evt.getEntityLiving().getEntityId())) {
+				if (jetpackState == null) {
+					lastJetpackState.remove(evt.getEntityLiving().getEntityId());
+				} else {
+					lastJetpackState.put(evt.getEntityLiving().getEntityId(), jetpackState);
+				}
+				PacketHandler.INSTANCE.sendToAllAround(new PacketSJSyncParticles(evt.getEntityLiving().getEntityId(), jetpackState != null ? jetpackState.ordinal() : -1), new NetworkRegistry.TargetPoint(evt.getEntityLiving().dimension, evt.getEntityLiving().posX, evt.getEntityLiving().posY, evt.getEntityLiving().posZ, 256));
+			} else if (jetpack != null && evt.getEntityLiving().world.getTotalWorldTime() % 160L == 0) {
+				PacketHandler.INSTANCE.sendToAllAround(new PacketSJSyncParticles(evt.getEntityLiving().getEntityId(), jetpackState != null ? jetpackState.ordinal() : -1), new NetworkRegistry.TargetPoint(evt.getEntityLiving().dimension, evt.getEntityLiving().posX, evt.getEntityLiving().posY, evt.getEntityLiving().posZ, 256));
+			}
+
+			if (evt.getEntityLiving().world.getTotalWorldTime() % 200L == 0) {
+				IntIterator itr = lastJetpackState.keySet().iterator();
+				while (itr.hasNext()) {
+					int entityId = itr.nextInt();
+					if (evt.getEntityLiving().world.getEntityByID(entityId) == null) {
+						itr.remove();
+					}
+				}
+			}
+		}
+	}
+	
+	public static ParticleType getParticleType(EntityLivingBase user, ItemStack stack, Jetpack jetpack) {
+		boolean flyKeyDown = SyncHandler.isFlyKeyDown(user);
+		if (!JetpackSettings.ENGINE.isOff(stack) && searchStorage(user, 1).isPresent() && (flyKeyDown || !JetpackSettings.HOVER.isOff(stack) && !user.onGround && user.motionY < 0)) {
+			return jetpack.defaultParticleType;
+		}
+		return ParticleType.NONE;
+	}
+
 	
 	protected int getFuelUsage(ItemStack stack) {
 		if (jetpack.getBaseName().contains("enderium")) {
@@ -237,17 +409,24 @@ public class JetpackPancakeHippos extends ArmorModifierTrait {
 		return jetpack.getFuelUsage();
 	}
 	
+	protected static Optional<IEnergyStorage> searchStorage(EntityLivingBase elb, int fuelUsage) {
+		Optional<IEnergyStorage> storage = Optional.empty();
+		if (elb.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)) {
+			IItemHandler cap = elb.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+			for (int i=0; i<cap.getSlots(); ++i) {
+				ItemStack energyStack = cap.getStackInSlot(i);
+				storage = Optional.ofNullable(energyStack.getCapability(CapabilityEnergy.ENERGY, null))
+						.filter(raw -> raw.extractEnergy(fuelUsage, true) >= fuelUsage);
+				if (storage.isPresent()) break;
+			}
+		}
+		return storage;
+	}
+	
 	protected void flyUser(EntityPlayer user, ItemStack stack, boolean force) {
 		int fuelUsage = (int) (user.isSprinting() ? Math.round(this.getFuelUsage(stack) * jetpack.sprintFuelModifier) : this.getFuelUsage(stack));
 		
-		Optional<IEnergyStorage> storage = Optional.empty();
-		IItemHandler cap = user.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-		for (int i=0; i<cap.getSlots(); ++i) {
-			ItemStack energyStack = cap.getStackInSlot(i);
-			storage = Optional.ofNullable(energyStack.getCapability(CapabilityEnergy.ENERGY, null))
-					.filter(raw -> raw.extractEnergy(fuelUsage, true) >= fuelUsage);
-			if (storage.isPresent()) break;
-		}
+		Optional<IEnergyStorage> storage = searchStorage(user, fuelUsage);
 		
 		if (!JetpackSettings.ENGINE.isOff(stack)) {
 			boolean hoverMode = !JetpackSettings.HOVER.isOff(stack);
@@ -343,5 +522,13 @@ public class JetpackPancakeHippos extends ArmorModifierTrait {
 	@Override
 	public String getLocalizedDesc() {
 		return Util.translate(LOC_Desc, "jetpackpancakehippos");
+	}
+	
+	@Override
+	public void applyEffect(NBTTagCompound rootCompound, NBTTagCompound modifierTag) {
+		super.applyEffect(rootCompound, modifierTag);
+		ArmorNBT data = ArmorTagUtil.getArmorStats(rootCompound);
+		data.durability += jetpack.fuelCapacity * Config.jetpackDurabilityBonusScale;
+		TagUtil.setToolTag(rootCompound, data.get());
 	}
 }

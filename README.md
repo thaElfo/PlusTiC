@@ -30,6 +30,7 @@ Starting in 5.1.2.0, PlusTiC forces out and *overrides* Natural Pledge TiC mater
 - Applied Energistics 2 by AlgorithmX2 (Llamagistics by thiakil should work as well)
 - Environmental Tech by ValkyrieofNight
 - Thaumcraft by azanor
+- Simply Jetpacks by Tomson124
 ## Using the source and building
 After cloning this repository, run the command (with working directory in the folder with the repository)
 ```

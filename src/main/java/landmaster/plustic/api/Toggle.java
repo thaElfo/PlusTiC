@@ -119,7 +119,7 @@ public class Toggle {
 	}
 	
 	public static void addToggleable(String trait) {
-		System.out.println(toggleable);
+		//System.out.println(toggleable);
 		toggleable.add(trait);
 	}
 	public static void addToggleableAlias(String trait, String alias) {
@@ -204,12 +204,12 @@ public class Toggle {
 			
 			mc.renderEngine.bindTexture(background);
 			for (int i=0; i<Math.min(OPTIONS_PER_PAGE, identifiers.size() - page*OPTIONS_PER_PAGE); ++i) {
-				drawTexturedModalRect(guiLeft+7, guiTop+18*(i+1), 0, 128, 114, 16);
+				drawTexturedModalRect(guiLeft+7, guiTop+18*(i+1), 0, 128, 152, 16);
 			}
 			
 			mc.renderEngine.bindTexture(background);
-			drawTexturedModalRect(guiLeft+150, guiTop+18, 176, 12, 12, 21);
-			drawTexturedModalRect(guiLeft+150, guiTop+100, 176+12, 12, 12, 21);
+			if (page > 0) drawTexturedModalRect(guiLeft+160, guiTop+18, 176, 12, 12, 21);
+			if (page < identifiers.size() / OPTIONS_PER_PAGE - (identifiers.size() % OPTIONS_PER_PAGE == 0 ? 1 : 0)) drawTexturedModalRect(guiLeft+160, guiTop+100, 176+12, 12, 12, 21);
 			
 			for (int i=page*OPTIONS_PER_PAGE; i<Math.min((page+1)*OPTIONS_PER_PAGE, identifiers.size()); ++i) {
 				String identifier = identifiers.get(i);
@@ -217,10 +217,10 @@ public class Toggle {
 				boolean isArmor = identifier.startsWith(ARMOR_FLAG);
 				boolean enabled = enableds.get(i);
 				String locName = I18n.format(isArmor ? "gui.toggle.armor" : "gui.toggle.tool", I18n.format("modifier."+rawIdentifier+".name"));
-				fontRenderer.drawString(locName, guiLeft+10, guiTop+18*(i+1)+3, 0xFFFFFF);
+				fontRenderer.drawString(locName, guiLeft+10, guiTop+18*(i%OPTIONS_PER_PAGE+1)+3, 0xFFFFFF);
 				mc.renderEngine.bindTexture(background);
-				drawTexturedModalRect(guiLeft+96, guiTop+18*(i+1)+1,176+(enabled ? 0 : 12), 0, 12, 12);
-				if (isPointInRegion(7, 18*(i+1), 114, 16, mouseX, mouseY)) {
+				drawTexturedModalRect(guiLeft+130, guiTop+18*(i%OPTIONS_PER_PAGE+1)+1,176+(enabled ? 0 : 12), 0, 12, 12);
+				if (isPointInRegion(7, 18*(i%OPTIONS_PER_PAGE+1), 158, 16, mouseX, mouseY)) {
 					drawHoveringText(Arrays.asList(I18n.format("tooltip.plustic.toggle.info"),
 							I18n.format("tooltip.plustic.toggle.state."+enabled, locName)
 							), mouseX, mouseY);
@@ -232,15 +232,15 @@ public class Toggle {
 		public void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
 			super.mouseClicked(mouseX, mouseY, mouseButton);
 			for (int i=0; i<Math.min(OPTIONS_PER_PAGE, identifiers.size() - page*OPTIONS_PER_PAGE); ++i) {
-				if (isPointInRegion(7, 18*(i+1), 114, 16, mouseX, mouseY)) {
+				if (isPointInRegion(7, 18*(i+1), 152, 16, mouseX, mouseY)) {
 					String identifier = identifiers.get(page*OPTIONS_PER_PAGE+i);
 					PacketHandler.INSTANCE.sendToServer(new PacketHandleToggleGui(identifier));
 					return;
 				}
 			}
-			if (isPointInRegion(176, 12, 12, 21, mouseX, mouseY)) {
+			if (isPointInRegion(160, 18, 12, 21, mouseX, mouseY)) {
 				page = Math.max(page-1, 0);
-			} else if (isPointInRegion(176+12, 12, 12, 21, mouseX, mouseY)) {
+			} else if (isPointInRegion(160, 100, 12, 21, mouseX, mouseY)) {
 				page = Math.min(page+1, identifiers.size() / OPTIONS_PER_PAGE - (identifiers.size() % OPTIONS_PER_PAGE == 0 ? 1 : 0));
 			}
 		}

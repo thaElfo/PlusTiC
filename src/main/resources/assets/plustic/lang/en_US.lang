@@ -236,7 +236,7 @@ modifier.camdaibay_armor.desc=§oNo, it's not some bay in Vietnam!§r\nIf the pl
 modifier.dunanstransport_armor.name=Dunans Transport
 modifier.dunanstransport_armor.desc=§oThe FedEx of one square foot of land§r\nBonus armor protection and toughness for riding players.
 modifier.invariant_armor.name=Invariant
-modifier.invariant_armor.desc=§oThe more things change, the more they stay the same.§r\nChance to stop terrain (not entity) damage from nearby explosions.
+modifier.invariant_armor.desc=§oThe more things change, the more they stay the same.§r\nStops terrain (not entity) damage from nearby explosions.
 modifier.jetpackpancakehippos.name=Jetpack Pancake Hippos
 modifier.jetpackpancakehippos.desc=§oTOUCHDOWN!§r\nGrants the user the ability to fly using energy. (Same stats as the jetpack used.)
 

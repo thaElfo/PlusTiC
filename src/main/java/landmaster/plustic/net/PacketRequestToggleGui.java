@@ -5,9 +5,8 @@ import java.util.stream.*;
 
 import io.netty.buffer.*;
 import landmaster.plustic.api.*;
-import net.minecraft.client.Minecraft;
-import net.minecraft.util.IThreadListener;
-import net.minecraft.world.WorldServer;
+import net.minecraft.util.*;
+import net.minecraft.world.*;
 import net.minecraftforge.fml.common.network.simpleimpl.*;
 
 public class PacketRequestToggleGui implements IMessage {
@@ -15,7 +14,7 @@ public class PacketRequestToggleGui implements IMessage {
 		IThreadListener mainThread = (WorldServer)ctx.getServerHandler().player.getEntityWorld();
 		mainThread.addScheduledTask(() -> {
 			List<String> toggleableArmor = Toggle.getToggleableArmor(ctx.getServerHandler().player).collect(Collectors.toList());
-			if (Toggle.canToggle(Minecraft.getMinecraft().player.getHeldItemMainhand()) || !toggleableArmor.isEmpty()) {
+			if (Toggle.canToggle(ctx.getServerHandler().player.getHeldItemMainhand()) || !toggleableArmor.isEmpty()) {
 				PacketHandler.INSTANCE.sendTo(new PacketOpenToggleGui(toggleableArmor), ctx.getServerHandler().player);
 			}
 		});

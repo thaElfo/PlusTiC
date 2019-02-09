@@ -83,6 +83,8 @@ public class Sounds {
 			this.xPosF = (float) this.user.posX;
 			this.yPosF = (float) this.user.posY;
 			this.zPosF = (float) this.user.posZ;
+			
+			//System.out.println(this.user);
 
 			if (this.fadeOut < 0 && !JetpackPancakeHippos.getJetpackStates().containsKey(this.user.getEntityId())) {
 				this.fadeOut = 0;

@@ -41,6 +41,7 @@ import net.minecraftforge.fml.client.*;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.eventhandler.*;
 import net.minecraftforge.fml.common.gameevent.*;
+import net.minecraftforge.fml.common.network.*;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.relauncher.*;
 import net.minecraftforge.items.*;
@@ -192,13 +193,21 @@ public class JetpackPancakeHippos extends ArmorModifierTrait {
 		if (!layerAdded.contains(event.getRenderer())) {
 			layerAdded.add(event.getRenderer());
 			event.getRenderer().addLayer(new LayerBipedArmor(event.getRenderer()) {
+				private Optional<Jetpack> jetpackOpt = Optional.empty();
+				
+				@Override
+				public void doRenderLayer(EntityLivingBase entitylivingbaseIn, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
+					jetpackOpt = Utils.getModifiers(event.getEntity().getItemStackFromSlot(EntityEquipmentSlot.CHEST)).stream()
+					.filter(trait -> trait instanceof JetpackPancakeHippos)
+					.findAny()
+					.map(modifier -> ((JetpackPancakeHippos)modifier).jetpack);
+					jetpackOpt.ifPresent(jetpack -> this.renderArmorLayer(entitylivingbaseIn, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch, scale, EntityEquipmentSlot.CHEST));
+				}
+				
 				@Override
 				protected ModelBiped getArmorModelHook(EntityLivingBase entity, ItemStack itemStack, EntityEquipmentSlot slot, ModelBiped model) {
 					if (slot == EntityEquipmentSlot.CHEST) {
-						return Utils.getModifiers(event.getEntity().getItemStackFromSlot(EntityEquipmentSlot.CHEST)).stream()
-						.filter(trait -> trait instanceof JetpackPancakeHippos)
-						.findAny()
-						.map(modifier -> ((JetpackPancakeHippos)modifier).jetpack)
+						return jetpackOpt
 						.filter(jetpack -> tonius.simplyjetpacks.config.Config.enableArmor3DModels)
 						.map(jetpack -> RenderUtils.getArmorModel(jetpack, entity))
 						.orElse(super.getArmorModelHook(entity, itemStack, slot, model));
@@ -209,10 +218,7 @@ public class JetpackPancakeHippos extends ArmorModifierTrait {
 				@Override
 				public ResourceLocation getArmorResource(Entity entity, ItemStack stack, EntityEquipmentSlot slot, String type) {
 					if (slot == EntityEquipmentSlot.CHEST) {
-						return Utils.getModifiers(event.getEntity().getItemStackFromSlot(EntityEquipmentSlot.CHEST)).stream()
-								.filter(trait -> trait instanceof JetpackPancakeHippos)
-								.findAny()
-								.map(modifier -> ((JetpackPancakeHippos)modifier).jetpack)
+						return jetpackOpt
 								.map(jetpack -> new ResourceLocation(SimplyJetpacks.RESOURCE_PREFIX + "textures/armor/" + jetpack.getBaseName() + (tonius.simplyjetpacks.config.Config.enableArmor3DModels || jetpack.armorModel == PackModelType.FLAT ? "" : ".flat") + ".png"))
 								.orElse(TextureManager.RESOURCE_LOCATION_EMPTY);
 					}
@@ -243,16 +249,17 @@ public class JetpackPancakeHippos extends ArmorModifierTrait {
 				lastJetpackState0 = particleType;
 				processJetpackUpdate(Minecraft.getMinecraft().player.getEntityId(), particleType);
 			}
+			//System.out.println(particleType);
 		} else {
 			if (!Minecraft.getMinecraft().isGamePaused()) {
-				IntIterator it = lastJetpackState.keySet().iterator();
+				IntIterator it = jetpackState.keySet().iterator();
 				while (it.hasNext()) {
 					int cur = it.nextInt();
 					Entity entity = Minecraft.getMinecraft().world.getEntityByID(cur);
 					if (entity == null || !(entity instanceof EntityLivingBase) || entity.dimension != Minecraft.getMinecraft().player.dimension) {
 						it.remove();
 					} else {
-						ParticleType particle = lastJetpackState.get(cur);
+						ParticleType particle = jetpackState.get(cur);
 						if (particle != null) {
 							if (entity.isInWater() && particle != ParticleType.NONE) {
 								particle = ParticleType.BUBBLE;
@@ -294,6 +301,12 @@ public class JetpackPancakeHippos extends ArmorModifierTrait {
 			}
 		}
 	}
+	
+	@SubscribeEvent
+    public static void onClientDisconnectedFromServer(FMLNetworkEvent.ClientDisconnectionFromServerEvent evt) {
+		Sounds.PTSoundJetpack.clearPlayingFor();
+	}
+	
 	public void addHUDInfo(List<String> list, ItemStack stack, boolean showState) {
 		if (showState) {
 			list.add(this.getHUDStatesInfo(stack));
@@ -398,7 +411,7 @@ public class JetpackPancakeHippos extends ArmorModifierTrait {
 		if (!JetpackSettings.ENGINE.isOff(stack) && searchStorage(user, 1).isPresent() && (flyKeyDown || !JetpackSettings.HOVER.isOff(stack) && !user.onGround && user.motionY < 0)) {
 			return jetpack.defaultParticleType;
 		}
-		return ParticleType.NONE;
+		return null;
 	}
 
 	

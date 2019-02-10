@@ -87,7 +87,7 @@ public class Utils {
 	 */
 	public static void displace(String displace) {
 		Material displaced = tinkerMaterials.remove(displace);
-		tinkerMaterials.put(displace, displaced);
+		if (displaced != null) tinkerMaterials.put(displace, displaced);
 	}
 	
 	public static boolean matchesOre(ItemStack is, String od) {

@@ -120,7 +120,7 @@ public class Config extends Configuration {
 		// MODULES
 		base = getBoolean("Enable vanilla TiC addons", "modules", true, "Add features to vanilla Tinkers Construct");
 		bop = getBoolean("Enable BoP integration", "modules", true, "Integrate with Biomes o' Plenty");
-		projectRed = getBoolean("Enable Project Red integration", "modules", true, "Integrate with Project Red-Exploration");
+		projectRed = getBoolean("Enable Project Red integration", "modules", true, "Integrate with Project Red-Core");
 		mekanism = getBoolean("Enable Mekanism integration", "modules", true, "Integrate with Mekanism");
 		botania = getBoolean("Enable Botania integration", "modules", true, "Integrate with Botania");
 		{

@@ -30,7 +30,7 @@ public class ModuleAvaritia implements IModule {
 			infinity.setFluid(infinityFluid);
 			
 			TinkerRegistry.addMaterialStats(infinity,
-					new HeadMaterialStats(7000, 8.5f, 40, 10),
+					new HeadMaterialStats(7000, 18, 40, 10),
 					new HandleMaterialStats(2.0f, 0),
 					new ExtraMaterialStats(1400),
 					new BowMaterialStats(2.0f, 2.8f, 16),

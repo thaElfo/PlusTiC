@@ -49,6 +49,13 @@ public class ModuleConArm implements IModule {
 						new PlatesMaterialStats(1.2f, 0, 5),
 						new TrimMaterialStats(7f));
 			});
+			Optional.ofNullable(PlusTiC.materials.get("iridium")).ifPresent(mat -> {
+				ArmorMaterials.addArmorTrait(mat, alien, dense);
+				TinkerRegistry.addMaterialStats(mat,
+						new CoreMaterialStats(14.6f, 17.2f),
+						new PlatesMaterialStats(1.15f, -0.5f, 2.4f),
+						new TrimMaterialStats(5f));
+			});
 			
 			if (Config.jetpackConarmModifier && Loader.isModLoaded("simplyjetpacks")) {
 				SJ.init();

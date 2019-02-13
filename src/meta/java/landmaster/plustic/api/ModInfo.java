@@ -11,7 +11,7 @@ public class ModInfo {
 	+ "required-after:tconstruct@[1.12-2.7.2.15,);required-after:forge@[14.23.5.2768,);"
 	+ "after:mekanism;after:biomesoplenty;"
 	+ "after:botania;after:libvulpes;after:redstoneflux;"
-	+ "after:armorplus;after:enderio;after:projectred-exploration;"
+	+ "after:armorplus;after:enderio;after:projectred-core;"
 	+ "after:thermalfoundation;after:substratum;after:draconicevolution;"
 	+ "after:landcore;after:tesla;after:baubles;after:actuallyadditions;"
 	+ "after:natura@[1.12.2-4.3.2.42,);after:psi;after:avaritia;after:landcore;after:landcraft;"

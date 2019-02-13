@@ -19,7 +19,7 @@ public class ModuleBoP implements IModule {
 		final boolean isBoPLoaded = Loader.isModLoaded("BiomesOPlenty") || Loader.isModLoaded("biomesoplenty");
 		
 		if ((Config.bop && isBoPLoaded)
-				|| (Config.projectRed && Loader.isModLoaded("projectred-exploration"))) {
+				|| (Config.projectRed && Loader.isModLoaded("projectred-core"))) {
 			Material sapphire = new Material("sapphire", TextFormatting.BLUE);
 			sapphire.addTrait(aquadynamic);
 			sapphire.addItem("gemSapphire", 1, Material.VALUE_Ingot);

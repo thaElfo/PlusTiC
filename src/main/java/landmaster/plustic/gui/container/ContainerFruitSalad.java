@@ -1,7 +1,6 @@
 package landmaster.plustic.gui.container;
 
 import landmaster.plustic.traits.*;
-import net.minecraft.client.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.inventory.*;
 import net.minecraft.item.*;
@@ -37,7 +36,7 @@ public class ContainerFruitSalad extends Container {
 	
 	@Override
 	public boolean canInteractWith(EntityPlayer playerIn) {
-		return TinkerUtil.hasTrait(TagUtil.getTagSafe(Minecraft.getMinecraft().player.getHeldItemMainhand()),
+		return TinkerUtil.hasTrait(TagUtil.getTagSafe(playerIn.getHeldItemMainhand()),
 				FruitSalad.fruitsalad.identifier);
 	}
 	

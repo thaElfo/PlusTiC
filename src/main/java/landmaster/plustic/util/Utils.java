@@ -17,7 +17,6 @@ import landmaster.plustic.block.*;
 import landmaster.plustic.fluids.*;
 import net.darkhax.tesla.capability.*;
 import net.minecraft.block.*;
-import net.minecraft.block.state.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
@@ -289,49 +288,13 @@ public class Utils {
 		}
 	}
 	
-	private static final MethodHandle getCollisionBoundingBoxM;
-	
-	static {
-		try {
-			MethodHandle temp;
-			try {
-				try {
-					temp = MethodHandles.lookup().findVirtual(IBlockState.class, "getCollisionBoundingBox",
-							MethodType.methodType(AxisAlignedBB.class, IBlockAccess.class, BlockPos.class));
-				} catch (NoSuchMethodException e) {
-					temp = MethodHandles.lookup().findVirtual(IBlockState.class, "getCollisionBoundingBox",
-							MethodType.methodType(AxisAlignedBB.class, World.class, BlockPos.class));
-				}
-			} catch (NoSuchMethodException e1) {
-				try {
-					temp = MethodHandles.lookup().findVirtual(IBlockState.class, "func_185890_d",
-							MethodType.methodType(AxisAlignedBB.class, IBlockAccess.class, BlockPos.class));
-				} catch (NoSuchMethodException e) {
-					temp = MethodHandles.lookup().findVirtual(IBlockState.class, "func_185890_d",
-							MethodType.methodType(AxisAlignedBB.class, World.class, BlockPos.class));
-				}
-			}
-			getCollisionBoundingBoxM = temp;
-		} catch (Throwable e) {
-			Throwables.throwIfUnchecked(e);
-			throw new RuntimeException(e);
-		}
-	}
-	
-	public static AxisAlignedBB getCollisionBoundingBox(IBlockState state, World world, BlockPos pos) {
-		try {
-			return (AxisAlignedBB) getCollisionBoundingBoxM.invoke(state, world, pos);
-		} catch (Throwable e) {
-			Throwables.throwIfUnchecked(e);
-			throw new RuntimeException(e);
-		}
-	}
-	
 	public static boolean canTeleportTo(EntityPlayer player, Coord4D dest) {
 		if (dest == null)
 			return false;
 		for (int i = 1; i <= 2; ++i) {
-			if (getCollisionBoundingBox(dest.add(0, i, 0).blockState(), dest.world(), dest.pos()) != null) {
+			if (Optional.ofNullable(dest.add(0, i, 0).blockState())
+					.map(bs -> bs.getCollisionBoundingBox(dest.world(), dest.pos()))
+					.orElse(null) != null) {
 				return false;
 			}
 		}

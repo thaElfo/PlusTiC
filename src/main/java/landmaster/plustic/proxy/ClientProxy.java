@@ -9,6 +9,7 @@ import landmaster.plustic.entity.*;
 import landmaster.plustic.entity.render.*;
 import landmaster.plustic.modules.*;
 import landmaster.plustic.traits.*;
+import landmaster.plustic.util.*;
 import net.minecraft.client.*;
 import net.minecraft.client.audio.*;
 import net.minecraft.client.renderer.*;
@@ -155,6 +156,16 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public boolean isSoundPlaying(Object sound) {
 		return sound instanceof ISound && Minecraft.getMinecraft().getSoundHandler().isSoundPlaying((ISound)sound);
+	}
+	
+	@Override
+	public void runOnClient(RunnableDefaultNoop runnable) {
+		runnable.run();
+	}
+	
+	@Override
+	public <T> T runOnClient(SupplierDefaultNoop<T> supplier) {
+		return supplier.get();
 	}
 	
 	public static class FluidStateMapper extends StateMapperBase implements ItemMeshDefinition {

@@ -198,19 +198,24 @@ public class Toggle {
 			GlStateManager.enableAlpha();
 			GL11.glEnable(GL11.GL_BLEND);
 			
+			// draw background proper
 			mc.renderEngine.bindTexture(background);
 			drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
+			// draw header
 			fontRenderer.drawString(I18n.format("gui.header.toggle"), guiLeft+5, guiTop+5, 0xFFFFFF);
 			
+			// draw list background
 			mc.renderEngine.bindTexture(background);
 			for (int i=0; i<Math.min(OPTIONS_PER_PAGE, identifiers.size() - page*OPTIONS_PER_PAGE); ++i) {
 				drawTexturedModalRect(guiLeft+7, guiTop+18*(i+1), 0, 128, 152, 16);
 			}
 			
+			// draw arrows
 			mc.renderEngine.bindTexture(background);
 			if (page > 0) drawTexturedModalRect(guiLeft+160, guiTop+18, 176, 12, 12, 21);
 			if (page < identifiers.size() / OPTIONS_PER_PAGE - (identifiers.size() % OPTIONS_PER_PAGE == 0 ? 1 : 0)) drawTexturedModalRect(guiLeft+160, guiTop+100, 176+12, 12, 12, 21);
 			
+			// draw items
 			for (int i=page*OPTIONS_PER_PAGE; i<Math.min((page+1)*OPTIONS_PER_PAGE, identifiers.size()); ++i) {
 				String identifier = identifiers.get(i);
 				String rawIdentifier = rawIdentifier(identifier);

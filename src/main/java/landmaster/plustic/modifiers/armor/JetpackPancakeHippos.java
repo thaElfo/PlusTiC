@@ -3,6 +3,8 @@ package landmaster.plustic.modifiers.armor;
 import java.lang.invoke.*;
 import java.lang.reflect.*;
 import java.util.*;
+import java.util.function.*;
+import java.util.stream.*;
 
 import org.lwjgl.opengl.GL11;
 
@@ -319,11 +321,7 @@ public class JetpackPancakeHippos extends ArmorModifierTrait {
 	public static final Map<Jetpack, JetpackPancakeHippos> jetpackpancakehippos
 		= Arrays.stream(Jetpack.values())
 		.filter(jetpack -> !jetpack.isArmored)
-		.collect(() -> new EnumMap<>(Jetpack.class), (m,j) -> {
-			JetpackPancakeHippos trait = new JetpackPancakeHippos(j);
-			//trait.addItem(j.getStackJetpack(), 1, 1);
-			m.put(j, trait);
-		}, Map::putAll);
+		.collect(Collectors.toMap(Function.identity(), JetpackPancakeHippos::new, (a,b) -> b, () -> new EnumMap<>(Jetpack.class)));
 	
 	public final Jetpack jetpack;
 	

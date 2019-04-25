@@ -3,6 +3,7 @@ package landmaster.plustic.proxy;
 import landmaster.plustic.*;
 import landmaster.plustic.api.*;
 import landmaster.plustic.entity.*;
+import landmaster.plustic.util.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.util.*;
@@ -59,5 +60,12 @@ public class CommonProxy {
 	
 	public boolean isSoundPlaying(Object sound) {
 		return false;
+	}
+	
+	public void runOnClient(RunnableDefaultNoop runnable) {
+	}
+	
+	public <T> T runOnClient(SupplierDefaultNoop<T> supplier) {
+		return null;
 	}
 }

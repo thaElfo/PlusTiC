@@ -10,6 +10,7 @@ import appeng.api.config.*;
 import appeng.api.implementations.items.*;
 import landmaster.plustic.api.*;
 import landmaster.plustic.api.event.*;
+import landmaster.plustic.config.*;
 import landmaster.plustic.modules.*;
 import landmaster.plustic.net.*;
 import landmaster.plustic.tools.nbt.*;
@@ -63,7 +64,7 @@ public class ToolLaserGun extends TinkerToolCore implements cofh.redstoneflux.ap
 	}
 	
 	private int energyPerAttack(ItemStack is) {
-		return 100;
+		return Config.laser_energy;
 	}
 	
 	private static int getFullEnergy(ItemStack is) {
@@ -351,9 +352,9 @@ public class ToolLaserGun extends TinkerToolCore implements cofh.redstoneflux.ap
 				MinecraftForge.EVENT_BUS.post(eevent);
 				int energyTaken = eevent.energyDrained; // grab event result
 				
-				if (this.extractEnergy(stack, energyTaken, true) >= energyTaken) {
+				if (this.extractEnergy(stack, energyTaken, true) >= energyTaken
+						&& worldIn.destroyBlock(pos, false)) {
 					this.extractEnergy(stack, energyTaken, false);
-					worldIn.destroyBlock(pos, false);
 					worldIn.spawnEntity(new EntityItem(worldIn, pos.getX()+0.5, pos.getY()+0.5, pos.getZ()+0.5, smeltingRes));
 					nbt.setInteger(POS_LCOOL_TAG, MathHelper.ceil(220 / ToolHelper.getActualMiningSpeed(stack)));
 					if (player instanceof EntityPlayerMP) {

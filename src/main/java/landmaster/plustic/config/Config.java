@@ -61,6 +61,8 @@ public class Config extends Configuration {
 	public static boolean katana_boosts_only_on_killing;
 	public static boolean katana_smooth_progression;
 	
+	public static int laser_energy;
+	
 	private static final IntArrayList botan_amount = new IntArrayList(Botanical.MAX_LEVELS);
 	
 	public static IntList getBotanAmount() {
@@ -164,6 +166,7 @@ public class Config extends Configuration {
 		katana_smooth_progression = getBoolean("Smooth Katana progression", "tools", false, "Should boosted damage of Katana change smoothly from material to material?");
 		
 		laserGun = getBoolean("Enable Laser Gun", "tools", true, "Enable Laser Gun");
+		laser_energy = getInt("Laser Gun Energy consumed", "tools", 100, 0, Integer.MAX_VALUE, "How much energy is used, by default, per laser attack");
 		
 		// Trash
 		String[] trash_things_arr = getStringList("Trash generation", "tweaks",

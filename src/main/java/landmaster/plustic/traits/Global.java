@@ -51,6 +51,7 @@ public class Global extends AbstractTrait {
 		if (nbt0.hasKey("global", 10) && ToolHelper.isToolEffective2(tool, event.getState())) {
 			NBTTagCompound nbt = nbt0.getCompoundTag("global");
 			Coord4D coord = Coord4D.fromNBT(nbt);
+			if (coord.pos().equals(event.getPos())) return; // prevent self-linking
 			TileEntity te = coord.TE();
 			if (te == null) return;
 			IItemHandler ih = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY,

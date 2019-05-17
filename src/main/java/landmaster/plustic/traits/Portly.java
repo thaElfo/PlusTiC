@@ -9,6 +9,7 @@ import net.minecraft.entity.player.*;
 import net.minecraft.init.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
+import net.minecraft.util.*;
 import net.minecraft.util.text.*;
 import net.minecraft.world.*;
 import net.minecraftforge.common.*;
@@ -37,7 +38,7 @@ public class Portly extends AbstractTrait {
 	}
 	
 	@SubscribeEvent(priority = EventPriority.LOWEST)
-	public void captureEntity(PlayerInteractEvent.EntityInteractSpecific event) {
+	public void captureEntity(PlayerInteractEvent.EntityInteract event) {
 		NBTTagCompound nbt = TagUtil.getTagSafe(event.getItemStack());
 		if (event.getWorld().isRemote
 				|| !event.getEntityPlayer().isSneaking()
@@ -58,6 +59,8 @@ public class Portly extends AbstractTrait {
 		event.getEntityPlayer().swingArm(event.getHand());
 		event.getEntityPlayer().sendMessage(new TextComponentTranslation(
 				"msg.plustic.portlymodifier.set", nbt.getCompoundTag("portlyGentleman").getString("id")));
+		event.setCanceled(true);
+		event.setCancellationResult(EnumActionResult.SUCCESS);
 	}
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent

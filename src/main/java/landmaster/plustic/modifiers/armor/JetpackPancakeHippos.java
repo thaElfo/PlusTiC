@@ -10,6 +10,8 @@ import org.lwjgl.opengl.GL11;
 
 import com.google.common.base.Throwables;
 
+import baubles.api.*;
+import baubles.api.cap.*;
 import c4.conarm.common.armor.utils.*;
 import c4.conarm.lib.armor.*;
 import c4.conarm.lib.modifiers.*;
@@ -426,6 +428,15 @@ public class JetpackPancakeHippos extends ArmorModifierTrait {
 			IItemHandler cap = elb.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 			for (int i=0; i<cap.getSlots(); ++i) {
 				ItemStack energyStack = cap.getStackInSlot(i);
+				storage = Optional.ofNullable(energyStack.getCapability(CapabilityEnergy.ENERGY, null))
+						.filter(raw -> raw.extractEnergy(fuelUsage, true) >= fuelUsage);
+				if (storage.isPresent()) break;
+			}
+		}
+		if (!storage.isPresent() && elb instanceof EntityPlayer) {
+			IBaublesItemHandler ib = BaublesApi.getBaublesHandler((EntityPlayer)elb);
+			for (int i=0; i<ib.getSlots(); ++i) {
+				ItemStack energyStack = ib.getStackInSlot(i);
 				storage = Optional.ofNullable(energyStack.getCapability(CapabilityEnergy.ENERGY, null))
 						.filter(raw -> raw.extractEnergy(fuelUsage, true) >= fuelUsage);
 				if (storage.isPresent()) break;

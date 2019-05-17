@@ -8,11 +8,18 @@ import landmaster.plustic.fluids.*;
 import landmaster.plustic.tools.stats.*;
 import landmaster.plustic.traits.*;
 import landmaster.plustic.util.*;
+import net.minecraftforge.common.*;
 import net.minecraftforge.fml.common.*;
+import net.minecraftforge.fml.common.eventhandler.*;
+import net.minecraftforge.oredict.*;
 import slimeknights.tconstruct.library.*;
+import slimeknights.tconstruct.library.events.*;
 import slimeknights.tconstruct.library.materials.*;
 
 public class ModulePsi implements IModule {
+	static {
+		MinecraftForge.EVENT_BUS.register(ModulePsi.class);
+	}
 
 	public void init() {
 		if (Config.psi && (Loader.isModLoaded("Psi") || Loader.isModLoaded("psi"))) {
@@ -56,4 +63,15 @@ public class ModulePsi implements IModule {
 		}
 	}
 	
+	@SubscribeEvent
+	public static void meltingRecipeRegister(TinkerRegisterEvent.MeltingRegisterEvent event) {
+		if (Config.psi && (Loader.isModLoaded("Psi") || Loader.isModLoaded("psi"))) {
+			if (OreDictionary.getOres("dustPsi", false).stream().findFirst()
+					.filter(event.getRecipe()::matches)
+					.isPresent()
+					&& Loader.instance().activeModContainer().getModId().equalsIgnoreCase("tconstruct")) {
+				event.setCanceled(true); // remove dust recipe
+			}
+		}
+	}
 }

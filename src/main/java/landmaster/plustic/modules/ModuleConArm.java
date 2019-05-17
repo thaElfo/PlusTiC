@@ -71,6 +71,13 @@ public class ModuleConArm implements IModule {
 						new PlatesMaterialStats(1, 7, 2.2f),
 						new TrimMaterialStats(10f)); // TODO refine stats
 			});
+			Optional.ofNullable(PlusTiC.materials.get("peridot")).ifPresent(mat -> {
+				ArmorMaterials.addArmorTrait(mat, TomAndJerry.tomAndJerry);
+				TinkerRegistry.addMaterialStats(mat,
+						new CoreMaterialStats(14, 20),
+						new PlatesMaterialStats(1, 7, 2.2f),
+						new TrimMaterialStats(10f)); // TODO refine stats
+			});
 			
 			if (Config.jetpackConarmModifier && Loader.isModLoaded("simplyjetpacks")) {
 				SJ.init();

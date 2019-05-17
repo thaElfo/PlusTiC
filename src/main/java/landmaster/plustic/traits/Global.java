@@ -25,6 +25,7 @@ import net.minecraftforge.items.*;
 import slimeknights.tconstruct.library.tools.*;
 import slimeknights.tconstruct.library.traits.*;
 import slimeknights.tconstruct.library.utils.*;
+import slimeknights.tconstruct.tools.tools.*;
 
 public class Global extends AbstractTrait {
 	public static final Global global = new Global();
@@ -49,6 +50,9 @@ public class Global extends AbstractTrait {
 		if (!Toggle.getToggleState(tool, identifier)) return;
 		NBTTagCompound nbt0 = TagUtil.getTagSafe(tool);
 		if (nbt0.hasKey("global", 10) && ToolHelper.isToolEffective2(tool, event.getState())) {
+			//System.out.println(event.getDrops());
+			//new Exception().printStackTrace();
+			
 			NBTTagCompound nbt = nbt0.getCompoundTag("global");
 			Coord4D coord = Coord4D.fromNBT(nbt);
 			if (coord.pos().equals(event.getPos())) return; // prevent self-linking
@@ -81,20 +85,39 @@ public class Global extends AbstractTrait {
 			}
 			
 			ListIterator<ItemStack> it = event.getDrops().listIterator();
-			
+			ItemStack keptSeed = ItemStack.EMPTY;
 			while (it.hasNext()) {
 				ItemStack stk = it.next();
-				for (int j=0; j<ih.getSlots(); ++j) {
-					ItemStack res = ih.insertItem(j, stk, false);
-					if (!res.isEmpty()) {
-						it.set(res);
-						stk = res;
-					} else {
-						it.remove();
-						break;
+				if (event.getWorld().rand.nextFloat() > event.getDropChance()) {
+					it.remove();
+				} else {
+					if (tool.getItem() instanceof Kama
+							&& stk.getItem() instanceof IPlantable
+							&& keptSeed.isEmpty()) {
+						keptSeed = stk.splitStack(1);
 					}
 				}
 			}
+			
+			if (!(tool.getItem() instanceof Kama) || !keptSeed.isEmpty()) {
+				it = event.getDrops().listIterator();
+				while (it.hasNext()) {
+					ItemStack stk = it.next();
+					for (int j=0; j<ih.getSlots(); ++j) {
+						ItemStack res = ih.insertItem(j, stk, false);
+						if (!res.isEmpty()) {
+							it.set(res);
+							stk = res;
+						} else {
+							it.remove();
+							break;
+						}
+					}
+				}
+			}
+			if (!keptSeed.isEmpty()) event.getDrops().add(keptSeed);
+			
+			event.setDropChance(1); // already accounted for in this function
 			
 			te.markDirty();
 		}

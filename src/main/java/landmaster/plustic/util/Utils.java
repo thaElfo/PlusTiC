@@ -363,4 +363,25 @@ public class Utils {
 		}
 		return modifiers;
 	}
+	
+	private static final MethodHandle harvestersHandle;
+	static {
+		try {
+			Field field = Block.class.getDeclaredField("harvesters");
+			field.setAccessible(true);
+			harvestersHandle = MethodHandles.lookup().unreflectGetter(field);
+		} catch (Throwable e) {
+			Throwables.throwIfUnchecked(e);
+			throw new RuntimeException(e);
+		}
+	}
+	
+	public static ThreadLocal<EntityPlayer> getHarvester() {
+		try {
+			return (ThreadLocal<EntityPlayer>)harvestersHandle.invokeExact();
+		} catch (Throwable e) {
+			Throwables.throwIfUnchecked(e);
+			throw new RuntimeException(e);
+		}
+	}
 }

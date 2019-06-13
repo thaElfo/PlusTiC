@@ -5,11 +5,12 @@ import java.lang.reflect.*;
 import java.util.*;
 import java.util.Optional;
 
+import javax.annotation.*;
+
 import org.apache.commons.lang3.*;
 import org.apache.commons.lang3.StringUtils;
 
 import com.google.common.base.*;
-import com.google.common.collect.Lists;
 
 import landmaster.plustic.*;
 import landmaster.plustic.api.*;
@@ -353,7 +354,7 @@ public class Utils {
 	}
 	
 	public static List<IModifier> getModifiers(ItemStack stack) {
-		List<IModifier> modifiers = Lists.newLinkedList();
+		List<IModifier> modifiers = new ArrayList<>();
 		NBTTagList modifiersTagList = TagUtil.getBaseModifiersTagList(stack);
 		for(int i = 0; i < modifiersTagList.tagCount(); i++) {
 			IModifier modifier = TinkerRegistry.getModifier(modifiersTagList.getStringTagAt(i));
@@ -383,5 +384,13 @@ public class Utils {
 			Throwables.throwIfUnchecked(e);
 			throw new RuntimeException(e);
 		}
+	}
+	
+	public static boolean areFluidStacksIdentical(@Nullable FluidStack a, @Nullable FluidStack b) {
+		return a != null ? a.isFluidStackIdentical(b) : b == null;
+	}
+	
+	public static FluidStack safeCopy(FluidStack stack) {
+		return stack != null ? stack.copy() : null;
 	}
 }

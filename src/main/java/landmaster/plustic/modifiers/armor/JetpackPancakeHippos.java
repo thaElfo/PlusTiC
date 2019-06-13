@@ -15,6 +15,7 @@ import baubles.api.cap.*;
 import c4.conarm.common.armor.utils.*;
 import c4.conarm.lib.armor.*;
 import c4.conarm.lib.modifiers.*;
+import c4.conarm.lib.tinkering.*;
 import it.unimi.dsi.fastutil.ints.*;
 import landmaster.plustic.api.Sounds;
 import landmaster.plustic.config.*;
@@ -125,7 +126,7 @@ public class JetpackPancakeHippos extends ArmorModifierTrait {
 	public static void onKeyInput(InputEvent.KeyInputEvent event) {
 		EntityPlayer player = FMLClientHandler.instance().getClient().player;
 		ItemStack chestStack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
-
+		
 		Utils.getModifiers(chestStack).stream()
 		.filter(trait -> trait instanceof JetpackPancakeHippos)
 		.findAny().ifPresent(trait -> {
@@ -172,17 +173,17 @@ public class JetpackPancakeHippos extends ArmorModifierTrait {
 					if (info.isEmpty()) {
 						return;
 					}
-
+					
 					GL11.glPushMatrix();
 					Minecraft.getMinecraft().entityRenderer.setupOverlayRendering();
 					GL11.glScaled(tonius.simplyjetpacks.config.Config.HUDScale, tonius.simplyjetpacks.config.Config.HUDScale, 1.0D);
-
+					
 					int i = 0;
 					for (String s : info) {
 						RenderUtils.drawStringAtHUDPosition(s, RenderUtils.HUDPositions.values()[tonius.simplyjetpacks.config.Config.HUDPosition], Minecraft.getMinecraft().fontRenderer, tonius.simplyjetpacks.config.Config.HUDOffsetX, tonius.simplyjetpacks.config.Config.HUDOffsetY, tonius.simplyjetpacks.config.Config.HUDScale, 0xeeeeee, true, i);
 						i++;
 					}
-
+					
 					GL11.glPopMatrix();
 				});
 			}
@@ -202,9 +203,9 @@ public class JetpackPancakeHippos extends ArmorModifierTrait {
 				@Override
 				public void doRenderLayer(EntityLivingBase entitylivingbaseIn, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
 					jetpackOpt = Utils.getModifiers(event.getEntity().getItemStackFromSlot(EntityEquipmentSlot.CHEST)).stream()
-					.filter(trait -> trait instanceof JetpackPancakeHippos)
-					.findAny()
-					.map(modifier -> ((JetpackPancakeHippos)modifier).jetpack);
+							.filter(trait -> trait instanceof JetpackPancakeHippos)
+							.findAny()
+							.map(modifier -> ((JetpackPancakeHippos)modifier).jetpack);
 					jetpackOpt.ifPresent(jetpack -> this.renderArmorLayer(entitylivingbaseIn, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch, scale, EntityEquipmentSlot.CHEST));
 				}
 				
@@ -212,9 +213,9 @@ public class JetpackPancakeHippos extends ArmorModifierTrait {
 				protected ModelBiped getArmorModelHook(EntityLivingBase entity, ItemStack itemStack, EntityEquipmentSlot slot, ModelBiped model) {
 					if (slot == EntityEquipmentSlot.CHEST) {
 						return jetpackOpt
-						.filter(jetpack -> tonius.simplyjetpacks.config.Config.enableArmor3DModels)
-						.map(jetpack -> RenderUtils.getArmorModel(jetpack, entity))
-						.orElse(super.getArmorModelHook(entity, itemStack, slot, model));
+								.filter(jetpack -> tonius.simplyjetpacks.config.Config.enableArmor3DModels)
+								.map(jetpack -> RenderUtils.getArmorModel(jetpack, entity))
+								.orElse(super.getArmorModelHook(entity, itemStack, slot, model));
 					}
 					return super.getArmorModelHook(entity, itemStack, slot, model);
 				}
@@ -244,9 +245,9 @@ public class JetpackPancakeHippos extends ArmorModifierTrait {
 		if (evt.phase == TickEvent.Phase.START) {
 			ItemStack stack = Minecraft.getMinecraft().player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
 			Optional<Jetpack> jetpackOpt = Utils.getModifiers(stack).stream()
-			.filter(trait -> trait instanceof JetpackPancakeHippos)
-			.findAny()
-			.map(modifier -> ((JetpackPancakeHippos)modifier).jetpack);
+					.filter(trait -> trait instanceof JetpackPancakeHippos)
+					.findAny()
+					.map(modifier -> ((JetpackPancakeHippos)modifier).jetpack);
 			ParticleType particleType = jetpackOpt.map(jetpack -> getParticleType(Minecraft.getMinecraft().player, stack, jetpack)).orElse(null);
 			wearingJetpack0 = jetpackOpt.isPresent();
 			if (lastJetpackState0 != particleType) {
@@ -307,7 +308,7 @@ public class JetpackPancakeHippos extends ArmorModifierTrait {
 	}
 	
 	@SubscribeEvent
-    public static void onClientDisconnectedFromServer(FMLNetworkEvent.ClientDisconnectionFromServerEvent evt) {
+	public static void onClientDisconnectedFromServer(FMLNetworkEvent.ClientDisconnectionFromServerEvent evt) {
 		Sounds.PTSoundJetpack.clearPlayingFor();
 	}
 	
@@ -321,9 +322,9 @@ public class JetpackPancakeHippos extends ArmorModifierTrait {
 	}
 	
 	public static final Map<Jetpack, JetpackPancakeHippos> jetpackpancakehippos
-		= Arrays.stream(Jetpack.values())
-		.filter(jetpack -> !jetpack.isArmored)
-		.collect(Collectors.toMap(Function.identity(), JetpackPancakeHippos::new, (a,b) -> b, () -> new EnumMap<>(Jetpack.class)));
+	= Arrays.stream(Jetpack.values())
+	.filter(jetpack -> !jetpack.isArmored)
+	.collect(Collectors.toMap(Function.identity(), JetpackPancakeHippos::new, (a,b) -> b, () -> new EnumMap<>(Jetpack.class)));
 	
 	public final Jetpack jetpack;
 	
@@ -339,7 +340,7 @@ public class JetpackPancakeHippos extends ArmorModifierTrait {
 	}
 	
 	@Override
-    public boolean canApplyCustom(ItemStack stack) {
+	public boolean canApplyCustom(ItemStack stack) {
 		//System.out.println("STACK: "+stack);
 		return EntityLiving.getSlotForItemStack(stack) == EntityEquipmentSlot.CHEST && super.canApplyCustom(stack);
 	}
@@ -375,11 +376,14 @@ public class JetpackPancakeHippos extends ArmorModifierTrait {
 		if (!evt.getEntityLiving().world.isRemote) {
 			ParticleType jetpackState = null;
 			ItemStack armor = evt.getEntityLiving().getItemStackFromSlot(EntityEquipmentSlot.CHEST);
-			Jetpack jetpack = Utils.getModifiers(armor).stream()
-			.filter(trait -> trait instanceof JetpackPancakeHippos)
-			.findAny()
-			.map(trait -> ((JetpackPancakeHippos)trait).jetpack)
-			.orElse(null);
+			Jetpack jetpack = null;
+			if (armor.getItem() instanceof TinkersArmor) {
+				jetpack = Utils.getModifiers(armor).stream()
+					.filter(trait -> trait instanceof JetpackPancakeHippos)
+					.findAny()
+					.map(trait -> ((JetpackPancakeHippos)trait).jetpack)
+					.orElse(null);
+			}
 			if (jetpack != null) {
 				jetpackState = getParticleType(evt.getEntityLiving(), armor, jetpack);
 			}
@@ -393,7 +397,7 @@ public class JetpackPancakeHippos extends ArmorModifierTrait {
 			} else if (jetpack != null && evt.getEntityLiving().world.getTotalWorldTime() % 160L == 0) {
 				PacketHandler.INSTANCE.sendToAllAround(new PacketSJSyncParticles(evt.getEntityLiving().getEntityId(), jetpackState != null ? jetpackState.ordinal() : -1), new NetworkRegistry.TargetPoint(evt.getEntityLiving().dimension, evt.getEntityLiving().posX, evt.getEntityLiving().posY, evt.getEntityLiving().posZ, 256));
 			}
-
+			
 			if (evt.getEntityLiving().world.getTotalWorldTime() % 200L == 0) {
 				IntIterator itr = lastJetpackState.keySet().iterator();
 				while (itr.hasNext()) {
@@ -413,7 +417,7 @@ public class JetpackPancakeHippos extends ArmorModifierTrait {
 		}
 		return null;
 	}
-
+	
 	
 	protected int getFuelUsage(ItemStack stack) {
 		if (jetpack.getBaseName().contains("enderium")) {
@@ -464,7 +468,7 @@ public class JetpackPancakeHippos extends ArmorModifierTrait {
 				if (jetpack.usesFuel && storage.isPresent()) {
 					storage.get().extractEnergy(fuelUsage, false);
 				}
-
+				
 				if (!jetpack.usesFuel || storage.map(IEnergyStorage::getEnergyStored).filter(e -> e>0).isPresent()) {
 					if (flyKeyDown) {
 						if (!hoverMode) {
@@ -479,7 +483,7 @@ public class JetpackPancakeHippos extends ArmorModifierTrait {
 					} else {
 						user.motionY = Math.min(user.motionY + currentAccel, -hoverSpeed);
 					}
-
+					
 					float speedSideways = (float) (user.isSneaking() ? jetpack.speedSideways * 0.5F : jetpack.speedSideways);
 					float speedForward = (float) (user.isSprinting() ? speedSideways * jetpack.sprintSpeedModifier : speedSideways);
 					if (SyncHandler.isForwardKeyDown(user)) {
@@ -494,10 +498,10 @@ public class JetpackPancakeHippos extends ArmorModifierTrait {
 					if (SyncHandler.isRightKeyDown(user)) {
 						user.moveRelative(-speedSideways, 0, 0, speedSideways);
 					}
-
+					
 					if (!user.world.isRemote) {
 						user.fallDistance = 0.0F;
-
+						
 						if (user instanceof EntityPlayerMP) {
 							((EntityPlayerMP) user).connection.floatingTickCount = 0;
 						}
@@ -505,7 +509,7 @@ public class JetpackPancakeHippos extends ArmorModifierTrait {
 				}
 			}
 		}
-
+		
 		//Emergency Hover
 		if (!user.world.isRemote && jetpack.emergencyHoverMode && !JetpackSettings.EHOVER.isOff(stack)) {
 			if ((!jetpack.usesFuel || storage.map(IEnergyStorage::getEnergyStored).filter(e -> e>0).isPresent()) && (JetpackSettings.HOVER.isOff(stack) || JetpackSettings.ENGINE.isOff(stack))) {

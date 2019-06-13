@@ -24,5 +24,10 @@ public class PacketHandler {
 		INSTANCE.registerMessage(PacketRequestToggleGui::onMessage, PacketRequestToggleGui.class, 12, Side.SERVER);
 		INSTANCE.registerMessage(PacketOpenToggleGui::onMessage, PacketOpenToggleGui.class, 13, Side.CLIENT);
 		INSTANCE.registerMessage(PacketSJSyncParticles::onMessage, PacketSJSyncParticles.class, 14, Side.CLIENT);
+		INSTANCE.registerMessage(PacketUpdateTECentrifugeLiquid::onMessage, PacketUpdateTECentrifugeLiquid.class, 15, Side.CLIENT);
+		INSTANCE.registerMessage(PacketUpdateTECentrifugeCoreEnergy::onMessage, PacketUpdateTECentrifugeCoreEnergy.class, 16, Side.CLIENT);
+		INSTANCE.registerMessage(PacketRequestUpdateTECentrifuge::onMessage, PacketRequestUpdateTECentrifuge.class, 17, Side.SERVER);
+		
+		// TODO add mroe messages when needed
 	}
 }

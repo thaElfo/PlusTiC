@@ -4,6 +4,9 @@ import java.io.*;
 import java.lang.invoke.*;
 import java.lang.reflect.*;
 import java.util.*;
+import java.util.stream.*;
+
+import org.apache.commons.lang3.tuple.*;
 
 import com.google.common.base.Throwables;
 
@@ -13,9 +16,11 @@ import net.minecraft.item.*;
 import net.minecraft.util.*;
 import net.minecraft.util.text.translation.*;
 import net.minecraftforge.common.config.*;
+import net.minecraftforge.fluids.*;
 import net.minecraftforge.fml.common.event.*;
 import net.minecraftforge.oredict.OreDictionary;
 import slimeknights.tconstruct.library.materials.*;
+import slimeknights.tconstruct.library.smeltery.*;
 
 public class Config extends Configuration {
 	// MODULES
@@ -44,6 +49,7 @@ public class Config extends Configuration {
 	public static boolean twilightForest;
 	public static boolean thaumcraft;
 	public static boolean constructsArmory;
+	public static boolean machines;
 	
 	public static boolean jetpackConarmModifier;
 	public static float jetpackDurabilityBonusScale;
@@ -63,7 +69,11 @@ public class Config extends Configuration {
 	
 	public static int laser_energy;
 	
+	public static int centrifugeEnergyPerMB;
+	
 	private static final IntArrayList botan_amount = new IntArrayList(Botanical.MAX_LEVELS);
+	
+	private static final Set<Pair<String, Set<String>>> blacklistedForCentrifuge = new HashSet<>();
 	
 	public static IntList getBotanAmount() {
 		return IntLists.unmodifiable(botan_amount);
@@ -155,6 +165,7 @@ public class Config extends Configuration {
 		twilightForest = getBoolean("Enable Twilight Forest support", "modules", true, "Integrate with Twilight Forest");
 		thaumcraft = getBoolean("Enable Thaumcraft support", "modules", true, "Integrate with Thaumcraft");
 		constructsArmory = getBoolean("Enable Constructs Armory support", "modules", true, "Integrate with Constructs Armory");
+		machines = getBoolean("Enable Machines addon", "modules", true, "Enable the machines from this mod");
 		
 		jetpackConarmModifier = getBoolean("Add Simply Jetpacks as ConArm modifiers", "modifiers", true, "Add Simply Jetpacks as ConArm modifiers");
 		jetpackDurabilityBonusScale = getFloat("Durability bonus scalar for Simply Jetpacks modifiers", "modifiers", 1f/8000, 0, Float.MAX_VALUE, "Durability bonus calculated as FUEL_CAPACITY_OF_JETPACK*this_scalar");
@@ -237,6 +248,13 @@ public class Config extends Configuration {
 		while (botan_amount.size() < Botanical.MAX_LEVELS) {
 			botan_amount.add(botan_amount.getInt(botan_amount.size()-1)<<1);
 		}
+		
+		// Centrifuge
+		for (String blacklistEntry: this.getStringList("Centrifuge blacklist", "tweaks", new String[0], "Enter in the format inputFluid:outputFluid1;outputFluid2;outputFluid3")) {
+			String[] separateInOut = blacklistEntry.split(":");
+			blacklistedForCentrifuge.add(Pair.of(separateInOut[0], new HashSet<>(Arrays.asList(separateInOut[1].split(";")))));
+		}
+		centrifugeEnergyPerMB = this.getInt("Centrifuge energy per mB", "tweaks", 5, 0, Integer.MAX_VALUE, "Energy consumed by centrifuge per millibucket");
 	}
 	
 	private static final MethodHandle injectHandle;
@@ -281,5 +299,14 @@ public class Config extends Configuration {
 	
 	public void update() {
 		if (hasChanged()) save();
+	}
+
+	public static boolean isCentrifugeRecipeValid(AlloyRecipe recipe) {
+		Pair<String, Set<String>> pairToCheck = Pair.of(
+				FluidRegistry.getFluidName(recipe.getResult()),
+				recipe.getFluids().stream()
+				.map(FluidRegistry::getFluidName)
+				.collect(Collectors.toSet()));
+		return !blacklistedForCentrifuge.contains(pairToCheck);
 	}
 }

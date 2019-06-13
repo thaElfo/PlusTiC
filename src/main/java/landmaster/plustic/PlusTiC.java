@@ -132,7 +132,9 @@ public class PlusTiC {
 				new ModuleTools(),
 				new ModuleModifiers(),
 				
-				new ModuleConArm()
+				new ModuleConArm(),
+				
+				new ModuleMachines()
 				));
 		
 		IModule.modules.forEach(IModule::init);
@@ -142,6 +144,8 @@ public class PlusTiC {
 		config.update();
 		
 		preIntegrate();
+		
+		FMLInterModComms.sendMessage("waila", "register", "landmaster.plustic.waila.PTWailaRegistrar.wailaCallback");
 		
 		NetworkRegistry.INSTANCE.registerGuiHandler(INSTANCE, new PTGuiHandler());
 	}

@@ -1,5 +1,7 @@
 package landmaster.plustic.block;
 
+import java.util.*;
+
 import javax.annotation.*;
 
 import landmaster.plustic.*;
@@ -9,6 +11,8 @@ import net.minecraft.block.*;
 import net.minecraft.block.material.*;
 import net.minecraft.block.properties.*;
 import net.minecraft.block.state.*;
+import net.minecraft.client.resources.*;
+import net.minecraft.client.util.*;
 import net.minecraft.creativetab.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
@@ -142,5 +146,16 @@ public class BlockCentrifuge extends Block implements IMetaBlockName {
     public void harvestBlock(World world, EntityPlayer player, BlockPos pos, IBlockState state, @Nullable TileEntity te, ItemStack tool) {
 		super.harvestBlock(world, player, pos, state, te, tool);
 		world.setBlockToAir(pos);
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+		super.addInformation(stack, worldIn, tooltip, flagIn);
+		NBTTagCompound blockEntityTag = stack.getSubCompound("BlockEntityTag");
+		if (blockEntityTag != null && blockEntityTag.hasKey("Tank", 10)) {
+			FluidStack fs = FluidStack.loadFluidStackFromNBT(blockEntityTag.getCompoundTag("Tank"));
+			tooltip.add(I18n.format("tooltip.plustic.centrifuge.fluid_info", fs.getLocalizedName(), fs.amount));
+		}
 	}
 }

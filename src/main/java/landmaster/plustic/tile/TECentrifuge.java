@@ -22,7 +22,7 @@ public abstract class TECentrifuge extends TileEntity {
 	};
 	
 	protected void sendTankUpdates() {
-		if (!world.isRemote) {
+		if (world != null && !world.isRemote) {
 			markDirty();
 			PacketHandler.INSTANCE.sendToAllAround(new PacketUpdateTECentrifugeLiquid(new Coord4D(pos, world), tank.getFluid()), new NetworkRegistry.TargetPoint(world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 64));
 		}

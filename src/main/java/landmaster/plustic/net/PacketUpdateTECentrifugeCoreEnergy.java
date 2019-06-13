@@ -19,6 +19,7 @@ public class PacketUpdateTECentrifugeCoreEnergy implements IMessage {
 	
 	public static IMessage onMessage(PacketUpdateTECentrifugeCoreEnergy packet, MessageContext ctx) {
 		Minecraft.getMinecraft().addScheduledTask(() -> {
+			if (Minecraft.getMinecraft().world.provider.getDimension() != packet.pos.dimensionId) return;
 			TileEntity te = Minecraft.getMinecraft().world.getTileEntity(packet.pos.pos());
 			if (te instanceof TECentrifugeCore) {
 				((TECentrifugeCore)te).setEnergy(packet.energy);

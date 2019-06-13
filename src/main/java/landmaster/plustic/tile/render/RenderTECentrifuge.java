@@ -11,7 +11,7 @@ public class RenderTECentrifuge extends TileEntitySpecialRenderer<TECentrifuge> 
 			float alpha) {
 		FluidStack fs = te.getTank().getFluid();
 		if (fs != null) {
-			float height = fs.amount / te.getTank().getCapacity();
+			float height = ((float)fs.amount) / te.getTank().getCapacity();
 			float d = RenderUtil.FLUID_OFFSET;
 			if (fs.getFluid().isGaseous(fs)) {
 				RenderUtil.renderFluidCuboid(fs, te.getPos(), x, y, z, d, 1f - (d + height), d, 1d - d, 1d - d, 1d - d);

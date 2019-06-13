@@ -20,7 +20,7 @@ public class PacketRequestUpdateTECentrifuge implements IMessage {
 			PacketHandler.INSTANCE.sendTo(new PacketUpdateTECentrifugeCoreEnergy(packet.coord, te.getCapability(CapabilityEnergy.ENERGY, null).getEnergyStored()), ctx.getServerHandler().player);
 		}
 		if (te instanceof TECentrifuge) {
-			return new PacketUpdateTECentrifugeLiquid(packet.coord, ((TECentrifuge) te).getTank().getFluid());
+			PacketHandler.INSTANCE.sendTo(new PacketUpdateTECentrifugeLiquid(packet.coord, ((TECentrifuge) te).getTank().getFluid()), ctx.getServerHandler().player);
 		}
 		return null;
 	}

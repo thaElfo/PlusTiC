@@ -22,8 +22,10 @@ public class PacketUpdateTECentrifugeLiquid implements IMessage {
 	
 	public static IMessage onMessage(PacketUpdateTECentrifugeLiquid message, MessageContext ctx) {
 		Minecraft.getMinecraft().addScheduledTask(() -> {
+			if (Minecraft.getMinecraft().world.provider.getDimension() != message.pos.dimensionId) return;
 			TileEntity te = Minecraft.getMinecraft().world.getTileEntity(message.pos.pos());
 			if (te instanceof TECentrifuge) {
+				//System.out.println(message.input == null ? 0 : message.input.amount);
 				((TECentrifuge)te).getTank().setFluid(message.input);
 			}
 		});

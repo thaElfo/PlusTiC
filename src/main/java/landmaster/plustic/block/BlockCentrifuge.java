@@ -12,6 +12,7 @@ import net.minecraft.block.state.*;
 import net.minecraft.creativetab.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
+import net.minecraft.nbt.*;
 import net.minecraft.tileentity.*;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
@@ -52,7 +53,7 @@ public class BlockCentrifuge extends Block implements IMetaBlockName {
 	
 	@Override
 	public int damageDropped(IBlockState state) {
-	    return getMetaFromState(state);
+		return getMetaFromState(state);
 	}
 	
 	@Override
@@ -86,7 +87,7 @@ public class BlockCentrifuge extends Block implements IMetaBlockName {
 	public BlockRenderLayer getRenderLayer() {
 		return BlockRenderLayer.CUTOUT;
 	}
-
+	
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		// adapted from Tinker's TileTank code
@@ -100,7 +101,7 @@ public class BlockCentrifuge extends Block implements IMetaBlockName {
 			return true;
 		}
 		
-		if (state.getValue(CORE)) {
+		if (state.getValue(CORE) && !(Block.getBlockFromItem(heldItem.getItem()) instanceof BlockCentrifuge)) {
 			if (!worldIn.isRemote) {
 				playerIn.openGui(PlusTiC.INSTANCE, PTGuiHandler.CENTRIFUGE_CORE, worldIn, pos.getX(), pos.getY(), pos.getZ());
 			}
@@ -114,9 +115,32 @@ public class BlockCentrifuge extends Block implements IMetaBlockName {
 	public boolean isFullCube(IBlockState state) {
 		return false;
 	}
-
+	
 	@Override
 	public boolean isOpaqueCube(IBlockState state) {
 		return false;
+	}
+	
+	@Override
+	public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+		super.getDrops(drops, world, pos, state, fortune);
+		for (ItemStack drop: drops) {
+			if (Block.getBlockFromItem(drop.getItem()) instanceof BlockCentrifuge) {
+				drop.setTagCompound(new NBTTagCompound());
+				drop.getTagCompound().setTag("BlockEntityTag", world.getTileEntity(pos).serializeNBT());
+			}
+		}
+	}
+	
+	@Override
+	public boolean removedByPlayer(IBlockState state, World world, BlockPos pos, EntityPlayer player, boolean willHarvest) {
+		if (willHarvest) return true; // see BlockFlowerPot.java
+		return super.removedByPlayer(state, world, pos, player, willHarvest);
+	}
+	
+	@Override
+    public void harvestBlock(World world, EntityPlayer player, BlockPos pos, IBlockState state, @Nullable TileEntity te, ItemStack tool) {
+		super.harvestBlock(world, player, pos, state, te, tool);
+		world.setBlockToAir(pos);
 	}
 }

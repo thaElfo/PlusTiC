@@ -17,12 +17,16 @@ public abstract class TECentrifuge extends TileEntity {
 	protected final FluidTank tank = new FluidTank(Material.VALUE_Block * 8) {
 		@Override
 		protected void onContentsChanged() {
-			if (!world.isRemote) {
-				markDirty();
-				PacketHandler.INSTANCE.sendToAllAround(new PacketUpdateTECentrifugeLiquid(new Coord4D(pos, world), tank.getFluid()), new NetworkRegistry.TargetPoint(world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 64));
-			}
+			sendTankUpdates();
 		}
 	};
+	
+	protected void sendTankUpdates() {
+		if (!world.isRemote) {
+			markDirty();
+			PacketHandler.INSTANCE.sendToAllAround(new PacketUpdateTECentrifugeLiquid(new Coord4D(pos, world), tank.getFluid()), new NetworkRegistry.TargetPoint(world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 64));
+		}
+	}
 	
 	@Override
 	public void onLoad() {
@@ -34,13 +38,18 @@ public abstract class TECentrifuge extends TileEntity {
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
 		super.readFromNBT(compound);
-		tank.readFromNBT(compound.getCompoundTag("Tank"));
+		if (compound.hasKey("Tank", 10)) {
+			tank.setFluid(FluidStack.loadFluidStackFromNBT(compound.getCompoundTag("Tank")));
+			sendTankUpdates();
+		}
 	}
 	
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		compound = super.writeToNBT(compound);
-		compound.setTag("Tank", tank.writeToNBT(new NBTTagCompound()));
+		if (tank.getFluid() != null) {
+			compound.setTag("Tank", tank.getFluid().writeToNBT(new NBTTagCompound()));
+		}
 		return compound;
 	}
 	

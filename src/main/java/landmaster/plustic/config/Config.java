@@ -46,10 +46,10 @@ public class Config extends Configuration {
 	public static boolean gemsplus;
 	public static boolean appEng2;
 	public static boolean environTech;
-	public static boolean twilightForest;
 	public static boolean thaumcraft;
 	public static boolean constructsArmory;
 	public static boolean machines;
+	public static boolean astralSorcery;
 	
 	public static boolean jetpackConarmModifier;
 	public static float jetpackDurabilityBonusScale;
@@ -162,10 +162,10 @@ public class Config extends Configuration {
 		gemsplus = getBoolean("Enable Gems+ support", "modules", true, "Integrate with Gems+");
 		appEng2 = getBoolean("Enable Applied Energistics 2 support", "modules", true, "Integrate with Applied Energistics 2");
 		environTech = getBoolean("Enable Environmental Tech support", "modules", true, "Integrate with Environmental Tech");
-		twilightForest = getBoolean("Enable Twilight Forest support", "modules", true, "Integrate with Twilight Forest");
 		thaumcraft = getBoolean("Enable Thaumcraft support", "modules", true, "Integrate with Thaumcraft");
 		constructsArmory = getBoolean("Enable Constructs Armory support", "modules", true, "Integrate with Constructs Armory");
-		machines = getBoolean("Enable Machines addon", "modules", true, "Enable the machines from this mod");
+		machines = getBoolean("Enable Machines addon", "modules", true, "Enable the machines from this mod (Centrifuge, etc.)");
+		astralSorcery = getBoolean("Enable Astral Sorcery support", "modules", true, "Integrate with Astral Sorcery");
 		
 		jetpackConarmModifier = getBoolean("Add Simply Jetpacks as ConArm modifiers", "modifiers", true, "Add Simply Jetpacks as ConArm modifiers");
 		jetpackDurabilityBonusScale = getFloat("Durability bonus scalar for Simply Jetpacks modifiers", "modifiers", 1f/8000, 0, Float.MAX_VALUE, "Durability bonus calculated as FUEL_CAPACITY_OF_JETPACK*this_scalar");
@@ -255,6 +255,14 @@ public class Config extends Configuration {
 			blacklistedForCentrifuge.add(Pair.of(separateInOut[0], new HashSet<>(Arrays.asList(separateInOut[1].split(";")))));
 		}
 		centrifugeEnergyPerMB = this.getInt("Centrifuge energy per mB", "tweaks", 5, 0, Integer.MAX_VALUE, "Energy consumed by centrifuge per millibucket");
+		
+		for (String traitLoadEntry: this.getStringList("Force load traits", "tweaks", new String[0], "Force-load these traits (as a fully-qualified class name; e.g. landmaster.plustic.traits.Global) without the required mods themselves being loaded")) {
+			try {
+				Class.forName(traitLoadEntry);
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	private static final MethodHandle injectHandle;

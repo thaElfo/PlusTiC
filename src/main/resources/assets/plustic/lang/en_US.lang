@@ -56,6 +56,7 @@ fluid.plustic.osgloglas.name=Molten Osgloglas
 fluid.plustic.fiery_blood.name=Fiery Blood
 fluid.plustic.fiery.name=Molten Fiery Metal
 fluid.plustic.thaumium.name=Molten Thaumium
+fluid.plustic.starmetal.name=Molten Starmetal
 
 material.sapphire.name=Sapphire
 material.ruby.name=Ruby
@@ -131,6 +132,7 @@ material.ionite.name=Ionite
 material.kyronite.name=Kyronite
 material.pladium.name=Pladium
 material.aethium.name=Aethium
+material.starmetal.name=Starmetal
 
 modifier.bloodymary.name=Bloody Mary
 modifier.bloodymary.desc=§oBrought to you by the legendary Queen of England...§r\nDeals bonus damage depending on the amount of health already lost by the target. Also, a chance to drop a Coagulated Blood for each hit.
@@ -243,6 +245,8 @@ modifier.haorans_cult_armor.name=Haoran's Cult
 modifier.haorans_cult_armor.desc=§oHarry, harry on the wall, who's the hairiest of them all?§r\nWhen withered, reduces HP of all mobs in a certain range by 30% every second.
 modifier.tom_and_jerry_armor.name=Tom and Jerry
 modifier.tom_and_jerry_armor.desc=§o[laughs in flattening Tom]§r\nExplosions caused by a user with this trait slow down those affected.
+modifier.im_a_superstar.name=I'm a Superstar
+modifier.im_a_superstar.name=§oI am a superstar!…[falls into the toilet]§r\nEffects depend on the player's attunement.
 
 # MISCELLANEOUS
 

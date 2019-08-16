@@ -128,6 +128,7 @@ public class PlusTiC {
 				new ModuleEnvironTech(),
 				new ModuleMFR(),
 				new ModuleThaumcraft(),
+				new ModuleAstralSorcery(),
 				
 				new ModuleTools(),
 				new ModuleModifiers(),

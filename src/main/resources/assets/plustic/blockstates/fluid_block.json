@@ -99,6 +99,9 @@
 		}],
 		"thaumium": [{
 			"custom": { "fluid": "thaumium" }
+		}],
+		"starmetal": [{
+			"custom": { "fluid": "starmetal" }
 		}]
 	}
 }

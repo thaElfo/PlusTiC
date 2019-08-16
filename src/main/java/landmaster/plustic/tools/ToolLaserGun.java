@@ -26,6 +26,7 @@ import net.minecraft.creativetab.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.item.*;
 import net.minecraft.entity.player.*;
+import net.minecraft.inventory.*;
 import net.minecraft.item.*;
 import net.minecraft.item.crafting.*;
 import net.minecraft.nbt.*;
@@ -317,7 +318,16 @@ public class ToolLaserGun extends TinkerToolCore implements cofh.redstoneflux.ap
 						
 						if (this.extractEnergy(itemStackIn, energyTaken, true) >= energyTaken
 								&& nbt.getInteger(ATTACK_DURATION_TAG) <= 0) { // able to attack?
-							if (ToolHelper.attackEntity(itemStackIn, this, playerIn, ent)) { // try attacking
+							if (hand == EnumHand.OFF_HAND) {
+								unequip(playerIn, EntityEquipmentSlot.MAINHAND, EntityEquipmentSlot.MAINHAND);
+								equip(playerIn, EntityEquipmentSlot.OFFHAND, EntityEquipmentSlot.MAINHAND);
+							}
+							boolean didAttack = ToolHelper.attackEntity(itemStackIn, this, playerIn, ent);
+							if (hand == EnumHand.OFF_HAND) {
+								unequip(playerIn, EntityEquipmentSlot.OFFHAND, EntityEquipmentSlot.MAINHAND);
+								equip(playerIn, EntityEquipmentSlot.MAINHAND, EntityEquipmentSlot.MAINHAND);
+							}
+							if (didAttack) { // try attacking
 								this.extractEnergy(itemStackIn, energyTaken, false); // if success, use energy
 								nbt.setInteger(ATTACK_DURATION_TAG, this.maxAttackDuration(itemStackIn));
 								itemStackIn.setTagCompound(nbt);
@@ -330,6 +340,20 @@ public class ToolLaserGun extends TinkerToolCore implements cofh.redstoneflux.ap
 		}
 		
 		return res;
+	}
+	
+	private void unequip(EntityLivingBase entity, EntityEquipmentSlot slot, EntityEquipmentSlot functionalSlot) {
+		ItemStack stack = entity.getItemStackFromSlot(slot);
+		if (!stack.isEmpty()) {
+			entity.getAttributeMap().removeAttributeModifiers(stack.getAttributeModifiers(functionalSlot));
+		}
+	}
+	
+	private void equip(EntityLivingBase entity, EntityEquipmentSlot slot, EntityEquipmentSlot functionalSlot) {
+		ItemStack stack = entity.getItemStackFromSlot(slot);
+		if (!stack.isEmpty()) {
+			entity.getAttributeMap().applyAttributeModifiers(stack.getAttributeModifiers(functionalSlot));
+		}
 	}
 	
 	@Override

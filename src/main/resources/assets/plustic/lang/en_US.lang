@@ -246,7 +246,7 @@ modifier.haorans_cult_armor.desc=§oHarry, harry on the wall, who's the hairiest
 modifier.tom_and_jerry_armor.name=Tom and Jerry
 modifier.tom_and_jerry_armor.desc=§o[laughs in flattening Tom]§r\nExplosions caused by a user with this trait slow down those affected.
 modifier.im_a_superstar.name=I'm a Superstar
-modifier.im_a_superstar.name=§oI am a superstar!…[falls into the toilet]§r\nEffects depend on the player's attunement.
+modifier.im_a_superstar.desc=§oI am a superstar!…[falls into the toilet]§r\nEffects depend on the player's attunement.
 
 # MISCELLANEOUS
 

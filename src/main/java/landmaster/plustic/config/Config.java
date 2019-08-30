@@ -50,6 +50,7 @@ public class Config extends Configuration {
 	public static boolean constructsArmory;
 	public static boolean machines;
 	public static boolean astralSorcery;
+	public static boolean aoa;
 	
 	public static boolean jetpackConarmModifier;
 	public static float jetpackDurabilityBonusScale;
@@ -166,6 +167,7 @@ public class Config extends Configuration {
 		constructsArmory = getBoolean("Enable Constructs Armory support", "modules", true, "Integrate with Constructs Armory");
 		machines = getBoolean("Enable Machines addon", "modules", true, "Enable the machines from this mod (Centrifuge, etc.)");
 		astralSorcery = getBoolean("Enable Astral Sorcery support", "modules", true, "Integrate with Astral Sorcery");
+		aoa = getBoolean("Enable AoA support", "modules", true, "Integrate with AoA");
 		
 		jetpackConarmModifier = getBoolean("Add Simply Jetpacks as ConArm modifiers", "modifiers", true, "Add Simply Jetpacks as ConArm modifiers");
 		jetpackDurabilityBonusScale = getFloat("Durability bonus scalar for Simply Jetpacks modifiers", "modifiers", 1f/8000, 0, Float.MAX_VALUE, "Durability bonus calculated as FUEL_CAPACITY_OF_JETPACK*this_scalar");

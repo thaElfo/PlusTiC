@@ -2,6 +2,8 @@ package landmaster.plustic.modules;
 
 import static slimeknights.tconstruct.library.utils.HarvestLevels.*;
 
+import java.util.stream.*;
+
 import landmaster.plustic.*;
 import landmaster.plustic.config.*;
 import landmaster.plustic.fluids.*;
@@ -66,11 +68,12 @@ public class ModulePsi implements IModule {
 	@SubscribeEvent
 	public static void meltingRecipeRegister(TinkerRegisterEvent.MeltingRegisterEvent event) {
 		if (Config.psi && (Loader.isModLoaded("Psi") || Loader.isModLoaded("psi"))) {
-			if (OreDictionary.getOres("dustPsi", false).stream().findFirst()
-					.filter(event.getRecipe()::matches)
-					.isPresent()
+			if (Stream.concat(OreDictionary.getOres("dustPsi", false).stream(),
+					OreDictionary.getOres("blockPsiDust", false).stream())
+					.anyMatch(event.getRecipe()::matches)
+					&& Loader.instance().activeModContainer() != null
 					&& Loader.instance().activeModContainer().getModId().equalsIgnoreCase("tconstruct")) {
-				event.setCanceled(true); // remove dust recipe
+				event.setCanceled(true); // remove dust recipes
 			}
 		}
 	}

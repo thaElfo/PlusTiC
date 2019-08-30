@@ -102,6 +102,9 @@
 		}],
 		"starmetal": [{
 			"custom": { "fluid": "starmetal" }
+		}],
+		"limonite": [{
+			"custom": { "fluid": "limonite" }
 		}]
 	}
 }

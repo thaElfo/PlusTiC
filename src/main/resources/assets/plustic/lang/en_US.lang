@@ -3,7 +3,7 @@
 item.katana.name=Katana
 item.katana.desc=The Katana is a special weapon that unleashes combos on the target(s).\nComplements the Shuriken
 item.laser_gun.name=Laser Gun
-item.laser_gun.desc=The Laser Gun is a special ranged weapon that fires accurate shots from afar, but requires both durability and energy. It can also change mode to enable smelting of blocks.\nAttack depends on the laser medium, not the pipe piece.
+item.laser_gun.desc=The Laser Gun is a special "melee" (in some ways) weapon that fires accurate shots from afar, but requires both durability and energy. It can also change mode to enable smelting of blocks.\nAttack depends on the laser medium, not the pipe piece.
 
 item.pipe_piece.name=Pipe Piece
 item.laser_medium.name=Laser Medium
@@ -57,6 +57,7 @@ fluid.plustic.fiery_blood.name=Fiery Blood
 fluid.plustic.fiery.name=Molten Fiery Metal
 fluid.plustic.thaumium.name=Molten Thaumium
 fluid.plustic.starmetal.name=Molten Starmetal
+fluid.plustic.limonite.name=Molten Limonite
 
 material.sapphire.name=Sapphire
 material.ruby.name=Ruby
@@ -133,6 +134,7 @@ material.kyronite.name=Kyronite
 material.pladium.name=Pladium
 material.aethium.name=Aethium
 material.starmetal.name=Starmetal
+material.limonite.name=Limonite
 
 modifier.bloodymary.name=Bloody Mary
 modifier.bloodymary.desc=§oBrought to you by the legendary Queen of England...§r\nDeals bonus damage depending on the amount of health already lost by the target. Also, a chance to drop a Coagulated Blood for each hit.
@@ -307,7 +309,7 @@ tooltip.plustic.centrifuge.fluid_info=Fluid: %s (%d mb)
 
 # METER(S)
 
-meter.plustic.katana=COMBO LEVEL: %d
+meter.plustic.katana=COMBO LEVEL: %s
 
 # CONTROLS
 

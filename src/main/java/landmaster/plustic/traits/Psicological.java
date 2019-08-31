@@ -8,6 +8,7 @@ import net.minecraft.item.*;
 import net.minecraft.world.*;
 import slimeknights.tconstruct.library.traits.*;
 import slimeknights.tconstruct.library.utils.*;
+import slimeknights.tconstruct.tools.modifiers.*;
 
 public class Psicological extends AbstractTrait {
 	public static final int PSI_COST = 28;
@@ -21,6 +22,9 @@ public class Psicological extends AbstractTrait {
 	
 	@Override
 	public void onUpdate(ItemStack tool, World world, Entity entity, int itemSlot, boolean isSelected) {
+		if (TagUtil.getTagSafe(tool).getBoolean(ModReinforced.TAG_UNBREAKABLE)) {
+			return;
+		}
 		if (entity instanceof EntityPlayer
 				&& Toggle.getToggleState(tool, identifier)
 				&& ToolHelper.getCurrentDurability(tool) < ToolHelper.getMaxDurability(tool)) {
@@ -33,6 +37,9 @@ public class Psicological extends AbstractTrait {
 	
 	@Override
 	public int onToolDamage(ItemStack tool, int damage, int newDamage, EntityLivingBase entity) {
+		if (TagUtil.getTagSafe(tool).getBoolean(ModReinforced.TAG_UNBREAKABLE)) {
+			return 0;
+		}
 		if (entity instanceof EntityPlayer
 				&& newDamage >= 1
 				&& Toggle.getToggleState(tool, identifier)) {

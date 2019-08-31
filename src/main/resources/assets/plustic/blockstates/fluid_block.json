@@ -105,6 +105,9 @@
 		}],
 		"limonite": [{
 			"custom": { "fluid": "limonite" }
+		}],
+		"rosite": [{
+			"custom": { "fluid": "rosite" }
 		}]
 	}
 }

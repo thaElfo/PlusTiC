@@ -11,6 +11,7 @@ import net.minecraft.world.*;
 import net.minecraftforge.items.*;
 import slimeknights.tconstruct.library.traits.*;
 import slimeknights.tconstruct.library.utils.*;
+import slimeknights.tconstruct.tools.modifiers.*;
 import vazkii.botania.api.mana.*;
 
 public class Mana extends AbstractTrait {
@@ -24,6 +25,9 @@ public class Mana extends AbstractTrait {
 	
 	@Override
 	public void onUpdate(ItemStack tool, World world, Entity entity, int itemSlot, boolean isSelected) {
+		if (TagUtil.getTagSafe(tool).getBoolean(ModReinforced.TAG_UNBREAKABLE)) {
+			return;
+		}
 		if (!world.isRemote
 				&& entity instanceof EntityPlayer
 				&& ToolHelper.getCurrentDurability(tool) < ToolHelper.getMaxDurability(tool)
@@ -36,6 +40,9 @@ public class Mana extends AbstractTrait {
 	
 	@Override
 	public int onToolDamage(ItemStack tool, int damage, int newDamage, EntityLivingBase entity) {
+		if (TagUtil.getTagSafe(tool).getBoolean(ModReinforced.TAG_UNBREAKABLE)) {
+			return 0;
+		}
 		if (!entity.getEntityWorld().isRemote
 				&& entity instanceof EntityPlayer
 				&& Toggle.getToggleState(tool, identifier)

@@ -7,6 +7,7 @@ import static slimeknights.tconstruct.tools.TinkerTraits.*;
 import landmaster.plustic.*;
 import landmaster.plustic.config.*;
 import landmaster.plustic.fluids.*;
+import landmaster.plustic.traits.*;
 import landmaster.plustic.util.*;
 import net.minecraftforge.fml.common.*;
 import slimeknights.tconstruct.library.*;
@@ -35,6 +36,25 @@ public class ModuleAoA implements IModule {
 					new BowMaterialStats(0.7f, 1.5f, 6f));
 			
 			PlusTiC.materials.put("limonite", limonite);
+			
+			Material rosite = new Material("rosite", 0xEF2647);
+			rosite.addTrait(Autorepair.autorepair);
+			rosite.addItem("ingotRosite", 1, Material.VALUE_Ingot);
+			rosite.setCraftable(false).setCastable(true);
+			PlusTiC.proxy.setRenderInfo(rosite, 0xEF2647);
+			
+			FluidMolten rositeFluid = Utils.fluidMetal("rosite", 0xEF2647);
+			rositeFluid.setTemperature(888);
+			Utils.initFluidMetal(rositeFluid);
+			rosite.setFluid(rositeFluid);
+			
+			TinkerRegistry.addMaterialStats(rosite,
+					new HeadMaterialStats(2000, 9, 6, COBALT),
+					new HandleMaterialStats(1.5f, -600),
+					new ExtraMaterialStats(200),
+					new BowMaterialStats(1, 1, 6f));
+			
+			PlusTiC.materials.put("rosite", rosite);
 		}
 	}
 }

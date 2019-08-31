@@ -58,6 +58,7 @@ fluid.plustic.fiery.name=Molten Fiery Metal
 fluid.plustic.thaumium.name=Molten Thaumium
 fluid.plustic.starmetal.name=Molten Starmetal
 fluid.plustic.limonite.name=Molten Limonite
+fluid.plustic.rosite.name=Molten Rosite
 
 material.sapphire.name=Sapphire
 material.ruby.name=Ruby
@@ -135,6 +136,7 @@ material.pladium.name=Pladium
 material.aethium.name=Aethium
 material.starmetal.name=Starmetal
 material.limonite.name=Limonite
+material.rosite.name=Rosite
 
 modifier.bloodymary.name=Bloody Mary
 modifier.bloodymary.desc=§oBrought to you by the legendary Queen of England...§r\nDeals bonus damage depending on the amount of health already lost by the target. Also, a chance to drop a Coagulated Blood for each hit.
@@ -249,6 +251,8 @@ modifier.tom_and_jerry_armor.name=Tom and Jerry
 modifier.tom_and_jerry_armor.desc=§o[laughs in flattening Tom]§r\nExplosions caused by a user with this trait slow down those affected.
 modifier.im_a_superstar.name=I'm a Superstar
 modifier.im_a_superstar.desc=§oI am a superstar!…[falls into the toilet]§r\nEffects depend on the player's attunement.
+modifier.autorepair.name=Autorepair
+modifier.autorepair.desc=§oHandy!§r\nWhen the tool breaks, a sharpening kit is grabbed from your inventory to repair it. If the tool is unbreakable, gain 1 modifier instead.
 
 # MISCELLANEOUS
 

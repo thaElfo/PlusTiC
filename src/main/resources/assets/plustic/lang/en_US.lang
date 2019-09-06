@@ -137,6 +137,8 @@ material.aethium.name=Aethium
 material.starmetal.name=Starmetal
 material.limonite.name=Limonite
 material.rosite.name=Rosite
+material.sapphire_aoa.name=Ascended Sapphire
+material.jade.name=Jade
 
 modifier.bloodymary.name=Bloody Mary
 modifier.bloodymary.desc=§oBrought to you by the legendary Queen of England...§r\nDeals bonus damage depending on the amount of health already lost by the target. Also, a chance to drop a Coagulated Blood for each hit.
@@ -253,6 +255,8 @@ modifier.im_a_superstar.name=I'm a Superstar
 modifier.im_a_superstar.desc=§oI am a superstar!…[falls into the toilet]§r\nEffects depend on the player's attunement.
 modifier.autorepair.name=Autorepair
 modifier.autorepair.desc=§oHandy!§r\nWhen the tool breaks, a sharpening kit is grabbed from your inventory to repair it. If the tool is unbreakable, gain 1 modifier instead.
+modifier.jaded.name=Jaded
+modifier.jaded.desc=§oCat§r\nMobs attacked with this tool have their ability to heal temporarily hindered.
 
 # MISCELLANEOUS
 
@@ -310,6 +314,7 @@ tooltip.plustic.toggle.info=Click to toggle
 tooltip.plustic.toggle.state.true=%s currently §aenabled
 tooltip.plustic.toggle.state.false=%s currently §cdisabled
 tooltip.plustic.centrifuge.fluid_info=Fluid: %s (%d mb)
+tooltip.plustic.sapphire.warn=§cAoA 3 Sapphire is a different material
 
 # METER(S)
 

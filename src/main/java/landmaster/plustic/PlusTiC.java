@@ -44,7 +44,7 @@ public class PlusTiC {
 	public static final Logger log = LogManager.getLogger(
 			ModInfo.MODID.toUpperCase(Locale.US/* to avoid problems with Turkish */));
 	
-	public static final Map<String, Material> materials = new Object2ObjectOpenHashMap<>();
+	public static final Map<String, Material> materials = new LinkedHashMap<>();
 	public static final Map<String, MaterialIntegration> materialIntegrations = new Object2ObjectOpenHashMap<>();
 	
 	public static final Map<String, CompletionStage<?>> materialIntegrationStages = new Object2ObjectOpenHashMap<>();
@@ -108,7 +108,7 @@ public class PlusTiC {
 				new ModuleBase(),
 				
 				new ModuleNatura(),
-				new ModuleBoP(),
+				new ModuleGems(),
 				new ModuleMekanism(),
 				new ModuleAdvRocketry(),
 				new ModuleBotania(),

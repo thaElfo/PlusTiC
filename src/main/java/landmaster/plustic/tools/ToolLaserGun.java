@@ -51,6 +51,20 @@ import slimeknights.tconstruct.tools.*;
 @net.minecraftforge.fml.common.Optional.Interface(iface = "cofh.redstoneflux.api.IEnergyContainerItem", modid = "redstoneflux")
 @net.minecraftforge.fml.common.Optional.Interface(iface = "appeng.api.implementations.items.IAEItemPowerStorage", modid = "appliedenergistics2")
 public class ToolLaserGun extends TinkerToolCore implements cofh.redstoneflux.api.IEnergyContainerItem, IAEItemPowerStorage, IToggleTool<ToolLaserGun.Mode> {
+	public static class LaserDamageSource extends EntityDamageSource {
+		private final ItemStack stack;
+		
+		public LaserDamageSource(String damageTypeIn, Entity damageSourceEntityIn, ItemStack stack) {
+			super(damageTypeIn, damageSourceEntityIn);
+			this.stack = stack;
+		}
+
+		public ItemStack getStack() {
+			return stack;
+		}
+		
+	}
+	
 	private static float range(ItemStack is) {
 		return (new LaserNBT(TagUtil.getToolTag(is))).range;
 	}
@@ -327,6 +341,8 @@ public class ToolLaserGun extends TinkerToolCore implements cofh.redstoneflux.ap
 								unequip(playerIn, EntityEquipmentSlot.OFFHAND, EntityEquipmentSlot.MAINHAND);
 								equip(playerIn, EntityEquipmentSlot.MAINHAND, EntityEquipmentSlot.MAINHAND);
 							}
+							PTLaserAttack aevent = new PTLaserAttack(playerIn, ent, itemStackIn, didAttack);
+							MinecraftForge.EVENT_BUS.post(aevent);
 							if (didAttack) { // try attacking
 								this.extractEnergy(itemStackIn, energyTaken, false); // if success, use energy
 								nbt.setInteger(ATTACK_DURATION_TAG, this.maxAttackDuration(itemStackIn));
@@ -340,6 +356,14 @@ public class ToolLaserGun extends TinkerToolCore implements cofh.redstoneflux.ap
 		}
 		
 		return res;
+	}
+	
+	@Override
+	public boolean dealDamage(ItemStack stack, EntityLivingBase player, Entity entity, float damage) {
+		if(player instanceof EntityPlayer) {
+			return entity.attackEntityFrom(new LaserDamageSource("player", player, stack), damage);
+		}
+		return entity.attackEntityFrom(new LaserDamageSource("mob", player, stack), damage);
 	}
 	
 	private void unequip(EntityLivingBase entity, EntityEquipmentSlot slot, EntityEquipmentSlot functionalSlot) {

@@ -55,6 +55,19 @@ public class ModuleAoA implements IModule {
 					new BowMaterialStats(1, 1, 6f));
 			
 			PlusTiC.materials.put("rosite", rosite);
+			
+			Material crystallite = new Material("crystallite", 0xFFC14D);
+			crystallite.addTrait(Global.global);
+			crystallite.addItem("gemCrystallite", 1, Material.VALUE_Ingot);
+			new OreRegisterPromise("gemCrystallite").thenAccept(crystallite::setRepresentativeItem);
+			crystallite.setCraftable(true);
+			PlusTiC.proxy.setRenderInfo(crystallite, 0xFFC14D);
+			
+			TinkerRegistry.addMaterialStats(crystallite,
+					new HeadMaterialStats(1000, 8.5f, 10, 5),
+					new HandleMaterialStats(0.8f, 20),
+					new ExtraMaterialStats(70),
+					new BowMaterialStats(1, 1, 6f));
 		}
 	}
 }

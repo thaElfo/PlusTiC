@@ -18,11 +18,12 @@ import net.minecraft.util.text.*;
 import net.minecraftforge.event.entity.player.*;
 import net.minecraftforge.fml.common.*;
 import net.minecraftforge.fml.common.eventhandler.*;
+import net.minecraftforge.fml.relauncher.*;
 import slimeknights.tconstruct.library.*;
 import slimeknights.tconstruct.library.materials.*;
 import slimeknights.tconstruct.library.utils.*;
 
-@Mod.EventBusSubscriber(modid = ModInfo.MODID)
+@Mod.EventBusSubscriber(modid = ModInfo.MODID, value = Side.CLIENT)
 public class ModuleGems implements IModule {
 
 	public void init() {

@@ -56,18 +56,45 @@ public class ModuleAoA implements IModule {
 			
 			PlusTiC.materials.put("rosite", rosite);
 			
-			/*Material crystallite = new Material("crystallite", 0xFFC14D);
+			Material crystallite = new Material("crystallite", 0xFFC14D);
 			crystallite.addTrait(Global.global);
+			crystallite.addTrait(BrownMagic.brownmagic);
 			crystallite.addItem("gemCrystallite", 1, Material.VALUE_Ingot);
 			new OreRegisterPromise("gemCrystallite").thenAccept(crystallite::setRepresentativeItem);
 			crystallite.setCraftable(true);
 			PlusTiC.proxy.setRenderInfo(crystallite, 0xFFC14D);
 			
 			TinkerRegistry.addMaterialStats(crystallite,
-					new HeadMaterialStats(1000, 8.5f, 10, 5),
+					new HeadMaterialStats(1000, 7, 10, 5),
 					new HandleMaterialStats(0.8f, 20),
 					new ExtraMaterialStats(70),
-					new BowMaterialStats(1, 1, 6f));*/
+					PlusTiC.justWhy);
+			PlusTiC.materials.put("crystallite", crystallite);
+			
+			Material emberstone = new Material("emberstone", 0x450009);
+			emberstone.addTrait(autosmelt, HEAD);
+			emberstone.addTrait(hellish, HEAD);
+			emberstone.addTrait(autosmelt);
+			emberstone.addItem("ingotEmberstone", 1, Material.VALUE_Ingot);
+			emberstone.setCraftable(false).setCastable(true);
+			PlusTiC.proxy.setRenderInfo(emberstone, 0x450009);
+			
+			FluidMolten emberstoneFluid = Utils.fluidMetal("emberstone", 0x450009);
+			emberstoneFluid.setTemperature(1000);
+			Utils.initFluidMetal(emberstoneFluid);
+			emberstone.setFluid(emberstoneFluid);
+			
+			TinkerRegistry.addMaterialStats(emberstone,
+					new HeadMaterialStats(1100, 9, 9.5f, COBALT),
+					new HandleMaterialStats(1, 0),
+					new ExtraMaterialStats(120),
+					new BowMaterialStats(0.4f, 2, 10));
+			PlusTiC.materials.put("emberstone", emberstone);
+			
+			/*Material skeletal = new Material("skeletal", 0xE8E3C5);
+			skeletal.addTrait(sharp, HEAD);
+			skeletal.addTrait(fractured);
+			skeletal.addItem("ingotSkeletal", 1, Material.VALUE_Ingot);*/
 		}
 	}
 }

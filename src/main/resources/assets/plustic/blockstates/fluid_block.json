@@ -108,6 +108,9 @@
 		}],
 		"rosite": [{
 			"custom": { "fluid": "rosite" }
+		}],
+		"emberstone": [{
+			"custom": { "fluid": "emberstone" }
 		}]
 	}
 }

@@ -214,7 +214,17 @@ public class Utils {
 	}
 	
 	public static BlockMolten registerMoltenBlock(Fluid fluid) {
-		BlockMolten block = new BlockMolten(fluid);
+		BlockMolten block = new BlockMolten(fluid) {
+			@Nonnull
+			@Override
+			public String getTranslationKey() {
+				Fluid fluid = FluidRegistry.getFluid(fluidName);
+				if(fluid != null) {
+					return fluid.getUnlocalizedName().substring(0, fluid.getUnlocalizedName().length() - 5); // chop off .name
+				}
+				return super.getTranslationKey();
+			}
+		};
 		return registerBlock(block, "molten_" + fluid.getName());
 	}
 	

@@ -43,6 +43,9 @@ public class Toggle {
 	private static final Set<String> toggleable = new HashSet<>();
 	private static final Map<String, String> toggleableAlias = new HashMap<>();
 	
+	@CapabilityInject(IToggleArmor.class)
+	private static Capability<IToggleArmor> TOGGLE_ARMOR = null;
+	
 	static {
 		MinecraftForge.EVENT_BUS.register(Toggle.class);
 		CapabilityManager.INSTANCE.register(IToggleArmor.class, new Capability.IStorage<IToggleArmor>() {
@@ -261,6 +264,40 @@ public class Toggle {
 		public void update(String identifier, boolean value) {
 			int ind = identifiers.indexOf(identifier);
 			if (ind>=0) enableds.set(ind, value);
+		}
+	}
+	
+	@SubscribeEvent
+	public static void copyOnDeath(net.minecraftforge.event.entity.player.PlayerEvent.Clone event) {
+		IToggleArmor oldCap = event.getOriginal().getCapability(TOGGLE_ARMOR, null);
+		IToggleArmor newCap = event.getEntityPlayer().getCapability(TOGGLE_ARMOR, null);
+		if (oldCap != null && newCap != null) {
+			newCap.getDisabled().clear();
+			newCap.getDisabled().addAll(oldCap.getDisabled());
+		}
+	}
+	
+	@SubscribeEvent
+	public static void onPlayerRespawn(net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerRespawnEvent event) {
+		syncArmorToClient(event);
+	}
+	
+	@SubscribeEvent
+	public static void onPlayerLogin(net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent event) {
+		syncArmorToClient(event);
+	}
+	
+	@SubscribeEvent
+	public static void changeDim(net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerChangedDimensionEvent event) {
+		syncArmorToClient(event);
+	}
+	
+	protected static void syncArmorToClient(net.minecraftforge.fml.common.gameevent.PlayerEvent event) {
+		IToggleArmor cap = event.player.getCapability(TOGGLE_ARMOR, null);
+		if (cap != null && !event.player.world.isRemote) {
+			for (String disabled: cap.getDisabled()) {
+				PacketHandler.INSTANCE.sendTo(new PacketUpdateToggleGui(ARMOR_FLAG+disabled, false), (EntityPlayerMP)event.player);
+			}
 		}
 	}
 	

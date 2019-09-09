@@ -53,12 +53,11 @@ fluid.plustic.landium.name=Molten Landium
 fluid.plustic.desh.name=Molten Desh
 fluid.plustic.refinedglowstone.name=Refined Glowstone
 fluid.plustic.osgloglas.name=Molten Osgloglas
-fluid.plustic.fiery_blood.name=Fiery Blood
-fluid.plustic.fiery.name=Molten Fiery Metal
 fluid.plustic.thaumium.name=Molten Thaumium
 fluid.plustic.starmetal.name=Molten Starmetal
 fluid.plustic.limonite.name=Molten Limonite
 fluid.plustic.rosite.name=Molten Rosite
+fluid.plustic.emberstone.name=Molten Emberstone
 
 material.sapphire.name=Sapphire
 material.ruby.name=Ruby
@@ -139,6 +138,8 @@ material.limonite.name=Limonite
 material.rosite.name=Rosite
 material.sapphire_aoa.name=Ascended Sapphire
 material.jade.name=Jade
+material.crystallite.name=Crystallite
+material.emberstone.name=Emberstone
 
 modifier.bloodymary.name=Bloody Mary
 modifier.bloodymary.desc=§oBrought to you by the legendary Queen of England...§r\nDeals bonus damage depending on the amount of health already lost by the target. Also, a chance to drop a Coagulated Blood for each hit.

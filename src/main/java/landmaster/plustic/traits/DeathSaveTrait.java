@@ -63,11 +63,10 @@ public abstract class DeathSaveTrait extends AbstractTrait implements IArmorTrai
 		return String.format(super.getLocalizedDesc(), cost);
 	}
 	
-	@SubscribeEvent(priority = EventPriority.LOWEST)
-	public void timing(LivingHurtEvent event) {
+	@SubscribeEvent(priority = EventPriority.HIGHEST)
+	public void timing(LivingDeathEvent event) {
 		if (event.getEntity().getEntityWorld().isRemote
-				|| !(event.getEntity() instanceof EntityPlayerMP)
-				|| event.getEntityLiving().getHealth() > event.getAmount()) {
+				|| !(event.getEntity() instanceof EntityPlayerMP)) {
 			return;
 		}
 		
@@ -76,7 +75,9 @@ public abstract class DeathSaveTrait extends AbstractTrait implements IArmorTrai
 				&& hasDeathSaveArmor((EntityPlayer)event.getEntity())
 				&& event.getEntity().hasCapability(PORTAL_ARMOR, null)
 				&& event.getEntity().hasCapability(TOGGLE_ARMOR, null)
-				&& !event.getEntity().getCapability(TOGGLE_ARMOR, null).getDisabled().contains(identifier)) {
+				&& !event.getEntity().getCapability(TOGGLE_ARMOR, null).getDisabled().contains(identifier)
+				&& Utils.canTeleportTo((EntityPlayer)event.getEntity(), event.getEntity().getCapability(PORTAL_ARMOR, null).location())
+				&& !event.getEntity().getCapability(PORTAL_ARMOR, null).location().equals(Coord4D.NIHIL)) {
 			checkItems(event, event.getEntity().getCapability(PORTAL_ARMOR, null).location());
 		} else {
 			Arrays.stream(EnumHand.values())
@@ -101,7 +102,7 @@ public abstract class DeathSaveTrait extends AbstractTrait implements IArmorTrai
 				.isPresent();
 	}
 	
-	private void checkItems(LivingHurtEvent event, Coord4D coord) {
+	private void checkItems(LivingDeathEvent event, Coord4D coord) {
 		IItemHandler ih = event.getEntity().getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 		for (int i=0; i<ih.getSlots(); ++i) {
 			ItemStack is = ih.extractItem(i, cost, true);
@@ -119,6 +120,8 @@ public abstract class DeathSaveTrait extends AbstractTrait implements IArmorTrai
 						event.getEntityLiving().extinguish();
 					}
 				});
+				event.getEntityLiving().setHealth(1);
+				event.getEntityLiving().addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 160, 1));
 				event.getEntityLiving().addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 160));
 				event.getEntity().sendMessage(new TextComponentTranslation(
 						unlocSaveMessage));

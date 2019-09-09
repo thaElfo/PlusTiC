@@ -2,6 +2,8 @@ package landmaster.plustic.fluids;
 
 import net.minecraft.item.*;
 import net.minecraft.util.*;
+import net.minecraft.util.text.translation.*;
+import net.minecraftforge.fluids.*;
 import landmaster.plustic.api.*;
 import slimeknights.tconstruct.library.fluid.*;
 
@@ -24,5 +26,17 @@ public class FluidMolten extends FluidColored {
         
         // rare by default
         setRarity(EnumRarity.UNCOMMON);
+    }
+    
+    @Override
+    public String getUnlocalizedName() {
+    	return super.getUnlocalizedName() + ".name";
+    }
+    
+    @SuppressWarnings("deprecation")
+	@Override
+    public String getLocalizedName(FluidStack stack) {
+    	String s = this.getUnlocalizedName();
+    	return s == null ? "" : I18n.translateToLocal(s);
     }
 }

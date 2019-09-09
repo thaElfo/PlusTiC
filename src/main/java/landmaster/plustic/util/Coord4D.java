@@ -17,6 +17,8 @@ public class Coord4D {
 	public int zCoord;
 	public int dimensionId;
 	
+	public static final Coord4D NIHIL = new Coord4D(0,0,0,0);
+	
 	public Coord4D(Entity ent) {
 		xCoord = (int)ent.posX;
 		yCoord = (int)ent.posY;

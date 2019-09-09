@@ -14,6 +14,7 @@ import net.minecraftforge.common.*;
 import net.minecraftforge.common.capabilities.*;
 import net.minecraftforge.event.*;
 import net.minecraftforge.event.entity.player.*;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.eventhandler.*;
 import net.minecraftforge.fml.common.gameevent.*;
@@ -21,6 +22,9 @@ import net.minecraftforge.fml.relauncher.*;
 import slimeknights.tconstruct.library.utils.*;
 
 public class Portal {
+	@CapabilityInject(IPortalArmor.class)
+	private static Capability<IPortalArmor> PORTAL_ARMOR = null;
+	
 	public static final ResourceLocation PORTALARMOR_CAPLOCATION = new ResourceLocation(ModInfo.MODID, "portalarmor_cap");
 	
 	static {
@@ -44,7 +48,7 @@ public class Portal {
 		void location(Coord4D loc);
 	}
 	private static class PortalArmor implements IPortalArmor {
-		private Coord4D loc = new Coord4D(0, 0, 0, 0);
+		private Coord4D loc = Coord4D.NIHIL;
 
 		@Override
 		public Coord4D location() {
@@ -110,6 +114,15 @@ public class Portal {
 			}
 		}
 		return false;
+	}
+	
+	@SubscribeEvent
+	public static void copyOnDeath(PlayerEvent.Clone event) {
+		IPortalArmor oldCap = event.getOriginal().getCapability(PORTAL_ARMOR, null);
+		IPortalArmor newCap = event.getEntityPlayer().getCapability(PORTAL_ARMOR, null);
+		if (oldCap != null && newCap != null) {
+			newCap.location(oldCap.location());
+		}
 	}
 	
 	@SideOnly(Side.CLIENT)

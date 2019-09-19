@@ -57,6 +57,6 @@ public class EntityCameoTrait extends AbstractTrait {
 		cameo.setPosition(summoner.posX + random.nextDouble()*4 - 2,
 				summoner.posY,
 				summoner.posZ + random.nextDouble()*4 - 2);
-		summoner.getEntityWorld().spawnEntity(summoner);
+		summoner.getEntityWorld().spawnEntity(cameo);
 	}
 }

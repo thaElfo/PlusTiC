@@ -4,13 +4,14 @@ import java.lang.invoke.*;
 import java.lang.reflect.*;
 import java.util.*;
 import java.util.Optional;
+import java.util.function.*;
 
 import javax.annotation.*;
 
 import org.apache.commons.lang3.*;
 import org.apache.commons.lang3.StringUtils;
 
-import com.google.common.base.*;
+import com.google.common.base.Throwables;
 
 import landmaster.plustic.*;
 import landmaster.plustic.api.*;
@@ -37,6 +38,7 @@ import slimeknights.tconstruct.library.*;
 import slimeknights.tconstruct.library.materials.*;
 import slimeknights.tconstruct.library.modifiers.*;
 import slimeknights.tconstruct.library.modifiers.Modifier;
+import slimeknights.tconstruct.library.smeltery.*;
 import slimeknights.tconstruct.library.utils.TagUtil;
 
 public class Utils {
@@ -67,6 +69,18 @@ public class Utils {
 		}
 	}
 	
+	private static final List<ICastingRecipe> tableCastingRecipes;
+	static {
+		try {
+			Field temp = TinkerRegistry.class.getDeclaredField("tableCastRegistry");
+			temp.setAccessible(true);
+			tableCastingRecipes = (List<ICastingRecipe>) MethodHandles.lookup().unreflectGetter(temp).invokeExact();
+		} catch (Throwable e) {
+			Throwables.throwIfUnchecked(e);
+			throw new RuntimeException(e);
+		}
+	}
+	
 	public static void forceOut(String material) {
 		if (tinkerMaterials.remove(material) != null) {
 			PlusTiC.log.info(String.format("Forcing out material %s", material));
@@ -77,6 +91,16 @@ public class Utils {
 		Optional.ofNullable(tinkerMaterialRegisteredByMod.get(material))
 				.filter(cont -> ArrayUtils.contains(anyOfTheseModids, cont.getModId()))
 				.ifPresent(cont -> forceOut(material));
+	}
+	
+	public static void displaceTableCastingRecipe(ICastingRecipe recipe) {
+		if (tableCastingRecipes.remove(recipe)) {
+			tableCastingRecipes.add(recipe);
+		}
+	}
+	
+	public static void addTableCastingRecipeDirectly(ICastingRecipe recipe) {
+		tableCastingRecipes.add(recipe);
 	}
 	
 	/**
@@ -129,7 +153,7 @@ public class Utils {
 		AxisAlignedBB bb = entity.getEntityBoundingBox().expand(look.x * range, look.y * range, look.z * range)
 				.expand(1, 1, 1);
 		List<Entity> entitiesInArea = entity.getEntityWorld().getEntitiesInAABBexcluding(entity, bb,
-				Predicates.and(pred, EntitySelectors.NOT_SPECTATING));
+				EntitySelectors.NOT_SPECTATING.and(pred)::test);
 		double range2 = range; // range to the current candidate. Used to find
 								// the closest entity.
 		

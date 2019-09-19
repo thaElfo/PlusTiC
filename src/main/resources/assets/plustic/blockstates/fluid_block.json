@@ -111,6 +111,12 @@
 		}],
 		"emberstone": [{
 			"custom": { "fluid": "emberstone" }
+		}],
+		"skeletal": [{
+			"custom": { "fluid": "skeletal" }
+		}],
+		"mystite": [{
+			"custom": { "fluid": "mystite" }
 		}]
 	}
 }

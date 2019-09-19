@@ -22,7 +22,10 @@ import net.minecraftforge.fluids.*;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.*;
 import slimeknights.tconstruct.library.*;
+import slimeknights.tconstruct.library.events.*;
 import slimeknights.tconstruct.library.materials.*;
+import slimeknights.tconstruct.library.smeltery.*;
+import slimeknights.tconstruct.library.tinkering.*;
 import slimeknights.tconstruct.shared.*;
 
 @Mod.EventBusSubscriber(modid = ModInfo.MODID)
@@ -175,6 +178,32 @@ public class ModuleBase implements IModule {
 						new FluidStack(TinkerFluids.nickel, 1));
 			}
 		});
+		
+		if (PlusTiC.materials.containsKey("emerald")) {
+			TinkerRegistry.registerTableCasting(EmeraldBoltCoreCastingRecipe.INSTANCE);
+		}
 	}
 	
+	@SubscribeEvent
+	public static void onCastingRecipeRegister(TinkerRegisterEvent.TableCastingRegisterEvent event) {
+		if (event.getRecipe() instanceof CastingRecipe
+				&& ((CastingRecipe)event.getRecipe()).getResult().getItem() instanceof IMaterialItem
+				&& ((CastingRecipe)event.getRecipe()).getFluid().getFluid().equals(TinkerFluids.emerald)) {
+			FluidStack fs = ((CastingRecipe)event.getRecipe()).getFluid();
+			// heuristic to make sure we don't apply this correction more than once
+			if (fs.amount % Material.VALUE_Shard != 0) return;
+			fs.amount = (fs.amount * Material.VALUE_Gem) / Material.VALUE_Ingot;
+		}
+	}
+	
+	@SubscribeEvent
+	public static void onMeltingRecipeRegister(TinkerRegisterEvent.MeltingRegisterEvent event) {
+		if (event.getRecipe().input.getInputs()
+				.stream().anyMatch(stack -> stack.getItem() instanceof IMaterialItem)
+				&& event.getRecipe().output.getFluid().equals(TinkerFluids.emerald)) {
+			FluidStack fs = event.getRecipe().output;
+			if (fs.amount % Material.VALUE_Shard != 0) return;
+			fs.amount = (fs.amount * Material.VALUE_Gem) / Material.VALUE_Ingot;
+		}
+	}
 }

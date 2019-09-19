@@ -58,6 +58,8 @@ fluid.plustic.starmetal.name=Molten Starmetal
 fluid.plustic.limonite.name=Molten Limonite
 fluid.plustic.rosite.name=Molten Rosite
 fluid.plustic.emberstone.name=Molten Emberstone
+fluid.plustic.skeletal.name=Molten Skeletal
+fluid.plustic.mystite.name=Molten Mystite
 
 material.sapphire.name=Sapphire
 material.ruby.name=Ruby
@@ -140,6 +142,9 @@ material.sapphire_aoa.name=Ascended Sapphire
 material.jade.name=Jade
 material.crystallite.name=Crystallite
 material.emberstone.name=Emberstone
+material.skeletal.name=Skeletal
+material.mystite.name=Mystite
+material.ghostlystone.name=Ghostly Stone
 
 modifier.bloodymary.name=Bloody Mary
 modifier.bloodymary.desc=§oBrought to you by the legendary Queen of England...§r\nDeals bonus damage depending on the amount of health already lost by the target. Also, a chance to drop a Coagulated Blood for each hit.
@@ -258,6 +263,10 @@ modifier.autorepair.name=Autorepair
 modifier.autorepair.desc=§oHandy!§r\nWhen the tool breaks, a sharpening kit is grabbed from your inventory to repair it. If the tool is unbreakable, gain 1 modifier instead.
 modifier.jaded.name=Jaded
 modifier.jaded.desc=§oCat§r\nMobs attacked with this tool have their ability to heal temporarily hindered.
+modifier.soulcharge.name=Soul Charge
+modifier.soulcharge.desc=§oThe soul is charged on a googolplex counts§r\nAdds Soul Power per block mined: +5, +2, and +1 for pickaxe, axe, and shovel-minable blocks respectively.
+modifier.soulpower.name=Soul Power
+modifier.soulpower.desc=§oI hereby declare defendant guilty on all charges§r\nAttack damage increases based on the amount of Soul Power you have, but attacks use it up.
 
 # MISCELLANEOUS
 

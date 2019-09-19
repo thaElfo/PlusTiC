@@ -9,6 +9,8 @@ import landmaster.plustic.config.*;
 import landmaster.plustic.fluids.*;
 import landmaster.plustic.traits.*;
 import landmaster.plustic.util.*;
+import net.minecraft.item.*;
+import net.minecraft.util.*;
 import net.minecraftforge.fml.common.*;
 import slimeknights.tconstruct.library.*;
 import slimeknights.tconstruct.library.materials.*;
@@ -91,10 +93,63 @@ public class ModuleAoA implements IModule {
 					new BowMaterialStats(0.4f, 2, 10));
 			PlusTiC.materials.put("emberstone", emberstone);
 			
-			/*Material skeletal = new Material("skeletal", 0xE8E3C5);
+			Material skeletal = new Material("skeletal", 0xE8E3C5);
 			skeletal.addTrait(sharp, HEAD);
 			skeletal.addTrait(fractured);
-			skeletal.addItem("ingotSkeletal", 1, Material.VALUE_Ingot);*/
+			skeletal.addItem("ingotSkeletal", 1, Material.VALUE_Ingot);
+			skeletal.setCraftable(false).setCastable(true);
+			PlusTiC.proxy.setRenderInfo(skeletal, 0xE8E3C5);
+			
+			FluidMolten skeletalFluid = Utils.fluidMetal("skeletal", 0xE8E3C5);
+			skeletalFluid.setTemperature(888);
+			Utils.initFluidMetal(skeletalFluid);
+			skeletal.setFluid(skeletalFluid);
+			
+			TinkerRegistry.addMaterialStats(skeletal,
+					new HeadMaterialStats(1500, 12, 12, 4),
+					new HandleMaterialStats(1, 200),
+					new ExtraMaterialStats(200),
+					new BowMaterialStats(0.3f, 2, 13));
+			PlusTiC.materials.put("skeletal", skeletal);
+			
+			Material mystite = new Material("mystite", 0x29ffc2);
+			mystite.addTrait(SoulPower.soulpower);
+			mystite.addItem("ingotMystite", 1, Material.VALUE_Ingot);
+			mystite.setCraftable(false).setCastable(true);
+			PlusTiC.proxy.setRenderInfo(mystite, 0x29ffc2);
+			
+			FluidMolten mystiteFluid = Utils.fluidMetal("mystite", 0x29ffc2);
+			mystiteFluid.setTemperature(361);
+			Utils.initFluidMetal(mystiteFluid);
+			mystite.setFluid(mystiteFluid);
+			
+			TinkerRegistry.addMaterialStats(mystite,
+					new HeadMaterialStats(2000, 14, 4, 6),
+					new HandleMaterialStats(0.7f, -50),
+					new ExtraMaterialStats(0),
+					new BowMaterialStats(1, 1, 5));
+			PlusTiC.materials.put("mystite", mystite);
+			
+			Material ghostlyStone = new Material("ghostlystone", 0xe8fcff);
+			ghostlyStone.addTrait(SoulCharge.soulcharge);
+			ghostlyStone.setCraftable(true);
+			PlusTiC.proxy.setRenderInfo(ghostlyStone, 0xe8fcff);
+			TinkerRegistry.addMaterialStats(ghostlyStone,
+					new HeadMaterialStats(50, 4, 2, STONE),
+					new HandleMaterialStats(1.5f, 0),
+					new ExtraMaterialStats(400),
+					PlusTiC.justWhy);
+			PlusTiC.materials.put("ghostlystone", ghostlyStone);
+		}
+	}
+	
+	@Override
+	public void init2() {
+		Material ghostlyStone = PlusTiC.materials.get("ghostlystone");
+		if (ghostlyStone != null) {
+			Item ghostlyStoneItem = Item.REGISTRY.getObject(new ResourceLocation("aoa3:ghostly_stone"));
+			ghostlyStone.addItem(ghostlyStoneItem, 1, Material.VALUE_Ingot);
+			ghostlyStone.setRepresentativeItem(ghostlyStoneItem);
 		}
 	}
 }

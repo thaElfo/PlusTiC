@@ -117,6 +117,9 @@
 		}],
 		"mystite": [{
 			"custom": { "fluid": "mystite" }
+		}],
+		"blazium": [{
+			"custom": { "fluid": "blazium" }
 		}]
 	}
 }

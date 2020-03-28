@@ -10,6 +10,7 @@ import net.minecraftforge.common.*;
 import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.fml.common.eventhandler.*;
 import slimeknights.tconstruct.library.entity.*;
+import slimeknights.tconstruct.library.tools.ranged.*;
 import slimeknights.tconstruct.library.traits.*;
 
 public class Jaded extends AbstractProjectileTrait {
@@ -50,11 +51,12 @@ public class Jaded extends AbstractProjectileTrait {
 	}
 	
 	@SubscribeEvent
-	public void onAttack(LivingAttackEvent event) {
+	public void onAttack(LivingAttackEvent event) { // for melee damage
 		if (event.getEntity().world.isRemote) return;
 		
 		if (event.getSource() instanceof EntityDamageSource
 				&& !(event.getSource() instanceof EntityDamageSourceIndirect)
+				&& !(event.getSource() instanceof ProjectileCore.DamageSourceProjectileForEndermen)
 				&& event.getSource().getTrueSource() instanceof EntityLivingBase) {
 			ItemStack stack = event.getSource() instanceof ToolLaserGun.LaserDamageSource
 					? ((ToolLaserGun.LaserDamageSource)event.getSource()).getStack()

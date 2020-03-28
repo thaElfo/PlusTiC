@@ -49,8 +49,10 @@ public class ModuleTF implements IModule {
 			
 			signalum.setFluid(FluidRegistry.getFluid("signalum"));
 			
-			TinkerRegistry.addMaterialStats(signalum, new HeadMaterialStats(690, 7.5f, 5.2f, OBSIDIAN),
-					new HandleMaterialStats(1.2f, 0), new ExtraMaterialStats(55),
+			TinkerRegistry.addMaterialStats(signalum,
+					new HeadMaterialStats(690, 7.5f, 5.2f, OBSIDIAN),
+					new HandleMaterialStats(1.2f, 0),
+					new ExtraMaterialStats(55),
 					new BowMaterialStats(1.2f, 1.6f, 4.4f));
 			PlusTiC.materials.put("signalum", signalum);
 			

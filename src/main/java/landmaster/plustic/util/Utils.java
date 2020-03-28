@@ -23,11 +23,8 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.network.play.server.*;
-import net.minecraft.potion.*;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
-import net.minecraft.world.*;
 import net.minecraftforge.energy.*;
 import net.minecraftforge.fluids.*;
 import net.minecraftforge.fml.common.*;
@@ -283,44 +280,11 @@ public class Utils {
 	
 	public static void teleportPlayerTo(EntityPlayerMP player, Coord4D coord) {
 		if (player.dimension != coord.dimensionId) {
-			int id = player.dimension;
-			WorldServer oldWorld = player.getServer().getWorld(player.dimension);
-			player.dimension = coord.dimensionId;
-			WorldServer newWorld = player.getServer().getWorld(player.dimension);
-			player.connection.sendPacket(new SPacketRespawn(player.dimension, player.getEntityWorld().getDifficulty(),
-					newWorld.getWorldInfo().getTerrainType(), player.interactionManager.getGameType()));
-			oldWorld.removeEntityDangerously(player);
-			player.isDead = false;
-			
-			if (player.isEntityAlive()) {
-				newWorld.spawnEntity(player);
-				player.setLocationAndAngles(coord.xCoord + 0.5, coord.yCoord + 1, coord.zCoord + 0.5,
-						player.rotationYaw, player.rotationPitch);
-				newWorld.updateEntityWithOptionalForce(player, false);
-				player.setWorld(newWorld);
-			}
-			
-			player.getServer().getPlayerList().preparePlayer(player, oldWorld);
-			player.connection.setPlayerLocation(coord.xCoord + 0.5, coord.yCoord + 1, coord.zCoord + 0.5,
-					player.rotationYaw, player.rotationPitch);
-			player.interactionManager.setWorld(newWorld);
-			player.getServer().getPlayerList().updateTimeAndWeatherForPlayer(player, newWorld);
-			player.getServer().getPlayerList().syncPlayerInventory(player);
-			
-			for (PotionEffect potioneffect : player.getActivePotionEffects()) {
-				player.connection.sendPacket(new SPacketEntityEffect(player.getEntityId(), potioneffect));
-			}
-			
-			player.connection.sendPacket(
-					new SPacketSetExperience(player.experience, player.experienceTotal, player.experienceLevel)); // Force
-																													// XP
-																													// sync
-			
-			FMLCommonHandler.instance().firePlayerChangedDimensionEvent(player, id, coord.dimensionId);
+			player.changeDimension(coord.dimensionId, (world, entity, yaw) -> entity.setPositionAndUpdate(coord.xCoord +0.5, coord.yCoord +1, coord.zCoord +0.5));
 		} else {
-			player.connection.setPlayerLocation(coord.xCoord + 0.5, coord.yCoord + 1, coord.zCoord + 0.5,
-					player.rotationYaw, player.rotationPitch);
+			player.setPositionAndUpdate(coord.xCoord +0.5, coord.yCoord +1, coord.zCoord +0.5);
 		}
+		player.world.updateEntityWithOptionalForce(player, true);
 	}
 	
 	public static boolean canTeleportTo(EntityPlayer player, Coord4D dest) {

@@ -27,6 +27,7 @@ import net.minecraft.client.model.*;
 import net.minecraft.client.renderer.entity.*;
 import net.minecraft.client.renderer.entity.layers.*;
 import net.minecraft.client.renderer.texture.TextureManager;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.client.settings.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
@@ -412,7 +413,7 @@ public class JetpackPancakeHippos extends ArmorModifierTrait {
 	
 	public static ParticleType getParticleType(EntityLivingBase user, ItemStack stack, Jetpack jetpack) {
 		boolean flyKeyDown = SyncHandler.isFlyKeyDown(user);
-		if (!JetpackSettings.ENGINE.isOff(stack) && searchStorage(user, 1).isPresent() && (flyKeyDown || !JetpackSettings.HOVER.isOff(stack) && !user.onGround && user.motionY < 0)) {
+		if (!JetpackSettings.ENGINE.isOff(stack) && (searchStorage(user, 1).isPresent() || !jetpack.usesFuel) && (flyKeyDown || !JetpackSettings.HOVER.isOff(stack) && !user.onGround && user.motionY < 0)) {
 			return jetpack.defaultParticleType;
 		}
 		return null;
@@ -542,7 +543,8 @@ public class JetpackPancakeHippos extends ArmorModifierTrait {
 	
 	@Override
 	public String getLocalizedName() {
-		return Util.translate(LOC_Name, "jetpackpancakehippos");
+		return Util.translateFormatted("modifier.jetpackpancakehippos.name",
+				I18n.format(jetpack.unlocalisedName + ".name"));
 	}
 	
 	@Override

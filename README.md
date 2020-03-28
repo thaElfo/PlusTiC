@@ -31,7 +31,6 @@ Starting in 5.1.2.0, PlusTiC forces out and *overrides* Natural Pledge TiC mater
 - Environmental Tech by ValkyrieofNight
 - Thaumcraft by azanor
 - Simply Jetpacks by Tomson124
-- AoA 3 by Tslat
 ## Using the source and building
 After cloning this repository, run the command (with working directory in the folder with the repository)
 ```

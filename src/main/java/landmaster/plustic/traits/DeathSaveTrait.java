@@ -103,11 +103,11 @@ public abstract class DeathSaveTrait extends AbstractTrait implements IArmorTrai
 	}
 	
 	private void checkItems(LivingDeathEvent event, Coord4D coord) {
+		//System.out.println("Checking items "+event.getSource().getDamageType());
 		IItemHandler ih = event.getEntity().getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 		for (int i=0; i<ih.getSlots(); ++i) {
 			ItemStack is = ih.extractItem(i, cost, true);
 			if (stackMatcher.test(is) && is.getCount() >= cost) {
-				Utils.teleportPlayerTo((EntityPlayerMP)event.getEntity(), coord);
 				ih.extractItem(i, cost, false);
 				event.setCanceled(true);
 				event.getEntityLiving().clearActivePotions();
@@ -125,6 +125,8 @@ public abstract class DeathSaveTrait extends AbstractTrait implements IArmorTrai
 				event.getEntityLiving().addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 160));
 				event.getEntity().sendMessage(new TextComponentTranslation(
 						unlocSaveMessage));
+				event.getEntity().fallDistance = 0;
+				Utils.teleportPlayerTo((EntityPlayerMP)event.getEntity(), coord);
 				return;
 			}
 		}

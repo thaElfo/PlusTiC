@@ -26,6 +26,7 @@ public class PacketBrownAbracadabra implements IMessage {
 			if (TinkerUtil.hasTrait(nbt, BrownMagic.brownmagic.identifier)
 					&& Utils.canTeleportTo(ep, coord)) {
 				Sounds.playSoundToAll(ep, SoundEvents.ENTITY_ENDERMEN_TELEPORT, 1.0f, 1.0f);
+				ep.fallDistance = 0;
 				Utils.teleportPlayerTo(ep, coord);
 				ep.sendMessage(new TextComponentTranslation("msg.plustic.brownmagic.use"));
 			}

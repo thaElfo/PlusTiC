@@ -1,7 +1,7 @@
 # PlusTiC [![Build Status](https://travis-ci.org/Landmaster/PlusTiC.svg?branch=1.12)](http://travis-ci.org/Landmaster/PlusTiC)
 Minecraft mod for adding new tools to and integrating various mods with Tinkers Construct
 
-CurseForge page: https://minecraft.curseforge.com/projects/plustic
+CurseForge page: https://minecraft.curseforge.com/projects/plus-tic
 ## New tool(s)
 - Katana. A fast two-handed weapon that deals increasing damage the more mobs you kill.
 - Laser Gun. A ranged weapon that requires durability and energy (Forge, Tesla, RF).

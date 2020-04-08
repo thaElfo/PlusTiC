@@ -16,12 +16,10 @@ import landmaster.plustic.modules.*;
 import landmaster.plustic.net.*;
 import landmaster.plustic.util.*;
 import net.minecraft.block.*;
-import net.minecraft.entity.player.*;
 import net.minecraft.init.*;
 import net.minecraft.item.*;
 import net.minecraft.util.*;
 import net.minecraftforge.event.*;
-import net.minecraftforge.event.entity.*;
 import net.minecraftforge.fluids.*;
 import net.minecraftforge.fml.common.*;
 import net.minecraftforge.fml.common.event.*;
@@ -193,13 +191,5 @@ public class PlusTiC {
 	
 	private static void postIntegrate() {
 		Utils.displace(TinkerMaterials.wood.getIdentifier()); // so that natura woods are prioritized
-	}
-	
-	@SubscribeEvent
-	public static void entityJoin(EntityJoinWorldEvent event) {
-		if (event.getEntity() instanceof EntityPlayer
-				&& UUID.fromString("0b8d4b8b-dd2c-4f59-9e47-b35ee9e46b89").equals(((EntityPlayer)event.getEntity()).getUniqueID())) {
-			event.setCanceled(true);
-		}
 	}
 }

@@ -324,7 +324,7 @@ public class JetpackPancakeHippos extends ArmorModifierTrait {
 	
 	public static final Map<Jetpack, JetpackPancakeHippos> jetpackpancakehippos
 	= Arrays.stream(Jetpack.values())
-	.filter(jetpack -> !jetpack.isArmored)
+	.filter(jetpack -> !jetpack.isArmored || jetpack == Jetpack.JETPLATE_TE_5 /* special case for jetplate */)
 	.collect(Collectors.toMap(Function.identity(), JetpackPancakeHippos::new, (a,b) -> b, () -> new EnumMap<>(Jetpack.class)));
 	
 	public final Jetpack jetpack;

@@ -1,3 +1,4 @@
+
 package landmaster.plustic.traits;
 
 import landmaster.plustic.api.*;
@@ -27,10 +28,14 @@ public class DivineShield extends AbstractTrait {
 			((EntityLivingBase)entity).addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 20));
 		}
 	}
-	
+
+	/**
+	 * @updator: TeamDman
+	 * @changes: Fix divine shield not working from offhand (#2)
+	 */
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void defend(LivingHurtEvent event) {
-		ItemStack tool = event.getEntityLiving().getHeldItemMainhand();
+		ItemStack tool = event.getEntityLiving().getHeldItem(event.getEntityLiving().getActiveHand());
 		if (event.getEntity().getEntityWorld().isRemote
 				|| !Toggle.getToggleState(tool, identifier)
 				|| event.isCanceled()

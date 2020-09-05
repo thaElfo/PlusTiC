@@ -1,5 +1,6 @@
 package landmaster.plustic.modules;
 
+import static slimeknights.tconstruct.library.materials.MaterialTypes.HEAD;
 import static slimeknights.tconstruct.library.utils.HarvestLevels.*;
 import static slimeknights.tconstruct.tools.TinkerTraits.*;
 
@@ -10,9 +11,11 @@ import landmaster.plustic.fluids.*;
 import landmaster.plustic.traits.*;
 import landmaster.plustic.util.*;
 import net.minecraft.item.*;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.*;
 import net.minecraftforge.fml.common.registry.*;
+import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 import net.minecraftforge.oredict.*;
 import slimeknights.tconstruct.library.*;
 import slimeknights.tconstruct.library.materials.*;
@@ -21,6 +24,9 @@ import slimeknights.tconstruct.library.materials.*;
 public class ModuleGalacticraft implements IModule {
 	@GameRegistry.ObjectHolder(value = "galacticraftplanets:item_basic_mars")
 	public static final Item item_basic_mars = null;
+
+	@ObjectHolder(value="galacticraftplanets:item_basic_asteroids")
+	public static final Item item_basic_asteroids = null;
 	
 	private static Material titanium;
 	private static Material desh;

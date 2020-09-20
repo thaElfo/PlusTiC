@@ -1,11 +1,13 @@
 package landmaster.plustic.modifiers.armor;
 
+import com.google.common.collect.Maps;
 import java.lang.invoke.*;
 import java.lang.reflect.*;
 import java.util.*;
 import java.util.function.*;
 import java.util.stream.*;
 
+import net.minecraftforge.client.settings.KeyBindingMap;
 import org.lwjgl.opengl.GL11;
 
 import com.google.common.base.Throwables;
@@ -54,14 +56,14 @@ import net.minecraftforge.items.*;
 import slimeknights.tconstruct.library.*;
 import slimeknights.tconstruct.library.modifiers.*;
 import slimeknights.tconstruct.library.utils.*;
-import tonius.simplyjetpacks.*;
-import tonius.simplyjetpacks.client.handler.*;
+import tonius.simplyjetpacks.SimplyJetpacks;
+import tonius.simplyjetpacks.client.handler.KeybindHandler;
 import tonius.simplyjetpacks.client.model.PackModelType;
-import tonius.simplyjetpacks.client.util.*;
-import tonius.simplyjetpacks.handler.*;
-import tonius.simplyjetpacks.item.*;
+import tonius.simplyjetpacks.client.util.RenderUtils;
+import tonius.simplyjetpacks.handler.SyncHandler;
+import tonius.simplyjetpacks.item.Jetpack;
 import tonius.simplyjetpacks.setup.ParticleType;
-import tonius.simplyjetpacks.util.*;
+import tonius.simplyjetpacks.util.SJStringUtil;
 
 /**
  * Adapted from SimplyJetpack2's code.
@@ -106,20 +108,11 @@ public class JetpackPancakeHippos extends ArmorModifierTrait {
 		}
 	}
 	
-	private static final ArrayList<KeyBinding> keys;
+	private static final Map<KeyBinding, JetpackSettings> keys = new HashMap<>();
 	static {
-		ArrayList<KeyBinding> temp = null;
-		try {
-			Field f = KeyTracker.class.getDeclaredField("keys");
-			f.setAccessible(true);
-			temp = (ArrayList<KeyBinding>) MethodHandles.lookup().unreflectGetter(f).invokeExact();
-		} catch (Throwable e) {
-			if (FMLCommonHandler.instance().getSide() == Side.CLIENT) { 
-				Throwables.throwIfUnchecked(e);
-				throw new RuntimeException(e);
-			}
-		}
-		keys = temp;
+		keys.put(KeybindHandler.JETPACK_ENGINE_KEY, JetpackSettings.ENGINE);
+		keys.put(KeybindHandler.JETPACK_HOVER_KEY, JetpackSettings.HOVER);
+		keys.put(KeybindHandler.JETPACK_EHOVER_KEY, JetpackSettings.EHOVER);
 	}
 	
 	@SideOnly(Side.CLIENT)
@@ -131,29 +124,19 @@ public class JetpackPancakeHippos extends ArmorModifierTrait {
 		Utils.getModifiers(chestStack).stream()
 		.filter(trait -> trait instanceof JetpackPancakeHippos)
 		.findAny().ifPresent(trait -> {
-			for (KeyBinding keyBindings : keys) {
-				int button = keyBindings.getKeyCode();
-				if (button > 0 && keyBindings.isPressed()) {
-					JetpackSettings setting = null;
-					if (keyBindings.getKeyDescription().equals(SimplyJetpacks.PREFIX + "keybind.engine")) {
-						setting = JetpackSettings.ENGINE;
-					} else if (keyBindings.getKeyDescription().equals(SimplyJetpacks.PREFIX + "keybind.hover")) {
-						setting = JetpackSettings.HOVER;
-					} else if (keyBindings.getKeyDescription().equals(SimplyJetpacks.PREFIX + "keybind.emergencyhover")) {
-						setting = JetpackSettings.EHOVER;
+			keys.forEach((key, setting) -> {
+				if (key.isPressed()) {
+					boolean oldState = setting.isOff(chestStack);
+					if (tonius.simplyjetpacks.config.Config.enableStateMessages) {
+						String unlocTemp = setting.getStateMsgUnloc();
+						ITextComponent state = SJStringUtil
+							.localizeNew(oldState ? "chat.enabled" : "chat.disabled");
+						state.setStyle(new Style().setColor(oldState ? TextFormatting.GREEN : TextFormatting.RED));
+						player.sendStatusMessage(SJStringUtil.localizeNew(unlocTemp, state), true);
 					}
-					if (setting != null) {
-						boolean oldState = setting.isOff(chestStack);
-						if (tonius.simplyjetpacks.config.Config.enableStateMessages) {
-							String unlocTemp = setting.getStateMsgUnloc();
-							ITextComponent state = SJStringHelper.localizeNew(oldState ? "chat.enabled" : "chat.disabled");
-							state.setStyle(new Style().setColor(oldState ? TextFormatting.GREEN : TextFormatting.RED));
-							player.sendStatusMessage(SJStringHelper.localizeNew(unlocTemp, state), true);
-						}
-						PacketHandler.INSTANCE.sendToServer(new PacketSJKey(setting));
-					}
+					PacketHandler.INSTANCE.sendToServer(new PacketSJKey(setting));
 				}
-			}
+			});
 		});
 	}
 	
@@ -181,7 +164,7 @@ public class JetpackPancakeHippos extends ArmorModifierTrait {
 					
 					int i = 0;
 					for (String s : info) {
-						RenderUtils.drawStringAtHUDPosition(s, RenderUtils.HUDPositions.values()[tonius.simplyjetpacks.config.Config.HUDPosition], Minecraft.getMinecraft().fontRenderer, tonius.simplyjetpacks.config.Config.HUDOffsetX, tonius.simplyjetpacks.config.Config.HUDOffsetY, tonius.simplyjetpacks.config.Config.HUDScale, 0xeeeeee, true, i);
+						RenderUtils.drawStringAtHUDPosition(s, tonius.simplyjetpacks.config.Config.HUDPosition, Minecraft.getMinecraft().fontRenderer, tonius.simplyjetpacks.config.Config.HUDOffsetX, tonius.simplyjetpacks.config.Config.HUDOffsetY, tonius.simplyjetpacks.config.Config.HUDScale, 0xeeeeee, true, i);
 						i++;
 					}
 					
@@ -319,7 +302,11 @@ public class JetpackPancakeHippos extends ArmorModifierTrait {
 		}
 	}
 	public String getHUDStatesInfo(ItemStack stack) {
-		return SJStringHelper.getHUDStateText(!JetpackSettings.ENGINE.isOff(stack), !JetpackSettings.HOVER.isOff(stack), null);
+		return SJStringUtil.getHUDStateText(
+			!JetpackSettings.ENGINE.isOff(stack),
+			!JetpackSettings.HOVER.isOff(stack),
+			null,
+			!JetpackSettings.EHOVER.isOff(stack));
 	}
 	
 	public static final Map<Jetpack, JetpackPancakeHippos> jetpackpancakehippos
@@ -413,7 +400,7 @@ public class JetpackPancakeHippos extends ArmorModifierTrait {
 	
 	public static ParticleType getParticleType(EntityLivingBase user, ItemStack stack, Jetpack jetpack) {
 		boolean flyKeyDown = SyncHandler.isFlyKeyDown(user);
-		if (!JetpackSettings.ENGINE.isOff(stack) && (searchStorage(user, 1).isPresent() || !jetpack.usesFuel) && (flyKeyDown || !JetpackSettings.HOVER.isOff(stack) && !user.onGround && user.motionY < 0)) {
+		if (!JetpackSettings.ENGINE.isOff(stack) && (searchStorage(user, 1).isPresent() || !jetpack.usesEnergy) && (flyKeyDown || !JetpackSettings.HOVER.isOff(stack) && !user.onGround && user.motionY < 0)) {
 			return jetpack.defaultParticleType;
 		}
 		return null;
@@ -422,9 +409,9 @@ public class JetpackPancakeHippos extends ArmorModifierTrait {
 	
 	protected int getFuelUsage(ItemStack stack) {
 		if (jetpack.getBaseName().contains("enderium")) {
-			return (int)Math.round(jetpack.getFuelUsage() * 0.8);
+			return (int)Math.round(jetpack.getEnergyUsage() * 0.8);
 		}
-		return jetpack.getFuelUsage();
+		return jetpack.getEnergyUsage();
 	}
 	
 	protected static Optional<IEnergyStorage> searchStorage(EntityLivingBase elb, int fuelUsage) {
@@ -451,7 +438,7 @@ public class JetpackPancakeHippos extends ArmorModifierTrait {
 	}
 	
 	protected void flyUser(EntityPlayer user, ItemStack stack, boolean force) {
-		int fuelUsage = (int) (user.isSprinting() ? Math.round(this.getFuelUsage(stack) * jetpack.sprintFuelModifier) : this.getFuelUsage(stack));
+		int fuelUsage = (int) (user.isSprinting() ? Math.round(this.getFuelUsage(stack) * jetpack.sprintEnergyModifier) : this.getFuelUsage(stack));
 		
 		Optional<IEnergyStorage> storage = searchStorage(user, fuelUsage);
 		
@@ -466,11 +453,11 @@ public class JetpackPancakeHippos extends ArmorModifierTrait {
 			//System.out.println(flyKeyDown + " " + descendKeyDown);
 			
 			if (flyKeyDown || hoverMode && !user.onGround) {
-				if (jetpack.usesFuel && storage.isPresent()) {
+				if (jetpack.usesEnergy && storage.isPresent()) {
 					storage.get().extractEnergy(fuelUsage, false);
 				}
 				
-				if (!jetpack.usesFuel || storage.map(IEnergyStorage::getEnergyStored).filter(e -> e>0).isPresent()) {
+				if (!jetpack.usesEnergy || storage.map(IEnergyStorage::getEnergyStored).filter(e -> e>0).isPresent()) {
 					if (flyKeyDown) {
 						if (!hoverMode) {
 							user.motionY = Math.min(user.motionY + currentAccel, currentSpeedVertical);
@@ -513,7 +500,7 @@ public class JetpackPancakeHippos extends ArmorModifierTrait {
 		
 		//Emergency Hover
 		if (!user.world.isRemote && jetpack.emergencyHoverMode && !JetpackSettings.EHOVER.isOff(stack)) {
-			if ((!jetpack.usesFuel || storage.map(IEnergyStorage::getEnergyStored).filter(e -> e>0).isPresent()) && (JetpackSettings.HOVER.isOff(stack) || JetpackSettings.ENGINE.isOff(stack))) {
+			if ((!jetpack.usesEnergy || storage.map(IEnergyStorage::getEnergyStored).filter(e -> e>0).isPresent()) && (JetpackSettings.HOVER.isOff(stack) || JetpackSettings.ENGINE.isOff(stack))) {
 				if (user.posY < -5) {
 					this.doEHover(stack, user);
 				} else {
@@ -536,7 +523,7 @@ public class JetpackPancakeHippos extends ArmorModifierTrait {
 	protected void doEHover(ItemStack armor, EntityPlayer user) {
 		JetpackSettings.ENGINE.setOff(armor, false);
 		JetpackSettings.HOVER.setOff(armor, false);
-		ITextComponent msg = SJStringHelper.localizeNew("chat.itemJetpack.emergencyHoverMode.msg");
+		ITextComponent msg = SJStringUtil.localizeNew("chat.itemJetpack.emergencyHoverMode.msg");
 		msg.setStyle(new Style().setColor(TextFormatting.RED));
 		user.sendStatusMessage(msg, true);
 	}
@@ -556,7 +543,7 @@ public class JetpackPancakeHippos extends ArmorModifierTrait {
 	public void applyEffect(NBTTagCompound rootCompound, NBTTagCompound modifierTag) {
 		super.applyEffect(rootCompound, modifierTag);
 		ArmorNBT data = ArmorTagUtil.getArmorStats(rootCompound);
-		data.durability += jetpack.fuelCapacity * Config.jetpackDurabilityBonusScale;
+		data.durability += jetpack.energyCapacity * Config.jetpackDurabilityBonusScale;
 		TagUtil.setToolTag(rootCompound, data.get());
 	}
 }

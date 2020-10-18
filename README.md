@@ -47,7 +47,9 @@ Build with
 ./gradlew build
 ```
 ## Developers/Credits
-Creator/Lead Developer: @Landmaster
+Current maintainer: @TeamDman
+
+Old Creator/Lead Developer: @Landmaster
 
 Chinese translation: @DYColdWind
 

@@ -110,10 +110,17 @@ public class JetpackPancakeHippos extends ArmorModifierTrait {
 	
 	private static final Map<KeyBinding, JetpackSettings> keys = new HashMap<>();
 	static {
-		keys.put(KeybindHandler.JETPACK_ENGINE_KEY, JetpackSettings.ENGINE);
-		keys.put(KeybindHandler.JETPACK_HOVER_KEY, JetpackSettings.HOVER);
-		keys.put(KeybindHandler.JETPACK_EHOVER_KEY, JetpackSettings.EHOVER);
+		try {
+			if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
+				keys.put(KeybindHandler.JETPACK_ENGINE_KEY, JetpackSettings.ENGINE);
+				keys.put(KeybindHandler.JETPACK_HOVER_KEY, JetpackSettings.HOVER);
+				keys.put(KeybindHandler.JETPACK_EHOVER_KEY, JetpackSettings.EHOVER);
+			}
+		} catch (Exception e) {
+			// bad code requires bad solutions
+		}
 	}
+
 	
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent

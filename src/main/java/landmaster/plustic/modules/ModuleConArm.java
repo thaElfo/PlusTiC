@@ -78,17 +78,19 @@ public class ModuleConArm implements IModule {
 						new PlatesMaterialStats(1, 7, 2.2f),
 						new TrimMaterialStats(10f)); // TODO refine stats
 			});
-			
-			if (Config.jetpackConarmModifier && Loader.isModLoaded("simplyjetpacks")) {
-				SJ.init();
-			}
+		}
+	}
+
+	@Override
+	public void init2() {
+		if (Config.jetpackConarmModifier && Loader.isModLoaded("simplyjetpacks")) {
+			SJ.init();
 		}
 	}
 	
 	private static class SJ {
 		public static void init() {
 			JetpackPancakeHippos.jetpackpancakehippos.values().forEach(mod -> {
-				//System.out.println(mod.jetpack.getStackJetpack());
 				RecipeMatchHolder.addItem(mod, mod.jetpack.getStackJetpack(), 1, 1);
 			});
 		}

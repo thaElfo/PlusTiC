@@ -1,61 +1,66 @@
 package landmaster.plustic.modifiers.armor;
 
-import com.google.common.collect.Maps;
-import java.lang.invoke.*;
-import java.lang.reflect.*;
-import java.util.*;
-import java.util.function.*;
-import java.util.stream.*;
-
-import net.minecraftforge.client.settings.KeyBindingMap;
-import org.lwjgl.opengl.GL11;
-
-import com.google.common.base.Throwables;
-
-import baubles.api.*;
-import baubles.api.cap.*;
-import c4.conarm.common.armor.utils.*;
-import c4.conarm.lib.armor.*;
-import c4.conarm.lib.modifiers.*;
-import c4.conarm.lib.tinkering.*;
-import it.unimi.dsi.fastutil.ints.*;
+import baubles.api.BaublesApi;
+import baubles.api.cap.IBaublesItemHandler;
+import c4.conarm.common.armor.utils.ArmorTagUtil;
+import c4.conarm.lib.armor.ArmorNBT;
+import c4.conarm.lib.modifiers.ArmorModifierTrait;
+import c4.conarm.lib.tinkering.TinkersArmor;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMaps;
+import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
+import it.unimi.dsi.fastutil.ints.IntIterator;
 import landmaster.plustic.api.Sounds;
-import landmaster.plustic.config.*;
-import landmaster.plustic.net.*;
-import landmaster.plustic.util.*;
-import net.minecraft.client.*;
-import net.minecraft.client.gui.*;
-import net.minecraft.client.model.*;
-import net.minecraft.client.renderer.entity.*;
-import net.minecraft.client.renderer.entity.layers.*;
+import landmaster.plustic.config.Config;
+import landmaster.plustic.net.PacketHandler;
+import landmaster.plustic.net.PacketSJKey;
+import landmaster.plustic.net.PacketSJSyncParticles;
+import landmaster.plustic.util.Utils;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiChat;
+import net.minecraft.client.model.ModelBiped;
+import net.minecraft.client.renderer.entity.RenderLivingBase;
+import net.minecraft.client.renderer.entity.layers.LayerBipedArmor;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.client.settings.*;
-import net.minecraft.entity.*;
-import net.minecraft.entity.player.*;
+import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.MobEffects;
-import net.minecraft.inventory.*;
-import net.minecraft.item.*;
-import net.minecraft.nbt.*;
+import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.*;
-import net.minecraft.util.text.*;
-import net.minecraft.world.*;
-import net.minecraftforge.client.event.*;
-import net.minecraftforge.common.*;
-import net.minecraftforge.energy.*;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.World;
+import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.event.RenderLivingEvent;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.event.entity.living.LivingEvent;
-import net.minecraftforge.fml.client.*;
+import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.eventhandler.*;
-import net.minecraftforge.fml.common.gameevent.*;
-import net.minecraftforge.fml.common.network.*;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.InputEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
+import net.minecraftforge.fml.common.network.FMLNetworkEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
-import net.minecraftforge.fml.relauncher.*;
-import net.minecraftforge.items.*;
-import slimeknights.tconstruct.library.*;
-import slimeknights.tconstruct.library.modifiers.*;
-import slimeknights.tconstruct.library.utils.*;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
+import org.lwjgl.opengl.GL11;
+import slimeknights.tconstruct.library.Util;
+import slimeknights.tconstruct.library.modifiers.IModifier;
+import slimeknights.tconstruct.library.modifiers.IToolMod;
+import slimeknights.tconstruct.library.utils.TagUtil;
 import tonius.simplyjetpacks.SimplyJetpacks;
 import tonius.simplyjetpacks.client.handler.KeybindHandler;
 import tonius.simplyjetpacks.client.model.PackModelType;
@@ -64,6 +69,10 @@ import tonius.simplyjetpacks.handler.SyncHandler;
 import tonius.simplyjetpacks.item.Jetpack;
 import tonius.simplyjetpacks.setup.ParticleType;
 import tonius.simplyjetpacks.util.SJStringUtil;
+
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * Adapted from SimplyJetpack2's code.
@@ -75,7 +84,7 @@ public class JetpackPancakeHippos extends ArmorModifierTrait {
 		MinecraftForge.EVENT_BUS.register(JetpackPancakeHippos.class);
 	}
 	
-	public static enum JetpackSettings {
+	public enum JetpackSettings {
 		ENGINE, HOVER, EHOVER;
 		
 		public String getNBTKey() {
@@ -97,11 +106,11 @@ public class JetpackPancakeHippos extends ArmorModifierTrait {
 		public String getStateMsgUnloc() {
 			switch (this) {
 			case EHOVER:
-				return "chat.itemJetpack.emergencyHoverMode";
+				return "emergency_hover_mode";
 			case ENGINE:
-				return "chat.itemJetpack.on";
+				return "engine_mode";
 			case HOVER:
-				return "chat.itemJetpack.hoverMode";
+				return "hover_mode";
 			default:
 				return "";
 			}
@@ -110,14 +119,10 @@ public class JetpackPancakeHippos extends ArmorModifierTrait {
 	
 	private static final Map<KeyBinding, JetpackSettings> keys = new HashMap<>();
 	static {
-		try {
-			if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
-				keys.put(KeybindHandler.JETPACK_ENGINE_KEY, JetpackSettings.ENGINE);
-				keys.put(KeybindHandler.JETPACK_HOVER_KEY, JetpackSettings.HOVER);
-				keys.put(KeybindHandler.JETPACK_EHOVER_KEY, JetpackSettings.EHOVER);
-			}
-		} catch (Exception e) {
-			// bad code requires bad solutions
+		if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
+			keys.put(KeybindHandler.JETPACK_ENGINE_KEY, JetpackSettings.ENGINE);
+			keys.put(KeybindHandler.JETPACK_HOVER_KEY, JetpackSettings.HOVER);
+			keys.put(KeybindHandler.JETPACK_EHOVER_KEY, JetpackSettings.EHOVER);
 		}
 	}
 
@@ -127,24 +132,24 @@ public class JetpackPancakeHippos extends ArmorModifierTrait {
 	public static void onKeyInput(InputEvent.KeyInputEvent event) {
 		EntityPlayer player = FMLClientHandler.instance().getClient().player;
 		ItemStack chestStack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
-		
-		Utils.getModifiers(chestStack).stream()
-		.filter(trait -> trait instanceof JetpackPancakeHippos)
-		.findAny().ifPresent(trait -> {
-			keys.forEach((key, setting) -> {
-				if (key.isPressed()) {
-					boolean oldState = setting.isOff(chestStack);
-					if (tonius.simplyjetpacks.config.Config.enableStateMessages) {
-						String unlocTemp = setting.getStateMsgUnloc();
-						ITextComponent state = SJStringUtil
-							.localizeNew(oldState ? "chat.enabled" : "chat.disabled");
-						state.setStyle(new Style().setColor(oldState ? TextFormatting.GREEN : TextFormatting.RED));
-						player.sendStatusMessage(SJStringUtil.localizeNew(unlocTemp, state), true);
+
+		for (IModifier trait : Utils.getModifiers(chestStack)) {
+			if (trait instanceof JetpackPancakeHippos) {
+				keys.forEach((key, setting) -> {
+					if (key.isPressed()) {
+						boolean oldState = setting.isOff(chestStack);
+						if (tonius.simplyjetpacks.config.Config.enableStateMessages) {
+							ITextComponent state = oldState ? SJStringUtil.localizeNew("chat.", ".enabled") : SJStringUtil.localizeNew("chat.", ".disabled");
+							state.setStyle(oldState ? new Style().setColor(TextFormatting.GREEN) : new Style().setColor(TextFormatting.RED));
+							ITextComponent msg = SJStringUtil.localizeNew("chat.", ".jetpack." + setting.getStateMsgUnloc(), state);
+							player.sendStatusMessage(msg, true);
+						}
+						PacketHandler.INSTANCE.sendToServer(new PacketSJKey(setting));
 					}
-					PacketHandler.INSTANCE.sendToServer(new PacketSJKey(setting));
-				}
-			});
-		});
+				});
+				break;
+			}
+		}
 	}
 	
 	@SideOnly(Side.CLIENT)
@@ -530,7 +535,7 @@ public class JetpackPancakeHippos extends ArmorModifierTrait {
 	protected void doEHover(ItemStack armor, EntityPlayer user) {
 		JetpackSettings.ENGINE.setOff(armor, false);
 		JetpackSettings.HOVER.setOff(armor, false);
-		ITextComponent msg = SJStringUtil.localizeNew("chat.itemJetpack.emergencyHoverMode.msg");
+		ITextComponent msg = SJStringUtil.localizeNew("chat.", ".jetpack.emergency_hover_mode.msg");
 		msg.setStyle(new Style().setColor(TextFormatting.RED));
 		user.sendStatusMessage(msg, true);
 	}

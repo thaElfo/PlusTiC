@@ -9,7 +9,7 @@ buildscript {
 		mavenCentral()
 		maven {
 			name = "forge"
-			url = "http://files.minecraftforge.net/maven"
+			url = "https://files.minecraftforge.net/maven"
 		}
 		maven {
 			name = "sonatype"
@@ -34,13 +34,13 @@ archivesBaseName = "plustic"
 
 repositories {
 	maven {
-		url "http://dvs1.progwml6.com/files/maven"
+		url "https://dvs1.progwml6.com/files/maven"
 	}
 	maven {
-		url "http://maven.covers1624.net"
+		url "https://maven.covers1624.net"
 	}
 	maven {
-		url "http://maven.blamejared.com"
+		url "https://maven.blamejared.com"
 	}
 	maven {
 		url "https://maven.chaosfield.at"
@@ -49,7 +49,7 @@ repositories {
 		url "https://minecraft.curseforge.com/api/maven/"
 	}
 	maven {
-		url "http://maven.mcmoddev.com"
+		url "https://maven.mcmoddev.com"
 	}
 	maven {
 		url "https://tehnut.info/maven"
@@ -72,6 +72,8 @@ minecraft {
 	// simply re-run your setup task after changing the mappings to update your workspace.
 	mappings = "stable_39"
 	// makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
+	replaceIn "ModInfo.java"
+	replace "@VERSION@", project.version
 }
 
 dependencies {
@@ -138,19 +140,7 @@ dependencies {
 //	runtimeOnly fg.deobf(group: "CraftTweaker2", name:"CraftTweaker2-MC1120-Main", version: "1.12-4.1.9.491")
 //	runtimeOnly fg.deobf(group: "CraftTweaker2", name:"CraftTweaker2-MC1120-Main", version: "1.12-4.1.9.491")
 }
-//
-//import org.apache.tools.ant.filters.ReplaceTokens
-//task replaceVersion(type: Copy) {
-//	from 'src/meta/java'
-//	into "$buildDir/__generated_src"
-//	filter(ReplaceTokens, tokens: [
-//			'VERSION': project.version
-//	])
-//}
-//
-//compileJava.source replaceVersion.outputs.files
-//compileJava.dependsOn replaceVersion
-//
+
 idea {
 	module {
 		sourceDirs += file("src/main/java")
@@ -166,26 +156,26 @@ idea {
 //}
 
 //
-//processResources {
-//	exclude '**/*.xcf'
+processResources {
+	exclude '**/*.xcf'
 //
 //	// this will ensure that this task is redone when the versions change.
-//	inputs.property "version", project.version
-//	inputs.property "mcversion", project.minecraft.version
+	inputs.property "version", project.version
+	inputs.property "mcversion", project.minecraft.version
 //
 //	// replace stuff in mcmod.info, nothing else
-//	from(sourceSets.main.resources.srcDirs) {
-//		include 'mcmod.info'
+	from(sourceSets.main.resources.srcDirs) {
+		include 'mcmod.info'
 //
 //		// replace version and mcversion
-//		expand 'version':project.version, 'mcversion':project.minecraft.version
-//	}
+		expand 'version':project.version, 'mcversion':project.minecraft.version
+	}
 //
 //	// copy everything else, thats not the mcmod.info
-//	from(sourceSets.main.resources.srcDirs) {
-//		exclude 'mcmod.info'
-//	}
-//}
+	from(sourceSets.main.resources.srcDirs) {
+		exclude 'mcmod.info'
+	}
+}
 //
 jar {
 	manifest {

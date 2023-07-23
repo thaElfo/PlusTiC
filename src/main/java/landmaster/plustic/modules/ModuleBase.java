@@ -82,7 +82,7 @@ public class ModuleBase implements IModule {
 			PlusTiC.materials.put("alumite", alumite);
 			
 			if (TinkerRegistry.getMaterial("nickel") == Material.UNKNOWN) {
-				Material nickel = new Material("nickel", TextFormatting.YELLOW);
+				Material nickel = new Material("nickel_plustic", TextFormatting.YELLOW);
 				nickel.addTrait(NickOfTime.nickOfTime, HEAD);
 				nickel.addTrait(magnetic);
 				nickel.addItem("ingotNickel", 1, Material.VALUE_Ingot);
@@ -102,7 +102,7 @@ public class ModuleBase implements IModule {
 			if (TinkerRegistry.getMaterial("invar") == Material.UNKNOWN) {
 				Utils.ItemMatGroup invarGroup = Utils.registerMatGroup("invar");
 				
-				Material invar = new Material("invar", 0xD6D6D6);
+				Material invar = new Material("invar_plustic", 0xD6D6D6);
 				invar.addTrait(DevilsStrength.devilsstrength);
 				invar.addTrait(magnetic);
 				invar.addItem("ingotInvar", 1, Material.VALUE_Ingot);
@@ -129,7 +129,7 @@ public class ModuleBase implements IModule {
 			}
 			
 			if (TinkerRegistry.getMaterial("iridium") == Material.UNKNOWN) {
-				Material iridium = new Material("iridium", TextFormatting.GRAY);
+				Material iridium = new Material("iridium_plustic", TextFormatting.GRAY);
 				iridium.addTrait(dense);
 				iridium.addTrait(alien, HEAD);
 				iridium.addItem("ingotIridium", 1, Material.VALUE_Ingot);

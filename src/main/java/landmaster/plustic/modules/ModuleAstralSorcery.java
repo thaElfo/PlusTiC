@@ -17,7 +17,7 @@ public class ModuleAstralSorcery implements IModule {
 	@Override
 	public void init() {
 		if (Loader.isModLoaded("astralsorcery") && Config.astralSorcery) {
-			Material starmetal = new Material("starmetal", 0x000b56);
+			Material starmetal = new Material("starmetal_plustic", 0x000b56);
 			starmetal.addTrait(ImASuperstar.imasuperstar, HEAD);
 			starmetal.addTrait(ImASuperstar.imasuperstar, LaserMediumMaterialStats.TYPE);
 			starmetal.addTrait(Illuminati.illuminati);

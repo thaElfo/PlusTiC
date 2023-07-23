@@ -14,7 +14,7 @@ import slimeknights.tconstruct.library.materials.*;
 public class ModuleThaumcraft implements IModule {
 	public void init() {
 		if (Config.thaumcraft && Loader.isModLoaded("thaumcraft")) {
-			Material thaumium = new Material("thaumium", 0x1E0066);
+			Material thaumium = new Material("thaumium_plustic", 0x1E0066);
 			thaumium.addTrait(Thaumic.thaumic);
 			thaumium.setCraftable(false).setCastable(true);
 			thaumium.addItem("ingotThaumium", 1, Material.VALUE_Ingot);

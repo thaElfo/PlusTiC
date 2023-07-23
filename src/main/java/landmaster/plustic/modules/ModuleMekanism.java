@@ -22,7 +22,7 @@ public class ModuleMekanism implements IModule {
 	@Override
 	public void init() {
 		if (Config.mekanism && (Loader.isModLoaded("Mekanism") || Loader.isModLoaded("mekanism"))) {
-			Material osmium = TinkerRegistry.getMaterial("osmium");
+			Material osmium = TinkerRegistry.getMaterial("osmium_plustic");
 			if (osmium == Material.UNKNOWN) {
 				osmium = new Material("osmium", TextFormatting.BLUE);
 				osmium.addTrait(dense);
@@ -118,7 +118,7 @@ public class ModuleMekanism implements IModule {
 				PlusTiC.materials.put("osgloglas", osgloglas);
 			}
 			
-			Material iridium = Optional.ofNullable(PlusTiC.materials.get("iridium"))
+			Material iridium = Optional.ofNullable(PlusTiC.materials.get("iridium_plustic"))
 					.orElse(TinkerRegistry.getMaterial("iridium"));
 			
 			if (iridium.hasFluid() && osmium.hasFluid()) {

@@ -22,7 +22,7 @@ public class ModuleMFR implements IModule {
 	@Override
 	public void init() {
 		if (Config.mfr && (Loader.isModLoaded("industrialforegoing"))) {
-			Material pink_slime_mat = new Material("pink_slime", 0xFF84AD);
+			Material pink_slime_mat = new Material("pink_slime_plustic", 0xFF84AD);
 			
 			PlusTiC.materials.put("pink_slime", pink_slime_mat);
 			

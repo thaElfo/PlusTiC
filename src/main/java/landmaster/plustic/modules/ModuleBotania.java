@@ -36,19 +36,19 @@ public class ModuleBotania implements IModule {
 			if (Config.forceOutNaturalPledgeMaterials || !Loader.isModLoaded("botanicaladdons")) {
 				final Map<String, Material> botaniaMaterials = new Object2ObjectOpenHashMap<>();
 				
-				Material terrasteel = new Material("terrasteel", TextFormatting.GREEN);
+				Material terrasteel = new Material("terrasteel_plustic", TextFormatting.GREEN);
 				botaniaMaterials.put("terrasteel", terrasteel);
 				FluidMolten terrasteelFluid = Utils.fluidMetal("terrasteel", 0x00FF00);
 				terrasteelFluid.setTemperature(760);
 				Utils.initFluidMetal(terrasteelFluid);
 				
-				Material elementium = new Material("elementium", TextFormatting.LIGHT_PURPLE);
+				Material elementium = new Material("elementium_plustic", TextFormatting.LIGHT_PURPLE);
 				botaniaMaterials.put("elvenElementium", elementium);
 				FluidMolten elementiumFluid = Utils.fluidMetal("elementium", 0xF66AFD);
 				elementiumFluid.setTemperature(800);
 				Utils.initFluidMetal(elementiumFluid);
 				
-				Material manasteel = new Material("manasteel", TextFormatting.BLUE);
+				Material manasteel = new Material("manasteel_plustic", TextFormatting.BLUE);
 				botaniaMaterials.put("manasteel", manasteel);
 				FluidMolten manasteelFluid = Utils.fluidMetal("manasteel", 0x54E5FF);
 				manasteelFluid.setTemperature(681);

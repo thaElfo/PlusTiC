@@ -19,7 +19,7 @@ public class ModuleEnvironTech implements IModule {
 	
 	public void init() {
 		if (Config.environTech && Loader.isModLoaded("environmentaltech")) {
-			Material mica = new Material("mica", 0xBBBBBB);
+			Material mica = new Material("mica_plustic", 0xBBBBBB);
 			mica.addTrait(Slashing.slashing);
 			mica.setCraftable(true);
 			PlusTiC.proxy.setRenderInfo(mica, 0xBBBBBB);
@@ -29,7 +29,7 @@ public class ModuleEnvironTech implements IModule {
 					PlusTiC.justWhy);
 			PlusTiC.materials.put("mica", mica);
 			
-			Material litherite = new Material("litherite", 0x078E51);
+			Material litherite = new Material("litherite_plustic", 0x078E51);
 			litherite.addTrait(stonebound, HEAD);
 			litherite.addTrait(crude2);
 			litherite.addTrait(petramor);
@@ -43,7 +43,7 @@ public class ModuleEnvironTech implements IModule {
 			PlusTiC.materials.put("litherite", litherite);
 			PlusTiC.materialOreDicts.put("litherite", "crystalLitherite");
 			
-			Material erodium = new Material("erodium", 0xBB56FF);
+			Material erodium = new Material("erodium_plustic", 0xBB56FF);
 			erodium.addTrait(Vindictive.vindictive);
 			erodium.addTrait(NaturesWrath.natureswrath);
 			erodium.addItem("crystalErodium", 1, Material.VALUE_Ingot);
@@ -56,7 +56,7 @@ public class ModuleEnvironTech implements IModule {
 			PlusTiC.materials.put("erodium", erodium);
 			PlusTiC.materialOreDicts.put("erodium", "crystalErodium");
 			
-			Material kyronite = new Material("kyronite", 0x77007f);
+			Material kyronite = new Material("kyronite_plustic", 0x77007f);
 			kyronite.addTrait(FruitSalad.fruitsalad, HEAD);
 			kyronite.addTrait(NaturesBlessing.naturesblessing);
 			kyronite.addItem("crystalKyronite", 1, Material.VALUE_Ingot);
@@ -69,7 +69,7 @@ public class ModuleEnvironTech implements IModule {
 			PlusTiC.materials.put("kyronite", kyronite);
 			PlusTiC.materialOreDicts.put("kyronite", "crystalKyronite");
 			
-			Material pladium = new Material("pladium", 0x070070);
+			Material pladium = new Material("pladium_plustic", 0x070070);
 			pladium.addTrait(StopBeingSelfish.stopbeingselfish);
 			pladium.addItem("crystalPladium", 1, Material.VALUE_Ingot);
 			pladium.setCraftable(true);
@@ -81,7 +81,7 @@ public class ModuleEnvironTech implements IModule {
 			PlusTiC.materials.put("pladium", pladium);
 			PlusTiC.materialOreDicts.put("pladium", "crystalPladium");
 			
-			Material ionite = new Material("ionite", 0x6df5ff);
+			Material ionite = new Material("ionite_plustic", 0x6df5ff);
 			ionite.addTrait(ChadThunder.chadthunder, HEAD);
 			ionite.addTrait(Illuminati.illuminati);
 			ionite.addItem("crystalIonite", 1, Material.VALUE_Ingot);
@@ -94,7 +94,7 @@ public class ModuleEnvironTech implements IModule {
 			PlusTiC.materials.put("ionite", ionite);
 			PlusTiC.materialOreDicts.put("ionite", "crystalIonite");
 			
-			Material aethium = new Material("aethium", 0x000000);
+			Material aethium = new Material("aethium_plustic", 0x000000);
 			aethium.addTrait(MusicOfTheSpheres.musicofthespheres);
 			aethium.addItem("crystalAethium", 1, Material.VALUE_Ingot);
 			aethium.setCraftable(true);
